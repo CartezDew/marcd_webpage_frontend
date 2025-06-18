@@ -1,12 +1,5 @@
 import axios from "axios";
 
-const getToken = () => {
-  return new Promise((resolve) => {
-    const token = localStorage.getItem("token");
-    resolve(token ? `Bearer ${token}` : null);
-  });
-};
-
 const api = axios.create({
   baseURL:
     process.env.NODE_ENV === "production"
@@ -15,11 +8,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-  async function (config) {
-    const token = await getToken();
-    if (token) {
-      config.headers["Authorization"] = token;
-    }
+  function (config) {
+    // Add any request interceptors if needed
     return config;
   },
   function (error) {

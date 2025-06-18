@@ -1,45 +1,58 @@
-import { NavLink } from "react-router-dom";
-import headerLogo from "../assets/header-logo.svg"
+import { Link, useLocation } from 'react-router-dom';
+import { FaTruck, FaMapMarkedAlt, FaComments, FaClipboardList } from 'react-icons/fa';
 
-function Nav({ user }) {
-  const authenticatedOptions = (
-    <>
-      <NavLink className="nav-link" to="/cats">
-        Cats
-      </NavLink>
-      <NavLink className="nav-link" to="/toys">
-        Toys
-      </NavLink>
-      <NavLink className="nav-link" to="/cats/add">
-        Add Cat
-      </NavLink>
-      <NavLink className="nav-link" to="/toys/add">
-        Add Toy
-      </NavLink>
-      <NavLink className="nav-link" to="/sign-out">
-        Log Out
-      </NavLink>
-    </>
-  );
+function Nav() {
+  const location = useLocation();
 
-  const unauthenticatedOptions = (
-    <>
-      <NavLink className="nav-link" to="/">
-        Log-In
-      </NavLink>
-      <NavLink className="nav-link" to="/register">
-        Register
-      </NavLink>
-    </>
-  );
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
-    <nav>
-      <img src={headerLogo} alt="header cat" />
-      {user && <div className="link welcome">Welcome, {user.username}</div>}
-      <div className="nav-links">
-        {user ? authenticatedOptions : unauthenticatedOptions}
-      </div>
+    <nav className="nav">
+      <Link to="/" className="nav-brand">
+        <FaTruck style={{ marginRight: '0.5rem' }} />
+        Marc'd Trucking
+      </Link>
+      
+      <ul className="nav-links">
+        <li>
+          <Link 
+            to="/" 
+            className={isActive('/') ? 'active' : ''}
+          >
+            <FaMapMarkedAlt style={{ marginRight: '0.5rem' }} />
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link 
+            to="/truck-stops" 
+            className={isActive('/truck-stops') ? 'active' : ''}
+          >
+            <FaTruck style={{ marginRight: '0.5rem' }} />
+            Truck Stops
+          </Link>
+        </li>
+        <li>
+          <Link 
+            to="/feedback" 
+            className={isActive('/feedback') ? 'active' : ''}
+          >
+            <FaComments style={{ marginRight: '0.5rem' }} />
+            Feedback
+          </Link>
+        </li>
+        <li>
+          <Link 
+            to="/survey" 
+            className={isActive('/survey') ? 'active' : ''}
+          >
+            <FaClipboardList style={{ marginRight: '0.5rem' }} />
+            Survey
+          </Link>
+        </li>
+      </ul>
     </nav>
   );
 }
