@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Nav from './components/Nav';
 import Home from './pages/Home';
@@ -44,20 +44,18 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="App">
-        <Nav />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home userLocation={userLocation} />} />
-            <Route path="/truck-stops" element={<TruckStops userLocation={userLocation} />} />
-            <Route path="/truck-stops/:id" element={<TruckStopDetail />} />
-            <Route path="/feedback" element={<Feedback />} />
-            <Route path="/survey" element={<Survey />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <div className="App">
+      <Nav />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home userLocation={userLocation} />} />
+          <Route path="/truck-stops" element={<TruckStops userLocation={userLocation} />} />
+          <Route path="/truck-stops/:id" element={<TruckStopDetail />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/survey" element={<Survey />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

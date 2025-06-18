@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaTruck, FaCloudSun, FaParking, FaStar, FaMapMarkedAlt, FaThermometerHalf, FaWind } from 'react-icons/fa';
+import { FaTruck, FaCloudSun, FaParking, FaStar, FaMapMarkedAlt, FaThermometerHalf, FaWind, FaComments } from 'react-icons/fa';
 import WeatherWidget from '../components/WeatherWidget';
 import MapView from '../components/MapView';
 
