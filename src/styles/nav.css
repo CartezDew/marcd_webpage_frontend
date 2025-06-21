@@ -1,0 +1,92 @@
+/* Navigation Styles */
+.nav-appbar {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(8px);
+  height: 60px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: height 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0 !important; /* Remove any rounded edges */
+}
+
+/* Shrinks the navbar height when user scrolls */
+.nav-appbar.nav-shrink {
+  height: 48px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure MUI Toolbar matches dynamic height */
+.MuiToolbar-root {
+  min-height: 60px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  transition: min-height 0.3s ease;
+}
+
+.nav-appbar.nav-shrink .MuiToolbar-root {
+  min-height: 48px !important;
+}
+
+.nav-button {
+  color: #333;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 6px 14px;
+  text-transform: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-button.active {
+  border-bottom: 2px solid #D32F2F;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.nav-drawer {
+  background-color: #f5f5f5;
+  color: #333;
+  width: 240px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #ddd;
+  border-radius: 0 !important;
+}
+
+.nav-drawer-item {
+  text-align: center;
+}
+
+.nav-drawer-item.Mui-selected {
+  background-color: #D32F2F;
+  color: white;
+}
+
+.nav-drawer-item.Mui-selected:hover {
+  background-color: #B71C1C;
+}
+
+.nav-drawer-icon {
+  color: inherit;
+}
+
+.nav-mobile-toggle {
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .nav-drawer {
+    display: block;
+  }
+}
+
+@media (min-width: 961px) {
+  .nav-drawer {
+    display: none;
+  }
+}

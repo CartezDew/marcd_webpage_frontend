@@ -1,5 +1,27 @@
 import { useState } from 'react';
-import { FaComments, FaBug, FaLightbulb, FaEnvelope } from 'react-icons/fa';
+import { 
+  Container, 
+  Paper, 
+  Typography, 
+  TextField, 
+  Button, 
+  Box, 
+  CircularProgress,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Card,
+  CardContent,
+  Alert
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { 
+  FaComments, 
+  FaBug, 
+  FaLightbulb, 
+  FaEnvelope 
+} from 'react-icons/fa';
 import { feedbackAPI } from '../services/feedback';
 
 function Feedback() {
@@ -11,6 +33,7 @@ function Feedback() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +46,7 @@ function Feedback() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       await feedbackAPI.create(formData);
@@ -33,146 +57,174 @@ function Feedback() {
         feedback_type: 'general',
         message: ''
       });
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
-      alert('There was an error submitting your feedback. Please try again.');
+    } catch (err) {
+      console.error('Error submitting feedback:', err);
+      setError('There was an error submitting your feedback. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const feedbackTypes = [
-    { value: 'bug', label: 'Bug Report', icon: <FaBug /> },
-    { value: 'feature', label: 'Feature Request', icon: <FaLightbulb /> },
-    { value: 'general', label: 'General Feedback', icon: <FaComments /> }
+    { value: 'bug', label: 'Bug Report', icon: <FaBug style={{ marginRight: 8 }} /> },
+    { value: 'feature', label: 'Feature Request', icon: <FaLightbulb style={{ marginRight: 8 }} /> },
+    { value: 'general', label: 'General Feedback', icon: <FaComments style={{ marginRight: 8 }} /> }
   ];
 
   if (submitted) {
     return (
-      <div className="feedback-page">
-        <div className="text-center">
-          <div className="card">
-            <FaEnvelope style={{ fontSize: '3rem', color: '#27ae60', marginBottom: '1rem' }} />
-            <h2>Thank You!</h2>
-            <p>Your feedback has been submitted successfully. We appreciate your input!</p>
-            <button 
-              onClick={() => setSubmitted(false)}
-              className="btn btn-primary mt-2"
-            >
-              Submit Another Feedback
-            </button>
-          </div>
-        </div>
-      </div>
+      <Container maxWidth="sm">
+        <Paper elevation={3} sx={{ p: 4, mt: 4, textAlign: 'center' }}>
+          <FaEnvelope style={{ fontSize: '3rem', color: 'success.main', marginBottom: '1rem' }} />
+          <Typography variant="h4" component="h2" gutterBottom>
+            Thank You!
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 3 }}>
+            Your feedback has been submitted successfully. We appreciate your input!
+          </Typography>
+          <Button 
+            onClick={() => setSubmitted(false)}
+            variant="contained"
+          >
+            Submit Another Feedback
+          </Button>
+        </Paper>
+      </Container>
     );
   }
 
   return (
-    <div className="feedback-page">
-      <div className="page-header text-center mb-3">
-        <h1>Send Feedback</h1>
-        <p>Help us improve Marc'd Trucking by sharing your thoughts</p>
-      </div>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, backgroundColor: 'transparent' }}>
+        <Typography variant="h3" component="h1" align="center" gutterBottom fontWeight={300}>
+          Send Feedback
+        </Typography>
+        <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 4 }}>
+          Help us improve Marc'd by sharing your thoughts
+        </Typography>
 
-      <div className="feedback-form-container">
-        <div className="card">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Name *</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Your name"
-              />
-            </div>
+        <Grid container spacing={4}>
+          <Grid xs={12} md={6}>
+            <Paper elevation={3} sx={{ p: 3 }}>
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                  <Grid xs={12}>
+                    <TextField
+                      label="Name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid xs={12}>
+                    <TextField
+                      label="Email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid xs={12}>
+                    <FormControl fullWidth required>
+                      <InputLabel id="feedback-type-label">Feedback Type</InputLabel>
+                      <Select
+                        labelId="feedback-type-label"
+                        id="feedback_type"
+                        name="feedback_type"
+                        value={formData.feedback_type}
+                        label="Feedback Type"
+                        onChange={handleChange}
+                      >
+                        {feedbackTypes.map(type => (
+                          <MenuItem key={type.value} value={type.value}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                              {type.icon}
+                              {type.label}
+                            </Box>
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid xs={12}>
+                    <TextField
+                      label="Message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      fullWidth
+                      required
+                      multiline
+                      rows={6}
+                    />
+                  </Grid>
+                  {error && (
+                    <Grid xs={12}>
+                      <Alert severity="error">{error}</Alert>
+                    </Grid>
+                  )}
+                  <Grid xs={12}>
+                    <Button 
+                      type="submit" 
+                      variant="contained"
+                      fullWidth
+                      disabled={loading}
+                      sx={{ py: 1.5 }}
+                    >
+                      {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit Feedback'}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </Paper>
+          </Grid>
 
-            <div className="form-group">
-              <label htmlFor="email">Email *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="your.email@example.com"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="feedback_type">Feedback Type *</label>
-              <select
-                id="feedback_type"
-                name="feedback_type"
-                value={formData.feedback_type}
-                onChange={handleChange}
-                required
-              >
-                {feedbackTypes.map(type => (
-                  <option key={type.value} value={type.value}>
-                    {type.icon} {type.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">Message *</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="6"
-                placeholder="Please describe your feedback in detail..."
-              />
-            </div>
-
-            <div className="form-actions">
-              <button 
-                type="submit" 
-                className="btn btn-primary"
-                disabled={loading}
-              >
-                {loading ? 'Submitting...' : 'Submit Feedback'}
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <div className="feedback-info card mt-3">
-          <h3>What kind of feedback can you provide?</h3>
-          <div className="feedback-types-info">
-            <div className="feedback-type-info">
-              <FaBug style={{ color: '#e74c3c' }} />
-              <div>
-                <h4>Bug Report</h4>
-                <p>Report any issues or problems you've encountered while using the app.</p>
-              </div>
-            </div>
-            <div className="feedback-type-info">
-              <FaLightbulb style={{ color: '#f39c12' }} />
-              <div>
-                <h4>Feature Request</h4>
-                <p>Suggest new features or improvements that would make the app better.</p>
-              </div>
-            </div>
-            <div className="feedback-type-info">
-              <FaComments style={{ color: '#3498db' }} />
-              <div>
-                <h4>General Feedback</h4>
-                <p>Share your overall experience, suggestions, or any other thoughts.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          <Grid xs={12} md={6}>
+            <Card elevation={2} sx={{ height: '100%' }}>
+              <CardContent sx={{ p: 3 }}>
+                <Typography variant="h5" component="h3" gutterBottom>
+                  What kind of feedback can you provide?
+                </Typography>
+                <Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <FaBug style={{ color: '#e74c3c', marginRight: 16, fontSize: 24 }} />
+                    <Box>
+                      <Typography variant="h6">Bug Report</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Report any issues or problems you've encountered.
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <FaLightbulb style={{ color: '#f39c12', marginRight: 16, fontSize: 24 }} />
+                    <Box>
+                      <Typography variant="h6">Feature Request</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Suggest new features or improvements.
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <FaComments style={{ color: '#3498db', marginRight: 16, fontSize: 24 }} />
+                    <Box>
+                      <Typography variant="h6">General Feedback</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Share your overall experience or any other thoughts.
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
   );
 }
 
