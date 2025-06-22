@@ -1,3 +1,27 @@
+.survey-intro-container {
+  padding: 32px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers all child elements horizontally */
+}
+
+.survey-intro-heading {
+  color: white;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.survey-intro-text {
+  color: white;
+  font-size: 1.2
+  rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+
+/* Existing styles below */
 .survey-embed-container {
   min-height: 100vh;
   position: relative;
@@ -16,7 +40,6 @@
   z-index: 1;
 }
 
-/* Loading Spinner Overlay */
 .survey-loading {
   position: absolute;
   z-index: 2;
@@ -26,18 +49,60 @@
   flex-direction: column;
   align-items: center;
   opacity: 1;
+  display: flex;
   transition: opacity 0.6s ease;
+  pointer-events: auto;
 }
 
 .survey-loading.fade-out {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
 }
 
-/* Spinner text */
 .survey-loading-text {
   margin-top: 12px;
   font-size: 0.95rem;
   color: #555;
   text-align: center;
+}
+
+/* Animate the heading when it appears */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.survey-intro-heading {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeSlideUp 1s ease-out forwards;
+  opacity: 0; /* Start invisible */
+}
+
+.survey-intro-heading {
+  animation: fadeSlideUp 1s ease-out forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.survey-intro-text {
+  animation: fadeSlideUp 1s ease-out forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.glow-text {
+  color: white;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8),
+               0 0 16px rgba(25, 118, 210, 0.7),
+               0 0 24px rgba(25, 118, 210, 0.5);
+  font-weight: bold;
 }
