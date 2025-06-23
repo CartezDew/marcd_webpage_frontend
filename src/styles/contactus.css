@@ -10,7 +10,6 @@
     z-index: 1;
   }
   
-
   .contact-card {
     width: 100%;
     max-width: 700px;
@@ -27,13 +26,7 @@
   form {
     width: 100%;
   }
-  
-  /* .MuiGrid-item {
-    display: flex;
-    flex-direction: column;
-  } */
-  
-  /* Bottom controls: social + submit */
+ 
   .bottom-controls {
     margin-top: 1.5rem;
     width: 100%;

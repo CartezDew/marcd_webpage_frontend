@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 import {
   Container,
-  Grid,
   TextField,
+  Grid,
   Button,
   CircularProgress,
   Typography,
@@ -14,6 +14,8 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+
+
 import {
   FaInstagram,
   FaFacebook,
@@ -139,7 +141,7 @@ function ContactUs() {
             <Box sx={{ px: 1 }}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
                 {/* First + Last Name */}
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -161,7 +163,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Email + Contact Reason */}
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -172,20 +174,21 @@ function ContactUs() {
                       value={formData.email}
                       onChange={handleChange}
                     />
-                    <FormControl fullWidth required>
-                      <InputLabel id="feedback-type-label">Contact Reason</InputLabel>
-                      <Select
-                        labelId="feedback-type-label"
-                        name="feedback_type"
-                        value={formData.feedback_type}
-                        label="Contact Reason"
-                        onChange={handleChange}
-                      >
-                        {contactTypes.map((type) => (
-                          <MenuItem key={type.value} value={type.value}>
-                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                              {type.icon}
-                              {type.label}
+
+                      <FormControl sx={{ display: "flex", gap: "8px", width: "100%" }}>
+                        <InputLabel id="contactus-type-label">Contact Reason</InputLabel>
+                        <Select
+                          labelId="contactus-type-label"
+                          name="contactus_type"
+                          value={formData.contactus_type}
+                          label="Contact Reason"
+                          onChange={handleChange}
+                        >
+                          {contactTypes.map((type) => (
+                            <MenuItem key={type.value} value={type.value}>
+                              <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
+                                {type.icon}
+                                {type.label}
                             </Box>
                           </MenuItem>
                         ))}
@@ -195,7 +198,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Social Media + Phone */}
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -224,7 +227,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Message */}
-                <Grid item xs={12} sx={{width: "79%"}}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <TextField
                     fullWidth
                     required
@@ -266,7 +269,7 @@ function ContactUs() {
             size="large"
             className="submit-button"
           >
-            {loading ? <CircularProgress size={24} /> : "Submit"}
+            {loading ? <CircularProgress size={24} /> : "Submit Message"}
           </Button>
         </Box>
       </form>
