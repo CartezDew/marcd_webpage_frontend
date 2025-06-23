@@ -54,7 +54,7 @@ useEffect(() => {
   const navItems = [
     { path: '/', label: 'Home', icon: <Map /> },
     { path: '/truck-stops', label: 'Truck Stops', icon: <LocalShipping /> },
-    { path: '/feedback', label: 'Feedback', icon: <Chat /> },
+    { path: '/contactus', label: 'Contact Us', icon: <Chat /> },
     { path: '/survey', label: 'Survey', icon: <Assessment /> }
   ];
 

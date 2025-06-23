@@ -6,7 +6,7 @@ import Nav from './components/Nav';
 import Home from './pages/Home';
 import TruckStops from './pages/TruckStops';
 import TruckStopDetail from './pages/TruckStopDetail';
-import Feedback from './pages/Feedback';
+import ContactUs from './pages/ContactUs';
 import Survey from './pages/Survey';
 import './styles/global.css';
 import './styles/components.css';
@@ -108,7 +108,7 @@ function App() {
             <Route path="/" element={<Home userLocation={userLocation} />} />
             <Route path="/truck-stops" element={<TruckStops userLocation={userLocation} />} />
             <Route path="/truck-stops/:id" element={<TruckStopDetail />} />
-            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/contactus" element={<ContactUs />} />
             <Route path="/survey" element={<Survey />} />
           </Routes>
         </main>
