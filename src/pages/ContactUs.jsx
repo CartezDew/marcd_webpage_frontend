@@ -22,17 +22,25 @@ import {
   FaBug,
   FaLightbulb,
   FaComments,
+  FaQuestion,
 } from "react-icons/fa";
 import { contactUsAPI } from "../services/contactus";
 import "../styles/contactus.css";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@react-hook/window-size";
+
 
 const contactTypes = [
-  { value: "general", label: "General Contact", icon: <FaComments style={{ marginRight: 8 }} /> },
+  { value: "general", label: "General Inquiry", icon: <FaComments style={{ marginRight: 8 }} /> },
   { value: "bug", label: "Bug Report", icon: <FaBug style={{ marginRight: 8 }} /> },
   { value: "feature", label: "Feature Request", icon: <FaLightbulb style={{ marginRight: 8 }} /> },
+  { value: "other", label: "Other", icon: <FaQuestion style={{ marginRight: 8 }} /> },
 ];
 
 function ContactUs() {
+
+  const [width, height] = useWindowSize();
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -77,17 +85,27 @@ function ContactUs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isFormValid) return;
-
+  
+    const missingFields = [];
+    if (!formData.first_name) missingFields.push("First Name");
+    if (!formData.last_name) missingFields.push("Last Name");
+    if (!formData.email) missingFields.push("Email");
+    if (!formData.message) missingFields.push("Message");
+  
+    if (missingFields.length > 0) {
+      setError(`Please fill in the following required field(s): ${missingFields.join(", ")}`);
+      return;
+    }
+  
     if (formData.phone && formData.phone.replace(/\D/g, "").length !== 10) {
       setPhoneError("Phone number must be 10 digits.");
       return;
     }
-
+  
     setPhoneError("");
     setLoading(true);
     setError("");
-
+  
     try {
       await contactUsAPI.create(formData);
       setSubmitted(true);
@@ -110,16 +128,29 @@ function ContactUs() {
 
   if (submitted) {
     return (
-      <Container maxWidth="sm" sx={{ mt: 6, textAlign: "center" }}>
-        <Card>
+      <Container maxWidth="sm" sx={{ mt: 6, textAlign: "center", position: "relative" }}>
+        <Confetti width={width} height={height} numberOfPieces={250} recycle={false} />
+        
+        <Card className="thank-you-card">
           <CardContent>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" fontWeight="bold" gutterBottom>
               Thank you for your feedback!
             </Typography>
-            <Typography>We'll be in touch soon!</Typography>
-            <Button onClick={() => setSubmitted(false)} variant="contained" sx={{ mt: 2 }}>
-              Submit Another
-            </Button>
+            <Typography variant="body1" color="textSecondary" gutterBottom>
+              We'll be in touch soon!
+            </Typography>
+  
+            <Box sx={{ mt: 4 }}>
+              <Button
+                onClick={() => setSubmitted(false)}
+                variant="contained"
+                color="primary"
+                size="large"
+                className="animated-submit"
+              >
+                Submit Another
+              </Button>
+            </Box>
           </CardContent>
         </Card>
       </Container>
@@ -176,11 +207,11 @@ function ContactUs() {
                     />
 
                       <FormControl sx={{ display: "flex", gap: "8px", width: "100%" }}>
-                        <InputLabel id="contactus-type-label">Contact Reason</InputLabel>
+                        <InputLabel id="feedback-type-label">Contact Reason</InputLabel>
                         <Select
-                          labelId="contactus-type-label"
-                          name="contactus_type"
-                          value={formData.contactus_type}
+                          labelId="feedback-type-label"
+                          name="feedback_type"
+                          value={formData.feedback_type}
                           label="Contact Reason"
                           onChange={handleChange}
                         >
@@ -215,7 +246,6 @@ function ContactUs() {
                       type="tel"
                       inputProps={{
                         inputMode: "numeric",
-                        pattern: "[0-9]*",
                         maxLength: 12,
                       }}
                       value={formData.phone}
@@ -265,7 +295,6 @@ function ContactUs() {
             form="contact-form"
             variant="contained"
             color="primary"
-            disabled={!isFormValid || loading}
             size="large"
             className="submit-button"
           >

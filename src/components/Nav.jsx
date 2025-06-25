@@ -20,10 +20,12 @@ import {
   Map, 
   Chat, 
   Assessment,
-  Menu
+  Menu,
+  People
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import '../styles/nav.css';
+import marcDLogo from '../assets/Marc-d_Logo.png';
 
 function Nav() {
   const location = useLocation();
@@ -55,7 +57,8 @@ useEffect(() => {
     { path: '/', label: 'Home', icon: <Map /> },
     { path: '/truck-stops', label: 'Truck Stops', icon: <LocalShipping /> },
     { path: '/contactus', label: 'Contact Us', icon: <Chat /> },
-    { path: '/survey', label: 'Survey', icon: <Assessment /> }
+    { path: '/survey', label: 'Survey', icon: <Assessment /> },
+    { path: '/our-story', label: 'Our Story', icon: <People /> }
   ];
 
   const handleDrawerToggle = () => {
@@ -65,7 +68,7 @@ useEffect(() => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box sx={{ my: 2, display: 'flex', justifyContent: 'center' }}>
-        <img src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" alt="Marc'd Logo" style={{ height: '80px' }} />
+        <img src={marcDLogo} alt="Marc'd Logo" style={{ height: '80px' }} />
       </Box>
       <List>
         {navItems.map((item) => (

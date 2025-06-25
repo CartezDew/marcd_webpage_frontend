@@ -10,6 +10,8 @@ import ContactUs from './pages/ContactUs';
 import Survey from './pages/Survey';
 import './styles/global.css';
 import './styles/components.css';
+import OurStory from './pages/OurStory';
+
 
 // Create a custom theme
 const theme = createTheme({
@@ -110,6 +112,7 @@ function App() {
             <Route path="/truck-stops/:id" element={<TruckStopDetail />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/survey" element={<Survey />} />
+            <Route path="/our-story" element={<OurStory />} />
           </Routes>
         </main>
       </ThemeProvider>
