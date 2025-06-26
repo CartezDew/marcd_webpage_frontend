@@ -1,0 +1,337 @@
+/* Leadership Profile - Cartez Dewberry */
+/* Following Marc'd Design System */
+
+.leadership-profile-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  padding: 2rem 0;
+}
+
+
+/* Main Container */
+.profile-container {
+  padding: 4rem 2rem 2rem !important;
+  max-width: 1200px !important;
+}
+
+.profile-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  min-height: 70vh;
+}
+
+/* Profile Card Section */
+.profile-card-section {
+  flex: 0 0 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.02);
+}
+
+.profile-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.divider-line {
+  width: 60px;
+  height: 2px;
+  background: #2563eb;
+  border-radius: 1px;
+  margin: 0.5rem 0;
+}
+
+/* Bio Content Section */
+.bio-content-section {
+  flex: 1;
+  padding-left: .8rem;
+  padding-right: .8rem;
+}
+
+.profile-name {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.25 !important;
+  text-align: center;
+}
+
+.profile-title {
+  font-size: 1.125rem !important;
+  font-weight: 500 !important;
+  color: #475569 !important;
+  margin-bottom: 0 !important;
+  text-align: center;
+}
+
+/* LinkedIn Button */
+.linkedin-button {
+  background: #0077b5 !important;
+  padding: 0.75rem !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.linkedin-button:hover {
+  background: #005885 !important;
+  transform: scale(1.05);
+}
+
+.linkedin-icon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+/* Bio Section */
+.bio-section {
+  margin-bottom: 3rem;
+}
+
+.bio-subtitle {
+  font-size: 1.75rem !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  margin-bottom: 1rem !important;
+}
+
+.bio-tagline {
+  font-size: 1.125rem !important;
+  font-weight: 500 !important;
+  color: #2563eb !important;
+  margin-bottom: 2rem !important;
+  line-height: 1.5 !important;
+  min-height: 2.25rem; /* Reserve space to prevent layout shift */
+  transition: font-weight 0.3s ease, transform 0.3s ease;
+}
+
+/* Typewriter cursor */
+.typing-cursor {
+  color: #2563eb;
+  animation: blink 1s infinite;
+  font-weight: normal;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Bold effect when typing is complete */
+.bio-tagline.bold-effect {
+  font-weight: 700 !important;
+  transform: scale(1.02);
+  transition: font-weight 0.3s ease, transform 0.3s ease;
+}
+
+.bio-paragraph {
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+  color: #475569 !important;
+  margin-bottom: 1rem !important;
+  text-align: justify;
+}
+
+/* Action Section */
+.action-section {
+  margin-top: 3rem;
+}
+
+.back-button-main {
+  background: #be0303 !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 12px !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.back-button-main:hover {
+  background: #26304a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .profile-container {
+    padding: 3rem 1.5rem 2rem !important;
+  }
+  
+  .profile-layout {
+    gap: 2rem;
+  }
+  
+  .profile-card-section {
+    flex: 0 0 300px;
+  }
+  
+  .profile-card {
+    max-width: 300px;
+  }
+  
+  .bio-content-section {
+    padding-left: 1rem;
+  }
+  
+  .profile-name {
+    font-size: 1.875rem !important;
+  }
+  
+  .profile-title {
+    font-size: 1.125rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .leadership-profile-container {
+    padding: 1rem 0;
+  }
+  
+  .back-button-nav {
+    top: 1rem !important;
+    left: 1rem !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .profile-container {
+    padding: 3rem 1rem 2rem !important;
+  }
+  
+  .profile-layout {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .profile-card-section {
+    flex: none;
+    width: 100%;
+  }
+  
+  .profile-card {
+    max-width: 280px;
+    padding: 1.5rem;
+  }
+  
+  .bio-content-section {
+    flex: none;
+    width: 100%;
+    padding-left: 0;
+  }
+  
+  .profile-name {
+    font-size: 1.75rem !important;
+  }
+  
+  .profile-title {
+    font-size: 1rem !important;
+  }
+  
+  .bio-subtitle {
+    font-size: 1.5rem !important;
+  }
+  
+  .bio-tagline {
+    font-size: 1rem !important;
+  }
+  
+  .bio-paragraph {
+    text-align: left;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .bio-section {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 2.5rem 0.75rem 1.5rem !important;
+  }
+  
+  .profile-name {
+    font-size: 1.75rem !important;
+  }
+  
+  .profile-title {
+    font-size: 1.125rem !important;
+  }
+  
+  .bio-subtitle {
+    font-size: 1.375rem !important;
+  }
+  
+  .bio-paragraph {
+    font-size: 0.95rem !important;
+  }
+  
+  .back-button-main {
+    width: 100%;
+    padding: 1rem !important;
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leadership-profile-container {
+  animation: fadeInUp 0.6s ease-out;
+} 

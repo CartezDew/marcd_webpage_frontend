@@ -11,7 +11,7 @@ import Survey from './pages/Survey';
 import './styles/global.css';
 import './styles/components.css';
 import OurStory from './pages/OurStory';
-
+import Leadership_Cartez from './pages/Leadership_Cartez';
 
 // Create a custom theme
 const theme = createTheme({
@@ -113,6 +113,7 @@ function App() {
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/survey" element={<Survey />} />
             <Route path="/our-story" element={<OurStory />} />
+            <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
           </Routes>
         </main>
       </ThemeProvider>

@@ -56,9 +56,9 @@ useEffect(() => {
   const navItems = [
     { path: '/', label: 'Home', icon: <Map /> },
     { path: '/truck-stops', label: 'Truck Stops', icon: <LocalShipping /> },
-    { path: '/contactus', label: 'Contact Us', icon: <Chat /> },
+    { path: '/our-story', label: 'Our Story', icon: <People /> },
     { path: '/survey', label: 'Survey', icon: <Assessment /> },
-    { path: '/our-story', label: 'Our Story', icon: <People /> }
+    { path: '/contactus', label: 'Contact Us', icon: <Chat /> }
   ];
 
   const handleDrawerToggle = () => {
