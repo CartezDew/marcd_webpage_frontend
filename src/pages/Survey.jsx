@@ -41,7 +41,7 @@ function Survey() {
             <Typography
                 variant="h6"
                 align="center"
-                className={`survey-intro-heading ${glow ? 'glow-text' : ''}`}
+                className= "survey-intro-heading"
                 style={{ fontWeight: 'bold' }}
             >
                 We’d love your feedback

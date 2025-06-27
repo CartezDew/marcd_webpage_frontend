@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { 
@@ -16,6 +16,10 @@ import '../styles/features.css';
 
 function Features() {
   const [isVisible, setIsVisible] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [isRewardsCardVisible, setIsRewardsCardVisible] = useState(false);
+  const rewardsCardRef = useRef(null);
+  const confettiIntervalRef = useRef(null);
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -26,13 +30,69 @@ function Features() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Intersection Observer for the rewards card
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsRewardsCardVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the card is visible
+        rootMargin: '0px'
+      }
+    );
+
+    if (rewardsCardRef.current) {
+      observer.observe(rewardsCardRef.current);
+    }
+
+    return () => {
+      if (rewardsCardRef.current) {
+        observer.unobserve(rewardsCardRef.current);
+      }
+    };
+  }, []);
+
+  // Confetti animation management
+  useEffect(() => {
+    if (isRewardsCardVisible) {
+      // Start confetti after 1 second when card becomes visible
+      const initialDelay = setTimeout(() => {
+        setShowConfetti(true);
+        
+        // Set up interval to repeat every 15 seconds
+        confettiIntervalRef.current = setInterval(() => {
+          setShowConfetti(false);
+          // Brief delay to reset animation
+          setTimeout(() => {
+            setShowConfetti(true);
+          }, 100);
+        }, 7000);
+      }, 1000);
+
+      return () => {
+        clearTimeout(initialDelay);
+        if (confettiIntervalRef.current) {
+          clearInterval(confettiIntervalRef.current);
+        }
+      };
+    } else {
+      // Stop confetti when card is not visible
+      setShowConfetti(false);
+      if (confettiIntervalRef.current) {
+        clearInterval(confettiIntervalRef.current);
+        confettiIntervalRef.current = null;
+      }
+    }
+  }, [isRewardsCardVisible]);
+
   const features = [
     {
       id: 1,
       icon: <StarIcon />,
       title: "Top Marc'er Rewards",
       route: '#rewards',
-      description: "Turn your impact into income. Earn cash and climb the leaderboard while makeing the road better for everyone."
+      description: "Rack up rewards, earn real cash, and get the recognition you deserve for making the road better for everyone."
     },
     {
       id: 2,
@@ -85,6 +145,27 @@ function Features() {
     },    
   ];
 
+  // Generate confetti elements that appear to pop from the icon
+  const generateConfetti = () => {
+    const confettiElements = [];
+    for (let i = 0; i < 15; i++) {
+      const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#a29bfe', '#fd79a8', '#fdcb6e', '#55a3ff'];
+      confettiElements.push(
+        <div 
+          key={i} 
+          className="confetti-particle" 
+          style={{
+            backgroundColor: colors[i % colors.length],
+            left: `${45 + Math.random() * 10}%`, // Center around icon position
+            animationDelay: `${Math.random() * 0.3}s`,
+            animationDuration: `${1.5 + Math.random() * 0.8}s`
+          }}
+        />
+      );
+    }
+    return confettiElements;
+  };
+
   return (
     <Box className="features-container">
       <Container maxWidth="lg" className="features-content">
@@ -106,7 +187,15 @@ function Features() {
               key={feature.id} 
               className={`feature-card feature-card-${feature.id}`}
               style={{ animationDelay: `${index * 0.1}s` }}
+              ref={feature.id === 1 ? rewardsCardRef : null}
             >
+              {/* Confetti Container for Top Marc'er Rewards */}
+              {feature.id === 1 && showConfetti && (
+                <div className="confetti-container">
+                  {generateConfetti()}
+                </div>
+              )}
+              
               <Box className="feature-icon">
                 {feature.icon}
               </Box>

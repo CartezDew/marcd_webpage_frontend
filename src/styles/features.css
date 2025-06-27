@@ -68,6 +68,7 @@
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease 0.3s;
+  position: relative;
 }
 
 .features-grid.animate {
@@ -89,52 +90,331 @@
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.6s ease forwards;
+  overflow: hidden;
 }
 
-/* Grid Borders - Specific positioning */
+/* Confetti Animation for Top Marc'er Rewards Card */
+.feature-card-1 {
+  position: relative;
+}
+
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 1.5rem; /* Start from icon position */
+  border-radius: 2px;
+  opacity: 1;
+  animation: confettiExplode 2s ease-out forwards;
+}
+
+@keyframes confettiExplode {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(-15px) translateX(var(--random-x, 0px)) rotate(45deg) scale(1.2);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(-35px) translateX(var(--random-x, 0px)) rotate(90deg) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(-25px) translateX(var(--random-x, 0px)) rotate(180deg) scale(0.9);
+  }
+  75% {
+    opacity: 0.6;
+    transform: translateY(20px) translateX(var(--random-x, 0px)) rotate(270deg) scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80px) translateX(var(--random-x, 0px)) rotate(360deg) scale(0.3);
+  }
+}
+
+/* Generate random X translations for confetti spread */
+.confetti-particle:nth-child(1) { --random-x: -40px; }
+.confetti-particle:nth-child(2) { --random-x: -30px; }
+.confetti-particle:nth-child(3) { --random-x: -20px; }
+.confetti-particle:nth-child(4) { --random-x: -10px; }
+.confetti-particle:nth-child(5) { --random-x: 0px; }
+.confetti-particle:nth-child(6) { --random-x: 10px; }
+.confetti-particle:nth-child(7) { --random-x: 20px; }
+.confetti-particle:nth-child(8) { --random-x: 30px; }
+.confetti-particle:nth-child(9) { --random-x: 40px; }
+.confetti-particle:nth-child(10) { --random-x: -35px; }
+.confetti-particle:nth-child(11) { --random-x: -15px; }
+.confetti-particle:nth-child(12) { --random-x: 15px; }
+.confetti-particle:nth-child(13) { --random-x: 35px; }
+.confetti-particle:nth-child(14) { --random-x: -25px; }
+.confetti-particle:nth-child(15) { --random-x: 25px; }
+
+/* Remove old confetti styles */
+.confetti {
+  display: none;
+}
+
+@keyframes confettiFall {
+  /* Keep for backwards compatibility but not used */
+  0% {
+    opacity: 1;
+    transform: translateY(-20px) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(50px) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(120px) rotate(360deg);
+  }
+}
+
+/* Enhanced Grid Borders with Fading Effects */
 /* Row 1: Cards 1, 2, 3 */
-.feature-card-1,
-.feature-card-2 {
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+.feature-card-1::after,
+.feature-card-2::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 0;
+  bottom: 20%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
 }
 
-.feature-card-1,
-.feature-card-2,
-.feature-card-3 {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.feature-card-1::before,
+.feature-card-2::before,
+.feature-card-3::before {
+  content: '';
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
 }
 
 /* Row 2: Cards 4, 5, 6 */
-.feature-card-4,
-.feature-card-5 {
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+.feature-card-4::after,
+.feature-card-5::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 0;
+  bottom: 20%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
 }
 
-.feature-card-4,
-.feature-card-5,
-.feature-card-6 {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.feature-card-4::before,
+.feature-card-5::before,
+.feature-card-6::before {
+  content: '';
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
 }
 
 /* Row 3: Cards 7, 8, 9 */
-.feature-card-7,
-.feature-card-8 {
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+.feature-card-7::after,
+.feature-card-8::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 0;
+  bottom: 20%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
 }
-
-/* No bottom border on row 3, no right border on card 9 */
 
 /* Hover Effects */
 .feature-card:hover {
   background: rgba(37, 99, 235, 0.05);
-  border-color: rgba(37, 99, 235, 0.3) !important;
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
 }
 
+.feature-card:hover::after {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(37, 99, 235, 0.4) 20%,
+    rgba(37, 99, 235, 0.4) 80%,
+    transparent 100%
+  ) !important;
+}
+
+.feature-card:hover::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(37, 99, 235, 0.4) 20%,
+    rgba(37, 99, 235, 0.4) 80%,
+    transparent 100%
+  ) !important;
+}
+
+/* Enhanced Icon Hover Animations */
 .feature-card:hover .feature-icon svg {
-  transform: scale(1.05);
   color: #3b82f6;
+}
+
+/* Specific icon animations for each feature */
+.feature-card-1:hover .feature-icon svg {
+  animation: bounceRotate 0.6s ease-in-out;
+  color: #ffd700 !important;
+}
+
+.feature-card-2:hover .feature-icon svg {
+  animation: spinPulse 0.8s ease-in-out;
+  color: #4ecdc4 !important;
+}
+
+.feature-card-3:hover .feature-icon svg {
+  animation: shake 0.5s ease-in-out;
+  color: #f39c12 !important;
+}
+
+.feature-card-4:hover .feature-icon svg {
+  animation: wave 0.7s ease-in-out;
+  color: #e74c3c !important;
+}
+
+.feature-card-5:hover .feature-icon svg {
+  animation: bounce 0.6s ease-in-out;
+  color: #9b59b6 !important;
+}
+
+.feature-card-6:hover .feature-icon svg {
+  animation: heartbeat 0.8s ease-in-out;
+  color: #e91e63 !important;
+}
+
+.feature-card-7:hover .feature-icon svg {
+  animation: speedometer 0.5s ease-in-out;
+  color: #ff5722 !important;
+}
+
+.feature-card-8:hover .feature-icon svg {
+  animation: flash 0.4s ease-in-out;
+  color: #2196f3 !important;
+}
+
+.feature-card-9:hover .feature-icon svg {
+  animation: glow 0.8s ease-in-out;
+  color: #e91e63 !important;
+}
+
+/* Icon Animation Keyframes */
+@keyframes bounceRotate {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.2) rotate(5deg); }
+  50% { transform: scale(1.3) rotate(-5deg); }
+  75% { transform: scale(1.2) rotate(3deg); }
+}
+
+@keyframes spinPulse {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.3) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px) scale(1.1); }
+  20%, 40%, 60%, 80% { transform: translateX(3px) scale(1.1); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(5deg) scale(1.1); }
+  50% { transform: rotate(-5deg) scale(1.2); }
+  75% { transform: rotate(3deg) scale(1.1); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-5px) scale(1.1); }
+  50% { transform: translateY(-10px) scale(1.2); }
+  75% { transform: translateY(-5px) scale(1.1); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1.3); }
+  75% { transform: scale(1.1); }
+}
+
+@keyframes speedometer {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  75% { transform: rotate(270deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.3); filter: brightness(1.5); }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    transform: scale(1); 
+    filter: drop-shadow(0 0 5px currentColor);
+  }
+  50% { 
+    transform: scale(1.2); 
+    filter: drop-shadow(0 0 15px currentColor) brightness(1.3);
+  }
 }
 
 /* Feature Icon */
@@ -194,28 +474,55 @@
     grid-template-rows: auto;
   }
   
-  /* Reset borders for tablet */
-  .feature-card {
-    border: none !important;
+  /* Reset all pseudo-elements for tablet */
+  .feature-card::before,
+  .feature-card::after {
+    display: none;
   }
   
-  /* Tablet borders - 2 columns */
-  .feature-card-1,
-  .feature-card-3,
-  .feature-card-5,
-  .feature-card-7 {
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  /* Tablet borders - 2 columns with fading */
+  .feature-card-1::after,
+  .feature-card-3::after,
+  .feature-card-5::after,
+  .feature-card-7::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: 0;
+    bottom: 15%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(255, 255, 255, 0.12) 75%,
+      transparent 100%
+    );
   }
   
-  .feature-card-1,
-  .feature-card-2,
-  .feature-card-3,
-  .feature-card-4,
-  .feature-card-5,
-  .feature-card-6,
-  .feature-card-7,
-  .feature-card-8 {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  .feature-card-1::before,
+  .feature-card-2::before,
+  .feature-card-3::before,
+  .feature-card-4::before,
+  .feature-card-5::before,
+  .feature-card-6::before,
+  .feature-card-7::before,
+  .feature-card-8::before {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(255, 255, 255, 0.12) 75%,
+      transparent 100%
+    );
   }
   
   .feature-card {
@@ -249,16 +556,44 @@
     grid-template-rows: auto;
   }
   
-  /* Reset all borders for mobile */
-  .feature-card {
-    border: none !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding: 2rem 1rem;
+  /* Reset all pseudo-elements for mobile */
+  .feature-card::before,
+  .feature-card::after {
+    display: none;
   }
   
-  /* Remove border from last card */
-  .feature-card-9 {
-    border-bottom: none !important;
+  /* Mobile borders - single column with fading bottom borders */
+  .feature-card-1::before,
+  .feature-card-2::before,
+  .feature-card-3::before,
+  .feature-card-4::before,
+  .feature-card-5::before,
+  .feature-card-6::before,
+  .feature-card-7::before,
+  .feature-card-8::before {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 30%,
+      rgba(255, 255, 255, 0.1) 70%,
+      transparent 100%
+    );
+  }
+  
+  /* No border on last card */
+  .feature-card-9::before {
+    display: none;
+  }
+  
+  .feature-card {
+    padding: 2rem 1rem;
   }
   
   .feature-icon svg {
@@ -289,6 +624,26 @@
   
   .feature-icon svg {
     font-size: 2rem !important;
+  }
+  
+  /* Enhanced mobile borders with shorter fade */
+  .feature-card-1::before,
+  .feature-card-2::before,
+  .feature-card-3::before,
+  .feature-card-4::before,
+  .feature-card-5::before,
+  .feature-card-6::before,
+  .feature-card-7::before,
+  .feature-card-8::before {
+    left: 5%;
+    right: 5%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0.08) 60%,
+      transparent 100%
+    );
   }
 }
   
