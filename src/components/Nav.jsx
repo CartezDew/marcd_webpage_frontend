@@ -21,7 +21,8 @@ import {
   Chat, 
   Assessment,
   Menu,
-  People
+  People,
+  Apps
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import '../styles/nav.css';
@@ -55,7 +56,7 @@ useEffect(() => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: <Map /> },
-    { path: '/truck-stops', label: 'Truck Stops', icon: <LocalShipping /> },
+    { path: '/features', label: 'Features', icon: <Apps /> },
     { path: '/our-story', label: 'Our Story', icon: <People /> },
     { path: '/survey', label: 'Survey', icon: <Assessment /> },
     { path: '/contactus', label: 'Contact Us', icon: <Chat /> }

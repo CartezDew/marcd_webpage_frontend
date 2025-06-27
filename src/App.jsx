@@ -13,6 +13,7 @@ import './styles/components.css';
 import OurStory from './pages/OurStory';
 import Leadership_Cartez from './pages/Leadership_Cartez';
 import Leadership_Beth from './pages/Leadership_Beth';
+import Features from './pages/Features';
 
 // Create a custom theme
 const theme = createTheme({
@@ -116,6 +117,7 @@ function App() {
             <Route path="/our-story" element={<OurStory />} />
             <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
             <Route path="/leadership/beth" element={<Leadership_Beth />} />
+            <Route path="/features" element={<Features />} />
           </Routes>
         </main>
       </ThemeProvider>
