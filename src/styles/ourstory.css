@@ -46,6 +46,21 @@
   flex: 1;
   position: relative;
   max-width: 600px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  /* Soft edges using mask-image (modern approach) */
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .hero-image {
@@ -55,6 +70,29 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   object-fit: cover;
   max-height: 400px;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+
+  /* Remove box shadow & border-radius for better blend */
+  border-radius: 0;
+  box-shadow: none;
+
+  /* Apply soft fading edge */
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, black 20%, black 80%, transparent 100%);
+
 }
 
 /* Mission & Vision Section */
@@ -230,15 +268,34 @@
   flex: 1;
   position: relative;
   max-width: 300px;
+  /* Remove box shadow & border-radius for better blend */
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+
+  /* Remove box shadow & border-radius for better blend */
+  border-radius: 0;
+  box-shadow: none;
+
+  /* Apply soft fading edge */
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, black 20%, black 80%, transparent 100%);
 }
 
 .story-image {
   width: 100%;
   height: auto;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
   object-fit: cover;
   max-height: 400px;
+
 }
 
 .story-hero-text {
