@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Container, Box, CircularProgress, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
 import '../styles/survey.css';
 
 function Survey() {
   const widgetRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [glow, setGlow] = useState(true);
-
 
   useEffect(() => {
     if (!document.getElementById('smcx-sdk')) {
@@ -32,34 +29,19 @@ function Survey() {
     <>
       {/* ✅ Intro Section ABOVE the widget */}
       <Box className="survey-intro-container">
-        <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            onAnimationComplete={() => setGlow(false)}
-            >
-            <Typography
-                variant="h6"
-                align="center"
-                className= "survey-intro-heading"
-                style={{ fontWeight: 'bold' }}
-            >
-                We’d love your feedback
-            </Typography>
-        </motion.div>
-
-
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+        <Typography
+          variant="h6"
+          align="center"
+          className="survey-intro-heading"
+          style={{ fontWeight: 'bold' }}
         >
-            <Typography variant="body1" align="center" className="survey-intro-text">
-            This short survey takes approximately 5 minutes to complete. Your insights are incredibly valuable and will directly inform how we improve Marc’d to better serve you. Thank you for your time and input.
-            </Typography>
-        </motion.div>
-    </Box>
+          We'd love your feedback
+        </Typography>
 
+        <Typography variant="body1" align="center" className="survey-intro-text">
+          This short survey takes approximately 5 minutes to complete. Your insights are incredibly valuable and will directly inform how we improve Marc'd to better serve you. Thank you for your time and input.
+        </Typography>
+      </Box>
 
       {/* ✅ Widget + Loader Container */}
       <Container maxWidth="md" className="survey-embed-container">

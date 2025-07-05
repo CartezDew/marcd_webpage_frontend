@@ -108,16 +108,17 @@
     overflow: hidden;
   }
   
-  .confetti-particle {
+    .confetti-particle {
     position: absolute;
     width: 8px;
     height: 8px;
-    top: 1.5rem; /* Start from icon position */
+    top: 4rem; /* Position at the top of the trophy icon (padding top + icon height/2) */
+    left: 4rem; /* Position at the trophy icon's horizontal center (padding left + icon center) */
     border-radius: 2px;
     opacity: 1;
     animation: confettiExplode 2s ease-out forwards;
   }
-  
+
   @keyframes confettiExplode {
     0% {
       opacity: 1;
@@ -144,23 +145,23 @@
       transform: translateY(80px) translateX(var(--random-x, 0px)) rotate(360deg) scale(0.3);
     }
   }
-  
-  /* Generate random X translations for confetti spread */
-  .confetti-particle:nth-child(1) { --random-x: -40px; }
-  .confetti-particle:nth-child(2) { --random-x: -30px; }
-  .confetti-particle:nth-child(3) { --random-x: -20px; }
-  .confetti-particle:nth-child(4) { --random-x: -10px; }
-  .confetti-particle:nth-child(5) { --random-x: 0px; }
-  .confetti-particle:nth-child(6) { --random-x: 10px; }
-  .confetti-particle:nth-child(7) { --random-x: 20px; }
-  .confetti-particle:nth-child(8) { --random-x: 30px; }
-  .confetti-particle:nth-child(9) { --random-x: 40px; }
-  .confetti-particle:nth-child(10) { --random-x: -35px; }
+
+  /* Generate random X translations for confetti spread from trophy position */
+  .confetti-particle:nth-child(1) { --random-x: -30px; }
+  .confetti-particle:nth-child(2) { --random-x: -20px; }
+  .confetti-particle:nth-child(3) { --random-x: -10px; }
+  .confetti-particle:nth-child(4) { --random-x: 0px; }
+  .confetti-particle:nth-child(5) { --random-x: 10px; }
+  .confetti-particle:nth-child(6) { --random-x: 20px; }
+  .confetti-particle:nth-child(7) { --random-x: 30px; }
+  .confetti-particle:nth-child(8) { --random-x: 40px; }
+  .confetti-particle:nth-child(9) { --random-x: 50px; }
+  .confetti-particle:nth-child(10) { --random-x: -25px; }
   .confetti-particle:nth-child(11) { --random-x: -15px; }
   .confetti-particle:nth-child(12) { --random-x: 15px; }
-  .confetti-particle:nth-child(13) { --random-x: 35px; }
-  .confetti-particle:nth-child(14) { --random-x: -25px; }
-  .confetti-particle:nth-child(15) { --random-x: 25px; }
+  .confetti-particle:nth-child(13) { --random-x: 25px; }
+  .confetti-particle:nth-child(14) { --random-x: 35px; }
+  .confetti-particle:nth-child(15) { --random-x: 45px; }
   
   /* Remove old confetti styles */
   .confetti {
@@ -528,6 +529,12 @@
     .feature-card {
       padding: 2rem;
     }
+
+    /* Responsive confetti positioning for tablet */
+    .confetti-particle {
+      top: 3.5rem; /* Adjust for smaller padding + icon position */
+      left: 3.5rem; /* Adjust for smaller padding */
+    }
   }
   
   @media (max-width: 768px) {
@@ -607,6 +614,12 @@
     .feature-description {
       font-size: 0.95rem !important;
     }
+
+    /* Responsive confetti positioning for mobile */
+    .confetti-particle {
+      top: 3.5rem; /* Adjust for mobile padding + icon position */
+      left: 2.5rem; /* Adjust for mobile padding */
+    }
   }
   
   @media (max-width: 480px) {
@@ -616,6 +629,12 @@
     
     .feature-card {
       padding: 1.5rem 0.5rem;
+    }
+
+    /* Responsive confetti positioning for small mobile */
+    .confetti-particle {
+      top: 3rem; /* Adjust for very small padding + icon position */
+      left: 2rem; /* Adjust for very small padding */
     }
     
     .feature-icon {
@@ -867,7 +886,7 @@
     max-width: 65%;
     width: 65%;
     height: auto;
-    border-radius: 3rem; 
+    border-radius: 2rem; 
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
@@ -876,11 +895,11 @@
   /* Tablet-specific border radius */
   @media (max-width: 1024px) and (min-width: 769px) {
     .alerts-video {
-      border-radius: 2.5rem;
+      border-radius: 2.2rem;
     }
     
     .alerts-video.enlarged {
-      border-radius: 2.5rem;
+      border-radius: 2.2rem;
     }
   }
   
@@ -906,13 +925,21 @@
     margin-top: 0.5rem !important;
   }
   
+  /* Hide video instructions when videos are enlarged */
+  .alerts-video.enlarged + .video-instruction,
+  .spotter-video.enlarged + .video-instruction,
+  .statistics-video.enlarged + .video-instruction,
+  .feature-request-video.enlarged + .video-instruction {
+    display: none !important;
+  }
+  
   /* Responsive Alerts Video */
   @media (max-width: 768px) {
     .alerts-video {
       max-width: 60%;
       width: 60%;
       transition: max-width 0.3s ease, transform 0.3s ease;
-      border-radius: 2.8rem;
+      border-radius: 2rem;
       object-fit: cover;
       object-position: center;
     }
@@ -922,7 +949,7 @@
       transform: scale(1.1);
       z-index: 10;
       position: relative;
-      border-radius: 4.2rem;
+      border-radius: 3rem;
     }
     
     .video-instruction {
@@ -1011,7 +1038,7 @@
       transform: scale(1.1);
       z-index: 10;
       position: relative;
-      border-radius: 4.2rem;
+      border-radius: 2.8rem;
     }
   }
   
@@ -1083,7 +1110,7 @@
       max-width: 70%;
       width: 70%;
       transition: max-width 0.3s ease, transform 0.3s ease;
-      border-radius: 2.3rem;
+      border-radius: 2.8rem;
       object-fit: cover;
       object-position: center;
     }
@@ -1093,7 +1120,7 @@
       transform: scale(1.1);
       z-index: 10;
       position: relative;
-      border-radius: 4.2rem;
+      border-radius: 2.8rem;
     }
   }
   
@@ -1783,5 +1810,202 @@
     .favorite-heart {
       width: 10px;
       height: 10px;
+    }
+  }
+
+  /* Feature Request Video Styling - Identical to other videos */
+  .feature-request-video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .feature-request-video {
+    max-width: 75%;
+    width: 75%;
+    height: auto;
+    border-radius: 1rem; 
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  /* Tablet-specific border radius for feature request video */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .feature-request-video {
+      border-radius: 1.5rem !important;
+    }
+    
+    .feature-request-video.enlarged {
+      border-radius: 2.5rem;
+    }
+  }
+
+  /* Only apply hover effects on non-touch devices */
+  @media (hover: hover) and (pointer: fine) {
+    .feature-request-video:hover {
+      transform: scale(1.05);
+      box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+    }
+  }
+
+  .feature-request-video.enlarged {
+    transform: scale(1.2);
+    box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
+    z-index: 10;
+    position: relative;
+  }
+
+  /* Responsive Feature Request Video */
+  @media (max-width: 768px) {
+    .feature-request-video {
+      max-width: 70%;
+      width: 70%;
+      transition: max-width 0.3s ease, transform 0.3s ease;
+      border-radius: 1rem;
+      object-fit: cover;
+      object-position: center;
+    }
+    
+    .feature-request-video.enlarged {
+      max-width: 90%;
+      transform: scale(1.1);
+      z-index: 10;
+      position: relative;
+      border-radius: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .feature-request-video {
+      max-width: 70%;
+      width: 70%;
+      border-radius: 1cqb;
+      object-fit: cover;
+      object-position: center;
+    }
+    
+    .feature-request-video.enlarged {
+      max-width: 95%;
+      transform: scale(1.05);
+      z-index: 10;
+      position: relative;
+      border-radius: 1rem;
+    }
+  }
+
+  /* Feature Request Button Styling */
+  .feature-request-button {
+    background: linear-gradient(135deg, #8b0000, #a50000, #8b0000) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    padding: 14px 28px !important;
+    border-radius: 12px !important;
+    text-transform: none !important;
+    box-shadow: 0 4px 14px rgba(139, 0, 0, 0.3) !important;
+    border: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    transform: translateY(0) !important;
+    background-size: 200% 200% !important;
+    animation: gradientShift 3s ease infinite !important;
+  }
+
+  /* Hover Effects */
+  .feature-request-button:hover {
+    background: linear-gradient(135deg, #700000, #8b0000, #700000) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(139, 0, 0, 0.5) !important;
+    animation: gradientShift 1.5s ease infinite !important;
+  }
+
+  /* Click/Active Effects */
+  .feature-request-button:active {
+    transform: translateY(0) scale(0.98) !important;
+    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.4) !important;
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: linear-gradient(135deg, #600000, #700000, #600000) !important;
+  }
+
+  /* Gradient Animation */
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Ripple Effect Animation */
+  .feature-request-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .feature-request-button:active::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  /* Focus Effects for Accessibility */
+  .feature-request-button:focus {
+    outline: none !important;
+    box-shadow: 0 4px 14px rgba(139, 0, 0, 0.3), 0 0 0 3px rgba(139, 0, 0, 0.2) !important;
+  }
+
+  /* Loading Animation (Optional) */
+  .feature-request-button.loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .feature-request-button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Responsive Button Styling */
+  @media (max-width: 768px) {
+    .feature-request-button {
+      padding: 12px 24px !important;
+      font-size: 0.9rem !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .feature-request-button {
+      padding: 10px 20px !important;
+      font-size: 0.85rem !important;
+      border-radius: 10px !important;
     }
   }

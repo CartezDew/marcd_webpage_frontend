@@ -34,6 +34,14 @@
   color: #be0303d1;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.about-hero-headline.animate {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .about-hero-description {
@@ -62,23 +70,11 @@
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
-}
-
-.hero-image {
-  width: 100%;
-  height: auto;
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   object-fit: cover;
   max-height: 400px;
-}
-
-.hero-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
-
+  
   /* Remove box shadow & border-radius for better blend */
   border-radius: 0;
   box-shadow: none;
@@ -93,7 +89,17 @@
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to left, transparent 0%, black 20%, black 80%, transparent 100%);
+  
+  /* Animation for moving from right */
+  opacity: 0;
+  transform: translateX(100px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transition-delay: 0.3s;
+}
 
+.hero-image.animate {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* Mission & Vision Section */
@@ -300,10 +306,17 @@
 .story-image {
   width: 100%;
   height: auto;
-
   object-fit: cover;
   max-height: 400px;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transition-delay: 0.4s;
+}
 
+.story-image.animate {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .story-hero-text {

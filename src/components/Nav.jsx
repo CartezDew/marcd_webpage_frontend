@@ -36,19 +36,18 @@ function Nav() {
 
   const [scrolled, setScrolled] = useState(false);
 
-useEffect(() => {
-  const handleScroll = () => {
-    if (window.scrollY > 10) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
 
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
-
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -67,9 +66,9 @@ useEffect(() => {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Box sx={{ my: 2, display: 'flex', justifyContent: 'center' }}>
-        <img src={marcDLogo} alt="Marc'd Logo" style={{ height: '80px' }} />
+    <Box onClick={handleDrawerToggle} className="nav-drawer-content">
+      <Box className="nav-drawer-logo-container">
+        <img src={marcDLogo} alt="Marc'd Logo" className="nav-drawer-logo" />
       </Box>
       <List>
         {navItems.map((item) => (
@@ -94,72 +93,49 @@ useEffect(() => {
   return (
     <>
       <AppBar 
-          position="sticky"
-          elevation={0}
-          className={`nav-appbar ${scrolled ? 'nav-shrink' : ''}`}
-          sx={{
-            backdropFilter: 'blur(10px)',
-            backgroundColor: 'rgba(255, 255, 255, 0.75)',
-            borderBottom: '1px solid #ddd'
-          }}
-        >
-          <Toolbar sx={{ px: 3, py: 1 }}>
-            <Box
-              component={Link}
-              to="/"
-              sx={{
-                flexGrow: 1,
-                display: 'flex',
-                alignItems: 'center',
-                textDecoration: 'none'
-              }}
+        position="sticky"
+        elevation={0}
+        className={`nav-appbar ${scrolled ? 'nav-shrink' : ''}`}
+      >
+        <Toolbar className="nav-toolbar">
+          <Box
+            component={Link}
+            to="/"
+            className="nav-logo-container"
+          >
+            <img 
+              src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
+              alt="Marc'd Logo" 
+              className="nav-logo"
+            />
+          </Box>
+
+          {isMobile ? (
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className="nav-mobile-toggle"
             >
-              <img 
-                src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
-                alt="Marc'd Logo" 
-                style={{ height: '95px', padding: '5px' }}
-              />
+              <Menu />
+            </IconButton>
+          ) : (
+            <Box className="nav-buttons-container">
+              {navItems.map((item) => (
+                <Button
+                  key={item.path}
+                  component={Link}
+                  to={item.path}
+                  startIcon={item.icon}
+                  className={`nav-button ${isActive(item.path) ? 'active' : ''}`}
+                >
+                  {item.label}
+                </Button>
+              ))}
             </Box>
-
-            {isMobile ? (
-              <IconButton
-                color="inherit"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ color: '#333' }}
-              >
-                <Menu />
-              </IconButton>
-            ) : (
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.path}
-                    component={Link}
-                    to={item.path}
-                    startIcon={item.icon}
-                    sx={{
-                      color: '#333',
-                      fontWeight: 500,
-                      borderRadius: '12px',
-                      px: 2.5,
-                      py: 1,
-                      textTransform: 'none',
-                      backgroundColor: isActive(item.path) ? 'rgba(0, 0, 0, 0.05)' : 'transparent',
-                      boxShadow: isActive(item.path) ? 'inset 0 -3px 0 0 #D32F2F' : 'none',
-                      '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.08)'
-                      }
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-              </Box>
-            )}
-          </Toolbar>
-        </AppBar>
-
+          )}
+        </Toolbar>
+      </AppBar>
 
       <Drawer
         variant="temporary"
@@ -168,13 +144,7 @@ useEffect(() => {
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
-            width: 240,
-          },
-        }}
+        className="nav-drawer-mui-container"
         PaperProps={{
           className: 'nav-drawer'
         }}

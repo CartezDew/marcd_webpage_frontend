@@ -1,92 +1,214 @@
-/* Navigation Styles */
+
+
+/* Base AppBar styling with blur effect and transparency */
 .nav-appbar {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(8px);
-  height: 60px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: height 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgb(2255, 255, 255, 0.95) !important; /* Semi-transparent white background */
+  backdrop-filter: blur(10px) !important; /* Blur effect for modern glass look */
+  border-bottom: 1px solid #ddd !important; /* Subtle bottom border */
+  height: 60px; /* Default height */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: height 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
   border-radius: 0 !important; /* Remove any rounded edges */
 }
 
 /* Shrinks the navbar height when user scrolls */
 .nav-appbar.nav-shrink {
-  height: 48px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  height: 48px; /* Reduced height on scroll */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Enhanced shadow when scrolled */
 }
 
-/* Ensure MUI Toolbar matches dynamic height */
-.MuiToolbar-root {
-  min-height: 60px !important;
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-  transition: min-height 0.3s ease;
+
+/* Main toolbar container with responsive padding */
+.nav-toolbar {
+  padding-left: 24px !important; /* Left padding */
+  padding-right: 24px !important; /* Right padding */
+  padding-top: 8px !important; /* Top padding */
+  padding-bottom: 8px !important; /* Bottom padding */
+  min-height: 60px !important; /* Match AppBar height */
+  transition: min-height 0.3s ease; /* Smooth height transition */
 }
 
-.nav-appbar.nav-shrink .MuiToolbar-root {
-  min-height: 48px !important;
+/* Toolbar height adjustment when navbar shrinks */
+.nav-appbar.nav-shrink .nav-toolbar {
+  min-height: 48px !important; /* Match shrunk AppBar height */
 }
 
+/* ===================================
+   LOGO CONTAINER
+   ================================== */
+
+/* Logo container with flex properties */
+.nav-logo-container {
+  flex-grow: 1; /* Takes up remaining space */
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important; /* Remove link underline */
+}
+
+/* Logo image styling */
+.nav-logo {
+  height: 95px; /* Fixed logo height */
+  padding: 5px; /* Small padding around logo */
+}
+
+/* Mobile drawer logo styling */
+.nav-drawer-logo {
+  height: 80px; /* Smaller logo for mobile drawer */
+}
+
+/* ===================================
+   DESKTOP NAVIGATION BUTTONS
+   ================================== */
+
+/* Container for desktop navigation buttons */
+.nav-buttons-container {
+  display: flex !important;
+  gap: 16px; /* Space between buttons */
+}
+
+/* Individual navigation button styling */
 .nav-button {
-  color: #333;
-  background-color: transparent;
-  border-radius: 0;
-  padding: 6px 14px;
-  text-transform: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  color: #333 !important; /* Dark text color */
+  font-weight: 500 !important; /* Medium font weight */
+  border-radius: 12px !important; /* Rounded corners */
+  padding-left: 20px !important; /* Left padding */
+  padding-right: 20px !important; /* Right padding */
+  padding-top: 8px !important; /* Top padding */
+  padding-bottom: 8px !important; /* Bottom padding */
+  text-transform: none !important; /* Preserve original text case */
+  background-color: transparent !important; /* Default transparent background */
+  box-shadow: none !important; /* No shadow by default */
+  transition: all 0.3s ease; /* Smooth transitions for all properties */
 }
 
-.nav-button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
+/* Active navigation button styling */
 .nav-button.active {
-  border-bottom: 2px solid #D32F2F;
-  background-color: transparent;
-  box-shadow: none;
+  background-color: transparent !important; /* Light background for active state */
+  box-shadow: inset 0 -3.5px 0 0 #D32F2F !important; /* Red bottom border indicator */
 }
 
-.nav-drawer {
-  background-color: #f5f5f5;
-  color: #333;
-  width: 240px;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  border-right: 1px solid #ddd;
-  border-radius: 0 !important;
+/* Navigation button hover effect */
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important; /* Darker background on hover */
 }
 
-.nav-drawer-item {
-  text-align: center;
-}
+/* ===================================
+   MOBILE MENU TOGGLE BUTTON
+   ================================== */
 
-.nav-drawer-item.Mui-selected {
-  background-color: #D32F2F;
-  color: white;
-}
-
-.nav-drawer-item.Mui-selected:hover {
-  background-color: #B71C1C;
-}
-
-.nav-drawer-icon {
-  color: inherit;
-}
-
+/* Mobile hamburger menu button */
 .nav-mobile-toggle {
-  color: #333;
+  color: #333 !important; /* Dark icon color */
 }
 
-/* Responsive Design */
-@media (max-width: 960px) {
+/* ===================================
+   MOBILE DRAWER STYLES
+   ================================== */
+
+/* Mobile drawer container */
+.nav-drawer {
+  background-color: #f5f5f5 !important; /* Light gray background */
+  color: #333 !important; /* Dark text color */
+  width: 240px !important; /* Fixed drawer width */
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important; /* Right shadow */
+  border-right: 1px solid #ddd !important; /* Right border */
+  border-radius: 0 !important; /* No rounded corners */
+  box-sizing: border-box !important; /* Include padding in width calculation */
+}
+
+/* Mobile drawer content container */
+.nav-drawer-content {
+  text-align: center !important; /* Center-align drawer content */
+}
+
+/* Mobile drawer logo container */
+.nav-drawer-logo-container {
+  margin-top: 16px !important; /* Top margin */
+  margin-bottom: 16px !important; /* Bottom margin */
+  display: flex !important;
+  justify-content: center !important; /* Center the logo */
+}
+
+/* Individual drawer menu item */
+.nav-drawer-item {
+  text-align: center !important; /* Center-align text */
+}
+
+/* Selected drawer item styling */
+.nav-drawer-item.Mui-selected {
+  background-color: #be0303d1 !important; /* Red background for selected item */
+  color: white !important; /* White text for selected item */
+}
+
+/* Selected drawer item hover effect */
+.nav-drawer-item.Mui-selected:hover {
+  background-color: #B71C1C !important; /* Darker red on hover */
+}
+
+/* Drawer item icon styling */
+.nav-drawer-icon {
+  color: inherit !important; /* Inherit color from parent */
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   ================================== */
+
+/* Hide drawer on desktop screens */
+@media (min-width: 961px) {
   .nav-drawer {
-    display: block;
+    display: none !important;
   }
 }
 
-@media (min-width: 961px) {
+/* Show drawer only on mobile screens */
+@media (max-width: 960px) {
   .nav-drawer {
-    display: none;
+    display: block !important;
+  }
+  
+  /* Adjust logo size for smaller screens */
+  .nav-logo {
+    height: 80px; /* Smaller logo on mobile */
+  }
+}
+
+/* ===================================
+   MATERIAL-UI OVERRIDES
+   ================================== */
+
+/* Override Material-UI Toolbar default styles */
+.MuiToolbar-root {
+  min-height: 60px !important; /* Match AppBar height */
+  padding-left: 16px !important; /* Default left padding */
+  padding-right: 16px !important; /* Default right padding */
+  transition: min-height 0.3s ease; /* Smooth height transition */
+}
+
+/* Toolbar height adjustment when navbar shrinks */
+.nav-appbar.nav-shrink .MuiToolbar-root {
+  min-height: 48px !important; /* Match shrunk AppBar height */
+}
+
+/* Material-UI Drawer paper styling */
+.MuiDrawer-paper {
+  box-sizing: border-box !important; /* Include padding in width calculation */
+  width: 240px !important; /* Fixed drawer width */
+}
+
+/* Display drawer only on mobile */
+.nav-drawer-container {
+  display: none !important; /* Hidden by default */
+}
+
+@media (max-width: 959px) {
+  .nav-drawer-container {
+    display: block !important; /* Show on mobile */
+  }
+}
+
+@media (min-width: 960px) {
+  .nav-drawer-container {
+    display: none !important; /* Hide on desktop */
   }
 }

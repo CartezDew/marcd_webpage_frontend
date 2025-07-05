@@ -13,9 +13,13 @@ import linkedinIcon from '../assets/linkedin_icon.png';
 
 function OurStory() {
   const navigate = useNavigate();
+  const aboutRef = useRef(null);
   const storyRef = useRef(null);
+  const storyImageRef = useRef(null);
   const leadershipRef = useRef(null);
+  const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isStoryVisible, setIsStoryVisible] = useState(false);
+  const [isStoryImageVisible, setIsStoryImageVisible] = useState(false);
   const [isLeadershipVisible, setIsLeadershipVisible] = useState(false);
 
   const leaders = [
@@ -51,12 +55,36 @@ function OurStory() {
       rootMargin: '0px 0px -100px 0px' // Trigger slightly before the section is fully visible
     };
 
+    // About Us section observer
+    const aboutObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsAboutVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
     // Story section observer
     const storyObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsStoryVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
+    // Story image observer
+    const storyImageObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsStoryImageVisible(true);
           }
         });
       },
@@ -75,17 +103,29 @@ function OurStory() {
       observerOptions
     );
 
-    // Observe both sections
+    // Observe all sections
+    if (aboutRef.current) {
+      aboutObserver.observe(aboutRef.current);
+    }
     if (storyRef.current) {
       storyObserver.observe(storyRef.current);
+    }
+    if (storyImageRef.current) {
+      storyImageObserver.observe(storyImageRef.current);
     }
     if (leadershipRef.current) {
       leadershipObserver.observe(leadershipRef.current);
     }
 
     return () => {
+      if (aboutRef.current) {
+        aboutObserver.unobserve(aboutRef.current);
+      }
       if (storyRef.current) {
         storyObserver.unobserve(storyRef.current);
+      }
+      if (storyImageRef.current) {
+        storyImageObserver.unobserve(storyImageRef.current);
       }
       if (leadershipRef.current) {
         leadershipObserver.unobserve(leadershipRef.current);
@@ -96,10 +136,13 @@ function OurStory() {
   return (
     <Box className="our-story-container">
       {/* About Us Section */}
-      <Box className="about-us-hero">
+      <Box className="about-us-hero" ref={aboutRef}>
         <Box className="about-hero-content">
           <Box className="about-hero-text">
-            <Typography variant="h2" className="about-hero-headline">
+            <Typography 
+              variant="h2" 
+              className={`about-hero-headline ${isAboutVisible ? 'animate' : ''}`}
+            >
               About Us
             </Typography>
             <Typography className="about-hero-description">
@@ -110,7 +153,7 @@ function OurStory() {
             <img 
               src={truckersImg} 
               alt="Happy truck drivers using Marc'd platform" 
-              className="hero-image"
+              className={`hero-image ${isAboutVisible ? 'animate' : ''}`}
             />
           </Box>
         </Box>
@@ -176,11 +219,11 @@ function OurStory() {
                 Marc'd was created to bridge those gaps. Named in honor of Marcus Dewberry, the platform is a living tribute—one that carries his name, his mission, and the mark he left on the industry. It's not just a tech solution; it's a commitment to making life on the road safer, healthier, and more connected for the drivers who keep America moving.
               </Typography>
             </Box>
-            <Box className="story-hero-image">
+            <Box className="story-hero-image" ref={storyImageRef}>
               <img 
                 src={sisterAndDadImg} 
                 alt="Family legacy in trucking industry" 
-                className="story-image"
+                className={`story-image ${isStoryImageVisible ? 'animate' : ''}`}
               />
             </Box>
           </Box>

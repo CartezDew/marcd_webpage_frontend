@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Typography, Container, Button } from '@mui/material';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { 
   Navigation as NavigationIcon,
@@ -13,6 +13,7 @@ import {
   EmojiEvents as StarIcon,
   AttachMoney as CashIcon,
   KeyboardArrowUp as ArrowUpIcon,
+  Add as AddIcon,
 } from '@mui/icons-material';
 import '../styles/features.css';
 // Import images
@@ -22,6 +23,7 @@ import parkingImage from '../assets/App_Parking.png';
 import alertsVideo from '../assets/Alerts_Demo.mp4';
 import spotterVideo from '../assets/Requesting_Spotter_Demo.mp4';
 import statisticsVideo from '../assets/statistics_demo.mp4';
+import featureRequestVideo from '../assets/Feature_Request_Demo.mp4';
 
 function Features() {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,9 +37,11 @@ function Features() {
   const [isVoiceControlsVisible, setIsVoiceControlsVisible] = useState(false);
   const [isSpeedAlertsVisible, setIsSpeedAlertsVisible] = useState(false);
   const [isFavoritePlacesVisible, setIsFavoritePlacesVisible] = useState(false);
+  const [isFeatureRequestVisible, setIsFeatureRequestVisible] = useState(false);
   const [isVideoEnlarged, setIsVideoEnlarged] = useState(false);
   const [isSpotterVideoEnlarged, setIsSpotterVideoEnlarged] = useState(false);
   const [isStatisticsVideoEnlarged, setIsStatisticsVideoEnlarged] = useState(false);
+  const [isFeatureRequestVideoEnlarged, setIsFeatureRequestVideoEnlarged] = useState(false);
   const rewardsCardRef = useRef(null);
   const rewardsSectionRef = useRef(null);
   const navigationSectionRef = useRef(null);
@@ -47,9 +51,11 @@ function Features() {
   const voiceControlsSectionRef = useRef(null);
   const speedAlertsSectionRef = useRef(null);
   const favoritePlacesSectionRef = useRef(null);
+  const featureRequestSectionRef = useRef(null);
   const alertsVideoRef = useRef(null);
   const spotterVideoRef = useRef(null);
   const statisticsVideoRef = useRef(null);
+  const featureRequestVideoRef = useRef(null);
   const confettiIntervalRef = useRef(null);
 
   useEffect(() => {
@@ -292,6 +298,37 @@ function Features() {
     };
   }, []);
 
+  // Intersection Observer for the feature request section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFeatureRequestVisible(entry.isIntersecting);
+        // Control video playback based on visibility
+        if (featureRequestVideoRef.current) {
+          if (entry.isIntersecting) {
+            featureRequestVideoRef.current.play();
+          } else {
+            featureRequestVideoRef.current.pause();
+          }
+        }
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px'
+      }
+    );
+
+    if (featureRequestSectionRef.current) {
+      observer.observe(featureRequestSectionRef.current);
+    }
+
+    return () => {
+      if (featureRequestSectionRef.current) {
+        observer.unobserve(featureRequestSectionRef.current);
+      }
+    };
+  }, []);
+
   // Confetti animation management
   useEffect(() => {
     if (isRewardsCardVisible) {
@@ -439,6 +476,20 @@ function Features() {
           behavior: 'smooth'
         });
       }
+    } else if (route === '#feature-request') {
+      // Get the feature request section element and its position
+      const element = featureRequestSectionRef.current;
+      if (element) {
+        // Calculate the offset from the top of the page
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        // Add a larger offset to ensure we scroll to the very beginning of the section
+        const offsetPosition = elementPosition - 100; // 100px offset from top to show the start
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
     // Add other route handlers as needed
   };
@@ -456,10 +507,40 @@ function Features() {
     setIsStatisticsVideoEnlarged(!isStatisticsVideoEnlarged);
   };
 
+  const handleFeatureRequestVideoClick = () => {
+    setIsFeatureRequestVideoEnlarged(!isFeatureRequestVideoEnlarged);
+  };
+
   // Check if user is on mobile device
   const isMobile = () => {
     return window.innerWidth <= 768;
   };
+
+  // Handle clicks outside of videos to shrink them
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      // Check if click is outside of any video element
+      const isVideoClick = event.target.closest('.alerts-video, .spotter-video, .statistics-video, .feature-request-video');
+      
+      if (!isVideoClick) {
+        // Reset all video enlargement states
+        setIsVideoEnlarged(false);
+        setIsSpotterVideoEnlarged(false);
+        setIsStatisticsVideoEnlarged(false);
+        setIsFeatureRequestVideoEnlarged(false);
+      }
+    };
+
+    // Add event listener when any video is enlarged
+    if (isVideoEnlarged || isSpotterVideoEnlarged || isStatisticsVideoEnlarged || isFeatureRequestVideoEnlarged) {
+      document.addEventListener('click', handleDocumentClick);
+    }
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [isVideoEnlarged, isSpotterVideoEnlarged, isStatisticsVideoEnlarged, isFeatureRequestVideoEnlarged]);
 
   // Scroll to top function
   const scrollToTop = () => {
@@ -525,6 +606,13 @@ function Features() {
       title: "Favorite Places",
       route: '#favorite-places',
       description: "Save frequently visited spots for quick access."
+    },
+    {
+      id: 9,
+      icon: <AddIcon />,
+      title: "Feature Request",
+      route: '#feature-request',
+      description: "Request a new feature or improvement for the app."
     },    
   ];
 
@@ -639,7 +727,7 @@ function Features() {
                     onMouseEnter={() => !isMobile() && setIsStatisticsVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsStatisticsVideoEnlarged(false)}
                   />
-                  {isMobile() && (
+                  {isMobile() && !isStatisticsVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
                     </Typography>
@@ -793,7 +881,7 @@ function Features() {
                     onMouseEnter={() => !isMobile() && setIsSpotterVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsSpotterVideoEnlarged(false)}
                   />
-                  {isMobile() && (
+                  {isMobile() && !isSpotterVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
                     </Typography>
@@ -880,7 +968,7 @@ function Features() {
                     onMouseEnter={() => !isMobile() && setIsVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsVideoEnlarged(false)}
                   />
-                  {isMobile() && (
+                  {isMobile() && !isVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
                     </Typography>
@@ -925,6 +1013,63 @@ function Features() {
                     <Box className="favorite-heart heart-3"></Box>
                   </Box>
                 </Box>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+
+        {/* Feature Request Feature Detail Section */}
+        <Box 
+          id="feature-request"
+          ref={featureRequestSectionRef}
+          className={`navigation-feature-section ${isFeatureRequestVisible ? 'animate' : ''} ${isFeatureRequestVideoEnlarged ? 'video-enlarged' : ''}`}
+        >
+          <Container maxWidth="lg" className="navigation-content">
+            <Box className="navigation-grid">
+              <Box className="navigation-text-content">
+                <Typography variant="h2" className="navigation-title">
+                  Feature Request
+                </Typography>
+                <Typography className="navigation-description">
+                  Your voice matters! At Marc'd, we believe the best ideas come from the drivers who live on the road every day. 
+                  You're empowered to make suggestions and recommendations for features that would make your trucking experience 
+                  safer, more efficient, and more rewarding. Whether it's a new alert system, improved navigation features, or 
+                  innovative ways to connect with fellow drivers, we want to hear from you.
+                </Typography>
+                <Typography className="navigation-description">
+                  Marc'd is built by truckers, for truckers. Every feature request is carefully reviewed by our development team, 
+                  and the most impactful suggestions become part of our roadmap. Your real-world experience and insights help us 
+                  create solutions that truly matter. Together, we're building the ultimate trucking companion app.
+                </Typography>
+                <Box sx={{ mt: 3 }}>
+                  <Button
+                    variant="contained"
+                    className="feature-request-button"
+                    onClick={() => window.location.href = '/contactus'}
+                  >
+                    Contact Us
+                  </Button>
+                </Box>
+              </Box>
+              <Box className="navigation-image-content">
+                <div className="feature-request-video-container">
+                  <video 
+                    ref={featureRequestVideoRef}
+                    src={featureRequestVideo}
+                    className={`feature-request-video ${isFeatureRequestVideoEnlarged ? 'enlarged' : ''}`}
+                    loop
+                    muted
+                    playsInline
+                    onClick={handleFeatureRequestVideoClick}
+                    onMouseEnter={() => !isMobile() && setIsFeatureRequestVideoEnlarged(true)}
+                    onMouseLeave={() => !isMobile() && setIsFeatureRequestVideoEnlarged(false)}
+                  />
+                  {isMobile() && !isFeatureRequestVideoEnlarged && (
+                    <Typography className="video-instruction">
+                      <em>(Click to enlarge)</em>
+                    </Typography>
+                  )}
+                </div>
               </Box>
             </Box>
           </Container>

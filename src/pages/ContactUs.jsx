@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   Container,
   TextField,
@@ -40,6 +40,8 @@ const contactTypes = [
 function ContactUs() {
 
   const [width, height] = useWindowSize();
+  const headerRef = useRef(null);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -59,6 +61,35 @@ function ContactUs() {
   const isFormValid = useMemo(() => {
     return formData.first_name && formData.last_name && formData.email && formData.message;
   }, [formData]);
+
+  // Intersection Observer for header animation
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const headerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsHeaderVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
+    if (headerRef.current) {
+      headerObserver.observe(headerRef.current);
+    }
+
+    return () => {
+      if (headerRef.current) {
+        headerObserver.unobserve(headerRef.current);
+      }
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -159,12 +190,26 @@ function ContactUs() {
 
   return (
     <Container maxWidth="sm" className="contact-container">
-      <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
-        Contact Us
-      </Typography>
-      <Typography variant="body1" align="center" className="contact-intro-text" gutterBottom sx={{fontSize: ".9rem"}}>
-        Have questions? Our team is here to provide the support and guidance you need.
-      </Typography>
+      <Box ref={headerRef} className="contact-header-section">
+        <Typography 
+          variant="h4" 
+          align="center" 
+          fontWeight="bold" 
+          gutterBottom
+          className={`contact-header-title ${isHeaderVisible ? 'animate' : ''}`}
+        >
+          Contact Us
+        </Typography>
+        <Typography 
+          variant="body1" 
+          align="center" 
+          className={`contact-intro-text ${isHeaderVisible ? 'animate' : ''}`}
+          gutterBottom 
+          sx={{fontSize: ".9rem"}}
+        >
+          Have questions? Our team is here to provide the support and guidance you need.
+        </Typography>
+      </Box>
 
       <form onSubmit={handleSubmit} id="contact-form">
         <Card className="contact-card">
