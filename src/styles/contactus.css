@@ -42,16 +42,20 @@
   @media (max-width: 600px) {
     .bottom-controls {
       flex-direction: column;
-      align-items: stretch;
+      align-items: center;
     }
   
     .submit-button {
-      width: 100%;
+      width: 35% !important;
+      min-width: 150px;
+      max-width: 200px;
       padding: 1rem;
+      margin: 0 auto;
     }
   
     .social-icons {
       justify-content: center;
+      margin-bottom: 1rem;
     }
   }
   
@@ -145,4 +149,26 @@
   .animated-submit:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .action-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .back-button-main {
+    width: 33.33% !important;
+    min-width: 150px;
+    max-width: 200px;
+    padding: 1rem !important;
+    margin: 0 auto !important;
+    display: block !important;
+    text-align: center !important;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }

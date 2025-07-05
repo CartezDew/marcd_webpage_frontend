@@ -146,7 +146,7 @@ function OurStory() {
           <Typography variant="h3" className="hero-headline">
             Empowering the Backbone of America
           </Typography>
-          <Typography className="hero-highlight">
+          <Typography className="hero-highlight" sx={{ fontStyle: 'italic' }}>
             Delivering real tools for real drivers, built from lived experience and lasting respect.
           </Typography>
           <Typography className="hero-subheadline">

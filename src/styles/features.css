@@ -646,4 +646,505 @@
     );
   }
 }
+
+/* Navigation Feature Detail Section */
+.navigation-feature-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, rgba(221, 231, 251, 0.1) 0%, rgba(246, 189, 189, 0.1) 100%);
+  margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.navigation-feature-section.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navigation-content {
+  max-width: 1200px !important;
+  padding: 0 2rem !important;
+}
+
+.navigation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.navigation-text-content {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.8s ease 0.2s;
+}
+
+.navigation-feature-section.animate .navigation-text-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navigation-title {
+  font-size: 3rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  color: #ffffff !important;
+  margin-bottom: 1.5rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+.navigation-description {
+  font-size: 1.125rem !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: #a1a1aa !important;
+  margin-bottom: 2rem !important;
+}
+
+.navigation-image-content {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.8s ease 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation-feature-section.animate .navigation-image-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navigation-image {
+  max-width: 65%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navigation-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+}
+
+/* Responsive Navigation Section */
+@media (max-width: 1024px) {
+  .navigation-feature-section {
+    padding: 3rem 0;
+  }
+
+  .navigation-content {
+    padding: 0 1.5rem !important;
+  }
+
+  .navigation-grid {
+    gap: 2.5rem;
+  }
+
+  .navigation-title {
+    font-size: 2.5rem !important;
+  }
+
+  .navigation-description {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .navigation-feature-section {
+    padding: 2rem 0;
+    margin-top: 2rem;
+  }
+
+  .navigation-content {
+    padding: 0 1rem !important;
+  }
+
+  .navigation-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .navigation-text-content {
+    order: 1;
+    transform: translateY(-20px);
+  }
+
+  .navigation-feature-section.animate .navigation-text-content {
+    transform: translateY(0);
+  }
+
+  .navigation-image-content {
+    order: 2;
+    transform: translateY(20px);
+  }
+
+  .navigation-feature-section.animate .navigation-image-content {
+    transform: translateY(0);
+  }
+
+  .navigation-title {
+    font-size: 2rem !important;
+  }
+
+  .navigation-description {
+    font-size: 0.9rem !important;
+  }
+
+  .navigation-image {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation-feature-section {
+    padding: 1.5rem 0;
+  }
+
+  .navigation-grid {
+    gap: 1rem;
+  }
+
+  .navigation-title {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .navigation-description {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 1rem !important;
+  }
+
+      .navigation-image {
+      max-width: 55%;
+      border-radius: 0.5rem;
+    }
+  }
+
+/* Cash Reward Animation */
+.cash-reward-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  animation: pulseBold 1.5s ease-in-out infinite;
+}
+
+.floating-cash-icon {
+  color: #ffd700 !important;
+  font-size: 1.2rem !important;
+  margin-right: -2px;
+}
+
+.floating-cash-amount {
+  color: #ffd700 !important;
+  font-weight: 700 !important;
+}
+
+@keyframes pulseBold {
+  0%, 100% {
+    font-weight: 400;
+    transform: scale(1);
+  }
+  50% {
+    font-weight: 700;
+    transform: scale(1.05);
+  }
+}
+
+/* Alerts Video Styling */
+.alerts-video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alerts-video {
+  max-width: 65%;
+  width: 65%;
+  height: auto;
+  border-radius: 3rem; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Tablet-specific border radius */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .alerts-video {
+    border-radius: 2.5rem;
+  }
   
+  .alerts-video.enlarged {
+    border-radius: 2.5rem;
+  }
+}
+
+/* Only apply hover effects on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .alerts-video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+  }
+}
+
+.alerts-video.enlarged {
+  transform: scale(1.2);
+  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+.video-instruction {
+  color: #a1a1aa !important;
+  font-size: 0.875rem !important;
+  text-align: center;
+  margin-top: 0.5rem !important;
+}
+
+/* Responsive Alerts Video */
+@media (max-width: 768px) {
+  .alerts-video {
+    max-width: 60%;
+    width: 60%;
+    transition: max-width 0.3s ease, transform 0.3s ease;
+    border-radius: 2.3rem;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .alerts-video.enlarged {
+    max-width: 90%;
+    transform: scale(1.1);
+    z-index: 10;
+    position: relative;
+    border-radius: 4.2rem;
+  }
+  
+  .video-instruction {
+    font-size: 0.8rem !important;
+  }
+}
+
+
+/* Mobile Backdrop for Enlarged Video */
+
+@media (max-width: 480px) {
+  .alerts-video {
+    max-width: 70%;
+    width: 70%;
+    border-radius: 3.5cqb;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .alerts-video.enlarged {
+    max-width: 95%;
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+    border-radius: 2rem;
+  }
+}
+
+/* Spotter Video Styling - Identical to Alerts Video */
+.spotter-video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spotter-video {
+  max-width: 75%;
+  width: 75%;
+  height: auto;
+  border-radius: 3rem; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Tablet-specific border radius for spotter video */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .spotter-video {
+    border-radius: 2.5rem;
+  }
+  
+  .spotter-video.enlarged {
+    border-radius: 2.5rem;
+  }
+}
+
+/* Only apply hover effects on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .spotter-video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+  }
+}
+
+.spotter-video.enlarged {
+  transform: scale(1.2);
+  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+/* Responsive Spotter Video - Identical to Alerts Video */
+@media (max-width: 768px) {
+  .spotter-video {
+    max-width: 70%;
+    width: 70%;
+    transition: max-width 0.3s ease, transform 0.3s ease;
+    border-radius: 2.3rem;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .spotter-video.enlarged {
+    max-width: 90%;
+    transform: scale(1.1);
+    z-index: 10;
+    position: relative;
+    border-radius: 4.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .spotter-video {
+    max-width: 85%;
+    width: 85%;
+    border-radius: 3.5cqb;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .spotter-video.enlarged {
+    max-width: 95%;
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+    border-radius: 2rem;
+  }
+}
+
+/* Scroll to Top Button */
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #be0303d1, #be0303);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3);
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+.scroll-to-top-button::before {
+  content: 'Scroll to Top';
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 0.5rem;
+}
+
+.scroll-to-top-button::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 1rem;
+  width: 0;
+  height: 0;
+  border-left: 0.25rem solid transparent;
+  border-right: 0.25rem solid transparent;
+  border-top: 0.25rem solid rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 0.25rem;
+}
+
+.scroll-to-top-button:hover {
+  background: linear-gradient(135deg, #be0303, #be0303d1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(190, 3, 3, 0.4);
+  animation: none; /* Stop pulsing on hover */
+}
+
+.scroll-to-top-button:hover::before,
+.scroll-to-top-button:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-to-top-button svg {
+  color: rgb(12, 0, 0);
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.scroll-to-top-button:hover svg {
+  transform: translateY(-1px);
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(190, 3, 3, 0.4);
+  }
+}
+
+/* Responsive scroll to top button */
+@media (max-width: 768px) {
+  .scroll-to-top-button {
+    width: 3rem;
+    height: 3rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .scroll-to-top-button svg {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-to-top-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .scroll-to-top-button svg {
+    font-size: 1.2rem;
+  }
+}
