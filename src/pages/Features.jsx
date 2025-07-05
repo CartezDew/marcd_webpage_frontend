@@ -755,54 +755,6 @@ function Features() {
           </Container>
         </Box>
 
-        {/* DOT/Police Alerts Feature Detail Section */}
-        <Box 
-          id="dot-police-alerts"
-          ref={policeAlertsSectionRef}
-          className={`navigation-feature-section ${isPoliceAlertsVisible ? 'animate' : ''} ${isVideoEnlarged ? 'video-enlarged' : ''}`}
-        >
-          <Container maxWidth="lg" className="navigation-content">
-            <Box className="navigation-grid">
-              <Box className="navigation-text-content">
-                <Typography variant="h2" className="navigation-title">
-                  DOT/Police Alerts
-                </Typography>
-                <Typography className="navigation-description">
-                  Stay ahead of the game with real-time DOT and police activity alerts from fellow drivers. Marc'd keeps 
-                  you informed about inspection stations, weigh station activity, and police presence along your route. 
-                  Our community-driven alert system helps you prepare for what's ahead, giving you time to ensure your 
-                  logs are current and your rig is inspection-ready.
-                </Typography>
-                <Typography className="navigation-description">
-                  When you spot DOT officers or police activity, share it with the community and earn Marc'er points. 
-                  Every alert you share helps fellow drivers stay prepared and avoid unexpected delays. Together, we're 
-                  building a network of drivers who look out for each other on the road.
-                </Typography>
-              </Box>
-              <Box className="navigation-image-content">
-                <div className="alerts-video-container">
-                  <video 
-                    ref={alertsVideoRef}
-                    src={alertsVideo}
-                    className={`alerts-video ${isVideoEnlarged ? 'enlarged' : ''}`}
-                    loop
-                    muted
-                    playsInline
-                    onClick={handleVideoClick}
-                    onMouseEnter={() => !isMobile() && setIsVideoEnlarged(true)}
-                    onMouseLeave={() => !isMobile() && setIsVideoEnlarged(false)}
-                  />
-                  {isMobile() && (
-                    <Typography className="video-instruction">
-                      <em>(Click to enlarge)</em>
-                    </Typography>
-                  )}
-                </div>
-              </Box>
-            </Box>
-          </Container>
-        </Box>
-
         {/* Spotter Request Assistance Feature Detail Section */}
         <Box 
           id="spotter-request"
@@ -886,6 +838,54 @@ function Features() {
                     <Box className="speed-wave wave-3"></Box>
                   </Box>
                 </Box>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+
+        {/* DOT/Police Alerts Feature Detail Section */}
+        <Box 
+          id="dot-police-alerts"
+          ref={policeAlertsSectionRef}
+          className={`navigation-feature-section ${isPoliceAlertsVisible ? 'animate' : ''} ${isVideoEnlarged ? 'video-enlarged' : ''}`}
+        >
+          <Container maxWidth="lg" className="navigation-content">
+            <Box className="navigation-grid">
+              <Box className="navigation-text-content">
+                <Typography variant="h2" className="navigation-title">
+                  DOT/Police Alerts
+                </Typography>
+                <Typography className="navigation-description">
+                  Stay ahead of the game with real-time DOT and police activity alerts from fellow drivers. Marc'd keeps 
+                  you informed about inspection stations, weigh station activity, and police presence along your route. 
+                  Our community-driven alert system helps you prepare for what's ahead, giving you time to ensure your 
+                  logs are current and your rig is inspection-ready.
+                </Typography>
+                <Typography className="navigation-description">
+                  When you spot DOT officers or police activity, share it with the community and earn Marc'er points. 
+                  Every alert you share helps fellow drivers stay prepared and avoid unexpected delays. Together, we're 
+                  building a network of drivers who look out for each other on the road.
+                </Typography>
+              </Box>
+              <Box className="navigation-image-content">
+                <div className="alerts-video-container">
+                  <video 
+                    ref={alertsVideoRef}
+                    src={alertsVideo}
+                    className={`alerts-video ${isVideoEnlarged ? 'enlarged' : ''}`}
+                    loop
+                    muted
+                    playsInline
+                    onClick={handleVideoClick}
+                    onMouseEnter={() => !isMobile() && setIsVideoEnlarged(true)}
+                    onMouseLeave={() => !isMobile() && setIsVideoEnlarged(false)}
+                  />
+                  {isMobile() && (
+                    <Typography className="video-instruction">
+                      <em>(Click to enlarge)</em>
+                    </Typography>
+                  )}
+                </div>
               </Box>
             </Box>
           </Container>
