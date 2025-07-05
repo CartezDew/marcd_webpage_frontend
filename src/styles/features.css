@@ -717,7 +717,7 @@
 }
 
 .navigation-image {
-  max-width: 65%;
+  max-width: 70%;
   height: auto;
   border-radius: 1rem;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -912,7 +912,7 @@
     max-width: 60%;
     width: 60%;
     transition: max-width 0.3s ease, transform 0.3s ease;
-    border-radius: 2.3rem;
+    border-radius: 2.8rem;
     object-fit: cover;
     object-position: center;
   }
@@ -937,12 +937,94 @@
   .alerts-video {
     max-width: 70%;
     width: 70%;
-    border-radius: 3.5cqb;
+    border-radius: 4cqb;
     object-fit: cover;
     object-position: center;
   }
   
   .alerts-video.enlarged {
+    max-width: 95%;
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+    border-radius: 2rem;
+  }
+}
+
+/* Statistics Video Styling - Identical to Alerts Video */
+.statistics-video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statistics-video {
+  max-width: 75%;
+  width: 75%;
+  height: auto;
+  border-radius: 3.5rem; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Tablet-specific border radius for statistics video */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .statistics-video {
+    border-radius: 2.5rem;
+  }
+  
+  .statistics-video.enlarged {
+    border-radius: 2.5rem;
+  }
+}
+
+/* Only apply hover effects on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .statistics-video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+  }
+}
+
+.statistics-video.enlarged {
+  transform: scale(1.2);
+  box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+/* Responsive Statistics Video - Identical to Alerts Video */
+@media (max-width: 768px) {
+  .statistics-video {
+    max-width: 60%;
+    width: 60%;
+    transition: max-width 0.3s ease, transform 0.3s ease;
+    border-radius: 2.8rem;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .statistics-video.enlarged {
+    max-width: 90%;
+    transform: scale(1.1);
+    z-index: 10;
+    position: relative;
+    border-radius: 4.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .statistics-video {
+    max-width: 70%;
+    width: 70%;
+    border-radius: 4cqb;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .statistics-video.enlarged {
     max-width: 95%;
     transform: scale(1.05);
     z-index: 10;
@@ -1146,5 +1228,560 @@
   
   .scroll-to-top-button svg {
     font-size: 1.2rem;
+  }
+}
+
+/* Voice Controls Section Styles */
+.voice-controls-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 65%;
+  width: 65%;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.voice-controls-icon {
+  font-size: 120px !important;
+  color: #be0303;
+  z-index: 2;
+  position: relative;
+  animation: voicePulse 2s ease-in-out infinite;
+}
+
+.sound-waves {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+}
+
+.sound-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(190, 3, 3, 0.3);
+  border-radius: 50%;
+  animation: soundWaveExpand 2s ease-in-out infinite;
+}
+
+.sound-wave.wave-1 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 0s;
+}
+
+.sound-wave.wave-2 {
+  width: 180px;
+  height: 180px;
+  animation-delay: 0.5s;
+}
+
+.sound-wave.wave-3 {
+  width: 220px;
+  height: 220px;
+  animation-delay: 1s;
+}
+
+@keyframes voicePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes soundWaveExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments for voice controls */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .voice-controls-icon-container {
+    max-width: 60%;
+    width: 60%;
+    height: 250px;
+    border-radius: 2.5rem;
+  }
+  
+  .voice-controls-icon {
+    font-size: 100px !important;
+  }
+  
+  .sound-waves {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .sound-wave.wave-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .sound-wave.wave-2 {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .sound-wave.wave-3 {
+    width: 170px;
+    height: 170px;
+  }
+}
+
+@media (max-width: 768px) {
+  .voice-controls-icon-container {
+    max-width: 50%;
+    width: 50%;
+    height: 200px;
+    border-radius: 2.3rem;
+  }
+  
+  .voice-controls-icon {
+    font-size: 80px !important;
+  }
+  
+  .sound-waves {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .sound-wave.wave-1 {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .sound-wave.wave-2 {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .sound-wave.wave-3 {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .voice-controls-icon-container {
+    max-width: 55%;
+    width: 55%;
+    height: 180px;
+    border-radius: 3.5cqb;
+  }
+  
+  .voice-controls-icon {
+    font-size: 70px !important;
+  }
+  
+  .sound-waves {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .sound-wave.wave-1 {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .sound-wave.wave-2 {
+    width: 85px;
+    height: 85px;
+  }
+  
+  .sound-wave.wave-3 {
+    width: 105px;
+    height: 105px;
+  }
+}
+
+/* Speed Monitoring Alerts Section Styles */
+.speed-alerts-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 65%;
+  width: 65%;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.speed-alerts-icon {
+  font-size: 120px !important;
+  color: #be0303;
+  z-index: 2;
+  position: relative;
+  animation: trafficLightColors 9s linear infinite;
+}
+
+.speed-waves {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+}
+
+.speed-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(190, 3, 3, 0.3);
+  border-radius: 50%;
+  animation: speedWaveExpand 2s ease-in-out infinite;
+}
+
+.speed-wave.wave-1 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 0s;
+}
+
+.speed-wave.wave-2 {
+  width: 180px;
+  height: 180px;
+  animation-delay: 0.5s;
+}
+
+.speed-wave.wave-3 {
+  width: 220px;
+  height: 220px;
+  animation-delay: 1s;
+}
+
+@keyframes trafficLightColors {
+  0% {
+    color: #be0303;
+    transform: scale(1);
+  }
+  16.5% {
+    color: #d4440a;
+    transform: scale(1.02);
+  }
+  33% {
+    color: #22c55e;
+    transform: scale(1.05);
+  }
+  49.5% {
+    color: #7dd956;
+    transform: scale(1.02);
+  }
+  66% {
+    color: #fbbf24;
+    transform: scale(1);
+  }
+  83% {
+    color: #e8a919;
+    transform: scale(1.02);
+  }
+  100% {
+    color: #be0303;
+    transform: scale(1);
+  }
+}
+
+@keyframes speedWaveExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Favorite Places Section Styles */
+.favorite-places-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 65%;
+  width: 65%;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.favorite-places-icon {
+  font-size: 120px !important;
+  color: #be0303;
+  z-index: 2;
+  position: relative;
+  animation: heartPulse 5s ease-in-out infinite;
+}
+
+.favorite-hearts {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  z-index: 1;
+}
+
+.favorite-heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: rgba(190, 3, 3, 0.4);
+  border-radius: 50%;
+  animation: heartFloat 3s ease-in-out infinite;
+}
+
+.favorite-heart.heart-1 {
+  animation-delay: 0s;
+  transform: translate(-50%, -50%) translateX(-60px) translateY(-40px);
+}
+
+.favorite-heart.heart-2 {
+  animation-delay: 1s;
+  transform: translate(-50%, -50%) translateX(60px) translateY(-20px);
+}
+
+.favorite-heart.heart-3 {
+  animation-delay: 2s;
+  transform: translate(-50%, -50%) translateX(0px) translateY(60px);
+}
+
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes heartFloat {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) translateX(var(--x, 0)) translateY(var(--y, 0)) scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) translateX(var(--x, 0)) translateY(var(--y, 0)) scale(1.2);
+  }
+}
+
+/* Responsive adjustments for speed alerts */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .speed-alerts-icon-container {
+    max-width: 60%;
+    width: 60%;
+    height: 250px;
+    border-radius: 2.5rem;
+  }
+  
+  .speed-alerts-icon {
+    font-size: 100px !important;
+  }
+  
+  .speed-waves {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .speed-wave.wave-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .speed-wave.wave-2 {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .speed-wave.wave-3 {
+    width: 170px;
+    height: 170px;
+  }
+}
+
+@media (max-width: 768px) {
+  .speed-alerts-icon-container {
+    max-width: 50%;
+    width: 50%;
+    height: 200px;
+    border-radius: 2.3rem;
+  }
+  
+  .speed-alerts-icon {
+    font-size: 80px !important;
+  }
+  
+  .speed-waves {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .speed-wave.wave-1 {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .speed-wave.wave-2 {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .speed-wave.wave-3 {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .speed-alerts-icon-container {
+    max-width: 55%;
+    width: 55%;
+    height: 180px;
+    border-radius: 3.5cqb;
+  }
+  
+  .speed-alerts-icon {
+    font-size: 70px !important;
+  }
+  
+  .speed-waves {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .speed-wave.wave-1 {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .speed-wave.wave-2 {
+    width: 85px;
+    height: 85px;
+  }
+  
+  .speed-wave.wave-3 {
+    width: 105px;
+    height: 105px;
+  }
+}
+
+/* Responsive adjustments for favorite places */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .favorite-places-icon-container {
+    max-width: 60%;
+    width: 60%;
+    height: 250px;
+    border-radius: 2.5rem;
+  }
+  
+  .favorite-places-icon {
+    font-size: 100px !important;
+  }
+  
+  .favorite-hearts {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .favorite-heart {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .favorite-places-icon-container {
+    max-width: 50%;
+    width: 50%;
+    height: 200px;
+    border-radius: 2.3rem;
+  }
+  
+  .favorite-places-icon {
+    font-size: 80px !important;
+  }
+  
+  .favorite-hearts {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .favorite-heart {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorite-places-icon-container {
+    max-width: 55%;
+    width: 55%;
+    height: 180px;
+    border-radius: 3.5cqb;
+  }
+  
+  .favorite-places-icon {
+    font-size: 70px !important;
+  }
+  
+  .favorite-hearts {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .favorite-heart {
+    width: 10px;
+    height: 10px;
   }
 }

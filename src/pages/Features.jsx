@@ -21,6 +21,7 @@ import statisticsImage from '../assets/App_Statistics.png';
 import parkingImage from '../assets/App_Parking.png';
 import alertsVideo from '../assets/Alerts_Demo.mp4';
 import spotterVideo from '../assets/Requesting_Spotter_Demo.mp4';
+import statisticsVideo from '../assets/statistics_demo.mp4';
 
 function Features() {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,16 +32,24 @@ function Features() {
   const [isParkingVisible, setIsParkingVisible] = useState(false);
   const [isPoliceAlertsVisible, setIsPoliceAlertsVisible] = useState(false);
   const [isSpotterVisible, setIsSpotterVisible] = useState(false);
+  const [isVoiceControlsVisible, setIsVoiceControlsVisible] = useState(false);
+  const [isSpeedAlertsVisible, setIsSpeedAlertsVisible] = useState(false);
+  const [isFavoritePlacesVisible, setIsFavoritePlacesVisible] = useState(false);
   const [isVideoEnlarged, setIsVideoEnlarged] = useState(false);
   const [isSpotterVideoEnlarged, setIsSpotterVideoEnlarged] = useState(false);
+  const [isStatisticsVideoEnlarged, setIsStatisticsVideoEnlarged] = useState(false);
   const rewardsCardRef = useRef(null);
   const rewardsSectionRef = useRef(null);
   const navigationSectionRef = useRef(null);
   const parkingSectionRef = useRef(null);
   const policeAlertsSectionRef = useRef(null);
   const spotterSectionRef = useRef(null);
+  const voiceControlsSectionRef = useRef(null);
+  const speedAlertsSectionRef = useRef(null);
+  const favoritePlacesSectionRef = useRef(null);
   const alertsVideoRef = useRef(null);
   const spotterVideoRef = useRef(null);
+  const statisticsVideoRef = useRef(null);
   const confettiIntervalRef = useRef(null);
 
   useEffect(() => {
@@ -80,6 +89,14 @@ function Features() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsRewardsSectionVisible(entry.isIntersecting);
+        // Control video playback based on visibility
+        if (statisticsVideoRef.current) {
+          if (entry.isIntersecting) {
+            statisticsVideoRef.current.play();
+          } else {
+            statisticsVideoRef.current.pause();
+          }
+        }
       },
       {
         threshold: 0.3,
@@ -206,6 +223,75 @@ function Features() {
     };
   }, []);
 
+  // Intersection Observer for the voice controls section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVoiceControlsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px'
+      }
+    );
+
+    if (voiceControlsSectionRef.current) {
+      observer.observe(voiceControlsSectionRef.current);
+    }
+
+    return () => {
+      if (voiceControlsSectionRef.current) {
+        observer.unobserve(voiceControlsSectionRef.current);
+      }
+    };
+  }, []);
+
+  // Intersection Observer for the speed alerts section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSpeedAlertsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px'
+      }
+    );
+
+    if (speedAlertsSectionRef.current) {
+      observer.observe(speedAlertsSectionRef.current);
+    }
+
+    return () => {
+      if (speedAlertsSectionRef.current) {
+        observer.unobserve(speedAlertsSectionRef.current);
+      }
+    };
+  }, []);
+
+  // Intersection Observer for the favorite places section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFavoritePlacesVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px'
+      }
+    );
+
+    if (favoritePlacesSectionRef.current) {
+      observer.observe(favoritePlacesSectionRef.current);
+    }
+
+    return () => {
+      if (favoritePlacesSectionRef.current) {
+        observer.unobserve(favoritePlacesSectionRef.current);
+      }
+    };
+  }, []);
+
   // Confetti animation management
   useEffect(() => {
     if (isRewardsCardVisible) {
@@ -311,6 +397,48 @@ function Features() {
           behavior: 'smooth'
         });
       }
+    } else if (route === '#voice-controls') {
+      // Get the voice controls section element and its position
+      const element = voiceControlsSectionRef.current;
+      if (element) {
+        // Calculate the offset from the top of the page
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        // Add a larger offset to ensure we scroll to the very beginning of the section
+        const offsetPosition = elementPosition - 100; // 100px offset from top to show the start
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else if (route === '#speed-alerts') {
+      // Get the speed alerts section element and its position
+      const element = speedAlertsSectionRef.current;
+      if (element) {
+        // Calculate the offset from the top of the page
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        // Add a larger offset to ensure we scroll to the very beginning of the section
+        const offsetPosition = elementPosition - 100; // 100px offset from top to show the start
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    } else if (route === '#favorite-places') {
+      // Get the favorite places section element and its position
+      const element = favoritePlacesSectionRef.current;
+      if (element) {
+        // Calculate the offset from the top of the page
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        // Add a larger offset to ensure we scroll to the very beginning of the section
+        const offsetPosition = elementPosition - 100; // 100px offset from top to show the start
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
     // Add other route handlers as needed
   };
@@ -322,6 +450,10 @@ function Features() {
 
   const handleSpotterVideoClick = () => {
     setIsSpotterVideoEnlarged(!isSpotterVideoEnlarged);
+  };
+
+  const handleStatisticsVideoClick = () => {
+    setIsStatisticsVideoEnlarged(!isStatisticsVideoEnlarged);
   };
 
   // Check if user is on mobile device
@@ -465,7 +597,7 @@ function Features() {
         <Box 
           id="rewards"
           ref={rewardsSectionRef}
-          className={`navigation-feature-section ${isRewardsSectionVisible ? 'animate' : ''}`}
+          className={`navigation-feature-section ${isRewardsSectionVisible ? 'animate' : ''} ${isStatisticsVideoEnlarged ? 'video-enlarged' : ''}`}
         >
           <Container maxWidth="lg" className="navigation-content">
             <Box className="navigation-grid">
@@ -495,11 +627,24 @@ function Features() {
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
-                <img 
-                  src={statisticsImage} 
-                  alt="Marc'd Rewards Statistics showing earnings, points, and achievements for Top Marc'er drivers"
-                  className="navigation-image"
-                />
+                <div className="statistics-video-container">
+                  <video 
+                    ref={statisticsVideoRef}
+                    src={statisticsVideo}
+                    className={`statistics-video ${isStatisticsVideoEnlarged ? 'enlarged' : ''}`}
+                    loop
+                    muted
+                    playsInline
+                    onClick={handleStatisticsVideoClick}
+                    onMouseEnter={() => !isMobile() && setIsStatisticsVideoEnlarged(true)}
+                    onMouseLeave={() => !isMobile() && setIsStatisticsVideoEnlarged(false)}
+                  />
+                  {isMobile() && (
+                    <Typography className="video-instruction">
+                      <em>(Click to enlarge)</em>
+                    </Typography>
+                  )}
+                </div>
               </Box>
             </Box>
           </Container>
@@ -565,6 +710,46 @@ function Features() {
                   alt="Marc'd Real-time Parking App Interface showing available parking spots and community updates"
                   className="navigation-image"
                 />
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+
+        {/* Voice-Activated Controls Feature Detail Section */}
+        <Box 
+          id="voice-controls"
+          ref={voiceControlsSectionRef}
+          className={`navigation-feature-section ${isVoiceControlsVisible ? 'animate' : ''}`}
+        >
+          <Container maxWidth="lg" className="navigation-content">
+            <Box className="navigation-grid">
+              <Box className="navigation-text-content">
+                <Typography variant="h2" className="navigation-title">
+                  Voice-Activated Controls
+                </Typography>
+                <Typography className="navigation-description">
+                  Keep your hands on the wheel and your eyes on the road with Marc'd's advanced voice-activated controls. 
+                  Simply speak your commands to navigate the app, report road conditions, request spotter assistance, or 
+                  check parking availability. Our intelligent voice recognition system understands natural speech patterns 
+                  and trucking terminology, making it easy to stay connected with the Marc'd community without ever 
+                  touching your phone.
+                </Typography>
+                <Typography className="navigation-description">
+                  From "Hey Marc'd, find parking near me" to "Report DOT activity ahead," voice controls make every 
+                  interaction safer and more convenient. The system works seamlessly with your truck's audio setup, 
+                  ensuring clear communication even in noisy cab environments. Drive smarter, not harder, with hands-free 
+                  technology designed specifically for professional drivers.
+                </Typography>
+              </Box>
+              <Box className="navigation-image-content">
+                <Box className="voice-controls-icon-container">
+                  <KeyboardVoiceIcon className="voice-controls-icon" />
+                  <Box className="sound-waves">
+                    <Box className="sound-wave wave-1"></Box>
+                    <Box className="sound-wave wave-2"></Box>
+                    <Box className="sound-wave wave-3"></Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Container>
@@ -662,6 +847,84 @@ function Features() {
                     </Typography>
                   )}
                 </div>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+
+        {/* Speed Monitoring Alerts Feature Detail Section */}
+        <Box 
+          id="speed-alerts"
+          ref={speedAlertsSectionRef}
+          className={`navigation-feature-section ${isSpeedAlertsVisible ? 'animate' : ''}`}
+        >
+          <Container maxWidth="lg" className="navigation-content">
+            <Box className="navigation-grid">
+              <Box className="navigation-text-content">
+                <Typography variant="h2" className="navigation-title">
+                  Speed Monitoring Alerts
+                </Typography>
+                <Typography className="navigation-description">
+                  Stay compliant and safe with Marc'd's intelligent speed monitoring system. Our app continuously 
+                  tracks speed limits along your route and provides real-time alerts when you're approaching or 
+                  exceeding posted limits. With construction zones, school zones, and varying speed limits across 
+                  different states, Marc'd ensures you're always informed of the current speed requirements.
+                </Typography>
+                <Typography className="navigation-description">
+                  The system integrates with your truck's GPS to provide customized alerts based on your vehicle's 
+                  specifications and load requirements. Get advance warnings for upcoming speed limit changes, 
+                  steep grade restrictions, and special zone requirements. Drive with confidence knowing Marc'd 
+                  is helping you maintain compliance while keeping you and other drivers safe on the road.
+                </Typography>
+              </Box>
+              <Box className="navigation-image-content">
+                <Box className="speed-alerts-icon-container">
+                  <SpeedIcon className="speed-alerts-icon" />
+                  <Box className="speed-waves">
+                    <Box className="speed-wave wave-1"></Box>
+                    <Box className="speed-wave wave-2"></Box>
+                    <Box className="speed-wave wave-3"></Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+
+        {/* Favorite Places Feature Detail Section */}
+        <Box 
+          id="favorite-places"
+          ref={favoritePlacesSectionRef}
+          className={`navigation-feature-section ${isFavoritePlacesVisible ? 'animate' : ''}`}
+        >
+          <Container maxWidth="lg" className="navigation-content">
+            <Box className="navigation-grid">
+              <Box className="navigation-text-content">
+                <Typography variant="h2" className="navigation-title">
+                  Favorite Places
+                </Typography>
+                <Typography className="navigation-description">
+                  Save time and streamline your routes with Marc'd's Favorite Places feature. Mark your most 
+                  frequently visited locations — from regular pickup and delivery points to preferred truck stops, 
+                  fuel stations, and rest areas. With one tap, you can navigate to any saved location without 
+                  having to search or remember addresses every time.
+                </Typography>
+                <Typography className="navigation-description">
+                  Organize your favorites by categories like "Fuel Stops," "Customers," "Rest Areas," and "Repair 
+                  Shops" for quick access. Share your favorite spots with other drivers in the Marc'd community 
+                  and discover new highly-rated locations along your routes. Your favorite places sync across all 
+                  your devices, ensuring your essential locations are always at your fingertips.
+                </Typography>
+              </Box>
+              <Box className="navigation-image-content">
+                <Box className="favorite-places-icon-container">
+                  <FavoriteIcon className="favorite-places-icon" />
+                  <Box className="favorite-hearts">
+                    <Box className="favorite-heart heart-1"></Box>
+                    <Box className="favorite-heart heart-2"></Box>
+                    <Box className="favorite-heart heart-3"></Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Container>
