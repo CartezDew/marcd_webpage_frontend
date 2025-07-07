@@ -1,98 +1,206 @@
-// src/pages/Home.jsx
-import React, { useState, useEffect } from 'react';
+// src/pages/home.jsx
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Box, Typography, TextField, Button } from '@mui/material';
+import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/home.css';
-import mainPageImage from '../assets/App_Marc-d_Main_Page.png';
 
-const actionWords = ["Reward", "Empower", "Appreciate", "Respect", "Support", "Listen to", "Understand", "Value"];
+import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
 
-function Home() {
+function home() {
+  const navigate = useNavigate();
+  const aboutRef = useRef(null);
+  const waitlistRef = useRef(null);
+  const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Action words cycling functionality
+  const actionWords = ['Reward','Empower', 'Support', 'Acknowledge','Thank', 'Appreciate', 'Value'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   useEffect(() => {
-    // Store original styles
-    const originalBackground = document.body.style.background;
-    const mainContent = document.querySelector('.main-content');
-    const originalMainContentStyles = mainContent ? {
-      padding: mainContent.style.padding,
-      maxWidth: mainContent.style.maxWidth,
-      margin: mainContent.style.margin,
-      width: mainContent.style.width
-    } : null;
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [actionWords.length]);
+
+  // Email validation function
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Handle email input change
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
     
-    // Set custom background
-    document.body.style.background = 'linear-gradient(to right, rgba(10, 10, 10, 0.96) 0%, rgba(0, 0, 0, 1) 30%, rgb(109, 2, 2) 70%, rgb(212, 2, 9) 100%)';
+    if (value && !validateEmail(value)) {
+      setEmailError('Please enter a valid email address');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  // Handle waitlist submission
+  const handleWaitlistSubmit = (e) => {
+    e.preventDefault();
     
-    // Override main-content margins/padding for home page
-    if (mainContent) {
-      mainContent.style.padding = '0.5rem';
-      mainContent.style.maxWidth = '1600px';
-      mainContent.style.margin = '0 auto';
-      mainContent.style.width = '100%';
+    if (!email) {
+      setEmailError('Email is required');
+      return;
+    }
+    
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address');
+      return;
     }
 
-    // Word animation interval
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prev) => (prev + 1) % actionWords.length);
-    }, 2000);
+    // TODO: Add API call to submit email to waitlist
+    console.log('Submitting email to waitlist:', email);
+    setIsSubmitted(true);
+    setEmail('');
+    setEmailError('');
+    
+    // Reset success message after 3 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+    }, 3000);
+  };
 
-    // Cleanup function
+  // Smooth scroll to waitlist section
+  const scrollToWaitlist = () => {
+    waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.3, // Trigger when 30% of the section is visible
+      rootMargin: '0px 0px -100px 0px' // Trigger slightly before the section is fully visible
+    };
+
+    // About Us section observer
+    const aboutObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsAboutVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
+    // Observe all sections
+    if (aboutRef.current) {
+      aboutObserver.observe(aboutRef.current);
+    }
+
     return () => {
-      document.body.style.background = originalBackground;
-      
-      // Restore original main-content styles
-      if (mainContent && originalMainContentStyles) {
-        mainContent.style.padding = originalMainContentStyles.padding;
-        mainContent.style.maxWidth = originalMainContentStyles.maxWidth;
-        mainContent.style.margin = originalMainContentStyles.margin;
-        mainContent.style.width = originalMainContentStyles.width;
+      if (aboutRef.current) {
+        aboutObserver.unobserve(aboutRef.current);
       }
-      
-      clearInterval(interval);
     };
   }, []);
 
   return (
-    <div className="hero">
-      {/* Left Column - Content */}
-      <div className="hero-content">
-        <h1 className="hero-title">
-          Marc'd is built to&nbsp;
-          <span className="action-word-container">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={actionWords[currentWordIndex]}
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 30 }}
-                transition={{ duration: 0.30 }}
-                className="action-word"
-              >
-                {actionWords[currentWordIndex]}
-              </motion.span>
-            </AnimatePresence>
-          </span>
-          &nbsp;truckers.
-        </h1>
-        <p className="hero-description">
-          From parking solutions to real-time updates and a supportive driver community, Marc'd stands beside you on every mile. 
-          Because trucking isn't just work — it's a way of life. It keeps this country moving, and you deserve a partner that moves with you.
-        </p>
-        <button className="hero-button">
-          Join Waitlist
-        </button>
-      </div>
+    <Box className="home-page-container">
+      {/* home Hero Section - Full Viewport */}
+      <Box className="home-hero-section" ref={aboutRef}>
+        <Box className="home-hero-content">
+          <Box className="home-hero-text">
+            <Typography 
+              variant="h1" 
+              className={`home-hero-headline ${isAboutVisible ? 'animate' : ''}`}
+            >
+              Marc'd is built to&nbsp;
+              <span className="action-word-container">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={actionWords[currentWordIndex]}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.30 }}
+                    className="action-word"
+                  >
+                    {actionWords[currentWordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+              &nbsp;truckers.
+            </Typography>
+            <Typography className="home-hero-description">
+              From parking solutions to real-time updates and a supportive driver community, Marc'd stands beside you on every mile. 
+              Because trucking isn't just work — it's a way of life. It keeps this country moving, and you deserve a partner that moves with you.
+            </Typography>
+            <Button className="hero-button">
+              Join Waitlist
+            </Button>
+          </Box>
+          <Box className="home-hero-image">
+            <img 
+              src={Main_Hero_Img} 
+              alt="Happy truck drivers using Marc'd platform" 
+              className={`home-main-image ${isAboutVisible ? 'animate' : ''}`}
+            />
+          </Box>
+        </Box>
+        
+        {/* Down Arrow to Scroll to Waitlist */}
+        <Box className="scroll-down-arrow" onClick={scrollToWaitlist}>
+          <FaChevronDown className="arrow-icon" />
+        </Box>
+      </Box>
 
-      {/* Right Column - Image */}
-      <div className="hero-image-container">
-        <img 
-          src={mainPageImage} 
-          alt="Marc'd Main Page" 
-          className="hero-image"
-        />
-      </div>
-    </div>
+      {/* Join Waitlist Section - Different Background */}
+      <Box className="waitlist-section" ref={waitlistRef}>
+        <Box className="waitlist-content">
+          <Typography variant="h3" className="waitlist-title">
+            Join the Waitlist
+          </Typography>
+          <Typography className="waitlist-description">
+            Be the first to experience Marc'd when we launch. Enter your email to get notified.
+          </Typography>
+          
+          <Box component="form" onSubmit={handleWaitlistSubmit} className="waitlist-form">
+            <Box className="email-input-container">
+              <TextField
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="Enter your email address"
+                variant="outlined"
+                error={!!emailError}
+                helperText={emailError}
+                className="email-input"
+                fullWidth
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                className="join-button"
+                disabled={!email || !!emailError}
+              >
+                Join
+              </Button>
+            </Box>
+            
+            {isSubmitted && (
+              <Typography className="success-message">
+                🎉 Thank you! You've been added to our waitlist.
+              </Typography>
+            )}
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
-export default Home;
+export default home;

@@ -4,7 +4,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Nav from './components/Nav';
 import Home from './pages/Home';
-import Home2 from './pages/Home2';
 import TruckStops from './pages/TruckStops';
 import TruckStopDetail from './pages/TruckStopDetail';
 import ContactUs from './pages/ContactUs';
@@ -111,7 +110,6 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home userLocation={userLocation} />} />
-            <Route path="/home2" element={<Home2 />} />
             <Route path="/truck-stops" element={<TruckStops userLocation={userLocation} />} />
             <Route path="/truck-stops/:id" element={<TruckStopDetail />} />
             <Route path="/contactus" element={<ContactUs />} />
