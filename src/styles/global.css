@@ -214,4 +214,9 @@ body {
   .grid-3 {
     grid-template-columns: 1fr;
   }
+}
+
+.home-page-bg {
+  min-height: 100vh;
+  background: #fff !important;
 } 

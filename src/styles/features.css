@@ -739,7 +739,6 @@
     max-width: 70%;
     height: auto;
     border-radius: 1rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
@@ -886,7 +885,7 @@
     max-width: 65%;
     width: 65%;
     height: auto;
-    border-radius: 2rem; 
+    border-radius: 3rem; 
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
@@ -939,7 +938,7 @@
       max-width: 60%;
       width: 60%;
       transition: max-width 0.3s ease, transform 0.3s ease;
-      border-radius: 2rem;
+      border-radius: 3rem;
       object-fit: cover;
       object-position: center;
     }
@@ -964,7 +963,7 @@
     .alerts-video {
       max-width: 70%;
       width: 70%;
-      border-radius: 4cqb;
+      border-radius: 4.5cqb;
       object-fit: cover;
       object-position: center;
     }
