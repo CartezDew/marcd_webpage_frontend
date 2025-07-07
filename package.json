@@ -17,6 +17,7 @@
     "@react-hook/window-size": "^3.1.1",
     "axios": "^1.6.7",
     "framer": "^2.4.1",
+    "framer-motion": "^12.23.0",
     "i": "^0.3.7",
     "leaflet": "^1.9.4",
     "motion": "^12.18.1",
