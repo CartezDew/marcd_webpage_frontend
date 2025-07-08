@@ -9,7 +9,7 @@
   --clr-neutral-900: hsl(0 0% 0%);
   --clr-neutral-100: hsl(0 0% 100%);
   
-  --fs-xl: 2rem;
+  --fs-xl: 5rem;
   --fs-600: 2rem;
   --fs-400: 1rem;
 }
@@ -73,7 +73,7 @@
   .home-hero-content {
     display: flex;
     align-items: center;
-    gap: clamp(1rem, 3vw, 2rem);
+    gap: clamp(2rem, 4vw, 4rem);
     flex-wrap: wrap;
     width: 100%;
     max-width: 1400px;
@@ -83,7 +83,7 @@
     flex: 1 1 45%;
     min-width: 300px;
     max-width: 48%;
-    padding-right: 2rem;
+    padding-right: 3rem;
     box-sizing: border-box;
     overflow: hidden;
     word-wrap: break-word;
@@ -91,7 +91,7 @@
   
   .home-hero-headline {
     font-family: var(--ff-heading) !important;
-    font-size: clamp(1.5rem, 4vw, 3rem) !important;
+    font-size: clamp(3rem, 5vw, 5rem) !important;
     font-weight: 700 !important;
     color: var(--clr-neutral-100) !important;
     letter-spacing: 0.5px !important;
@@ -106,16 +106,17 @@
     overflow: hidden;
   }
 
-  /* More specific selector to override Material-UI */
+  /* More specific selector to override Material-UI & Main font-size heading  */
   .MuiTypography-root.home-hero-headline,
   .MuiTypography-h1.home-hero-headline {
     font-family: var(--ff-heading) !important;
-    font-size: clamp(1.5rem, 4vw, 3rem) !important;
+    font-size: clamp(3rem, 5vw, 5rem) !important;
     font-weight: 700 !important;
     color: var(--clr-neutral-100) !important;
     letter-spacing: 0.5px !important;
     margin-bottom: 3rem !important;
     line-height: 1.1 !important;
+    text-align: left !important;
   }
   
   .home-hero-headline.animate {
@@ -124,16 +125,26 @@
   }
   
   .home-hero-description {
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    line-height: 1.6;
-    color: #cccccc;
-    margin-top: 2rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif !important;
+    font-size: clamp(1.5rem, 2.5vw, 2rem) !important;
+    line-height: 1.6 !important;
+    color: #cccccc !important;
+    margin-top: 2rem !important;
+  }
+  
+  /* More specific selector to override Material-UI for description */
+  .MuiTypography-root.home-hero-description {
+    font-family: 'Inter', 'Segoe UI', sans-serif !important;
+    font-size: clamp(1rem, 2vw, 1.5rem) !important;
+    line-height: 1.6 !important;
+    color: #cccccc !important;
+    margin-top: 2rem !important;
+    text-align: left !important;
   }
   
   /* Hero Button Styling */
   .hero-button {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
+    background: linear-gradient(135deg, #be0303d1, #c0c0c0, #a8a8a8) !important;
     color: white !important;
     font-size: 1.2rem !important;
     font-weight: bold !important;
@@ -141,14 +152,15 @@
     border-radius: 8px !important;
     text-transform: none !important;
     transition: all 0.3s ease !important;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(190, 3, 3, 0.3) !important;
     margin-top: 4rem !important;
+    margin-bottom: 3rem !important;
   }
   
   .hero-button:hover {
-    background: linear-gradient(135deg, #ee5a24, #c23616) !important;
+    background: linear-gradient(135deg, #a00202, #808080, #696969) !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(190, 3, 3, 0.4) !important;
   }
   
   .home-hero-image {
@@ -190,7 +202,7 @@
     .home-hero-headline,
     .MuiTypography-root.home-hero-headline,
     .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(1.3rem, 3.5vw, 2.5rem) !important;
+      font-size: clamp(2rem, 3.5vw, 3rem) !important;
     }
   }
   
@@ -207,7 +219,7 @@
     .home-hero-headline,
     .MuiTypography-root.home-hero-headline,
     .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(1.1rem, 3vw, 2rem) !important;
+      font-size: clamp(5rem, 3vw, 2rem) !important;
     }
   }
 
@@ -244,7 +256,7 @@
     .home-hero-content {
       flex-direction: column;
       text-align: center;
-      gap: 2rem;
+      gap: 3rem;
       align-items: center;
     }
     
@@ -265,6 +277,11 @@
       display: flex;
       justify-content: center;
       margin-bottom: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .hero-button {
+      margin-bottom: 2rem !important;
     }
     
     .home-hero-headline,
@@ -431,20 +448,40 @@
     }
   }
   
-  /* Scroll Down Arrow - Always Visible, Centered on Left Side */
+  /* Scroll Down Arrow - Always visible in viewport */
   .scroll-down-arrow {
     position: fixed;
     bottom: 2rem;
-    left: 25%;
+    left: 75%; /* Position under the image side */
     transform: translateX(-50%);
     cursor: pointer;
     z-index: 1000;
     animation: bounce 2s infinite;
     background: rgba(0, 0, 0, 0.7);
-    padding: 12px;
+    padding: 9px;
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
+    margin-top: 3rem;
+  }
+
+  /* Fine-tune positioning for different desktop widths */
+  @media (max-width: 1200px) {
+    .scroll-down-arrow {
+      left: 73%;
+    }
+  }
+  
+  @media (max-width: 1000px) {
+    .scroll-down-arrow {
+      left: 71%;
+    }
+  }
+  
+  @media (max-width: 950px) {
+    .scroll-down-arrow {
+      left: 70%;
+    }
   }
   
   .arrow-icon {
@@ -475,6 +512,19 @@
   }
   
   /* Responsive Design for Scroll Arrow */
+  @media (max-width: 900px) {
+    /* When layout becomes single column, center the arrow */
+    .scroll-down-arrow {
+      left: 50%;
+      bottom: 1rem;
+      padding: 10px;
+    }
+    
+    .arrow-icon {
+      font-size: 1.8rem;
+    }
+  }
+  
   @media (max-width: 768px) {
     .scroll-down-arrow {
       left: 50%;

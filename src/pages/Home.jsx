@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { FaChevronDown } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -15,6 +16,19 @@ function home() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  // Action words for cycling animation
+  const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+  // Cycle through action words every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [actionWords.length]);
 
   // Email validation function
   const validateEmail = (email) => {
@@ -95,6 +109,33 @@ function home() {
     };
   }, []);
 
+  // Animation variants for the action words
+  const wordVariants = {
+    initial: { 
+      opacity: 0, 
+      y: 20,
+      scale: 0.8
+    },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -20,
+      scale: 0.8,
+      transition: {
+        duration: 0.4,
+        ease: "easeIn"
+      }
+    }
+  };
+
   return (
     <Box className="home-page-container">
       {/* home Hero Section - Full Viewport */}
@@ -105,7 +146,30 @@ function home() {
               variant="h1" 
               className={`home-hero-headline ${isAboutVisible ? 'animate' : ''}`}
             >
-              Built to Appreciate truckers.
+              Built to
+              <br />
+              <Box component="span" style={{ display: 'block', minHeight: '1.2em', position: 'relative' }}>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={actionWords[currentWordIndex]}
+                    variants={wordVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    style={{
+                      display: 'block',
+                      background: 'linear-gradient(135deg,rgb(212, 209, 209),rgb(207, 1, 1),rgb(253, 1, 1))',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    {actionWords[currentWordIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </Box>
+              truckers.
             </Typography>
             <Typography className="home-hero-description">
               From parking solutions to real-time updates and a supportive driver community, Marc'd stands beside you on every mile. 
