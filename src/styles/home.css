@@ -1,11 +1,33 @@
 /* home.css - Styling for home page with unique class names */
 
+/* CSS Custom Properties for Dynamic Typography */
+:root {
+  --ff-body: "Heebo", sans-serif;
+  --ff-heading: "Poppins", sans-serif;
+  
+  --clr-primary-400: hsl(60 100% 50%);
+  --clr-neutral-900: hsl(0 0% 0%);
+  --clr-neutral-100: hsl(0 0% 100%);
+  
+  --fs-xl: 2rem;
+  --fs-600: 2rem;
+  --fs-400: 1rem;
+}
+
+@media (min-width: 40em) {
+  :root {
+    --fs-600: 3rem;
+    --fs-400: 1.125rem;
+  }
+}
+
 /* Override main-content styling for home page */
 .main-content:has(.home-page-container) {
     padding: 0 !important;
     max-width: none !important;
     margin: 0 !important;
-    width: 100% !important;
+    width: 100vw !important;
+    overflow-x: hidden !important;
   }
   
   /* Fallback for browsers that don't support :has() */
@@ -13,13 +35,25 @@
     padding: 0 !important;
     max-width: none !important;
     margin: 0 !important;
-    width: 100% !important;
+    width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Ensure body covers full width */
+  body:has(.home-page-container) {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    overflow-x: hidden !important;
   }
   
   .home-page-container {
     min-height: 100vh;
-    padding: 2rem 1rem;
+    width: 100vw;
+    padding: 2rem 8rem;
     background: linear-gradient(to right, rgba(10, 10, 10, 0.96) 0%, rgba(0, 0, 0, 1) 30%, rgb(109, 2, 2) 70%, rgb(212, 2, 9) 100%) !important;
+    position: relative;
+    overflow-x: hidden;
   }
   
   /* Home Hero Section - Full Viewport */
@@ -32,31 +66,56 @@
     position: relative;
     max-width: 1600px;
     margin: 0 auto;
-    padding: 2rem 0;
-    /* background-color: black !important; */
+    padding: 2rem 2rem;
+    padding-bottom: 8rem;
   }
   
   .home-hero-content {
     display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: clamp(1rem, 3vw, 2rem);
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 1400px;
   }
   
   .home-hero-text {
-    flex: 1;
+    flex: 1 1 45%;
     min-width: 300px;
+    max-width: 48%;
+    padding-right: 2rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    word-wrap: break-word;
   }
   
   .home-hero-headline {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    transform: translateX(-100px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    line-height: 1.2;
+    font-family: var(--ff-heading) !important;
+    font-size: clamp(1.5rem, 4vw, 3rem) !important;
+    font-weight: 700 !important;
+    color: var(--clr-neutral-100) !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 3rem !important;
+    line-height: 1.1 !important;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    hyphens: none;
+    max-width: 100%;
+    white-space: normal;
+    overflow: hidden;
+  }
+
+  /* More specific selector to override Material-UI */
+  .MuiTypography-root.home-hero-headline,
+  .MuiTypography-h1.home-hero-headline {
+    font-family: var(--ff-heading) !important;
+    font-size: clamp(1.5rem, 4vw, 3rem) !important;
+    font-weight: 700 !important;
+    color: var(--clr-neutral-100) !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 3rem !important;
+    line-height: 1.1 !important;
   }
   
   .home-hero-headline.animate {
@@ -64,24 +123,12 @@
     transform: translateX(0);
   }
   
-  /* Action Word Animation Styling */
-  .action-word-container {
-    display: inline-block;
-    min-width: 200px;
-    text-align: left;
-  }
-  
-  .action-word {
-    color: #ff6b6b;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-  }
-  
   .home-hero-description {
-    font-size: 1.2rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
     line-height: 1.6;
     color: #cccccc;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
   }
   
   /* Hero Button Styling */
@@ -95,7 +142,7 @@
     text-transform: none !important;
     transition: all 0.3s ease !important;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
-    margin-top: 1rem !important;
+    margin-top: 4rem !important;
   }
   
   .hero-button:hover {
@@ -105,8 +152,9 @@
   }
   
   .home-hero-image {
-    flex: 1;
+    flex: 1 1 45%;
     min-width: 300px;
+    max-width: 48%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,8 +165,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* border-radius: 12px; */
-    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); */
     opacity: 0;
     transform: translateX(100px);
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -130,52 +176,258 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 768px) {
+ 
+
+  @media (max-width: 1200px) {
+    .home-hero-text {
+      max-width: 52%;
+    }
+    
+    .home-hero-image {
+      max-width: 45%;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.3rem, 3.5vw, 2.5rem) !important;
+    }
+  }
+  
+  @media (max-width: 1000px) {
+    .home-hero-text {
+      max-width: 100%;
+      padding-right: 1rem;
+    }
+    
+    .home-hero-image {
+      max-width: 42%;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.1rem, 3vw, 2rem) !important;
+    }
+  }
+
+  @media (max-width: 950px) {
+    .home-hero-text {
+      max-width: 58%;
+      padding-right: 0.5rem;
+    }
+    
+    .home-hero-image {
+      max-width: 40%;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1rem, 2.5vw, 1.8rem) !important;
+    }
+  }
+  
+  /* Key breakpoint - image moves below button */
+  @media (max-width: 900px) {
+    .home-page-container {
+      padding: 2rem 1rem;
+      min-height: auto;
+    }
+    
+    .home-hero-section {
+      padding: 1rem;
+      min-height: auto;
+      padding-bottom: 4rem;
+    }
+    
     .home-hero-content {
       flex-direction: column;
       text-align: center;
       gap: 2rem;
+      align-items: center;
     }
     
-    .home-hero-headline {
-      font-size: 2.5rem;
+    .home-hero-text {
+      max-width: 100%;
+      min-width: 100%;
+      order: 1;
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
-    .action-word-container {
-      min-width: 150px;
+    .home-hero-image {
+      max-width: 100%;
+      min-width: 100%;
+      order: 2;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
     }
     
     .home-main-image {
       width: 100%;
-      max-width: 400px;
-      height: 250px;
+      max-width: 500px;
+      height: auto;
+      object-fit: contain;
+      min-height: 280px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .home-page-container {
+      padding: 1rem 0.5rem;
+      width: 100%;
+      min-height: auto;
+    }
+    
+    .home-hero-section {
+      padding: 0.5rem;
+      min-height: auto;
+      padding-bottom: 3rem;
+    }
+    
+    .home-hero-content {
+      gap: 1.5rem;
+    }
+    
+    .home-hero-description {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      text-align: center;
+      max-width: 90%;
+      margin: 1rem auto;
+    }
+    
+    .home-hero-image {
+      margin-bottom: 1.5rem;
+    }
+    
+    .home-main-image {
+      max-width: 85vw;
+      min-height: 250px;
+      object-fit: contain;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .hero-button {
+      font-size: 1.1rem !important;
+      padding: 15px 28px !important;
+      margin-top: 1.5rem !important;
+      width: auto;
+      min-width: 200px;
+    }
+    
+    .home-hero-image {
+      margin-bottom: 1rem;
+    }
+    
+    .home-main-image {
+      max-width: 80vw;
+      min-height: 220px;
+      object-fit: contain;
     }
   }
   
   @media (max-width: 480px) {
     .home-page-container {
-      padding: 1rem 0.5rem;
+      padding: 0.5rem;
+      min-height: auto;
+      width: 100%;
     }
     
-    .home-hero-headline {
-      font-size: 2rem;
+    .home-hero-section {
+      padding: 0.5rem;
+      min-height: auto;
+      padding-bottom: 2rem;
     }
     
-    .action-word-container {
-      min-width: 120px;
+    .home-hero-content {
+      gap: 1.5rem;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
     }
     
     .home-hero-description {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      margin: 0.75rem auto;
+      max-width: 95%;
+      text-align: center;
     }
     
     .hero-button {
       font-size: 1rem !important;
       padding: 14px 24px !important;
+      margin-top: 1rem !important;
+      width: auto;
+      min-width: 180px;
+    }
+    
+    .home-hero-image {
+      margin-bottom: 1rem;
     }
     
     .home-main-image {
-      height: 200px;
+      max-width: 85vw;
+      min-height: 200px;
+      object-fit: contain;
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .home-page-container {
+      padding: 0.25rem;
+      width: 100%;
+      min-height: auto;
+    }
+    
+    .home-hero-section {
+      padding-bottom: 1.5rem;
+    }
+    
+    .home-hero-content {
+      gap: 1rem;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.1rem, 4.5vw, 1.5rem) !important;
+    }
+    
+    .home-hero-description {
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      max-width: 98%;
+      margin: 0.5rem auto;
+    }
+    
+    .hero-button {
+      font-size: 0.9rem !important;
+      padding: 12px 20px !important;
+      margin-top: 0.75rem !important;
+      min-width: 160px;
+    }
+    
+    .home-hero-image {
+      margin-bottom: 0.75rem;
+    }
+    
+    .home-main-image {
+      max-width: 90vw;
+      min-height: 180px;
+      object-fit: contain;
     }
   }
   
@@ -263,15 +515,18 @@
     width: 100%;
   }
   
-  .waitlist-title {
-    font-size: 3rem !important;
+  .waitlist-title,
+  .MuiTypography-root.waitlist-title,
+  .MuiTypography-h3.waitlist-title {
+    font-size: clamp(2rem, 5vw, 3rem) !important;
     font-weight: bold !important;
     color: #ffffff !important;
     margin-bottom: 1.5rem !important;
   }
   
-  .waitlist-description {
-    font-size: 1.3rem !important;
+  .waitlist-description,
+  .MuiTypography-root.waitlist-description {
+    font-size: clamp(1rem, 2.5vw, 1.3rem) !important;
     color: #f0f0f0 !important;
     margin-bottom: 3rem !important;
     line-height: 1.6;
@@ -336,13 +591,13 @@
   }
   
   .success-message {
-    color: #ffffff !important;
-    font-size: 1.2rem !important;
-    font-weight: 500 !important;
-    background: rgba(0, 255, 0, 0.2);
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 255, 0, 0.3);
+    color: #4caf50 !important;
+    font-weight: bold !important;
+    margin-top: 1rem !important;
+    padding: 1rem !important;
+    background: rgba(76, 175, 80, 0.1) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(76, 175, 80, 0.3) !important;
   }
   
   /* Responsive Design for Waitlist */
@@ -367,7 +622,7 @@
   
   @media (max-width: 480px) {
     .waitlist-section {
-      padding: 3rem 1rem;
+      padding: 2rem 1rem;
     }
     
     .waitlist-title {
@@ -376,7 +631,9 @@
     
     .waitlist-description {
       font-size: 1rem !important;
-      margin-bottom: 2rem !important;
     }
   }
+  
+
+  
   

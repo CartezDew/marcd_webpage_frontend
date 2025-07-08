@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { FaChevronDown } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -16,18 +15,6 @@ function home() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // Action words cycling functionality
-  const actionWords = ['Reward','Empower', 'Support', 'Acknowledge','Thank', 'Appreciate', 'Value'];
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [actionWords.length]);
 
   // Email validation function
   const validateEmail = (email) => {
@@ -118,22 +105,7 @@ function home() {
               variant="h1" 
               className={`home-hero-headline ${isAboutVisible ? 'animate' : ''}`}
             >
-              Marc'd is built to&nbsp;
-              <span className="action-word-container">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={actionWords[currentWordIndex]}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 30 }}
-                    transition={{ duration: 0.30 }}
-                    className="action-word"
-                  >
-                    {actionWords[currentWordIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
-              &nbsp;truckers.
+              Built to Appreciate truckers.
             </Typography>
             <Typography className="home-hero-description">
               From parking solutions to real-time updates and a supportive driver community, Marc'd stands beside you on every mile. 
