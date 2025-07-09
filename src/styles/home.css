@@ -85,7 +85,7 @@
     max-width: 48%;
     padding-right: 3rem;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible;
     word-wrap: break-word;
   }
   
@@ -142,8 +142,16 @@
     text-align: left !important;
   }
   
-  /* Hero Button Styling */
+  /* Hero Button with Animated Border */
+  .hero-button-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 4rem !important;
+    margin-bottom: 3rem !important;
+  }
+
   .hero-button {
+    position: relative;
     background: linear-gradient(135deg, #be0303d1, #c0c0c0, #a8a8a8) !important;
     color: white !important;
     font-size: 1.2rem !important;
@@ -153,8 +161,8 @@
     text-transform: none !important;
     transition: all 0.3s ease !important;
     box-shadow: 0 4px 15px rgba(190, 3, 3, 0.3) !important;
-    margin-top: 4rem !important;
-    margin-bottom: 3rem !important;
+    z-index: 1;
+    border: none !important;
   }
   
   .hero-button:hover {

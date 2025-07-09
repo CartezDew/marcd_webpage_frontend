@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import { FaChevronDown } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -20,6 +20,21 @@ function home() {
   // Action words for cycling animation
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+  // Animated border setup following tutorial
+  const time = useTime();
+  const rotate = useTransform(time, [0, 3000], [0, 360], {
+    clamp: false,
+  });
+  const rotatingBg = useTransform(rotate, (r) => {
+    return `conic-gradient(from ${r}deg,rgb(222, 3, 3), #ff0000, #be0303d1, #c0c0c0, #a8a8a8, #be0303)`;
+  });
+
+  // Add pulsing animation
+  const pulse = useSpring(0, { damping: 0, mass: 5, stiffness: 10 });
+  const pulsingBg = useTransform(pulse, (r) => {
+    return `blur(${r}px)`;
+  });
 
   // Cycle through action words every 5 seconds
   useEffect(() => {
@@ -158,7 +173,7 @@ function home() {
                     exit="exit"
                     style={{
                       display: 'block',
-                      background: 'linear-gradient(135deg,rgb(212, 209, 209),rgb(207, 1, 1),rgb(253, 1, 1))',
+                      background: 'linear-gradient(to left, rgb(235, 4, 4), rgb(202, 2, 2), rgb(220, 217, 217), rgb(212, 2, 9))',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
@@ -175,9 +190,26 @@ function home() {
               From parking solutions to real-time updates and a supportive driver community, Marc'd stands beside you on every mile. 
               Because trucking isn't just work — it's a way of life. It keeps this country moving, and you deserve a partner that moves with you.
             </Typography>
-            <Button className="hero-button">
-              Join Waitlist
-            </Button>
+            <Box className="hero-button-container" sx={{ position: 'relative' }}>
+              <motion.div
+                className="absolute -inset-[1.5px] rounded-md"
+                style={{
+                  position: 'absolute',
+                  inset: '-1px',
+                  borderRadius: '8px',
+                  background: rotatingBg,
+                  filter: pulsingBg,
+                  zIndex: 0,
+                  filter: 'blur(5px)',
+                }}
+              />
+              <Button 
+                className="hero-button"
+                onClick={scrollToWaitlist}
+              >
+                Join Waitlist
+              </Button>
+            </Box>
           </Box>
           <Box className="home-hero-image">
             <img 
