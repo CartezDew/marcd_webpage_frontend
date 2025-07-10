@@ -83,8 +83,17 @@ function App() {
           setLoading(false);
         },
         (error) => {
-          console.error('Error getting location:', error);
+          // Silently handle geolocation errors - user may have denied permission
+          // or location services may be disabled
+          if (error.code !== error.PERMISSION_DENIED) {
+            console.log('Geolocation access was denied or is unavailable');
+          }
           setLoading(false);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 600000 // 10 minutes
         }
       );
     } else {

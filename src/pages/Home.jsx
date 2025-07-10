@@ -404,7 +404,6 @@ function home() {
                   inset: '-1px',
                   borderRadius: '8px',
                   background: rotatingBg,
-                  filter: pulsingBg,
                   zIndex: 0,
                   filter: 'blur(5px)',
                 }}

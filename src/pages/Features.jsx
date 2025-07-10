@@ -13,6 +13,7 @@ import {
   EmojiEvents as StarIcon,
   AttachMoney as CashIcon,
   KeyboardArrowUp as ArrowUpIcon,
+  KeyboardArrowDown as ArrowDownIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
 import '../styles/features.css';
@@ -22,7 +23,7 @@ import statisticsImage from '../assets/App_Statistics.png';
 import parkingImage from '../assets/App_Parking.png';
 import alertsVideo from '../assets/Alerts_Demo.mp4';
 import spotterVideo from '../assets/Requesting_Spotter_Demo.mp4';
-import statisticsVideo from '../assets/Statistics_Demo.mp4';
+import statisticsVideo from '../assets/statistics_demo.mp4';
 import featureRequestVideo from '../assets/Feature_Request_Demo.mp4';
 
 function Features() {
@@ -42,6 +43,8 @@ function Features() {
   const [isSpotterVideoEnlarged, setIsSpotterVideoEnlarged] = useState(false);
   const [isStatisticsVideoEnlarged, setIsStatisticsVideoEnlarged] = useState(false);
   const [isFeatureRequestVideoEnlarged, setIsFeatureRequestVideoEnlarged] = useState(false);
+  const [isFirstViewport, setIsFirstViewport] = useState(true);
+  const featuresGridRef = useRef(null);
   const rewardsCardRef = useRef(null);
   const rewardsSectionRef = useRef(null);
   const navigationSectionRef = useRef(null);
@@ -65,6 +68,29 @@ function Features() {
     }, 100);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Intersection Observer for the features grid (first viewport)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFirstViewport(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px'
+      }
+    );
+
+    if (featuresGridRef.current) {
+      observer.observe(featuresGridRef.current);
+    }
+
+    return () => {
+      if (featuresGridRef.current) {
+        observer.unobserve(featuresGridRef.current);
+      }
+    };
   }, []);
 
   // Intersection Observer for the rewards card
@@ -98,10 +124,7 @@ function Features() {
         // Control video playback based on visibility
         if (statisticsVideoRef.current) {
           if (entry.isIntersecting) {
-            statisticsVideoRef.current.play().catch(() => {
-              // Ignore autoplay errors - browser may block autoplay
-              console.log('Video autoplay blocked by browser policy');
-            });
+            statisticsVideoRef.current.play();
           } else {
             statisticsVideoRef.current.pause();
           }
@@ -178,10 +201,7 @@ function Features() {
         // Control video playback based on visibility
         if (alertsVideoRef.current) {
           if (entry.isIntersecting) {
-            alertsVideoRef.current.play().catch(() => {
-              // Ignore autoplay errors - browser may block autoplay
-              console.log('Video autoplay blocked by browser policy');
-            });
+            alertsVideoRef.current.play();
           } else {
             alertsVideoRef.current.pause();
           }
@@ -212,10 +232,7 @@ function Features() {
         // Control video playback based on visibility
         if (spotterVideoRef.current) {
           if (entry.isIntersecting) {
-            spotterVideoRef.current.play().catch(() => {
-              // Ignore autoplay errors - browser may block autoplay
-              console.log('Video autoplay blocked by browser policy');
-            });
+            spotterVideoRef.current.play();
           } else {
             spotterVideoRef.current.pause();
           }
@@ -315,10 +332,7 @@ function Features() {
         // Control video playback based on visibility
         if (featureRequestVideoRef.current) {
           if (entry.isIntersecting) {
-            featureRequestVideoRef.current.play().catch(() => {
-              // Ignore autoplay errors - browser may block autoplay
-              console.log('Video autoplay blocked by browser policy');
-            });
+            featureRequestVideoRef.current.play();
           } else {
             featureRequestVideoRef.current.pause();
           }
@@ -554,12 +568,24 @@ function Features() {
     };
   }, [isVideoEnlarged, isSpotterVideoEnlarged, isStatisticsVideoEnlarged, isFeatureRequestVideoEnlarged]);
 
-  // Scroll to top function
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+  // Scroll function - scrolls to next section if in first viewport, otherwise scrolls to top
+  const handleScrollAction = () => {
+    if (isFirstViewport) {
+      // Scroll to the first feature detail section (rewards section)
+      const rewardsSection = document.getElementById('rewards');
+      if (rewardsSection) {
+        rewardsSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else {
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const features = [
@@ -664,7 +690,7 @@ function Features() {
         </Box>
 
         {/* Features Grid */}
-        <Box className={`features-grid ${isVisible ? 'animate' : ''}`}>
+        <Box ref={featuresGridRef} className={`features-grid ${isVisible ? 'animate' : ''}`}>
           {features.map((feature, index) => (
             <Box 
               key={feature.id} 
@@ -1088,12 +1114,12 @@ function Features() {
         </Box>
       </Container>
 
-      {/* Scroll to Top Button */}
+      {/* Scroll Button */}
       <Box 
-        className="scroll-to-top-button"
-        onClick={scrollToTop}
+        className={`scroll-to-top-button ${isFirstViewport ? 'first-viewport' : 'other-viewport'}`}
+        onClick={handleScrollAction}
       >
-        <ArrowUpIcon />
+        {isFirstViewport ? <ArrowDownIcon /> : <ArrowUpIcon />}
       </Box>
     </Box>
   );

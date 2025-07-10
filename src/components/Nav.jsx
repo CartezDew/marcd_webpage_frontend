@@ -111,15 +111,13 @@ function Nav() {
         title={isHomePage ? "" : "Back to home page"} 
         placement="right"
         arrow
-        className="nav-logo-tooltip-mobile"
-        disablePortal={true}
-        PopperProps={{
-          className: "nav-logo-tooltip-popper-mobile",
-          style: {
-            transform: 'translateX(-15px) !important',
-          }
-        }}
-        componentsProps={{
+        slotProps={{
+          popper: {
+            className: "nav-logo-tooltip-popper-mobile",
+            style: {
+              transform: 'translateX(-15px) !important',
+            }
+          },
           tooltip: {
             className: "nav-logo-tooltip-content-mobile",
             sx: {
@@ -190,15 +188,13 @@ function Nav() {
             title={isHomePage ? "" : "Back to home page"} 
             placement="bottom"
             arrow
-            className="nav-logo-tooltip"
-            disablePortal={true}
-            PopperProps={{
-              className: "nav-logo-tooltip-popper",
-              style: {
-                transform: 'translateY(-15px) !important',
-              }
-            }}
-            componentsProps={{
+            slotProps={{
+              popper: {
+                className: "nav-logo-tooltip-popper",
+                style: {
+                  transform: 'translateY(-15px) !important',
+                }
+              },
               tooltip: {
                 className: "nav-logo-tooltip-content",
                 sx: {
@@ -258,7 +254,6 @@ function Nav() {
                       inset: '-1px',
                       borderRadius: '8px',
                       background: rotatingBg,
-                      filter: pulsingBg,
                       zIndex: 0,
                       filter: 'blur(5px)',
                     }}
