@@ -104,6 +104,61 @@
   filter: brightness(1.05); /* Slight brightening on hover */
 }
 
+/* Custom tooltip positioning for logo */
+.nav-logo-tooltip-popper {
+  z-index: 2000 !important;
+  margin-top: -20px !important;
+  top: auto !important;
+}
+
+.nav-logo-tooltip-content {
+  background-color: rgba(97, 97, 97, 0.9) !important;
+  color: white !important;
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  padding: 4px 8px !important;
+  margin: 0 !important;
+  transform: translateY(-5px) !important;
+}
+
+/* More specific overrides for tooltip positioning */
+div.nav-logo-tooltip-popper[data-popper-placement="bottom"] {
+  transform: translateY(-25px) !important;
+  margin-top: 0 !important;
+}
+
+div.nav-logo-tooltip-popper .MuiTooltip-tooltip {
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.nav-logo-tooltip-popper-mobile {
+  z-index: 2000 !important;
+  margin-left: -20px !important;
+  left: auto !important;
+}
+
+.nav-logo-tooltip-content-mobile {
+  background-color: rgba(97, 97, 97, 0.9) !important;
+  color: white !important;
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  padding: 4px 8px !important;
+  margin: 0 !important;
+  transform: translateX(-5px) !important;
+}
+
+/* More specific overrides for mobile tooltip positioning */
+div.nav-logo-tooltip-popper-mobile[data-popper-placement="right"] {
+  transform: translateX(-25px) !important;
+  margin-left: 0 !important;
+}
+
+div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
+  margin: 0 !important;
+  transform: none !important;
+}
+
 /* ===================================
    DESKTOP NAVIGATION BUTTONS
    ================================== */

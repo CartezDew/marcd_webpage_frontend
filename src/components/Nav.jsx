@@ -111,6 +111,26 @@ function Nav() {
         title={isHomePage ? "" : "Back to home page"} 
         placement="right"
         arrow
+        className="nav-logo-tooltip-mobile"
+        disablePortal={true}
+        PopperProps={{
+          className: "nav-logo-tooltip-popper-mobile",
+          style: {
+            transform: 'translateX(-15px) !important',
+          }
+        }}
+        componentsProps={{
+          tooltip: {
+            className: "nav-logo-tooltip-content-mobile",
+            sx: {
+              fontSize: '0.75rem !important',
+              padding: '4px 8px !important',
+              margin: '0 !important',
+              position: 'relative !important',
+              left: '-10px !important',
+            }
+          }
+        }}
       >
         <Box 
           className={`nav-drawer-logo-container ${isHomePage ? 'disabled' : ''}`}
@@ -170,6 +190,26 @@ function Nav() {
             title={isHomePage ? "" : "Back to home page"} 
             placement="bottom"
             arrow
+            className="nav-logo-tooltip"
+            disablePortal={true}
+            PopperProps={{
+              className: "nav-logo-tooltip-popper",
+              style: {
+                transform: 'translateY(-15px) !important',
+              }
+            }}
+            componentsProps={{
+              tooltip: {
+                className: "nav-logo-tooltip-content",
+                sx: {
+                  fontSize: '0.75rem !important',
+                  padding: '4px 8px !important',
+                  margin: '0 !important',
+                  position: 'relative !important',
+                  top: '-10px !important',
+                }
+              }
+            }}
           >
             <Box
               onClick={handleLogoClick}
