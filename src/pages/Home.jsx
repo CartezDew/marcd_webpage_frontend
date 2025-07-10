@@ -16,7 +16,11 @@ function home() {
   const navigate = useNavigate();
   const aboutRef = useRef(null);
   const waitlistRef = useRef(null);
+  const didYouKnowRef = useRef(null);
+  const solutionsRef = useRef(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const [isDidYouKnowVisible, setIsDidYouKnowVisible] = useState(false);
+  const [isSolutionsVisible, setIsSolutionsVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -107,7 +111,7 @@ function home() {
   // Handle click outside to collapse cards
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.fact-item')) {
+      if (!event.target.closest('.fact-item') && !event.target.closest('.solution-item')) {
         setExpandedCard(null);
       }
     };
@@ -134,14 +138,50 @@ function home() {
       observerOptions
     );
 
+    // Did You Know section observer
+    const didYouKnowObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsDidYouKnowVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
+    // Solutions section observer
+    const solutionsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsSolutionsVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
     // Observe all sections
     if (aboutRef.current) {
       aboutObserver.observe(aboutRef.current);
+    }
+    if (didYouKnowRef.current) {
+      didYouKnowObserver.observe(didYouKnowRef.current);
+    }
+    if (solutionsRef.current) {
+      solutionsObserver.observe(solutionsRef.current);
     }
 
     return () => {
       if (aboutRef.current) {
         aboutObserver.unobserve(aboutRef.current);
+      }
+      if (didYouKnowRef.current) {
+        didYouKnowObserver.unobserve(didYouKnowRef.current);
+      }
+      if (solutionsRef.current) {
+        solutionsObserver.unobserve(solutionsRef.current);
       }
     };
   }, []);
@@ -249,7 +289,7 @@ function home() {
       </Box>
 
       {/* Did You Know Section */}
-      <Box className="did-you-know-section">
+      <Box className={`did-you-know-section ${isDidYouKnowVisible ? 'visible' : ''}`} ref={didYouKnowRef}>
         <div className="video-overlay"></div>
         <video 
           src={truckParkingVideo} 
@@ -371,13 +411,13 @@ function home() {
                   )}
                 </AnimatePresence>
               </Box>
-            ))}
+                          ))}
           </Box>
         </Box>
       </Box>
 
       {/* Marc'd Solutions Section */}
-      <Box className="marcd-solutions-section">
+      <Box className={`marcd-solutions-section ${isSolutionsVisible ? 'visible' : ''}`} ref={solutionsRef}>
         <div className="video-overlay"></div>
         <video 
           src={truckParkingVideo} 
@@ -392,45 +432,93 @@ function home() {
           </Typography>
           
           <Box className="solutions-grid">
-            <Box className="solution-item">
-              <ParkingIcon className="solution-icon" />
-              <Typography className="solution-title">Real-time parking</Typography>
-              <Typography className="solution-text">
-                Shows available safe spots right now, so you stop wasting hours hunting.
-              </Typography>
-            </Box>
-
-            <Box className="solution-item">
-              <Typography className="solution-icon">🥗</Typography>
-              <Typography className="solution-title">Wellness support</Typography>
-              <Typography className="solution-text">
-                Locates cleaner stops, healthier food—even halal options—so you can take care of yourself on the road.
-              </Typography>
-            </Box>
-
-            <Box className="solution-item">
-              <SpeedIcon className="solution-icon" />
-              <Typography className="solution-title">Speed alerts & compliance tools</Typography>
-              <Typography className="solution-text">
-                Helps you avoid CSA violations and protect your safety record.
-              </Typography>
-            </Box>
-
-            <Box className="solution-item">
-              <KeyboardVoiceIcon className="solution-icon" />
-              <Typography className="solution-title">Voice-activated & hands-free</Typography>
-              <Typography className="solution-text">
-                Keep eyes on the road while updating parking or checking conditions.
-              </Typography>
-            </Box>
-
-            <Box className="solution-item">
-              <Typography className="solution-icon">🤝</Typography>
-              <Typography className="solution-title">Community updates</Typography>
-              <Typography className="solution-text">
-                Drivers help each other with parking, hazards, or spotting—and earn rewards for it.
-              </Typography>
-            </Box>
+            {[
+              {
+                icon: <ParkingIcon className="solution-stat-icon" />,
+                title: "Real-time parking",
+                text: "Shows available safe spots right now, so you stop wasting hours hunting.",
+                detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally—save time, fuel, and avoid violations."
+              },
+              {
+                icon: <img src={healthFoodImg} alt="Healthy food" className="solution-stat-image" />,
+                title: "Wellness support",
+                text: "Locates cleaner stops, healthier food—even halal options—so you can take care of yourself on the road.",
+                detail: "Find truck stops with healthy meal options, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it while on the road."
+              },
+              {
+                icon: <SpeedIcon className="solution-stat-icon" />,
+                title: "Speed alerts & compliance tools",
+                text: "Helps you avoid CSA violations and protect your safety record.",
+                detail: "Real-time speed monitoring and DOT compliance alerts help you maintain a clean driving record. Avoid costly violations, insurance hikes, and protect your livelihood with proactive safety tools."
+              },
+              {
+                icon: <KeyboardVoiceIcon className="solution-stat-icon" />,
+                title: "Voice-activated & hands-free",
+                text: "Keep eyes on the road while updating parking or checking conditions.",
+                detail: "Complete hands-free operation means you can report conditions, check parking, and get navigation updates without ever taking your hands off the wheel or eyes off the road."
+              },
+              {
+                icon: <Typography className="solution-stat-emoji">🤝</Typography>,
+                title: "Community updates",
+                text: "Drivers help each other with parking, hazards, or spotting—and earn rewards for it.",
+                detail: "Join a supportive community where drivers look out for each other. Share parking updates, road conditions, and spotting assistance while earning Marc'er points that convert to real cash rewards."
+              }
+            ].map((solution, index) => (
+              <Box 
+                key={index} 
+                className={`solution-item ${expandedCard === index + 8 ? 'expanded' : ''}`}
+                onClick={() => toggleCard(index + 8)}
+                title={expandedCard === index + 8 ? "" : "Click for more details"}
+              >
+                <Box className="solution-header">
+                  <Box className="solution-main-content">
+                    {solution.icon}
+                    <Typography className="solution-text">
+                      {solution.text}
+                    </Typography>
+                  </Box>
+                  <motion.div
+                    className={`expand-arrow ${expandedCard === index + 8 ? 'expanded' : ''}`}
+                    animate={{ 
+                      rotate: expandedCard === index + 8 ? 90 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path 
+                        d="M9 18l6-6-6-6" 
+                        stroke="currentColor" 
+                        strokeWidth="2.5" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                      <path 
+                        d="M5 18l6-6-6-6" 
+                        stroke="currentColor" 
+                        strokeWidth="2.5" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
+                </Box>
+                <AnimatePresence>
+                  {expandedCard === index + 8 && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="solution-detail-container"
+                    >
+                      <Typography className="solution-detail">
+                        {solution.detail}
+                      </Typography>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Box>
+                          ))}
           </Box>
 
           <Typography className="tagline">
