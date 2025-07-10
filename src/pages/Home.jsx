@@ -18,6 +18,7 @@ import truckParkingVideo from '../assets/Truck_Parking_Home_Page.mp4';
 import healthFoodImg from '../assets/Health_Food.png';
 import truckIcon from '../assets/Truck_Icon.png';
 import launchingSoonImg from '../assets/Launching_Soon.png';
+import socialProofImg from '../assets/Social_Proof.png';
 
 function home() {
   const navigate = useNavigate();
@@ -414,6 +415,16 @@ function home() {
               >
                 Join Waitlist
               </Button>
+            </Box>
+            <Box className="social-proof-container" sx={{ mt: 2, textAlign: 'left' }}>
+              <img 
+                src={socialProofImg} 
+                alt="Social proof - trusted by truckers" 
+                className="social-proof-image"
+              />
+              <Box className="social-proof-text">
+                Stephen L. and 200+ others have already joined.
+              </Box>
             </Box>
           </Box>
           <Box className="home-hero-image-carousel">
