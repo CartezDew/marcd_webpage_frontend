@@ -67,7 +67,7 @@
     max-width: 1600px;
     margin: 0 auto;
     padding: 2rem 2rem;
-    padding-bottom: 12rem;
+    padding-bottom: 8rem;
   }
   
   .home-hero-content {
@@ -178,7 +178,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
   
   .home-main-image {
@@ -259,7 +259,7 @@
     .home-hero-section {
       padding: 1rem;
       min-height: auto;
-      padding-bottom: 4rem;
+      padding-bottom: 6rem;
     }
     
     .home-hero-content {
@@ -318,7 +318,7 @@
     .home-hero-section {
       padding: 0.5rem;
       min-height: auto;
-      padding-bottom: 3rem;
+      padding-bottom: 5rem;
     }
     
     .home-hero-content {
@@ -373,7 +373,7 @@
     .home-hero-section {
       padding: 0.5rem;
       min-height: auto;
-      padding-bottom: 2rem;
+      padding-bottom: 4rem;
     }
     
     .home-hero-content {
@@ -420,7 +420,7 @@
     }
     
     .home-hero-section {
-      padding-bottom: 1.5rem;
+      padding-bottom: 3rem;
     }
     
     .home-hero-content {
@@ -604,7 +604,18 @@
     font-weight: bold !important;
     color: #ffffff !important;
     text-align: center !important;
-    margin-bottom: 2rem !important;
+    margin-bottom: 4rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+
+  .truck-icon {
+    width: clamp(2.5rem, 5vw, 3.5rem);
+    height: clamp(2.5rem, 5vw, 3.5rem);
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(8%) sepia(100%) saturate(5000%) hue-rotate(355deg) brightness(90%) contrast(120%);
   }
 
   .facts-grid {
@@ -1141,6 +1152,11 @@
       padding: 3rem 1rem;
     }
 
+    .truck-icon {
+      width: clamp(2.2rem, 5vw, 3rem);
+      height: clamp(2.2rem, 5vw, 3rem);
+    }
+
     .facts-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
@@ -1254,7 +1270,12 @@
     
     .did-you-know-title {
       font-size: clamp(2rem, 6vw, 3rem) !important;
-      margin-bottom: 2rem !important;
+      margin-bottom: 3rem !important;
+    }
+
+    .truck-icon {
+      width: clamp(2.5rem, 7vw, 3.5rem);
+      height: clamp(2.5rem, 7vw, 3.5rem);
     }
     
     .fact-stat {

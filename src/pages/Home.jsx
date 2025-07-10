@@ -10,6 +10,7 @@ import '../styles/home.css';
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
 import truckParkingVideo from '../assets/Truck_Parking_Home_Page.mp4';
 import healthFoodImg from '../assets/Health_Food.png';
+import truckIcon from '../assets/Truck_Icon.png';
 
 function home() {
   const navigate = useNavigate();
@@ -259,7 +260,8 @@ function home() {
         />
         <Box className="did-you-know-content">
           <Typography variant="h3" className="did-you-know-title">
-            🚚 Did You Know?
+            <img src={truckIcon} alt="Truck" className="truck-icon" />
+            Did You Know?
           </Typography>
           
           <Box className="facts-grid">
