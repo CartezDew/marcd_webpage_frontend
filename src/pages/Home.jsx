@@ -11,6 +11,7 @@ import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
 import truckParkingVideo from '../assets/Truck_Parking_Home_Page.mp4';
 import healthFoodImg from '../assets/Health_Food.png';
 import truckIcon from '../assets/Truck_Icon.png';
+import launchingSoonImg from '../assets/Launching_Soon.png';
 
 function home() {
   const navigate = useNavigate();
@@ -21,10 +22,12 @@ function home() {
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isDidYouKnowVisible, setIsDidYouKnowVisible] = useState(false);
   const [isSolutionsVisible, setIsSolutionsVisible] = useState(false);
+  const [isWaitlistVisible, setIsWaitlistVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [expandedCard, setExpandedCard] = useState(null);
+  const [currentSection, setCurrentSection] = useState('hero');
   
   // Action words for cycling animation
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
@@ -103,6 +106,36 @@ function home() {
     waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Smooth scroll to next section (Did You Know)
+  const scrollToNextSection = () => {
+    didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Smooth scroll to top (Hero section)
+  const scrollToTop = () => {
+    aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Dynamic scroll function based on current section
+  const handleDynamicScroll = () => {
+    switch (currentSection) {
+      case 'hero':
+        didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      case 'didYouKnow':
+        solutionsRef.current?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      case 'solutions':
+        waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      case 'waitlist':
+        aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
+        break;
+      default:
+        didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Toggle card expansion
   const toggleCard = (cardIndex) => {
     setExpandedCard(expandedCard === cardIndex ? null : cardIndex);
@@ -132,6 +165,7 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsAboutVisible(true);
+            setCurrentSection('hero');
           }
         });
       },
@@ -144,6 +178,7 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsDidYouKnowVisible(true);
+            setCurrentSection('didYouKnow');
           }
         });
       },
@@ -156,6 +191,20 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsSolutionsVisible(true);
+            setCurrentSection('solutions');
+          }
+        });
+      },
+      observerOptions
+    );
+
+    // Waitlist section observer
+    const waitlistObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsWaitlistVisible(true);
+            setCurrentSection('waitlist');
           }
         });
       },
@@ -172,6 +221,9 @@ function home() {
     if (solutionsRef.current) {
       solutionsObserver.observe(solutionsRef.current);
     }
+    if (waitlistRef.current) {
+      waitlistObserver.observe(waitlistRef.current);
+    }
 
     return () => {
       if (aboutRef.current) {
@@ -182,6 +234,9 @@ function home() {
       }
       if (solutionsRef.current) {
         solutionsObserver.unobserve(solutionsRef.current);
+      }
+      if (waitlistRef.current) {
+        waitlistObserver.unobserve(waitlistRef.current);
       }
     };
   }, []);
@@ -282,9 +337,15 @@ function home() {
           </Box>
         </Box>
         
-        {/* Down Arrow to Scroll to Waitlist */}
-        <Box className="scroll-down-arrow" onClick={scrollToWaitlist}>
-          <FaChevronDown className="arrow-icon" />
+        {/* Dynamic Scroll Arrow */}
+        <Box 
+          className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}
+          onClick={handleDynamicScroll}
+          title={currentSection === 'waitlist' ? 'Back to top' : 'Next page'}
+        >
+          <FaChevronDown 
+            className={`arrow-icon ${currentSection === 'waitlist' ? 'rotated' : ''}`} 
+          />
         </Box>
       </Box>
 
@@ -528,37 +589,58 @@ function home() {
       </Box>
 
       {/* Join Waitlist Section - Different Background */}
-      <Box className="waitlist-section" ref={waitlistRef}>
+      <Box className={`waitlist-section ${isWaitlistVisible ? 'visible' : ''}`} ref={waitlistRef}>
         <Box className="waitlist-content">
           <Typography variant="h3" className="waitlist-title">
             Join the Waitlist
           </Typography>
+          <Box className="launching-soon-container">
+            <img 
+              src={launchingSoonImg} 
+              alt="Launching Soon" 
+              className="launching-soon-image"
+            />
+          </Box>
+          <Box className="perks-section">
+            <div className="perks-title-container">
+              <h2 className="perks-title">
+                Get early access, exclusive perks, and special launch rewards.
+              </h2>
+              <span className="confetti-container">
+                <span className="confetti">🎉</span>
+                <span className="confetti">✨</span>
+                <span className="confetti">🎊</span>
+                <span className="confetti">⭐</span>
+                <span className="confetti">🎁</span>
+              </span>
+            </div>
+          </Box>
           <Typography className="waitlist-description">
-            Be the first to experience Marc'd when we launch. Enter your email to get notified.
+            Be the first to experience Marc'd when we launch. Enter your email to get notified and receive the latest updates.
           </Typography>
           
           <Box component="form" onSubmit={handleWaitlistSubmit} className="waitlist-form">
-            <Box className="email-input-container">
-              <TextField
+            <Box className="email-input-wrapper">
+              <input
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
                 placeholder="Enter your email address"
-                variant="outlined"
-                error={!!emailError}
-                helperText={emailError}
-                className="email-input"
-                fullWidth
+                className="email-input-field"
               />
-              <Button
+              <button
                 type="submit"
-                variant="contained"
                 className="join-button"
                 disabled={!email || !!emailError}
               >
                 Join
-              </Button>
+              </button>
             </Box>
+            {emailError && (
+              <Typography className="error-message">
+                {emailError}
+              </Typography>
+            )}
             
             {isSubmitted && (
               <Typography className="success-message">

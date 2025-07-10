@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   AppBar, 
   Toolbar, 
@@ -25,16 +25,33 @@ import {
   Apps
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
+import { motion, useTime, useTransform, useSpring } from 'framer-motion';
 import '../styles/nav.css';
 import marcDLogo from '../assets/Marc-d_Logo.png';
 
 function Nav() {
   const location = useLocation();
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const [scrolled, setScrolled] = useState(false);
+
+  // Framer Motion animation setup (same as Home component)
+  const time = useTime();
+  const rotate = useTransform(time, [0, 3000], [0, 360], {
+    clamp: false,
+  });
+  const rotatingBg = useTransform(rotate, (r) => {
+    return `conic-gradient(from ${r}deg,rgb(222, 3, 3), #ff0000, #be0303d1, #c0c0c0, #a8a8a8, #be0303)`;
+  });
+
+  // Add pulsing animation
+  const pulse = useSpring(0, { damping: 0, mass: 5, stiffness: 10 });
+  const pulsingBg = useTransform(pulse, (r) => {
+    return `blur(${r}px)`;
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,16 +70,23 @@ function Nav() {
     return location.pathname === path;
   };
 
+  const isHomePage = location.pathname === '/';
+  
   const navItems = [
     { path: '/', label: 'Home', icon: <Map /> },
     { path: '/features', label: 'Features', icon: <Apps /> },
     { path: '/our-story', label: 'Our Story', icon: <People /> },
     { path: '/survey', label: 'Survey', icon: <Assessment /> },
     { path: '/contactus', label: 'Contact Us', icon: <Chat /> }
-  ];
+  ].filter(item => !(isHomePage && item.path === '/'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const goToWaitlist = () => {
+    // Navigate directly to home page with waitlist hash
+    navigate('/#waitlist');
   };
 
   const drawer = (
@@ -86,6 +110,16 @@ function Nav() {
             </ListItemButton>
           </ListItem>
         ))}
+        {!isHomePage && (
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={goToWaitlist}
+              className="nav-drawer-join-button"
+            >
+              <ListItemText primary="Join" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );
@@ -132,6 +166,28 @@ function Nav() {
                   {item.label}
                 </Button>
               ))}
+              {!isHomePage && (
+                <Box className="nav-join-button-container" sx={{ position: 'relative' }}>
+                  <motion.div
+                    className="absolute -inset-[1.5px] rounded-md"
+                    style={{
+                      position: 'absolute',
+                      inset: '-1px',
+                      borderRadius: '8px',
+                      background: rotatingBg,
+                      filter: pulsingBg,
+                      zIndex: 0,
+                      filter: 'blur(5px)',
+                    }}
+                  />
+                  <Button
+                    onClick={goToWaitlist}
+                    className="nav-join-button"
+                  >
+                    Join
+                  </Button>
+                </Box>
+              )}
             </Box>
           )}
         </Toolbar>
