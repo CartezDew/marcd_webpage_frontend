@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Typography, Container, Button } from '@mui/material';
+import { Box, Typography, Container, Button, Tooltip } from '@mui/material';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { 
   Navigation as NavigationIcon,
@@ -13,6 +13,7 @@ import {
   EmojiEvents as StarIcon,
   AttachMoney as CashIcon,
   KeyboardArrowUp as ArrowUpIcon,
+  KeyboardArrowDown as ArrowDownIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
 import '../styles/features.css';
@@ -42,6 +43,8 @@ function Features() {
   const [isSpotterVideoEnlarged, setIsSpotterVideoEnlarged] = useState(false);
   const [isStatisticsVideoEnlarged, setIsStatisticsVideoEnlarged] = useState(false);
   const [isFeatureRequestVideoEnlarged, setIsFeatureRequestVideoEnlarged] = useState(false);
+  const [isFirstViewport, setIsFirstViewport] = useState(true);
+  const featuresGridRef = useRef(null);
   const rewardsCardRef = useRef(null);
   const rewardsSectionRef = useRef(null);
   const navigationSectionRef = useRef(null);
@@ -65,6 +68,29 @@ function Features() {
     }, 100);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Intersection Observer for the features grid (first viewport)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFirstViewport(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3,
+        rootMargin: '0px'
+      }
+    );
+
+    if (featuresGridRef.current) {
+      observer.observe(featuresGridRef.current);
+    }
+
+    return () => {
+      if (featuresGridRef.current) {
+        observer.unobserve(featuresGridRef.current);
+      }
+    };
   }, []);
 
   // Intersection Observer for the rewards card
@@ -542,12 +568,24 @@ function Features() {
     };
   }, [isVideoEnlarged, isSpotterVideoEnlarged, isStatisticsVideoEnlarged, isFeatureRequestVideoEnlarged]);
 
-  // Scroll to top function
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+  // Scroll function - scrolls to next section if in first viewport, otherwise scrolls to top
+  const handleScrollAction = () => {
+    if (isFirstViewport) {
+      // Scroll to the first feature detail section (rewards section)
+      const rewardsSection = document.getElementById('rewards');
+      if (rewardsSection) {
+        rewardsSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else {
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const features = [
@@ -652,7 +690,7 @@ function Features() {
         </Box>
 
         {/* Features Grid */}
-        <Box className={`features-grid ${isVisible ? 'animate' : ''}`}>
+        <Box ref={featuresGridRef} className={`features-grid ${isVisible ? 'animate' : ''}`}>
           {features.map((feature, index) => (
             <Box 
               key={feature.id} 
@@ -1076,13 +1114,15 @@ function Features() {
         </Box>
       </Container>
 
-      {/* Scroll to Top Button */}
-      <Box 
-        className="scroll-to-top-button"
-        onClick={scrollToTop}
-      >
-        <ArrowUpIcon />
-      </Box>
+      {/* Scroll Button */}
+      <Tooltip title={isFirstViewport ? "Next Page" : "Back to top"} placement="left">
+        <Box 
+          className="scroll-to-top-button"
+          onClick={handleScrollAction}
+        >
+          {isFirstViewport ? <ArrowDownIcon /> : <ArrowUpIcon />}
+        </Box>
+      </Tooltip>
     </Box>
   );
 }

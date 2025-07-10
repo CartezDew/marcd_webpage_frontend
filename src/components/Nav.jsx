@@ -13,7 +13,8 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Tooltip
 } from '@mui/material';
 import { 
   LocalShipping, 
@@ -35,6 +36,7 @@ function Nav() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [logoClicked, setLogoClicked] = useState(false);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -89,11 +91,43 @@ function Nav() {
     navigate('/#waitlist');
   };
 
+  const handleLogoClick = (e) => {
+    if (isHomePage) {
+      e.preventDefault();
+      return;
+    }
+    
+    // Add click animation
+    setLogoClicked(true);
+    setTimeout(() => setLogoClicked(false), 200);
+    
+    // Navigate to home page
+    navigate('/');
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} className="nav-drawer-content">
-      <Box className="nav-drawer-logo-container">
-        <img src={marcDLogo} alt="Marc'd Logo" className="nav-drawer-logo" />
-      </Box>
+      <Tooltip 
+        title={isHomePage ? "" : "Back to home page"} 
+        placement="right"
+        arrow
+      >
+        <Box 
+          className={`nav-drawer-logo-container ${isHomePage ? 'disabled' : ''}`}
+          onClick={isHomePage ? undefined : handleLogoClick}
+          sx={{ 
+            cursor: isHomePage ? 'default' : 'pointer',
+            opacity: isHomePage ? 0.6 : 1,
+            transition: 'all 0.2s ease'
+          }}
+        >
+          <img 
+            src={marcDLogo} 
+            alt="Marc'd Logo" 
+            className={`nav-drawer-logo ${isHomePage ? 'disabled' : ''}`} 
+          />
+        </Box>
+      </Tooltip>
       <List>
         {navItems.map((item) => (
           <ListItem key={item.path} disablePadding>
@@ -132,17 +166,26 @@ function Nav() {
         className={`nav-appbar ${scrolled ? 'nav-shrink' : ''}`}
       >
         <Toolbar className="nav-toolbar">
-          <Box
-            component={Link}
-            to="/"
-            className="nav-logo-container"
+          <Tooltip 
+            title={isHomePage ? "" : "Back to home page"} 
+            placement="bottom"
+            arrow
           >
-            <img 
-              src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
-              alt="Marc'd Logo" 
-              className="nav-logo"
-            />
-          </Box>
+            <Box
+              onClick={handleLogoClick}
+              className={`nav-logo-container ${isHomePage ? 'disabled' : ''} ${logoClicked ? 'clicked' : ''}`}
+              sx={{ 
+                cursor: isHomePage ? 'default' : 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <img 
+                src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
+                alt="Marc'd Logo" 
+                className={`nav-logo ${isHomePage ? 'disabled' : ''}`}
+              />
+            </Box>
+          </Tooltip>
 
           {isMobile ? (
             <IconButton
@@ -184,7 +227,7 @@ function Nav() {
                     onClick={goToWaitlist}
                     className="nav-join-button"
                   >
-                    Join
+                    Join Waitlist
                   </Button>
                 </Box>
               )}

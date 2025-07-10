@@ -49,11 +49,59 @@
 .nav-logo {
   height: 95px; /* Fixed logo height */
   padding: 5px; /* Small padding around logo */
+  transition: all 0.2s ease; /* Smooth transitions */
+}
+
+/* Logo click animation */
+.nav-logo-container.clicked {
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.nav-logo-container.clicked .nav-logo {
+  filter: brightness(1.1); /* Brighten logo on click */
+}
+
+/* Logo disabled state */
+.nav-logo-container.disabled {
+  opacity: 0.6; /* Reduce opacity when disabled */
+  cursor: default !important; /* Override cursor */
+}
+
+.nav-logo.disabled {
+  filter: grayscale(0.3); /* Slight grayscale effect when disabled */
+}
+
+/* Logo hover effect (only when not disabled) */
+.nav-logo-container:not(.disabled):hover {
+  transform: scale(1.02); /* Slightly grow on hover */
+}
+
+.nav-logo-container:not(.disabled):hover .nav-logo {
+  filter: brightness(1.05); /* Slight brightening on hover */
 }
 
 /* Mobile drawer logo styling */
 .nav-drawer-logo {
   height: 80px; /* Smaller logo for mobile drawer */
+  transition: all 0.2s ease; /* Smooth transitions */
+}
+
+/* Mobile drawer logo disabled state */
+.nav-drawer-logo-container.disabled {
+  opacity: 0.6; /* Reduce opacity when disabled */
+}
+
+.nav-drawer-logo.disabled {
+  filter: grayscale(0.3); /* Slight grayscale effect when disabled */
+}
+
+/* Mobile drawer logo hover effect (only when not disabled) */
+.nav-drawer-logo-container:not(.disabled):hover {
+  transform: scale(1.02); /* Slightly grow on hover */
+}
+
+.nav-drawer-logo-container:not(.disabled):hover .nav-drawer-logo {
+  filter: brightness(1.05); /* Slight brightening on hover */
 }
 
 /* ===================================

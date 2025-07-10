@@ -1161,52 +1161,13 @@
     animation: subtlePulse 3s ease-in-out infinite;
   }
   
-  .scroll-to-top-button::before {
-    content: 'Scroll to Top';
-    position: absolute;
-    bottom: 100%;
-    right: 0;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    pointer-events: none;
-    margin-bottom: 0.5rem;
-  }
-  
-  .scroll-to-top-button::after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    right: 1rem;
-    width: 0;
-    height: 0;
-    border-left: 0.25rem solid transparent;
-    border-right: 0.25rem solid transparent;
-    border-top: 0.25rem solid rgba(0, 0, 0, 0.8);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    pointer-events: none;
-    margin-bottom: 0.25rem;
-  }
+  /* CSS tooltip removed - now using Material-UI Tooltip component */
   
   .scroll-to-top-button:hover {
     background: linear-gradient(135deg, #be0303, #be0303d1);
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(190, 3, 3, 0.4);
     animation: none; /* Stop pulsing on hover */
-  }
-  
-  .scroll-to-top-button:hover::before,
-  .scroll-to-top-button:hover::after {
-    opacity: 1;
-    transform: translateY(0);
   }
   
   .scroll-to-top-button svg {
