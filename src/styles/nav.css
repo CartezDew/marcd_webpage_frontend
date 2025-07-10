@@ -2,7 +2,7 @@
 
 /* Base AppBar styling with blur effect and transparency */
 .nav-appbar {
-  background-color: rgb(2255, 255, 255, 0.95) !important; /* Semi-transparent white background */
+  background-color: rgba(2255, 255, 255, 0.95) !important; /* Semi-transparent white background */
   backdrop-filter: blur(10px) !important; /* Blur effect for modern glass look */
   border-bottom: 1px solid #ddd !important; /* Subtle bottom border */
   height: 60px; /* Default height */
@@ -90,6 +90,49 @@
 /* Navigation button hover effect */
 .nav-button:hover {
   background-color: rgba(0, 0, 0, 0.08) !important; /* Darker background on hover */
+}
+
+/* ===================================
+   JOIN BUTTON (NAVBAR)
+   ================================== */
+
+/* Join button container for Framer Motion animation */
+.nav-join-button-container {
+  position: relative !important;
+  display: inline-block !important;
+}
+
+/* Desktop join button styling */
+.nav-join-button {
+  background: rgba(2255, 255, 255, 0.95)  !important; /* Transparent background to match other nav buttons */
+  color: #333 !important; /* Dark text color to match other buttons */
+  font-weight: 500 !important; /* Medium font weight like other buttons */
+  border-radius: 12px !important; /* Rounded corners like other buttons */
+  padding: 8px 20px !important; /* Same padding as other nav buttons */
+  font-size: 0.875rem !important; /* Smaller font size for less prominence */
+  text-transform: none !important; /* Preserve original text case */
+  border: none !important; /* No border */
+  position: relative !important; /* For z-index stacking */
+  z-index: 1 !important; /* Above the animated border */
+  transition: all 0.3s ease !important; /* Smooth transitions */
+}
+
+/* Join button hover effect */
+.nav-join-button:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important; /* Same hover effect as other nav buttons */
+}
+
+/* Mobile drawer join button */
+.nav-drawer-join-button {
+  text-align: center !important; /* Center-align text */
+  background-color: #be0303d1 !important; /* Red background */
+  color: white !important; /* White text */
+  margin: 8px 16px !important; /* Margin around button */
+  border-radius: 8px !important; /* Rounded corners */
+}
+
+.nav-drawer-join-button:hover {
+  background-color: #B71C1C !important; /* Darker red on hover */
 }
 
 /* ===================================
