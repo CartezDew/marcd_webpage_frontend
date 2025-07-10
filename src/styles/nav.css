@@ -207,7 +207,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 
 /* Desktop join button styling */
 .nav-join-button {
-  background: rgba(2255, 255, 255, 0.95)  !important; /* Transparent background to match other nav buttons */
+  background: rgba(255, 255, 255, 0.95) !important; /* Semi-transparent white background */
   color: #333 !important; /* Dark text color to match other buttons */
   font-weight: 500 !important; /* Medium font weight like other buttons */
   border-radius: 12px !important; /* Rounded corners like other buttons */
@@ -222,7 +222,9 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 
 /* Join button hover effect */
 .nav-join-button:hover {
-  background-color: rgba(0, 0, 0, 0.08) !important; /* Same hover effect as other nav buttons */
+  background: rgba(240, 240, 240, 0.95) !important; /* Slightly darker white on hover */
+  transform: translateY(-1px) !important; /* Subtle lift effect */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important; /* Subtle shadow for depth */
 }
 
 /* Mobile drawer join button */
