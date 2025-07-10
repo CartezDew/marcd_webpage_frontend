@@ -1,13 +1,19 @@
 // src/pages/home.jsx
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { Box, Typography, TextField, Button } from '@mui/material';
-import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
+import { Box, Typography, TextField, Button, IconButton } from '@mui/material';
+import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
+import Landing_Page_Img from '../assets/App_Landing_Page.png';
+import Statistics_Img from '../assets/App_Statistics.png';
+import Parking_Img from '../assets/App_Parking.png';
+import Places_Img from '../assets/App_Marc\'d_Places.png';
+import Navigation_Img from '../assets/App_Navigation.png';
+import Alerts_Img from '../assets/App_Alerts_Image.png';
 import truckParkingVideo from '../assets/Truck_Parking_Home_Page.mp4';
 import healthFoodImg from '../assets/Health_Food.png';
 import truckIcon from '../assets/Truck_Icon.png';
@@ -33,6 +39,18 @@ function home() {
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
+  // Hero image cycling animation
+  const heroImages = [
+    Main_Hero_Img, 
+    Landing_Page_Img, 
+    Statistics_Img, 
+    Alerts_Img,
+    Parking_Img, 
+    Places_Img, 
+    Navigation_Img
+  ];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   // Animated border setup following tutorial
   const time = useTime();
   const rotate = useTransform(time, [0, 3000], [0, 360], {
@@ -48,14 +66,69 @@ function home() {
     return `blur(${r}px)`;
   });
 
-  // Cycle through action words every 5 seconds
+  // Cycle through action words every 9 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
-    }, 5000);
+    }, 9000);
 
     return () => clearInterval(interval);
   }, [actionWords.length]);
+
+  // Manual image navigation functions
+  const goToPrevImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? heroImages.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      (prevIndex + 1) % heroImages.length
+    );
+  };
+
+  // Touch/swipe handling for mobile
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNextImage();
+    } else if (isRightSwipe) {
+      goToPrevImage();
+    }
+  };
+
+  // Get descriptive alt text for each image
+  const getImageAltText = (index) => {
+    const altTexts = [
+      "Marc'd app main page - Dashboard view with trucking features",
+      "Marc'd app landing page - Welcome and onboarding screen", 
+      "Marc'd app statistics - Performance analytics and tracking data",
+      "Marc'd app alerts - DOT alerts and safety notifications",
+      "Marc'd app parking - Truck parking finder and availability",
+      "Marc'd app places - Recommended truck-friendly locations",
+      "Marc'd app navigation - GPS and route planning features"
+    ];
+    return altTexts[index] || `Marc'd app view ${index + 1}`;
+  };
 
   // Email validation function
   const validateEmail = (email) => {
@@ -268,6 +341,22 @@ function home() {
     }
   };
 
+  // Animation variants for the hero image carousel (no exit animation)
+  const imageVariants = {
+    initial: { 
+      opacity: 0,
+      x: 20
+    },
+    animate: { 
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <Box className="home-page-container">
       {/* home Hero Section - Full Viewport */}
@@ -328,12 +417,59 @@ function home() {
               </Button>
             </Box>
           </Box>
-          <Box className="home-hero-image">
-            <img 
-              src={Main_Hero_Img} 
-              alt="Image of Marc'd app" 
-              className={`home-main-image ${isAboutVisible ? 'animate' : ''}`}
-            />
+          <Box className="home-hero-image-carousel">
+            {/* Left Navigation Arrow (Desktop) */}
+            <IconButton 
+              className="carousel-nav-left"
+              onClick={goToPrevImage}
+              aria-label="Previous image"
+            >
+              <ChevronLeft />
+            </IconButton>
+
+            {/* Image Container with Swipe Support */}
+            <Box 
+              className="carousel-image-container"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
+              <motion.img
+                key={currentImageIndex}
+                src={heroImages[currentImageIndex]}
+                alt={getImageAltText(currentImageIndex)}
+                className={`home-main-image ${isAboutVisible ? 'animate' : ''}`}
+                variants={imageVariants}
+                initial="initial"
+                animate="animate"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '100%',
+                  objectFit: 'contain'
+                }}
+              />
+              
+              {/* Image Indicators */}
+              <Box className="carousel-indicators">
+                {heroImages.map((_, index) => (
+                  <Box
+                    key={index}
+                    className={`carousel-dot ${index === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  />
+                ))}
+              </Box>
+            </Box>
+
+            {/* Right Navigation Arrow (Desktop) */}
+            <IconButton 
+              className="carousel-nav-right"
+              onClick={goToNextImage}
+              aria-label="Next image"
+            >
+              <ChevronRight />
+            </IconButton>
           </Box>
         </Box>
         
