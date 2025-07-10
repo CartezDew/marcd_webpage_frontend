@@ -4,8 +4,40 @@ import '../styles/survey.css';
 
 function Survey() {
   const widgetRef = useRef(null);
+  const introRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isIntroVisible, setIsIntroVisible] = useState(false);
 
+  // Intersection Observer for intro section animation
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const introObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsIntroVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
+    if (introRef.current) {
+      introObserver.observe(introRef.current);
+    }
+
+    return () => {
+      if (introRef.current) {
+        introObserver.unobserve(introRef.current);
+      }
+    };
+  }, []);
+
+  // Survey widget loading effect
   useEffect(() => {
     if (!document.getElementById('smcx-sdk')) {
       const script = document.createElement('script');
@@ -28,17 +60,24 @@ function Survey() {
   return (
     <>
       {/* ✅ Intro Section ABOVE the widget */}
-      <Box className="survey-intro-container">
+      <Box 
+        ref={introRef}
+        className={`survey-intro-container ${isIntroVisible ? 'animate' : ''}`}
+      >
         <Typography
           variant="h6"
           align="center"
-          className="survey-intro-heading"
+          className={`survey-intro-heading ${isIntroVisible ? 'animate' : ''}`}
           style={{ fontWeight: 'bold' }}
         >
           We'd love your feedback
         </Typography>
 
-        <Typography variant="body1" align="center" className="survey-intro-text">
+        <Typography 
+          variant="body1" 
+          align="center" 
+          className={`survey-intro-text ${isIntroVisible ? 'animate' : ''}`}
+        >
           This short survey takes approximately 5 minutes to complete. Your insights are incredibly valuable and will directly inform how we improve Marc'd to better serve you. Thank you for your time and input.
         </Typography>
       </Box>

@@ -1,203 +1,136 @@
 .survey-intro-container {
-  padding: 32px 16px 24px;
+  padding: 4rem 0.5rem 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  width: 100%;
+  margin: 0;
 }
 
 .survey-intro-heading {
-  color: white;
-  font-weight: 700;
-  margin-bottom: 8px;
-  text-align: center;
-  padding: 12px;
-  font-size: 2.5rem;
-  animation: headingSpectacular 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #d40505d1;
+
+  margin-bottom: 1rem;
+  line-height: 1.2;
   opacity: 0;
-  transform: translateY(50px) scale(0.8);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
-               0 0 40px rgba(25, 118, 210, 0.4),
-               0 0 60px rgba(25, 118, 210, 0.3);
-  background: linear-gradient(135deg, #ffffff, #e3f2fd, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  overflow: hidden;
+  transform: translateY(-30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.survey-intro-heading::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmer 2s ease-in-out;
-  animation-delay: 1.5s;
-  animation-fill-mode: forwards;
+.survey-intro-heading.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .survey-intro-text {
-  color: white;
-  font-size: 1.2rem;
-  max-width: 800px;
+  color: #b6b9bc;
+  font-size: 1.25rem !important;
+  max-width: 700px;
   text-align: center;
   font-weight: 400;
   line-height: 1.6;
-  animation: textElegantEntry 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: 0.8s;
+  margin: 0 auto;
   opacity: 0;
-  transform: translateY(30px);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: 0.3s;
 }
 
-/* Spectacular Heading Animation */
-@keyframes headingSpectacular {
-  0% {
-    opacity: 0;
-    transform: translateY(50px) scale(0.8) rotateX(20deg);
-    filter: blur(10px);
+.survey-intro-text.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Simple fade-in animation consistent with other pages */
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
   }
-  40% {
-    opacity: 0.7;
-    transform: translateY(20px) scale(0.95) rotateX(10deg);
-    filter: blur(5px);
-  }
-  70% {
-    opacity: 0.9;
-    transform: translateY(-5px) scale(1.05) rotateX(0deg);
-    filter: blur(2px);
-  }
-  85% {
-    opacity: 1;
-    transform: translateY(-2px) scale(1.02) rotateX(0deg);
-    filter: blur(0px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotateX(0deg);
-    filter: blur(0px);
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
   }
 }
 
-/* Elegant Text Entry Animation */
-@keyframes textElegantEntry {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-    filter: blur(5px);
-  }
-  60% {
-    opacity: 0.8;
-    transform: translateY(-2px);
-    filter: blur(1px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0px);
-  }
-}
-
-/* Shimmer Effect for Heading */
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-/* Responsive Typography */
+/* Responsive Design */
 @media (max-width: 1024px) {
+  .survey-intro-container {
+    padding: 3rem 0.5rem 2.5rem;
+    gap: 1.5rem;
+  }
+  
   .survey-intro-heading {
-    font-size: 2.2rem;
-    padding: 10px;
+    font-size: 2.5rem !important;
   }
   
   .survey-intro-text {
-    font-size: 1.1rem;
-    max-width: 700px;
+    font-size: 1.125rem !important;
+    max-width: 600px;
+  }
+  
+  .survey-widget-box {
+    max-width: 98vw;
   }
 }
 
 @media (max-width: 768px) {
   .survey-intro-container {
-    padding: 24px 12px 20px;
-    gap: 12px;
+    padding: 2.5rem 0.25rem 2rem;
+    gap: 1.5rem;
   }
   
   .survey-intro-heading {
-    font-size: 1.8rem;
-    padding: 8px;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4),
-                 0 0 30px rgba(25, 118, 210, 0.3),
-                 0 0 45px rgba(25, 118, 210, 0.2);
+    font-size: 2.25rem !important;
   }
   
   .survey-intro-text {
-    font-size: 1rem;
-    max-width: 600px;
+    font-size: 1rem !important;
+    max-width: 100%;
     line-height: 1.5;
+  }
+  
+  .survey-embed-container {
+    padding: 12px 4px;
+  }
+  
+  .survey-widget-box {
+    max-width: 99vw;
   }
 }
 
 @media (max-width: 480px) {
   .survey-intro-container {
-    padding: 20px 8px 16px;
-    gap: 10px;
+    padding: 2rem 0.25rem 1.5rem;
+    gap: 1rem;
   }
   
   .survey-intro-heading {
-    font-size: 1.5rem;
-    padding: 6px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
-                 0 0 20px rgba(25, 118, 210, 0.2),
-                 0 0 30px rgba(25, 118, 210, 0.1);
+    font-size: 1.875rem !important;
   }
   
   .survey-intro-text {
-    font-size: 0.9rem;
-    max-width: 500px;
+    font-size: 0.95rem !important;
     line-height: 1.4;
+  }
+  
+  .survey-embed-container {
+    padding: 8px 2px;
   }
 }
 
-/* Enhanced Mobile Animations */
+/* Improved mobile experience */
 @media (max-width: 768px) {
-  @keyframes headingSpectacular {
-    0% {
-      opacity: 0;
-      transform: translateY(40px) scale(0.9);
-      filter: blur(8px);
-    }
-    50% {
-      opacity: 0.8;
-      transform: translateY(-3px) scale(1.03);
-      filter: blur(2px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0px);
-    }
+  .survey-intro-heading.animate {
+    transition-duration: 0.6s;
   }
   
-  @keyframes textElegantEntry {
-    0% {
-      opacity: 0;
-      transform: translateY(25px);
-      filter: blur(3px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0px);
-    }
+  .survey-intro-text.animate {
+    transition-duration: 0.6s;
   }
 }
 
@@ -208,13 +141,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px;
+  padding: 16px 8px;
   background-color: #f4f6f8;
+  width: 100%;
 }
 
 .survey-widget-box {
   width: 100%;
-  max-width: 720px;
+  max-width: 95vw;
   min-height: 500px;
   position: relative;
   z-index: 1;
