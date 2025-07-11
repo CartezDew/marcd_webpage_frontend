@@ -19,11 +19,10 @@ import {
 import '../styles/features.css';
 // Import images
 import navigationImage from '../assets/App_Navigation.png';
-import statisticsImage from '../assets/App_Statistics.png';
 import parkingImage from '../assets/App_Parking.png';
 import alertsVideo from '../assets/Alerts_Demo.mp4';
 import spotterVideo from '../assets/Requesting_Spotter_Demo.mp4';
-import statisticsVideo from '../assets/statistics_demo.mp4';
+import statisticsVideo from '../assets/Statistics_Demo.mp4';
 import featureRequestVideo from '../assets/Feature_Request_Demo.mp4';
 
 function Features() {
