@@ -572,8 +572,11 @@ function home() {
         <Box 
           className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}
           onClick={handleDynamicScroll}
-          title={currentSection === 'waitlist' ? 'Back to top' : 'Next page'}
+          tabIndex={0}
         >
+          <div className="scroll-arrow-message">
+            {currentSection === 'waitlist' ? 'Back to top' : 'Next page'}
+          </div>
           <FaChevronDown 
             className={`arrow-icon ${currentSection === 'waitlist' ? 'rotated' : ''}`} 
           />

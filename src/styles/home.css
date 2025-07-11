@@ -672,7 +672,7 @@
   .scroll-down-arrow {
     position: fixed;
     bottom: 3rem;
-    left: 68.5%; /* Centered precisely on the image container */
+    left: calc(50% + 20%); /* adjust this based on where the carousel sits */
     transform: translateX(-50%);
     cursor: pointer;
     z-index: 1000;
@@ -682,7 +682,6 @@
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    margin-top: 5rem;
   }
 
   /* Fine-tune positioning for different desktop widths */
@@ -2007,7 +2006,53 @@
     color: #fff;
     letter-spacing: 0.01em;
   }
+
+.scroll-arrow-message {
+  position: fixed;
+  bottom: 3rem;
+  left: calc(50% + 15%); /* adjust this based on where the carousel sits */
+  transform: translateX(-50%) translateY(0);
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.35rem;
+  font-size: 0.97rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.3s, transform 0.3s;
+  margin-bottom: 0.4rem;
+}
+.scroll-down-arrow:hover .scroll-arrow-message,
+.scroll-down-arrow:focus .scroll-arrow-message {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(-4px);
+}
+.scroll-arrow-message::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 0.35rem solid transparent;
+  border-right: 0.35rem solid transparent;
+  border-top: 0.35rem solid rgba(0, 0, 0, 0.85);
+}
   
+.scroll-down-arrow {
+  position: fixed;
+  bottom: 3rem;
+  left: calc(50% + 18%);
+  transform: translateX(300px); /* adjust until centered on the image */
+  /* rest of your styles... */
+}
 
   
   
