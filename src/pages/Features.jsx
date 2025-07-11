@@ -61,6 +61,11 @@ function Features() {
   const featureRequestVideoRef = useRef(null);
   const confettiIntervalRef = useRef(null);
 
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   useEffect(() => {
     // Trigger animation after component mounts
     const timer = setTimeout(() => {

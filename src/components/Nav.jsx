@@ -87,8 +87,20 @@ function Nav() {
   };
 
   const goToWaitlist = () => {
-    // Navigate directly to home page with waitlist hash
-    navigate('/#waitlist');
+    if (location.pathname !== '/') {
+      navigate('/#waitlist');
+    } else {
+      // If already on home, try to call scrollToWaitlist if available
+      if (typeof window.scrollToWaitlist === 'function') {
+        window.scrollToWaitlist();
+      } else {
+        // Fallback: scroll to element with id 'waitlist'
+        const el = document.getElementById('waitlist');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
   };
 
   const handleLogoClick = (e) => {

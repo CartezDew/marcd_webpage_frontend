@@ -7,6 +7,20 @@ import '../styles/survey.css';
 // Import social proof image
 import socialProofImage from '../assets/Social_Proof.png';
 
+// Animation variants for cards
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.12,
+      duration: 0.7,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
+  })
+};
+
 function Survey() {
   const [isLoading, setIsLoading] = useState(true);
   const [isIntroVisible, setIsIntroVisible] = useState(false);
@@ -22,66 +36,107 @@ function Survey() {
   const surveyResponses = [
     [
       {
-        name: "Mike Johnson",
-        title: "Owner-Operator",
+        name: "Kenneth M.",
+        title: "Company Driver",
         type: "comment",
-        content: "This app has completely changed how I plan my routes. The real-time parking updates from other drivers are a game-changer. No more driving around for hours looking for a spot!"
+        content: "Less paid parking since 90% of drivers spend 1000's of dollars every week at these truck stops."
       },
       {
-        name: "Sarah Chen",
-        title: "Fleet Manager",
-        type: "qa",
-        question: "What's the most valuable feature for your drivers?",
-        response: "The DOT/Police alerts have been incredibly helpful. Our drivers feel much more prepared and confident on the road knowing what's ahead."
+        name: "Jato Trucking",
+        title: "Owner Operator",
+        type: "comment",
+        content: "Truck stop are there to provide truckers a place to rest. It should always be free parking FCFS. No reserved parking."
       },
       {
-        name: "David Rodriguez",
-        title: "Long-haul Driver",
+        name: "Nathan B.",
+        title: "Owner Operator",
         type: "comment",
-        content: "The voice controls are fantastic. I can keep my hands on the wheel and still get all the information I need. Safety first!"
+        content: "I don't feel that truckers should be responsible for paying for any apps to help with parking. Government should extend parking spots at rest areas. Most rest areas have limited spaces."
       }
     ],
     [
       {
-        name: "Lisa Thompson",
-        title: "Regional Hauler",
+        name: "Kenneth M.",
+        title: "Company Driver",
         type: "qa",
-        question: "How has Marc'd improved your daily routine?",
-        response: "The favorite places feature saves me so much time. I have all my regular stops saved and can navigate to them instantly."
+        question: "If searching for parking affects your sleep or alertness, can you describe how it impacts your driving experience?",
+        response: "Uncomfortable"
       },
       {
-        name: "James Wilson",
-        title: "Owner-Operator",
-        type: "comment",
-        content: "The community aspect is what makes this special. We're all looking out for each other out here. It's like having thousands of eyes on the road."
+        name: "Andre G.",
+        title: "Independent Contractor",
+        type: "qa",
+        question: "How does the difficulty in finding parking affect your daily schedule and earnings?",
+        response: "It really affects us as the time I take to find parking I’m either late for the next delivery or I don’t make it at all."
       },
       {
-        name: "Amanda Foster",
-        title: "Fleet Driver",
+        name: "Gift M.",
+        title: "Company Driver",
         type: "qa",
-        question: "What would you tell other drivers about Marc'd?",
-        response: "Don't wait to download this app. The parking updates alone have saved me hours of frustration. Plus, you can earn rewards just by helping other drivers!"
+        question: "What are the safety concerns you face when parking in unauthorized areas?",
+        response: "Theft"
       }
     ],
     [
       {
-        name: "Robert Kim",
-        title: "Owner-Operator",
-        type: "comment",
-        content: "The speed monitoring alerts are spot-on. I always know when speed limits change, especially in construction zones. It's like having a co-pilot."
-      },
-      {
-        name: "Jennifer Martinez",
-        title: "Regional Driver",
+        name: "Kelvin M.",
+        title: "Company Driver",
         type: "qa",
-        question: "How reliable are the community updates?",
-        response: "Very reliable! The community is active and updates come in real-time. I've learned to trust the information from other Marc'd users."
+        question: "How often do you need to take significant detours to find safe parking?",
+        response: "Three or more times a week"
       },
       {
-        name: "Thomas Brown",
-        title: "Long-haul Driver",
-        type: "comment",
-        content: "The spotter request feature is brilliant. When I'm backing into a tight dock, having someone guide me makes all the difference. Safety and efficiency!"
+        name: "Chad L.",
+        title: "Owner Operator",
+        type: "qa",
+        question: "How often do you need to take significant detours to find safe parking?",
+        response: "Three or more times a week"
+      },
+      {
+        name: "Clederson M.",
+        title: "Company Driver",
+        type: "qa",
+        question: "If searching for parking affects your sleep or alertness, can you describe how it impacts your driving experience?",
+        response: "Not really affected sleep or alertness trying to find a safe place to pull over. If the delivery location or shipper needs you to move out the way that’s when it gets difficult."
+      }
+    ],
+    [
+      {
+        name: "Roger M.",
+        title: "Company Driver",
+        type: "qa",
+        question: "Do you have any other comments or suggestions regarding finding truck parking or features for a parking app?",
+        response: "I think it would give a lot of truckers peace of mind knowing they will have a place to park instead of driving around looking for a spot."
+      },
+      {
+        name: "Nathan B.",
+        title: "Owner Operator",
+        type: "qa",
+        question: "If searching for parking affects your sleep or alertness, can you describe how it impacts your driving experience?",
+        response: "If I’m unable to find parking, you get into the red and lose hours of service (HOS) which could impact sleep."
+      },
+      {
+        name: "Brian V.",
+        title: "Company Driver",
+        type: "qa",
+        question: "How often do you park in an unsafe area due to lack of available parking?",
+        response: "Twice a week"
+      }
+    ],
+    [
+      {
+        name: "Don A.",
+        title: "Company Driver",
+        type: "qa",
+        question: "What are the safety concerns you face when parking in unauthorized areas?",
+        response: "Theft, people knocking on doors"
+      },
+      {
+        name: "Will H.",
+        title: "Owner Operator",
+        type: "qa",
+        question: "How does the difficulty in finding parking affect your daily schedule and earnings?",
+        response: "Loses money, sometimes have to pay to park"
       }
     ]
   ];
@@ -120,7 +175,7 @@ function Survey() {
         }
       },
       {
-        threshold: 0.3,
+        threshold: 0.7,
         rootMargin: '0px'
       }
     );
@@ -250,7 +305,7 @@ function Survey() {
       </Box>
 
       {/* ✅ Widget + Loader Container */}
-      <Container maxWidth="md" className="survey-embed-container">
+      <Container maxWidth="lg" className="survey-embed-container">
         <Box className={`survey-loading ${!isLoading ? 'fade-out' : ''}`}>
           <CircularProgress size={48} style={{ color: '#1976d2' }} />
           <Typography variant="body2" className="survey-loading-text">
@@ -286,6 +341,7 @@ function Survey() {
             <img 
               src={socialProofImage} 
               alt="Social proof - community feedback" 
+              className="survey-social-proof-image"
               style={{
                 maxWidth: '300px',
                 height: 'auto',
@@ -298,7 +354,7 @@ function Survey() {
             <Tooltip title="Back page" placement="left">
               <IconButton
                 onClick={prevResponseSet}
-                className="nav-arrow nav-arrow-left"
+                className={`nav-arrow nav-arrow-left${currentResponseSet === surveyResponses.length - 1 ? ' nav-arrow-animate' : ''}`}
                 aria-label="Previous responses"
               >
                 ‹
@@ -312,7 +368,7 @@ function Survey() {
             <Tooltip title="Next page" placement="right">
               <IconButton
                 onClick={nextResponseSet}
-                className="nav-arrow nav-arrow-right"
+                className={`nav-arrow nav-arrow-right${currentResponseSet < surveyResponses.length - 1 ? ' nav-arrow-animate' : ''}`}
                 aria-label="Next responses"
               >
                 ›
@@ -331,12 +387,16 @@ function Survey() {
                 isTruncated = response.question.length > 60 || response.response.length > 60;
               }
               return (
-                <Box 
-                  key={`${currentResponseSet}-${index}`}
+                <motion.div
+                  key={`${currentResponseSet}-${index}-${isResponsesVisible}`}
                   className={`response-card ${expandedCard === index ? 'expanded' : ''}`}
                   onClick={() => isTruncated && toggleCard(index)}
                   title={isTruncated ? (expandedCard === index ? "" : "Click for full response") : undefined}
                   style={{ cursor: isTruncated ? 'pointer' : 'default' }}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate={isResponsesVisible ? "visible" : "hidden"}
+                  custom={index + 1}
                 >
                   <Box className="response-header">
                     <Box className="response-main-content">
@@ -426,7 +486,7 @@ function Survey() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </Box>
+                </motion.div>
               );
             })}
           </Box>

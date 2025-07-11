@@ -180,6 +180,23 @@ function home() {
     waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Expose scrollToWaitlist globally for navbar access
+  useEffect(() => {
+    window.scrollToWaitlist = scrollToWaitlist;
+    return () => {
+      delete window.scrollToWaitlist;
+    };
+  }, []);
+
+  // Scroll to waitlist if hash is present on mount
+  useEffect(() => {
+    if (window.location.hash === '#waitlist') {
+      setTimeout(() => {
+        waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100); // Delay to ensure DOM is ready
+    }
+  }, []);
+
   // Smooth scroll to next section (Did You Know)
   const scrollToNextSection = () => {
     didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -731,11 +748,34 @@ function home() {
           <Typography className="tagline">
             Because "The journey is easier when it's Marc'd."
           </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                mt: 2,
+                color: '#be0303',
+                borderColor: '#be0303',
+                fontWeight: 600,
+                borderRadius: '20px',
+                textTransform: 'none',
+                background: 'rgba(255, 255, 255, 0.48)',
+                '&:hover': {
+                  background: 'rgba(190,3,3,0.08)',
+                  borderColor: '#be0303',
+                  color: '#be0303',
+                },
+              }}
+              onClick={() => navigate('/features')}
+            >
+              See Features
+            </Button>
+          </Box>
         </Box>
       </Box>
 
       {/* Join Waitlist Section - Different Background */}
-      <Box className={`waitlist-section ${isWaitlistVisible ? 'visible' : ''}`} ref={waitlistRef}>
+      <Box id="waitlist" className={`waitlist-section ${isWaitlistVisible ? 'visible' : ''}`} ref={waitlistRef}>
         <Box className="waitlist-content">
           <Typography variant="h3" className="waitlist-title">
             Join the Waitlist

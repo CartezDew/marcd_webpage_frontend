@@ -1321,13 +1321,18 @@
   .marcd-solutions-content .solution-detail-container {
     overflow: hidden;
     margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .marcd-solutions-content .solution-detail {
     font-size: 0.9rem !important;
     color: #cccccc !important;
     line-height: 1.5 !important;
+    font-style: italic;
     text-align: center;
+    display: block;
+    margin-top: 0.5rem;
   }
 
   .marcd-solutions-content .expand-arrow {
