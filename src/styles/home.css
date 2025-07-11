@@ -668,7 +668,7 @@
     }
   }
   
-  /* Scroll Down Arrow - Always visible in viewport */
+  /* Scroll Down Arrow - Always visible in viewport THIS IS WHERE I CHANGED THE POSITIONING FOR THE SCROLL DOWN ARROW */
   .scroll-down-arrow {
     position: fixed;
     bottom: 3rem;
