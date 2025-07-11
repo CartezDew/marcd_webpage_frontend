@@ -75,7 +75,7 @@ function home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [actionWords.length]);
@@ -488,7 +488,13 @@ function home() {
                 Join Waitlist
               </Button>
             </Box>
-            <Box className="social-proof-container" sx={{ mt: 2, textAlign: 'left' }}>
+            <motion.div
+              className="social-proof-container"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: isAboutVisible ? 1 : 0, y: isAboutVisible ? 0 : 30 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.7 }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginTop: '1rem' }}
+            >
               <img 
                 src={socialProofImg} 
                 alt="Social proof - trusted by truckers" 
@@ -497,7 +503,7 @@ function home() {
               <Box className="social-proof-text">
                 Stephen L. and 200+ others have already joined.
               </Box>
-            </Box>
+            </motion.div>
           </Box>
           <Box className="home-hero-image-carousel">
             {/* Left Navigation Arrow (Desktop) */}
@@ -566,8 +572,11 @@ function home() {
         <Box 
           className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}
           onClick={handleDynamicScroll}
-          title={currentSection === 'waitlist' ? 'Back to top' : 'Next page'}
+          tabIndex={0}
         >
+          <div className="scroll-arrow-message">
+            {currentSection === 'waitlist' ? 'Back to top' : 'Next page'}
+          </div>
           <FaChevronDown 
             className={`arrow-icon ${currentSection === 'waitlist' ? 'rotated' : ''}`} 
           />
