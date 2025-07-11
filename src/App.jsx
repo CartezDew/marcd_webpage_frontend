@@ -69,49 +69,7 @@ const theme = createTheme({
 });
 
 function App() {
-  const [userLocation, setUserLocation] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Get user's current location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-          setLoading(false);
-        },
-        (error) => {
-          // Silently handle geolocation errors - user may have denied permission
-          // or location services may be disabled
-          if (error.code !== error.PERMISSION_DENIED) {
-            console.log('Geolocation access was denied or is unavailable');
-          }
-          setLoading(false);
-        },
-        {
-          enableHighAccuracy: false,
-          timeout: 10000,
-          maximumAge: 600000 // 10 minutes
-        }
-      );
-    } else {
-      console.log('Geolocation is not supported by this browser.');
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>Getting your location...</p>
-      </div>
-    );
-  }
-
+  // Remove userLocation and loading state
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -119,8 +77,8 @@ function App() {
         <Nav />
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Home userLocation={userLocation} />} />
-            <Route path="/truck-stops" element={<TruckStops userLocation={userLocation} />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/truck-stops" element={<TruckStops />} />
             <Route path="/truck-stops/:id" element={<TruckStopDetail />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/survey" element={<Survey />} />

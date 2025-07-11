@@ -4,7 +4,7 @@ import { FaSearch, FaFilter, FaStar, FaParking, FaShower, FaUtensils, FaTools, F
 import { truckStopsAPI } from '../services/truckStops';
 import TruckStopCard from '../components/TruckStopCard';
 
-function TruckStops({ userLocation }) {
+function TruckStops() {
   const [truckStops, setTruckStops] = useState([]);
   const [filteredStops, setFilteredStops] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,17 +27,9 @@ function TruckStops({ userLocation }) {
 
   const fetchTruckStops = async () => {
     try {
-      let data;
-      if (userLocation) {
-        // Get nearby stops if user location is available
-        const response = await truckStopsAPI.getNearby(userLocation.lat, userLocation.lng);
-        data = response.data;
-      } else {
-        // Get all stops if no user location
-        const response = await truckStopsAPI.getAll();
-        data = response.data;
-      }
-      setTruckStops(data);
+      // Always fetch all stops, never use userLocation
+      const response = await truckStopsAPI.getAll();
+      setTruckStops(response.data);
     } catch (error) {
       console.error('Error fetching truck stops:', error);
     } finally {
@@ -190,11 +182,7 @@ function TruckStops({ userLocation }) {
       <div className="results-section">
         <div className="results-header flex flex-between align-center mb-2">
           <h2>Results ({filteredStops.length})</h2>
-          {userLocation && (
-            <span className="location-note">
-              Showing stops near your location
-            </span>
-          )}
+          {/* Removed userLocation related span */}
         </div>
 
         {filteredStops.length === 0 ? (

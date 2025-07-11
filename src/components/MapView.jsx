@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { FaMapMarkedAlt, FaTruck } from 'react-icons/fa';
 
-function MapView({ userLocation, truckStops }) {
+function MapView({ truckStops }) {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    if (userLocation && truckStops.length > 0) {
+    if (truckStops.length > 0) {
       renderMap();
     }
-  }, [userLocation, truckStops]);
+  }, [truckStops]);
 
   const renderMap = () => {
     if (!mapRef.current) return;
@@ -38,14 +38,7 @@ function MapView({ userLocation, truckStops }) {
     const mapContent = document.createElement('div');
     mapContent.className = 'map-content';
     
-    // Add user location marker
-    const userMarker = document.createElement('div');
-    userMarker.className = 'map-marker user-marker';
-    userMarker.innerHTML = '<FaMapMarkedAlt />';
-    userMarker.title = 'Your Location';
-    mapContent.appendChild(userMarker);
-
-    // Add truck stop markers
+    // Only render truck stop markers
     truckStops.forEach((stop, index) => {
       const stopMarker = document.createElement('div');
       stopMarker.className = 'map-marker truck-stop-marker';
@@ -75,24 +68,10 @@ function MapView({ userLocation, truckStops }) {
     mapContainer.appendChild(mapInfo);
   };
 
-  if (!userLocation) {
-    return (
-      <div className="map-container">
-        <div className="text-center">
-          <p>Location access required to show map</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="map-container">
       <div ref={mapRef} className="simple-map">
-        {!userLocation && (
-          <div className="text-center">
-            <p>Loading map...</p>
-          </div>
-        )}
+        {/* No userLocation or loading message */}
       </div>
     </div>
   );

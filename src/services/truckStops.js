@@ -7,10 +7,6 @@ export const truckStopsAPI = {
   // Get a specific truck stop
   getById: (id) => api.get(`/truck-stops/${id}/`),
   
-  // Get nearby truck stops
-  getNearby: (lat, lng, unit = 'miles') => 
-    api.get(`/truck-stops/nearby/?lat=${lat}&lng=${lng}&unit=${unit}`),
-  
   // Create a new truck stop
   create: (data) => api.post('/truck-stops/', data),
   
