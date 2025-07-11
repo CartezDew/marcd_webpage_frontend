@@ -1,8 +1,8 @@
 // src/pages/home.jsx
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { Box, Typography, TextField, Button, IconButton } from '@mui/material';
-import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/material';
+import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
 import '../styles/home.css';
@@ -51,6 +51,10 @@ function home() {
     Navigation_Img
   ];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [carouselHovered, setCarouselHovered] = useState(false);
+  const [hasHoveredOnce, setHasHoveredOnce] = useState(false);
+  const carouselIntervalRef = useRef(null);
+  const carouselFirstHoverRef = useRef(false);
 
   // Animated border setup following tutorial
   const time = useTime();
@@ -71,7 +75,7 @@ function home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
-    }, 9000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [actionWords.length]);
@@ -116,6 +120,32 @@ function home() {
       goToPrevImage();
     }
   };
+
+  // Auto-advance on hover every 7 seconds, and advance immediately on first hover
+  useEffect(() => {
+    if (carouselHovered) {
+      if (!carouselFirstHoverRef.current) {
+        goToNextImage();
+        carouselFirstHoverRef.current = true;
+      }
+      carouselIntervalRef.current = setInterval(() => {
+        goToNextImage();
+      }, 7000);
+    } else {
+      if (carouselIntervalRef.current) {
+        clearInterval(carouselIntervalRef.current);
+        carouselIntervalRef.current = null;
+      }
+      carouselFirstHoverRef.current = false;
+    }
+    return () => {
+      if (carouselIntervalRef.current) {
+        clearInterval(carouselIntervalRef.current);
+        carouselIntervalRef.current = null;
+      }
+      carouselFirstHoverRef.current = false;
+    };
+  }, [carouselHovered]);
 
   // Get descriptive alt text for each image
   const getImageAltText = (index) => {
@@ -411,9 +441,34 @@ function home() {
               truckers.
             </Typography>
             <Typography className="home-hero-description">
-              From parking solutions to real-time updates and a supportive driver community, Marc'd stands beside you on every mile. 
-              Because trucking isn't just work — it's a way of life. It keeps this country moving, and you deserve a partner that moves with you.
+              Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
             </Typography>
+            <motion.div
+              className="home-hero-bullets"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ 
+                opacity: isAboutVisible ? 1 : 0, 
+                x: isAboutVisible ? 0 : -50 
+              }}
+              transition={{ 
+                duration: 0.8, 
+                ease: "easeOut",
+                delay: 0.3
+              }}
+            >
+              <Box className="hero-bullet">
+                <ParkingIcon className="hero-bullet-icon" />
+                <span>parking</span>
+              </Box>
+              <Box className="hero-bullet">
+                <UpdateIcon className="hero-bullet-icon" />
+                <span>updates</span>
+              </Box>
+              <Box className="hero-bullet">
+                <PeopleIcon className="hero-bullet-icon" />
+                <span>community</span>
+              </Box>
+            </motion.div>
             <Box className="hero-button-container" sx={{ position: 'relative' }}>
               <motion.div
                 className="absolute -inset-[1.5px] rounded-md"
@@ -446,13 +501,15 @@ function home() {
           </Box>
           <Box className="home-hero-image-carousel">
             {/* Left Navigation Arrow (Desktop) */}
-            <IconButton 
-              className="carousel-nav-left"
-              onClick={goToPrevImage}
-              aria-label="Previous image"
-            >
-              <ChevronLeft />
-            </IconButton>
+            <Tooltip title={<span className="carousel-tooltip">Click for Next Image</span>} placement="left" arrow classes={{ popper: 'carousel-tooltip-popper' }}>
+              <IconButton 
+                className="carousel-nav-left"
+                onClick={goToPrevImage}
+                aria-label="Previous image"
+              >
+                <ChevronLeft />
+              </IconButton>
+            </Tooltip>
 
             {/* Image Container with Swipe Support */}
             <Box 
@@ -460,6 +517,10 @@ function home() {
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
+              onClick={goToNextImage}
+              onMouseEnter={() => setCarouselHovered(true)}
+              onMouseLeave={() => setCarouselHovered(false)}
+              style={{ cursor: 'pointer' }}
             >
               <motion.img
                 key={currentImageIndex}
@@ -476,7 +537,6 @@ function home() {
                   objectFit: 'contain'
                 }}
               />
-              
               {/* Image Indicators */}
               <Box className="carousel-indicators">
                 {heroImages.map((_, index) => (
@@ -490,13 +550,15 @@ function home() {
             </Box>
 
             {/* Right Navigation Arrow (Desktop) */}
-            <IconButton 
-              className="carousel-nav-right"
-              onClick={goToNextImage}
-              aria-label="Next image"
-            >
-              <ChevronRight />
-            </IconButton>
+            <Tooltip title={<span className="carousel-tooltip">Click for Next Image</span>} placement="right" arrow classes={{ popper: 'carousel-tooltip-popper' }}>
+              <IconButton 
+                className="carousel-nav-right"
+                onClick={goToNextImage}
+                aria-label="Next image"
+              >
+                <ChevronRight />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Box>
         

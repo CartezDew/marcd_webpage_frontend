@@ -672,7 +672,7 @@
   .scroll-down-arrow {
     position: fixed;
     bottom: 3rem;
-    left: 70%; /* Centered precisely on the image container */
+    left: 68.5%; /* Centered precisely on the image container */
     transform: translateX(-50%);
     cursor: pointer;
     z-index: 1000;
@@ -1959,6 +1959,53 @@
     .waitlist-description {
       font-size: 1rem !important;
     }
+  }
+  
+  .home-hero-bullets {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .hero-bullet {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #9f9d9d;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  }
+  .hero-bullet-icon {
+    font-size: 3.5rem;
+    color: #be0303;
+    opacity: 1;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  }
+  
+  .carousel-tooltip-popper .MuiTooltip-tooltip {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.35rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .carousel-tooltip-popper .MuiTooltip-arrow {
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .carousel-tooltip {
+    font-size: 0.97rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.01em;
   }
   
 
