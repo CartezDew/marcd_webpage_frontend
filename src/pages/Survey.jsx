@@ -235,21 +235,12 @@ function Survey() {
     setCurrentResponseSet((prev) => (prev - 1 + surveyResponses.length) % surveyResponses.length);
   };
 
-  // Dynamic scroll function - scrolls to responses if in first viewport, otherwise scrolls to top
+  // Dynamic scroll function - always scrolls to responses section
   const handleScrollAction = () => {
-    if (isFirstViewport) {
-      // Scroll to the responses section
-      if (responsesRef.current) {
-        responsesRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else {
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    if (responsesRef.current) {
+      responsesRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       });
     }
   };
