@@ -23,7 +23,8 @@ import {
   Assessment,
   Menu,
   People,
-  Apps
+  Apps,
+  Login as LoginIcon
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { motion, useTime, useTransform, useSpring } from 'framer-motion';
@@ -257,6 +258,17 @@ function Nav() {
                   {item.label}
                 </Button>
               ))}
+              {isHomePage && (
+                <Button
+                  component={Link}
+                  to="/signin"
+                  startIcon={<LoginIcon />}
+                  className="nav-button"
+                  sx={{ ml: 2 }}
+                >
+                  Log In
+                </Button>
+              )}
               {!isHomePage && (
                 <Box className="nav-join-button-container" sx={{ position: 'relative' }}>
                   <motion.div

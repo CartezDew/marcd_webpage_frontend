@@ -1,0 +1,154 @@
+/* signin.css */
+
+.signin-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2rem 1rem;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.signin-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    background: #fff;
+}
+
+.signin-card-content {
+    padding: 2rem;
+}
+
+.signin-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.signin-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111;
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.signin-title.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.signin-subtitle {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #be0303;
+    margin-top: 0.3rem;
+}
+
+.signin-email-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.signin-email-text {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+
+.signin-edit-btn {
+    text-transform: none !important;
+    font-weight: 600 !important;
+    color: #be0303 !important;
+}
+
+.signin-input {
+    margin-bottom: 1rem;
+}
+
+.signin-input:first-of-type {
+    margin-bottom: 2.25rem;
+}
+
+.signin-icon {
+    color: #be0303;
+}
+
+.signin-forgot {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.signin-link {
+    color: #be0303;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.signin-error {
+    color: #be0303;
+    font-size: 0.92rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.signin-btn {
+    border-radius: 8px;
+    text-transform: none;
+    font-weight: 700;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.signin-btn.primary {
+    background: linear-gradient(90deg, #ff5a1f 0%, #be0303 100%);
+    color: white;
+    margin-bottom: 1.25rem;
+}
+
+.signin-btn.primary:hover {
+    background: linear-gradient(90deg, #be0303 0%, #ff5a1f 100%);
+}
+
+.signin-btn.secondary {
+    border: 2px solid #be0303;
+    color: #be0303;
+}
+
+.signin-btn.secondary:hover {
+    background: rgba(190,3,3,0.05);
+}
+
+.signin-footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.93rem;
+    color: #555;
+}
+
+.register-message {
+    background: #fff0f0;
+    color: #be0303;
+    border: 1px solid #ffd6d6;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 500;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(190,3,3,0.07);
+}
+  
