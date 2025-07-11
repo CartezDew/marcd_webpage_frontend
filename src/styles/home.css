@@ -1963,28 +1963,38 @@
   .home-hero-bullets {
     display: flex;
     flex-direction: row;
-    gap: 2.5rem;
+    gap: clamp(1rem, 3vw, 2.5rem);
     margin-top: 1.2rem;
     margin-bottom: 0.5rem;
     align-items: flex-start;
     justify-content: flex-start;
   }
+  
   .hero-bullet {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    font-size: 1.3rem;
+    gap: clamp(0.4rem, 2vw, 0.7rem);
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
     font-weight: 600;
     color: #9f9d9d;
     letter-spacing: 0.01em;
     text-shadow: 0 1px 2px rgba(0,0,0,0.07);
   }
+  
   .hero-bullet-icon {
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
     color: #be0303;
     opacity: 1;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
   }
+  
+  /* Center on smaller screens */
+  @media (max-width: 768px) {
+    .home-hero-bullets {
+      justify-content: center;
+    }
+  }
+  
   
   .carousel-tooltip-popper .MuiTooltip-tooltip {
     background: rgba(0, 0, 0, 0.85);
