@@ -75,7 +75,7 @@ function home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [actionWords.length]);
