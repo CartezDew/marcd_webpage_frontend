@@ -8,7 +8,7 @@ import {
   IconButton 
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import bethImg from '../assets/BethPitchDeck.png';
+import bethImg from '../assets/BethPitchDeck2.jpg';
 import linkedinIcon from '../assets/linkedin_icon.png';
 import '../styles/leadership_beth.css';
 

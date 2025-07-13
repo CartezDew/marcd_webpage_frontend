@@ -5,7 +5,7 @@ import { Box, Typography, Grid, CardMedia } from '@mui/material';
 import { FaFlag, FaBullseye } from 'react-icons/fa';
 import '../styles/ourstory.css';
 import cartezImg from '../assets/CartezPitchDeck.jpg';
-import bethImg from '../assets/BethPitchDeck.png';
+import bethImg from '../assets/BethPitchDeck2.jpg';
 import truckersImg from '../assets/truckers.jpeg';
 import sisterAndDadImg from '../assets/Sister and Dad.jpg';
 import personIcon from '../assets/person_icon.svg';
@@ -242,12 +242,13 @@ function OurStory() {
           {leaders.map((leader) => (
             <Grid item xs={12} sm={6} md={4} key={leader.name}>
               <Box className="leader-card">
-                <CardMedia
-                  component="img"
-                  image={leader.image}
-                  alt={leader.name}
-                  className="leader-image"
-                />
+                <Box className="leader-image-wrapper">
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    className="leader-image"
+                  />
+                </Box>
                 <Box className="leader-overlay">
                   <Typography className="leader-name">{leader.name}</Typography>
                   <Typography className="leader-title">{leader.title}</Typography>
