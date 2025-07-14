@@ -11,6 +11,8 @@ import sisterAndDadImg from '../assets/Sister and Dad.jpg';
 import personIcon from '../assets/person_icon.svg';
 import linkedinIcon from '../assets/linkedin_icon.png';
 
+
+
 function OurStory() {
   const navigate = useNavigate();
   const aboutRef = useRef(null);
@@ -21,6 +23,7 @@ function OurStory() {
   const [isStoryVisible, setIsStoryVisible] = useState(false);
   const [isStoryImageVisible, setIsStoryImageVisible] = useState(false);
   const [isLeadershipVisible, setIsLeadershipVisible] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const leaders = [
     {
@@ -133,6 +136,12 @@ function OurStory() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <Box className="our-story-container">
       {/* About Us Section */}
@@ -207,6 +216,15 @@ function OurStory() {
               >
                 Our Story
               </Typography>
+              {/* Conditionally render image inside text for mobile */}
+              {windowWidth <= 800 && (
+                <img 
+                  src={sisterAndDadImg} 
+                  alt="Family legacy in trucking industry" 
+                  className="story-image animate"
+                  style={{ float: 'right', margin: '0 0 1rem 1rem', maxWidth: '60%', height: 'auto', display: 'block' }}
+                />
+              )}
               <Typography className="story-hero-description">
                 Marc'd was built from lived experience and a generational connection to the trucking industry. Its founder, Cartez Dewberry, carries the legacy of his late father, Marcus Dewberry—a commercial truck driver with more than 30 years behind the wheel. For decades, Marcus shared stories of the challenges truckers face on the road: limited access to safe parking, healthy food, clean facilities, and long periods of isolation.
               </Typography>
@@ -219,62 +237,75 @@ function OurStory() {
                 Marc'd was created to bridge those gaps. Named in honor of Marcus Dewberry, the platform is a living tribute—one that carries his name, his mission, and the mark he left on the industry. It's not just a tech solution; it's a commitment to making life on the road safer, healthier, and more connected for the drivers who keep America moving.
               </Typography>
             </Box>
-            <Box className="story-hero-image" ref={storyImageRef}>
-              <img 
-                src={sisterAndDadImg} 
-                alt="Family legacy in trucking industry" 
-                className={`story-image ${isStoryImageVisible ? 'animate' : ''}`}
-              />
-            </Box>
+            {/* Only show image in side column for desktop */}
+            {windowWidth > 800 && (
+              <Box className="story-hero-image" ref={storyImageRef}>
+                <img 
+                  src={sisterAndDadImg} 
+                  alt="Family legacy in trucking industry" 
+                  className={`story-image${isStoryVisible ? ' animate' : ''}`}
+                />
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>
 
       {/* Leadership Section */}
       <Box className="leadership-section" ref={leadershipRef}>
-        <Typography 
-          variant="h3" 
-          className={`leadership-heading ${isLeadershipVisible ? 'animate' : ''}`}
-        >
-          Leadership
-        </Typography>
-        <Grid container spacing={4} justifyContent="center" className="leaders-grid">
-          {leaders.map((leader) => (
-            <Grid item xs={12} sm={6} md={4} key={leader.name}>
-              <Box className="leader-card">
-                <Box className="leader-image-wrapper">
-                  <img
-                    src={leader.image}
-                    alt={leader.name}
-                    className="leader-image"
-                  />
+  <Typography 
+    variant="h3" 
+    className={`leadership-heading ${isLeadershipVisible ? 'animate' : ''}`}
+  >
+    Leadership
+  </Typography>
+  <Grid 
+    container 
+    columns={{ xs: 12, sm: 12, md: 12 }} 
+    spacing={4} 
+    justifyContent="center" 
+    className="leaders-grid"
+  >
+    {leaders.map((leader) => (
+      <Grid 
+        gridColumn={{ xs: 12, sm: 6, md: 4 }} 
+        key={leader.name}
+      >
+        <Box className="leader-card">
+          <Box className="leader-image-wrapper">
+            <img
+              src={leader.image}
+              alt={leader.name}
+              className="leader-image"
+            />
+          </Box>
+          <Box className="leader-overlay">
+            <Typography className="leader-name">{leader.name}</Typography>
+            <Typography className="leader-title">{leader.title}</Typography>
+          </Box>
+          <Box className="leader-hover-overlay">
+            <Box className="hover-actions">
+              <Box className="hover-button" onClick={() => navigate(leader.route)}>
+                <Box className="button-icon">
+                  <img src={personIcon} alt="Person" style={{ width: '32px', height: '32px' }} />
                 </Box>
-                <Box className="leader-overlay">
-                  <Typography className="leader-name">{leader.name}</Typography>
-                  <Typography className="leader-title">{leader.title}</Typography>
-                </Box>
-                <Box className="leader-hover-overlay">
-                  <Box className="hover-actions">
-                    <Box className="hover-button" onClick={() => navigate(leader.route)}>
-                      <Box className="button-icon">
-                        <img src={personIcon} alt="Person" style={{ width: '32px', height: '32px' }} />
-                      </Box>
-                      <Typography className="button-label">ABOUT</Typography>
-                    </Box>
-                    <Box className="hover-button" onClick={() => handleFollowClick(leader)}>
-                      <Box className="button-icon">
-                        <img src={linkedinIcon} alt="LinkedIn" style={{ width: '32px', height: '32px' }} />
-                      </Box>
-                      <Typography className="button-label">FOLLOW</Typography>
-                    </Box>
-                  </Box>
-                </Box>
+                <Typography className="button-label">ABOUT</Typography>
               </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Box>
+              <Box className="hover-button" onClick={() => handleFollowClick(leader)}>
+                <Box className="button-icon">
+                  <img src={linkedinIcon} alt="LinkedIn" style={{ width: '32px', height: '32px' }} />
+                </Box>
+                <Typography className="button-label">FOLLOW</Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Grid>
+    ))}
+  </Grid>
+</Box>
+</Box>
+
   );
 }
 
