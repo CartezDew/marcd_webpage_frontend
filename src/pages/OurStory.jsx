@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, Grid, CardMedia } from '@mui/material';
 import { FaFlag, FaBullseye } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import '../styles/ourstory.css';
 import cartezImg from '../assets/CartezPitchDeck.jpg';
 import bethImg from '../assets/BethPitchDeck2.jpg';
@@ -19,10 +20,12 @@ function OurStory() {
   const storyRef = useRef(null);
   const storyImageRef = useRef(null);
   const leadershipRef = useRef(null);
+  const mvRef = useRef(null); // <-- Add this line
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isStoryVisible, setIsStoryVisible] = useState(false);
   const [isStoryImageVisible, setIsStoryImageVisible] = useState(false);
   const [isLeadershipVisible, setIsLeadershipVisible] = useState(false);
+  const [isMVVisible, setIsMVVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const leaders = [
@@ -106,6 +109,18 @@ function OurStory() {
       observerOptions
     );
 
+    // Mission & Vision section observer
+    const mvObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsMVVisible(true);
+          }
+        });
+      },
+      observerOptions
+    );
+
     // Observe all sections
     if (aboutRef.current) {
       aboutObserver.observe(aboutRef.current);
@@ -118,6 +133,9 @@ function OurStory() {
     }
     if (leadershipRef.current) {
       leadershipObserver.observe(leadershipRef.current);
+    }
+    if (mvRef.current) {
+      mvObserver.observe(mvRef.current);
     }
 
     return () => {
@@ -132,6 +150,9 @@ function OurStory() {
       }
       if (leadershipRef.current) {
         leadershipObserver.unobserve(leadershipRef.current);
+      }
+      if (mvRef.current) {
+        mvObserver.unobserve(mvRef.current);
       }
     };
   }, []);
@@ -169,9 +190,14 @@ function OurStory() {
       </Box>
 
       {/* Mission & Vision Section */}
-      <Box className="mv-section">
+      <Box className="mv-section" ref={mvRef}>
         <Box className="mv-row">
-          <Box className="mv-card">
+          <motion.div
+            className="mv-card"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isMVVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+          >
             <Box className="mv-header">
               <FaBullseye className="mv-icon" />
               <Typography className="mv-title">Our Mission</Typography>
@@ -179,8 +205,14 @@ function OurStory() {
             <Typography className="mv-desc">
               Marc'd empowers commercial drivers with real-time navigation, safe parking, and a supportive community—putting their well-being, safety, and success first.
             </Typography>
-          </Box>
-          <Box className="mv-card">
+          </motion.div>
+
+          <motion.div
+            className="mv-card"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isMVVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+          >
             <Box className="mv-header">
               <FaFlag className="mv-icon" />
               <Typography className="mv-title">Our Vision</Typography>
@@ -188,9 +220,11 @@ function OurStory() {
             <Typography className="mv-desc">
               To be the technology platform that eliminates inefficiencies in the transportation industry—enhancing driver well-being, reducing safety risks, and improving efficiency.
             </Typography>
-          </Box>
+          </motion.div>
         </Box>
       </Box>
+
+
 
       {/* Our Story Section */}
       <Box className="story-section" ref={storyRef}>
