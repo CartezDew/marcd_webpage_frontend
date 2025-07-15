@@ -106,9 +106,40 @@ function Leadership_Beth() {
           <Box className="bio-content-section">
             {/* Bio Section */}
             <Box className="bio-section">
-              <Typography variant="h3" className="bio-subtitle">
-                Meet Beth
-              </Typography>
+              {/* Mobile Profile Wrapper - only visible on small screens */}
+              <Box className="mobile-profile-wrapper">
+                {/* Mobile Profile Image */}
+                <img 
+                  src={bethImg} 
+                  alt="Beth Crosby, Co-Founder of Marc'd"
+                  className="mobile-profile-image"
+                />
+                {/* Mobile Profile Info */}
+                <Box className="mobile-profile-info">
+                  <Typography variant="h4" className="mobile-profile-title">
+                    Co-Founder
+                  </Typography>
+                  
+                  <Box className="mobile-divider-line"></Box>
+                </Box>
+              </Box>
+
+              <Box className="mobile-bio-header">
+                <Typography variant="h3" className="bio-subtitle">
+                  Meet Beth
+                </Typography>
+                <button 
+                  className="mobile-linkedin-button"
+                  onClick={handleLinkedInClick}
+                  aria-label="Contact Beth Crosby"
+                >
+                  <img 
+                    src={linkedinIcon} 
+                    alt="Contact" 
+                    className="mobile-linkedin-icon"
+                  />
+                </button>
+              </Box>
               <Typography 
                 variant="subtitle1" 
                 className={`bio-tagline ${showBold ? 'bold-effect' : ''}`}

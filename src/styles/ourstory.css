@@ -564,9 +564,10 @@
     margin: 0 auto;
     padding: 1rem;
   }
+}
  
 
-  @media (max-width: 7500px) {
+  @media (max-width: 750px) {
 
     .leaders-grid {
       display: grid;

@@ -78,6 +78,9 @@ function Leadership_Cartez() {
               </Box>
               
               <Box className="profile-card-content">
+                <Typography variant="h1" className="profile-name">
+                  Cartez Dewberry
+                </Typography>
                 <Typography variant="h3" className="profile-title">
                   Founder & CEO
                 </Typography>
@@ -104,9 +107,40 @@ function Leadership_Cartez() {
           <Box className="bio-content-section">
             {/* Bio Section */}
             <Box className="bio-section">
-              <Typography variant="h3" className="bio-subtitle">
-                Meet Cartez Dewberry
-              </Typography>
+              {/* Mobile Profile Wrapper - only visible on small screens */}
+              <Box className="mobile-profile-wrapper">
+                {/* Mobile Profile Image */}
+                <img 
+                  src={cartezImg} 
+                  alt="Cartez Dewberry, Founder & CEO of Marc'd"
+                  className="mobile-profile-image"
+                />
+                {/* Mobile Profile Info */}
+                <Box className="mobile-profile-info">
+                  <Typography variant="h4" className="mobile-profile-title">
+                    Founder & CEO
+                  </Typography>
+                  
+                  <Box className="mobile-divider-line"></Box>
+                </Box>
+              </Box>
+
+              <Box className="mobile-bio-header">
+                <Typography variant="h3" className="bio-subtitle">
+                  Meet Cartez Dewberry
+                </Typography>
+                <button 
+                  className="mobile-linkedin-button"
+                  onClick={handleLinkedInClick}
+                  aria-label="Visit Cartez Dewberry's LinkedIn profile"
+                >
+                  <img 
+                    src={linkedinIcon} 
+                    alt="LinkedIn" 
+                    className="mobile-linkedin-icon"
+                  />
+                </button>
+              </Box>
               <Typography 
                 variant="subtitle1" 
                 className={`bio-tagline ${showBold ? 'bold-effect' : ''}`}
