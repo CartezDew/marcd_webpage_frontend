@@ -35,7 +35,7 @@ function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery('(max-width:800px)');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoClicked, setLogoClicked] = useState(false);
 

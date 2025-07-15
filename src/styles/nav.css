@@ -298,65 +298,132 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   color: inherit !important; /* Inherit color from parent */
 }
 
-/* ===================================
-   RESPONSIVE DESIGN
-   ================================== */
+/* ===============================
+   NAVBAR & DRAWER VISIBILITY
+   =============================== */
 
-/* Hide drawer on desktop screens */
-@media (min-width: 961px) {
-  .nav-drawer {
+/* By default, hide mobile drawer */
+.nav-drawer, 
+.nav-drawer-container {
+  display: none !important;
+}
+
+/* On screens ≤800px: show drawer, shrink logo, etc */
+@media (max-width: 800px) {
+  .nav-drawer, 
+  .nav-drawer-container {
+    display: block !important;
+  }
+
+  /* Adjust logo size for mobile */
+  .nav-logo {
+    height: 80px !important;
+  }
+}
+
+/* On screens >800px: hide drawer */
+@media (min-width: 801px) {
+  .nav-drawer, 
+  .nav-drawer-container {
     display: none !important;
   }
 }
 
-/* Show drawer only on mobile screens */
-@media (max-width: 960px) {
-  .nav-drawer {
-    display: block !important;
-  }
-  
-  /* Adjust logo size for smaller screens */
-  .nav-logo {
-    height: 80px; /* Smaller logo on mobile */
-  }
-}
+/* ===============================
+   TOOLBAR & LOGO STYLES
+   =============================== */
 
-/* ===================================
-   MATERIAL-UI OVERRIDES
-   ================================== */
-
-/* Override Material-UI Toolbar default styles */
+/* Material-UI Toolbar default styles */
 .MuiToolbar-root {
-  min-height: 60px !important; /* Match AppBar height */
-  padding-left: 16px !important; /* Default left padding */
-  padding-right: 16px !important; /* Default right padding */
-  transition: min-height 0.3s ease; /* Smooth height transition */
+  min-height: 60px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  transition: min-height 0.3s ease;
 }
 
-/* Toolbar height adjustment when navbar shrinks */
+/* Shrink when scrolling */
 .nav-appbar.nav-shrink .MuiToolbar-root {
-  min-height: 48px !important; /* Match shrunk AppBar height */
+  min-height: 48px !important;
 }
 
-/* Material-UI Drawer paper styling */
+/* ===============================
+   MATERIAL-UI DRAWER PAPER
+   =============================== */
 .MuiDrawer-paper {
-  box-sizing: border-box !important; /* Include padding in width calculation */
-  width: 240px !important; /* Fixed drawer width */
+  box-sizing: border-box !important;
+  width: 240px !important;
 }
 
-/* Display drawer only on mobile */
-.nav-drawer-container {
-  display: none !important; /* Hidden by default */
+/* ===============================
+   OPTIONAL: NAVBAR LOGO SIZE ADJUST
+   =============================== */
+.nav-logo {
+  height: 95px !important;
+  padding: 5px !important;
+  transition: all 0.2s ease;
 }
 
-@media (max-width: 959px) {
-  .nav-drawer-container {
-    display: block !important; /* Show on mobile */
+
+@media (max-width: 1200px) {
+  .nav-toolbar {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .nav-logo {
+    height: 80px !important; /* slightly smaller logo */
+  }
+
+  .nav-button, .nav-join-button {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    font-size: 0.8rem !important;
   }
 }
 
-@media (min-width: 960px) {
-  .nav-drawer-container {
-    display: none !important; /* Hide on desktop */
+@media (max-width: 950px) {
+  .nav-toolbar {
+    padding-left: 8px !important;
+    padding-right: 14px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .nav-logo {
+    height: 70px !important; /* slightly smaller logo */
+  }
+
+  .nav-button, .nav-join-button {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    font-size: 0.7rem !important;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .nav-toolbar {
+    padding-left: 8px !important;
+    padding-right: 14px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .nav-logo {
+    height: 70px !important; /* slightly smaller logo */
+  }
+
+  .nav-button, .nav-join-button {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    font-size: 0.7rem !important;
   }
 }

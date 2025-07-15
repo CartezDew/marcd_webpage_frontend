@@ -386,8 +386,8 @@
 /* Grid container */
 .leaders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
-  gap: 4rem; /* reduced from 2rem */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+  gap: 2rem; /* reduced from 2rem */
   justify-content: center;
   align-items: start;
   max-width: 90%;
@@ -548,6 +548,36 @@
 
 /* Responsive Design */
 
+  /* Leadership Section */
+
+@media (max-width: 900px) {
+
+  .leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+    gap: 2rem; /* reduced from 2rem */
+    justify-content: center;
+    align-items: start;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+ 
+
+  @media (max-width: 7500px) {
+
+    .leaders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+      gap: 2rem; /* reduced from 2rem */
+      justify-content: center;
+      align-items: start;
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+  }
+
 @media (max-width: 700px) {
 
 
@@ -639,7 +669,7 @@
 .leaders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-  gap: 3rem; /* reduced from 2rem */
+  gap: 2rem; /* reduced from 2rem */
   justify-content: center;
   align-items: start;
   max-width: 90%;
@@ -689,10 +719,25 @@
   gap: .5rem; /* reduced from 2rem */
   justify-content: center;
   align-items: start;
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
   padding: 1rem;
 }
+}
+
+
+@media (max-width: 550px) {
+
+  .leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 180px));
+    gap: 1rem; /* reduced from 2rem */
+    justify-content: center;
+    align-items: start;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 1rem;
+  }
 }
 
 
@@ -781,7 +826,7 @@
 }
 .leaders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
   gap: 1rem; /* reduced from 2rem */
   justify-content: center;
   align-items: start;
