@@ -110,11 +110,11 @@
 
 .mv-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 3rem;
   max-width: 1400px;
   margin: 0 auto;
-  flex-wrap: wrap;
   padding: 0 2rem;
   align-items: stretch;
 }
@@ -133,16 +133,15 @@
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
   padding: 2rem;
-  flex: 1 1 400px;
-  max-width: 500px;
-  min-width: 350px;
+  flex: 1 1 calc(50% - 1.5rem); /* ensures 2 columns with gap accounted */
+  max-width: calc(50% - 1.5rem);
+  min-width: 250px; /* can adjust down if you want it to stack sooner */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   transition: transform 0.3s ease;
   opacity: 0;
   transform: translateX(80px);
-  /* overflow: hidden; */
 }
 
 .mv-card:hover {
@@ -339,7 +338,6 @@
 .story-hero-headline {
   font-size: 2.5rem !important;
   font-weight: 700 !important;
-  color: #1d4ed8;
   color: #be0303d1;
   margin-bottom: 1.5rem;
   line-height: 1.2;
@@ -372,7 +370,7 @@
   text-align: center;
   font-size: 2.4rem !important;
   font-weight: 800 !important;
-  color: #1e293b;
+  color: #be0303d1;
   margin-bottom: 3rem;
   padding-bottom: 1rem;
   opacity: 0;
@@ -563,15 +561,18 @@
   }
 } */
 
-@media (max-width: 800px) {
+@media (max-width: 700px) {
   .about-hero-content {
     flex-direction: column;
-    text-align: center;
+    text-align: left;
     gap: 2rem;
   }
   
   .about-hero-text {
+    text-align: left;
     max-width: 100%;
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
   
   .about-hero-image {
@@ -582,6 +583,17 @@
   .about-hero-headline {
     font-size: 2.25rem !important;
     padding-bottom: 1rem;
+  }
+
+
+  /* cards */
+
+  .mv-card {
+    
+    padding: 1rem;
+    flex: 1 1 calc(50% - 2rem); /* ensures 2 columns with gap accounted */
+    max-width: calc(50% - 1rem);
+    min-width: 200px; /* can adjust down if you want it to stack sooner */
   }
   
   .story-hero-content {
@@ -625,6 +637,40 @@
     text-align: left !important;
   }
 
+  /* Leadership Section smaller devices */
+
+.leadership-heading {
+  font-size: 2rem !important;
+  text-align: center !important;
+  padding-bottom: 1rem;
+}
+
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+  gap: 3rem; /* reduced from 2rem */
+  justify-content: center;
+  align-items: start;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Leader card */
+.leader-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  flex-direction: column;
+}
+
   /* .story-hero-headline {
     text-align: left;
     padding-bottom: 1rem;
@@ -644,11 +690,11 @@
     font-size: 1.875rem !important;
   }
   */
-  .mv-row {
+  /* .mv-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-  } 
+  }  */
   
   /*
   .leader-image {
@@ -669,16 +715,16 @@
     padding: 0.5rem;
   }
 } */
-
+/* 
 @media (max-width: 800px) {
   .story-hero-content {
     display: block !important;
-  }
+  } */
   /* .story-hero-image {
     width: 80%;
     margin-bottom: 1rem;
   } */
-  .story-hero-image img,
+  /* .story-hero-image img,
   .story-image {
     float: right;
     margin: 0 0 1rem 1rem;
@@ -687,7 +733,7 @@
     display: block;
     max-height: 100%;
     /* Soft edges for mobile, matching desktop */
-    -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+    /* -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
     mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
@@ -696,12 +742,12 @@
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
   }
   .story-hero-text {
-    max-width: 100%;
+    max-width: 100%; */ 
     /* The text will wrap around the floated image */
-  }
+  
 
 /* Animation for Mission & Vision section */
-.mv-row.animate-from-left {
+/* .mv-row.animate-from-left {
   animation: mvRowInLeft 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 @keyframes mvRowInLeft {
@@ -727,4 +773,4 @@
     opacity: 1;
     transform: translateX(0);
   }
-}
+} */
