@@ -118,19 +118,19 @@ function Leadership_Beth() {
               </Typography>
 
               <Typography className="bio-paragraph">
-                Beth Corbley is a seasoned tech leader with over 15 years of experience driving growth and building relationships at the intersection of technology, education, and impact. Currently serving as Director of Strategic Growth for Higher Education at Hootsuite, Beth partners with universities across the U.S. and Canada to amplify their digital presence, enhance community engagement, and drive institutional success through innovative social media strategies.
+                Beth Corbley is a seasoned tech leader, strategist, and storyteller with over 15 years of experience helping technology startups and emerging brands accelerate revenue, grow market share, and build authentic connections that last.
               </Typography>
 
               <Typography className="bio-paragraph">
-                Before joining Hootsuite, Beth held senior roles at industry leaders like Autodesk and RSMeans, as well as fast-scaling startups like Samsara and CostCenter. Throughout her career, she’s led high-performing sales teams and developed go-to-market strategies focused on consultative, value-based selling—particularly within public sector and government spaces.
+                Known for her consultative, relationship-driven style, Beth partners with brands to elevate their digital strategy and social media impact, shaping messaging that resonates, launching products that stick, and building communities that champion the story long after launch day. As Director of Strategic Growth at Hootsuite, Beth works alongside her clients to deliver insights on emerging trends, platform best practices, and social performance strategies that drive real engagement and measurable results. Throughout her career, she has held senior roles with industry innovators like Autodesk and RSMeans and stand out start-ups like Samsara and CostCenter, leading high-performing sales teams and go-to-market strategies focused on unlocking growth in competitive markets.
               </Typography>
 
               <Typography className="bio-paragraph">
-                Beth met the founder, Cartez Dewberry, while pursuing an MBA at Georgia State University. Their shared belief in entrepreneurship as a force for good, combined with Beth’s passion for digital storytelling and Cartez’s mission to uplift the trucking community, led them to team up and build Marc’d. As Cofounder, Beth leads marketing, sales, and strategic partnerships—bringing the Marc’d brand to life and helping to scale its reach across the logistics and transportation sector.
+                She and founder, Cartez Dewberry met while pursuing their Executive MBA at Georgia State University. Their shared belief in entrepreneurship as a force for good, combined with Beth’s passion for digital storytelling and Cartez’s mission to uplift the trucking community, led them to team up and build Marc’d. As Cofounder, Beth leads marketing, brand storytelling, and strategic partnerships, helping bring the Marc’d brand to life and scale its reach and impact from the ground up.
               </Typography>
 
               <Typography className="bio-paragraph">
-                A Florida native turned Atlanta local by way of Seattle and San Francisco, Beth is also a champion of social mobility, enrollment equity, and innovation in education. Outside of work, she’s an avid Peloton rider and enjoys life with her husband Eric and their rescue pup, Coco.
+                Originally from Florida and now an Atlanta local by way of Seattle and San Francisco, Beth is passionate about community building, digital innovation, and championing ideas that make a difference. Outside of work, she’s an avid Peloton rider, yogi and loves spending time with her husband Eric and their rescue pup, Coco.
               </Typography>
             </Box>
 

@@ -1,6 +1,6 @@
 /* Our Story Page - Following Marc'd Design System */
 .our-story-container {
-  padding: 0;
+  padding: 1;
   background: #ffffff;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
@@ -20,6 +20,8 @@
   margin: 0 auto;
   gap: 3rem;
   min-height: 250px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .about-hero-text {

@@ -73,9 +73,9 @@
 }
 
 .divider-line {
-  width: 60px;
+  width: 80px;
   height: 2px;
-  background: #2563eb;
+  background: linear-gradient(to right, transparent 0%, #be0303d1 20%, #be0303d1 80%, transparent 100%);
   border-radius: 1px;
   margin: 0.5rem 0;
 }
