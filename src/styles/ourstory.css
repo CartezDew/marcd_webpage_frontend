@@ -547,21 +547,12 @@
 }
 
 /* Responsive Design */
-/* @media (max-width: 1024px) {
-  .about-hero-content {
-    gap: 2rem;
-  }
-  
-  .about-hero-headline {
-    font-size: 2.5rem !important;
-  }
-  
-  .about-hero-description {
-    font-size: 1.125rem;
-  }
-} */
 
 @media (max-width: 700px) {
+
+
+
+  /* About Us Section */
   .about-hero-content {
     flex-direction: column;
     text-align: left;
@@ -670,107 +661,158 @@
   display: flex;
   flex-direction: column;
 }
+}
 
-  /* .story-hero-headline {
-    text-align: left;
-    padding-bottom: 1rem;
+
+
+@media (max-width: 600px) {
+
+  .mv-card {
+    
+    padding: 1rem;
+    flex: 1 1 calc(50% - 2rem); /* ensures 2 columns with gap accounted */
+    max-width: calc(50% - 1rem);
+    min-width: 400px; /* can adjust down if you want it to stack sooner */
   }
   
-  .story-hero-description {
-    max-width: 100%;
-    text-align: left;
-  }
   
-  .story-hero-image {
-    max-width: 100%;
-    align-items: left;
+
+.leadership-heading {
+  font-size: 2rem !important;
+  text-align: center !important;
+  padding-bottom: 1rem;
+}
+
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
+  gap: .5rem; /* reduced from 2rem */
+  justify-content: center;
+  align-items: start;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+}
+
+
+@media (max-width: 480px) {
+
+  .about-hero-content {
+    margin-left: -3rem;
+    margin-right: -3rem;
   }
-  
-  .story-hero-headline {
-    font-size: 1.875rem !important;
-  }
-  */
-  /* .mv-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }  */
-  
-  /*
-  .leader-image {
-    height: 300px;
-  }
-  
-  .leadership-heading {
+
+  .about-hero-text {
     font-size: 2rem !important;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .about-hero-description {
+    font-size: 1rem !important;
+  }
+  /* cards */
+
+  .mv-card {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 200px; /* or try 180px */
+    max-width: 500px;
+    font-size: 1.05rem; /* default size */
+    margin-left: -1rem;
+    margin-right: -1rem;
   }
   
-  .hover-actions {
-    gap: 1.5rem;
-  }
-  
-  .hover-button {
-    min-width: 70px;
-    min-height: 70px;
-    padding: 0.5rem;
-  }
-} */
-/* 
-@media (max-width: 800px) {
   .story-hero-content {
-    display: block !important;
-  } */
-  /* .story-hero-image {
-    width: 80%;
-    margin-bottom: 1rem;
-  } */
-  /* .story-hero-image img,
-  .story-image {
+    display: block;
+    text-align: left;
+  }
+
+  .story-hero-image img {
     float: right;
     margin: 0 0 1rem 1rem;
-    max-width: 80%;
-    height: 20%;
-    display: block;
-    max-height: 100%;
-    /* Soft edges for mobile, matching desktop */
-    /* -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
-    mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+    max-width: 50%;
+    height: auto;
   }
+
   .story-hero-text {
-    max-width: 100%; */ 
-    /* The text will wrap around the floated image */
+    max-width: 100%;
+  }
+
+  .story-hero-headline {
+    text-align: left !important;
+}
   
 
-/* Animation for Mission & Vision section */
-/* .mv-row.animate-from-left {
-  animation: mvRowInLeft 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-@keyframes mvRowInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-80px);
+  /* Hero Headline */
+
+  .our-story-hero {
+    align-items: flex-start;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  
+  .hero-headline, h3 {
+    text-align: left !important;
+    padding-bottom: 1rem;
   }
+
+  .hero-highlight {
+    text-align: left !important;
+    padding-bottom: 1rem;
+  }
+
+  .hero-subheadline {
+    text-align: left !important;
+  }
+
+  /* Leadership Section smaller devices */
+
+.leadership-heading {
+  font-size: 2rem !important;
+  text-align: center !important;
+  padding-bottom: 1rem;
 }
 
-.mv-card.animate-from-right {
-  animation: mvCardInRight 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+.leader-name {
+  font-size: .75rem !important;
 }
-@keyframes mvCardInRight {
-  from {
-    opacity: 0;
-    transform: translateX(80px);
+
+.leader-title {
+  font-size: .7rem !important;
+}
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  gap: 1rem; /* reduced from 2rem */
+  justify-content: center;
+  align-items: start;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Leader card */
+.leader-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  flex-direction: column;
+}
+}
+
+@media (max-width: 380px) {
+
+  /* About Us Section */
+
+  .about-hero-content {
+    flex-direction: column;
+    text-align: left;
+    gap: 2rem;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-} */
+}
