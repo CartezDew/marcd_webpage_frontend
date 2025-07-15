@@ -11,7 +11,7 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import cartezImg from '../assets/CartezPitchDeck.jpg';
 import linkedinIcon from '../assets/linkedin_icon.png';
-import '../styles/leadership_cartez.css';
+import '../styles/leadership.css';
 
 function Leadership_Cartez() {
   const navigate = useNavigate();
@@ -140,7 +140,7 @@ function Leadership_Cartez() {
             <Box className="action-section">
               <Button 
                 variant="contained" 
-                className="back-button-main"
+                className="back-button-our-story"
                 onClick={handleBackClick}
                 size="large"
               >

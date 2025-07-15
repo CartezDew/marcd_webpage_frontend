@@ -1,4 +1,4 @@
-/* Leadership Profile - Cartez Dewberry */
+
 /* Following Marc'd Design System */
 
 .leadership-profile-container {
@@ -8,7 +8,6 @@
   position: relative;
   padding: 2rem 0;
 }
-
 
 /* Main Container */
 .profile-container {
@@ -50,6 +49,9 @@
   position: relative;
   width: 100%;
   margin-bottom: 1.5rem;
+  background: linear-gradient(to right, transparent 0%, #be0303d1 20%, #be0303d1 80%, transparent 100%);
+  padding: 2px;
+  border-radius: 18px; /* Slightly larger to account for border */
 }
 
 .profile-image {
@@ -59,6 +61,9 @@
   object-fit: cover;
   border-radius: 16px;
   transition: transform 0.3s ease;
+  border: 3px solid transparent;
+  border-image: linear-gradient(to right, transparent 1.2rem, #be0303d1 20%, #010101d1 80%, transparent 90%) 1;
+  background: white; /* or whatever background you want */
 }
 
 .profile-image:hover {
@@ -83,8 +88,8 @@
 /* Bio Content Section */
 .bio-content-section {
   flex: 1;
-  padding-left: .8rem;
-  padding-right: .8rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .profile-name {
@@ -138,7 +143,7 @@
 .bio-tagline {
   font-size: 1.125rem !important;
   font-weight: 500 !important;
-  color: #2563eb !important;
+  color: #0136a9 !important;
   margin-bottom: 2rem !important;
   line-height: 1.5 !important;
   min-height: 2.25rem; /* Reserve space to prevent layout shift */
@@ -147,7 +152,7 @@
 
 /* Typewriter cursor */
 .typing-cursor {
-  color: #2563eb;
+  color: #0136a9;
   animation: blink 1s infinite;
   font-weight: normal;
 }
@@ -179,10 +184,14 @@
 /* Action Section */
 .action-section {
   margin-top: 3rem;
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  margin-top: 3rem;
 }
 
-.back-button-main {
-  background: #be0303 !important;
+.back-button-our-story {
+  background: linear-gradient(135deg, #0a0909,  #be0303, #be0303) !important;
   color: white !important;
   padding: 0.75rem 1.5rem !important;
   border-radius: 12px !important;
@@ -190,10 +199,12 @@
   font-weight: 500 !important;
   text-transform: none !important;
   transition: all 0.3s ease !important;
+  margin-left: 0 !important;
+  align-self: left !important;
 }
 
-.back-button-main:hover {
-  background: #26304a !important;
+.back-button-our-story:hover {
+  background: linear-gradient(135deg,#be0303,  #0a0909, #be0303) !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
@@ -232,13 +243,6 @@
 @media (max-width: 768px) {
   .leadership-profile-container {
     padding: 1rem 0;
-  }
-  
-  .back-button-nav {
-    top: 1rem !important;
-    left: 1rem !important;
-    padding: 0.5rem 0.75rem !important;
-    font-size: 0.75rem !important;
   }
   
   .profile-container {

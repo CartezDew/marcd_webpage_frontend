@@ -10,7 +10,7 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import bethImg from '../assets/BethPitchDeck2.jpg';
 import linkedinIcon from '../assets/linkedin_icon.png';
-import '../styles/leadership_beth.css';
+import '../styles/leadership.css';
 
 function Leadership_Beth() {
   const navigate = useNavigate();
@@ -138,7 +138,7 @@ function Leadership_Beth() {
             <Box className="action-section">
               <Button 
                 variant="contained" 
-                className="back-button-main"
+                className="back-button-our-story"
                 onClick={handleBackClick}
                 size="large"
               >
