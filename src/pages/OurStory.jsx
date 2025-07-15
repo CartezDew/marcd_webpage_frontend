@@ -286,58 +286,78 @@ function OurStory() {
       </Box>
 
       {/* Leadership Section */}
-      <Box className="leadership-section" ref={leadershipRef}>
-  <Typography 
-    variant="h3" 
-    className={`leadership-heading ${isLeadershipVisible ? 'animate' : ''}`}
-  >
-    Leadership
-  </Typography>
-  <Grid 
-    container 
-    columns={{ xs: 12, sm: 12, md: 12 }} 
-    spacing={4} 
-    justifyContent="center" 
-    className="leaders-grid"
-  >
-    {leaders.map((leader) => (
-      <Grid 
-        gridColumn={{ xs: 12, sm: 6, md: 4 }} 
-        key={leader.name}
-      >
-        <Box className="leader-card">
-          <Box className="leader-image-wrapper">
-            <img
-              src={leader.image}
-              alt={leader.name}
-              className="leader-image"
-            />
-          </Box>
-          <Box className="leader-overlay">
-            <Typography className="leader-name">{leader.name}</Typography>
-            <Typography className="leader-title">{leader.title}</Typography>
-          </Box>
-          <Box className="leader-hover-overlay">
-            <Box className="hover-actions">
-              <Box className="hover-button" onClick={() => navigate(leader.route)}>
-                <Box className="button-icon">
-                  <img src={personIcon} alt="Person" style={{ width: '32px', height: '32px' }} />
-                </Box>
-                <Typography className="button-label">ABOUT</Typography>
-              </Box>
-              <Box className="hover-button" onClick={() => handleFollowClick(leader)}>
-                <Box className="button-icon">
-                  <img src={linkedinIcon} alt="LinkedIn" style={{ width: '32px', height: '32px' }} />
-                </Box>
-                <Typography className="button-label">FOLLOW</Typography>
-              </Box>
-            </Box>
-          </Box>
+        <Box className="leadership-section" ref={leadershipRef}>
+          <Typography 
+            variant="h3" 
+            className={`leadership-heading ${isLeadershipVisible ? 'animate' : ''}`}
+          >
+            Leadership
+          </Typography>
+
+          <div className="leaders-grid">
+            {leaders.map((leader, index) => (
+              <motion.div
+              key={leader.name}
+              className="leader-card"
+              initial={{ 
+                opacity: 0, 
+                x: index === 0 ? -60 : 60, 
+                rotate: index === 0 ? -4 : 4,
+                scale: 0.98
+              }}
+              animate={isLeadershipVisible ? { 
+                opacity: 1, 
+                x: 0, 
+                rotate: 0,
+                scale: 1 
+              } : {}}
+              transition={{ 
+                duration: 1.2, 
+                ease: [0.25, 0.8, 0.25, 1], 
+                delay: index * 0.10 
+              }}
+              >
+                <div className="leader-image-wrapper">
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                  />
+                </div>
+                <div className="leader-overlay">
+                  <Typography className="leader-name">{leader.name}</Typography>
+                  <Typography className="leader-title">{leader.title}</Typography>
+                </div>
+                <div className="leader-hover-overlay">
+                  <div className="hover-actions">
+                    <div 
+                      className="hover-button" 
+                      onClick={() => navigate(leader.route)}
+                    >
+                      <div className="button-icon">
+                        <img src={personIcon} alt="Person" width="32" height="32" />
+                      </div>
+                      <Typography className="button-label">ABOUT</Typography>
+                    </div>
+                    <div 
+                      className="hover-button" 
+                      onClick={() => handleFollowClick(leader)}
+                    >
+                      <div className="button-icon">
+                        <img src={linkedinIcon} alt="LinkedIn" width="32" height="32" />
+                      </div>
+                      <Typography className="button-label">FOLLOW</Typography>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </Box>
-      </Grid>
-    ))}
-  </Grid>
-</Box>
+
+
+
+
+
 </Box>
 
   );

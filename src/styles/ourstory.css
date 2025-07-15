@@ -385,12 +385,18 @@
   transform: translateY(0);
 }
 
+/* Grid container */
 .leaders-grid {
-  justify-content: center !important;
-  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem; /* reduced from 2rem */
+  justify-items: center;
+  max-width: 80%;
   margin: 0 auto;
+  padding: 1rem;
 }
 
+/* Leader card */
 .leader-card {
   position: relative;
   border-radius: 18px;
@@ -398,9 +404,10 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  height: 100%;
-  max-width: 350px;
-  margin: 0 auto;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
 .leader-card:hover {
@@ -408,18 +415,24 @@
   box-shadow: 0 6px 32px rgba(0, 0, 0, 0.15);
 }
 
-.leader-image {
+/* Image container */
+.leader-image-wrapper {
+  flex: 1;
+  position: relative;
   width: 100%;
-  height: 350px;
-  max-width: 350px;
-  max-height: 350px;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  display: block;
-  margin: 0 auto;
+  height: 100%;
 }
 
+.leader-image-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text overlay */
 .leader-overlay {
   position: absolute;
   left: 0;
@@ -445,7 +458,7 @@
   opacity: 0.9;
 }
 
-/* Hover Overlay Styles */
+/* Hover overlay */
 .leader-hover-overlay {
   position: absolute;
   top: 0;
@@ -470,6 +483,7 @@
   opacity: 0;
 }
 
+/* Hover action buttons */
 .hover-actions {
   display: flex;
   gap: 2rem;
@@ -510,6 +524,9 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
+
+
+
 
 /* Animations */
 @keyframes fadeIn {
