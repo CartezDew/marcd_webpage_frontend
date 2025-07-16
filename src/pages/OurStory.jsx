@@ -27,6 +27,8 @@ function OurStory() {
   const [isLeadershipVisible, setIsLeadershipVisible] = useState(false);
   const [isMVVisible, setIsMVVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [hasHover, setHasHover] = useState(true);
+  const [showHoverNote, setShowHoverNote] = useState(false);
 
   const leaders = [
     {
@@ -103,6 +105,17 @@ function OurStory() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsLeadershipVisible(true);
+            // Show hover note when leadership section becomes visible
+            if (!hasHover) {
+              setShowHoverNote(true);
+              // Hide the note after 3 seconds
+              setTimeout(() => {
+                setShowHoverNote(false);
+              }, 3000);
+            }
+          } else {
+            // Reset the note visibility when section is not visible
+            setShowHoverNote(false);
           }
         });
       },
@@ -161,6 +174,18 @@ function OurStory() {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Detect hover capability
+  useEffect(() => {
+    const checkHoverCapability = () => {
+      setHasHover(window.matchMedia('(hover: hover)').matches);
+    };
+    
+    checkHoverCapability();
+    window.addEventListener('resize', checkHoverCapability);
+    
+    return () => window.removeEventListener('resize', checkHoverCapability);
   }, []);
 
   return (
@@ -352,6 +377,15 @@ function OurStory() {
               </motion.div>
             ))}
           </div>
+          
+          {/* Note for devices without hover */}
+          {!hasHover && showHoverNote && (
+            <Box className="leadership-hover-note flash-animation">
+              <Typography variant="body2" className="leadership-hover-note-text">
+                (Click leader's image to view their bio)
+              </Typography>
+            </Box>
+          )}
         </Box>
 
 

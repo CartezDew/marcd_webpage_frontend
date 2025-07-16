@@ -277,6 +277,13 @@
     padding: 1rem 0;
   }
   
+  /* Always show hover note on mobile */
+  .hover-note {
+    display: block !important;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
   .profile-container {
     padding: 3rem 1rem 2rem !important;
   }
@@ -577,4 +584,29 @@
 
 .leadership-profile-container {
   animation: fadeInUp 0.6s ease-out;
+}
+
+/* Hover note styles */
+.hover-note {
+  margin-top: 2rem;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(190, 3, 3, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(190, 3, 3, 0.2);
+}
+
+.hover-note-text {
+  color: #be0303 !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  margin: 0 !important;
+}
+
+/* Profile image container hover effect for devices with hover */
+@media (hover: hover) {
+  .profile-image-container:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+  }
 } 

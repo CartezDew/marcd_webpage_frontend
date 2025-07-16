@@ -18,6 +18,8 @@ function Leadership_Cartez() {
   const [displayedText, setDisplayedText] = useState('');
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [showBold, setShowBold] = useState(false);
+  const [hasHover, setHasHover] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const fullText = "Software Engineer | U.S. Marine Veteran | Former Owner-Operator";
 
@@ -28,6 +30,27 @@ function Leadership_Cartez() {
   const handleBackClick = () => {
     navigate('/our-story');
   };
+
+  // Detect hover capability and screen size
+  useEffect(() => {
+    const checkHoverCapability = () => {
+      setHasHover(window.matchMedia('(hover: hover)').matches);
+    };
+    
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkHoverCapability();
+    checkScreenSize();
+    window.addEventListener('resize', checkHoverCapability);
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => {
+      window.removeEventListener('resize', checkHoverCapability);
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -69,7 +92,11 @@ function Leadership_Cartez() {
           {/* Left Column - Profile Card */}
           <Box className="profile-card-section">
             <Box className="profile-card">
-              <Box className="profile-image-container">
+              <Box 
+                className="profile-image-container"
+                onClick={!hasHover ? handleLinkedInClick : undefined}
+                style={{ cursor: !hasHover ? 'pointer' : 'default' }}
+              >
                 <img 
                   src={cartezImg} 
                   alt="Cartez Dewberry, Founder & CEO of Marc'd"
@@ -87,18 +114,20 @@ function Leadership_Cartez() {
                 
                 <Box className="divider-line"></Box>
                 
-                {/* LinkedIn Button */}
-                <IconButton 
-                  className="linkedin-button"
-                  onClick={handleLinkedInClick}
-                  aria-label="Visit Cartez Dewberry's LinkedIn profile"
-                >
-                  <img 
-                    src={linkedinIcon} 
-                    alt="LinkedIn" 
-                    className="linkedin-icon"
-                  />
-                </IconButton>
+                {/* LinkedIn Button - only show on devices with hover */}
+                {hasHover && (
+                  <IconButton 
+                    className="linkedin-button"
+                    onClick={handleLinkedInClick}
+                    aria-label="Visit Cartez Dewberry's LinkedIn profile"
+                  >
+                    <img 
+                      src={linkedinIcon} 
+                      alt="LinkedIn" 
+                      className="linkedin-icon"
+                    />
+                  </IconButton>
+                )}
               </Box>
             </Box>
           </Box>
@@ -181,6 +210,15 @@ function Leadership_Cartez() {
                 Back to Our Story
               </Button>
             </Box>
+
+            {/* Note for devices without hover or on mobile */}
+            {(!hasHover || isMobile) && (
+              <Box className="hover-note">
+                <Typography variant="body2" className="hover-note-text">
+                  💡 Click image for bio
+                </Typography>
+              </Box>
+            )}
           </Box>
         </Box>
       </Container>
