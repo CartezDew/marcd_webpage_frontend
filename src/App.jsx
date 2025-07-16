@@ -13,6 +13,7 @@ import Leadership_Cartez from './pages/Leadership_Cartez';
 import Leadership_Beth from './pages/Leadership_Beth';
 import Features from './pages/Features';
 import SignIn from './pages/SignIn';
+import NotFound from './pages/NotFound';
 
 // Create a custom theme
 const theme = createTheme({
