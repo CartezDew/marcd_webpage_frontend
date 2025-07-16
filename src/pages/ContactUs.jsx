@@ -328,10 +328,10 @@ function ContactUs() {
         {/* Social + Submit */}
         <Box className="bottom-controls">
           <Box className="social-icons">
-            <a href="https://www.instagram.com/dewitlogistics" target="_blank" rel="noopener noreferrer" className="social-icon-link">
+                          <a href={import.meta.env.VITE_INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="social-icon-link">
               <FaInstagram className="social-icon instagram" />
             </a>
-            <a href="https://www.facebook.com/dewitlogistics" target="_blank" rel="noopener noreferrer" className="social-icon-link">
+                          <a href={import.meta.env.VITE_FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="social-icon-link">
               <FaFacebook className="social-icon facebook" />
             </a>
           </Box>

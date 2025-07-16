@@ -36,7 +36,7 @@ function OurStory() {
       title: 'Founder & CEO',
       image: cartezImg,
       route: '/leadership/cartez',
-      followRoute: 'https://www.linkedin.com/in/cartez-dewberry/',
+      followRoute: import.meta.env.VITE_CARTEZ_LINKEDIN_URL,
       isExternal: true
     },
     {

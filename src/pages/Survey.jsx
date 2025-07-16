@@ -219,7 +219,7 @@ function Survey() {
       script.type = 'text/javascript';
       script.async = true;
       script.src =
-        'https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd_2BL7H_2BDXEdJr0wzAqNIv4r_2BHt1k_2Fg4pHvhizXAm9SXN4.js';
+        import.meta.env.VITE_SURVEY_MONKEY_WIDGET_URL;
 
       script.onload = () => {
         setTimeout(() => setIsLoading(false), 1000);

@@ -24,7 +24,7 @@ function Leadership_Cartez() {
   const fullText = "Software Engineer | U.S. Marine Veteran | Former Owner-Operator";
 
   const handleLinkedInClick = () => {
-    window.open('https://www.linkedin.com/in/cartez-dewberry/', '_blank');
+    window.open(import.meta.env.VITE_CARTEZ_LINKEDIN_URL, '_blank');
   };
 
   const handleBackClick = () => {

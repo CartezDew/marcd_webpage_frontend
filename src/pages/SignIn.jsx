@@ -45,7 +45,7 @@ function SignIn() {
 
   const handleRegisterClick = (e) => {
     e.preventDefault();
-    setRegisterMessage('To register, please contact customer service at info@marc-d.com for further assistance.');
+            setRegisterMessage(`To register, please contact customer service at ${import.meta.env.VITE_CONTACT_EMAIL} for further assistance.`);
   };
 
   return (
