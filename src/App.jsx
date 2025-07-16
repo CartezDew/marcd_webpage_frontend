@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { Box, Typography } from '@mui/material';
 import Nav from './components/Nav';
 import Home from './pages/Home';
 import ContactUs from './pages/ContactUs';
@@ -13,8 +14,6 @@ import Leadership_Cartez from './pages/Leadership_Cartez';
 import Leadership_Beth from './pages/Leadership_Beth';
 import Features from './pages/Features';
 import SignIn from './pages/SignIn';
-import NotFound from './pages/NotFound';
-
 // Create a custom theme
 const theme = createTheme({
   palette: {
@@ -66,6 +65,20 @@ const theme = createTheme({
     },
   },
 });
+
+// Simple NotFound component
+const NotFound = () => {
+  return (
+    <Box textAlign="center" mt={10}>
+      <Typography variant="h3" color="error">
+        404 - Page Not Found
+      </Typography>
+      <Typography variant="subtitle1" mt={2}>
+        The page you're looking for doesn't exist.
+      </Typography>
+    </Box>
+  );
+};
 
 function App() {
   // Remove userLocation and loading state
