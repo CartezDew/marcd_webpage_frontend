@@ -83,6 +83,7 @@ function App() {
             <Route path="/leadership/beth" element={<Leadership_Beth />} />
             <Route path="/features" element={<Features />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="*" element={<NotFound />} /> {/* fallback */}
           </Routes>
         </main>
       </ThemeProvider>
