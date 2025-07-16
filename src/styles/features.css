@@ -3,7 +3,7 @@
 
 .features-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f1419 10%, #1a1a2e 30%,  #be0303d1 80%, #001d5a 95%);
+  background: linear-gradient(135deg, #0f1419 10%, #1a1a2e 30%,  #be0303d1 80%, #0f1419 95%);
   position: relative;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 4rem 0;

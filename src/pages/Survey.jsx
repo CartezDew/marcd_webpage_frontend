@@ -28,6 +28,8 @@ function Survey() {
   const [isFirstViewport, setIsFirstViewport] = useState(true);
   const [currentResponseSet, setCurrentResponseSet] = useState(0);
   const [expandedCard, setExpandedCard] = useState(null);
+  const [hasIntroAnimated, setHasIntroAnimated] = useState(false);
+  const [hasResponsesAnimated, setHasResponsesAnimated] = useState(false);
   const widgetRef = useRef(null);
   const introRef = useRef(null);
   const responsesRef = useRef(null);
@@ -145,7 +147,10 @@ function Survey() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsIntroVisible(entry.isIntersecting);
+        if (entry.isIntersecting && !hasIntroAnimated) {
+          setIsIntroVisible(true);
+          setHasIntroAnimated(true);
+        }
         setIsFirstViewport(entry.isIntersecting);
       },
       {
@@ -163,13 +168,16 @@ function Survey() {
         observer.unobserve(introRef.current);
       }
     };
-  }, []);
+  }, [hasIntroAnimated]);
 
   // Intersection Observer for responses section
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsResponsesVisible(entry.isIntersecting);
+        if (entry.isIntersecting && !hasResponsesAnimated) {
+          setIsResponsesVisible(true);
+          setHasResponsesAnimated(true);
+        }
         if (entry.isIntersecting) {
           setIsFirstViewport(false);
         }
@@ -189,7 +197,7 @@ function Survey() {
         observer.unobserve(responsesRef.current);
       }
     };
-  }, []);
+  }, [hasResponsesAnimated]);
 
   // Close expanded cards when clicking outside
   useEffect(() => {
@@ -235,12 +243,21 @@ function Survey() {
     setCurrentResponseSet((prev) => (prev - 1 + surveyResponses.length) % surveyResponses.length);
   };
 
-  // Dynamic scroll function - always scrolls to responses section
+  // Dynamic scroll function - scrolls to responses section or back to top
   const handleScrollAction = () => {
-    if (responsesRef.current) {
-      responsesRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+    if (isFirstViewport) {
+      // If we're in the first viewport, scroll to responses section
+      if (responsesRef.current) {
+        responsesRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else {
+      // If we're in the responses section, scroll back to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
     }
   };
@@ -248,29 +265,12 @@ function Survey() {
   return (
     <>
       {/* Dynamic Scroll Button */}
-      <Tooltip title={isFirstViewport ? "See what our community is saying" : "Back to Top"} placement="left">
-        <IconButton
-          className="scroll-to-community-button"
-          onClick={handleScrollAction}
-          sx={{
-            position: 'fixed',
-            bottom: { xs: 24, md: 40 },
-            right: { xs: 24, md: 40 },
-            zIndex: 1200,
-            background: 'rgba(190,3,3,0.9)',
-            color: 'white',
-            boxShadow: 3,
-            '&:hover': {
-              background: 'rgba(190,3,3,1)',
-              transform: 'scale(1.08) translateY(-2px)',
-              boxShadow: 6,
-            },
-            transition: 'all 0.3s cubic-bezier(.4,2,.6,1)',
-          }}
-        >
-          {isFirstViewport ? <KeyboardArrowDownIcon fontSize="large" /> : <KeyboardArrowUpIcon fontSize="large" />}
-        </IconButton>
-      </Tooltip>
+      <Box 
+        className={`scroll-to-top-button ${isFirstViewport ? 'first-viewport' : 'other-viewport'}`}
+        onClick={handleScrollAction}
+      >
+        {isFirstViewport ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+      </Box>
 
       {/* ✅ Intro Section ABOVE the widget */}
       <Box 

@@ -75,8 +75,9 @@
   animation: navArrowBounce 1s infinite;
 }
 
-.scroll-to-community-button {
-  position: fixed !important;
+/* Scroll to Top Button */
+.scroll-to-top-button {
+  position: fixed;
   bottom: 2rem;
   right: 2rem;
   width: 3.5rem;
@@ -87,28 +88,129 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 1200;
+  z-index: 1000;
   box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  animation: bounce 2.2s infinite;
   transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  animation: subtlePulse 3s ease-in-out infinite;
 }
 
-.scroll-to-community-button:hover {
+/* Conditional hover message - only show when not on first viewport */
+.scroll-to-top-button.other-viewport::before {
+  content: 'Back to Top';
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 0.5rem;
+}
+
+.scroll-to-top-button.other-viewport::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 1rem;
+  width: 0;
+  height: 0;
+  border-left: 0.25rem solid transparent;
+  border-right: 0.25rem solid transparent;
+  border-top: 0.25rem solid rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 0.25rem;
+}
+
+/* Show hover message only for other-viewport */
+.scroll-to-top-button.other-viewport:hover::before,
+.scroll-to-top-button.other-viewport:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover message for first-viewport */
+.scroll-to-top-button.first-viewport::before {
+  content: 'See what our community is saying';
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 0.5rem;
+}
+
+.scroll-to-top-button.first-viewport::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 1rem;
+  width: 0;
+  height: 0;
+  border-left: 0.25rem solid transparent;
+  border-right: 0.25rem solid transparent;
+  border-top: 0.25rem solid rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 0.25rem;
+}
+
+/* Show hover message for first-viewport */
+.scroll-to-top-button.first-viewport:hover::before,
+.scroll-to-top-button.first-viewport:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-to-top-button:hover {
   background: linear-gradient(135deg, #be0303, #be0303d1);
-  transform: translateY(-2px) scale(1.08);
+  transform: translateY(-2px);
   box-shadow: 0 6px 25px rgba(190, 3, 3, 0.4);
-  animation: none;
+  animation: none; /* Stop pulsing on hover */
 }
 
-.scroll-to-community-button svg {
+.scroll-to-top-button svg {
   color: rgb(12, 0, 0);
   font-size: 1.5rem;
   transition: transform 0.3s ease;
 }
 
-.scroll-to-community-button:hover svg {
+.scroll-to-top-button:hover svg {
   transform: translateY(-1px);
+}
+
+.responses-title {
+  text-align: center !important;
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(190, 3, 3, 0.4);
+  }
 }
 
 /* Responsive Design */
@@ -155,13 +257,14 @@
   .survey-widget-box {
     max-width: 99vw;
   }
-  .scroll-to-community-button {
+  .scroll-to-top-button {
     width: 3rem;
     height: 3rem;
     bottom: 1.5rem;
     right: 1.5rem;
   }
-  .scroll-to-community-button svg {
+  
+  .scroll-to-top-button svg {
     font-size: 1.3rem;
   }
 }
@@ -184,13 +287,14 @@
   .survey-embed-container {
     padding: 8px 2px;
   }
-  .scroll-to-community-button {
+  .scroll-to-top-button {
     width: 2.5rem;
     height: 2.5rem;
     bottom: 1rem;
     right: 1rem;
   }
-  .scroll-to-community-button svg {
+  
+  .scroll-to-top-button svg {
     font-size: 1.2rem;
   }
 }
