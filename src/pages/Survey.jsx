@@ -313,7 +313,7 @@ function Survey() {
         className={`survey-responses-section ${isResponsesVisible ? 'visible' : ''}`}
       >
         <Container maxWidth="lg">
-          <Typography variant="h3" className="responses-title">
+          <Typography variant="h3" className={`responses-title ${isResponsesVisible ? 'animate' : ''}`}>
             What Our Community is Saying
           </Typography>
           

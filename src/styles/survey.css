@@ -1,3 +1,4 @@
+
 .survey-intro-container {
   padding: 4rem 0.5rem 3rem;
   display: flex;
@@ -9,8 +10,8 @@
 }
 
 .survey-intro-heading {
-  font-size: 2rem !important;
-  font-weight: 700 !important;
+  font-size: 2.2rem !important;
+  font-weight: 900 !important;
   color: #d40505d1;
 
   margin-bottom: 1rem;
@@ -201,7 +202,6 @@
 .responses-title {
   text-align: center !important;
 }
-
 @keyframes subtlePulse {
   0%, 100% {
     transform: scale(1);
@@ -213,102 +213,6 @@
   }
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .survey-intro-container {
-    padding: 3rem 0.5rem 2.5rem;
-    gap: 1.5rem;
-  }
-  
-  .survey-intro-heading {
-    font-size: 2.5rem !important;
-  }
-  
-  .survey-intro-text {
-    font-size: 1.125rem !important;
-    max-width: 600px;
-  }
-  
-  .survey-widget-box {
-    max-width: 98vw;
-  }
-}
-
-@media (max-width: 768px) {
-  .survey-intro-container {
-    padding: 2.5rem 0.25rem 2rem;
-    gap: 1.5rem;
-  }
-  
-  .survey-intro-heading {
-    font-size: 2.25rem !important;
-  }
-  
-  .survey-intro-text {
-    font-size: 1rem !important;
-    max-width: 100%;
-    line-height: 1.5;
-  }
-  
-  .survey-embed-container {
-    padding: 12px 4px;
-  }
-  
-  .survey-widget-box {
-    max-width: 99vw;
-  }
-  .scroll-to-top-button {
-    width: 3rem;
-    height: 3rem;
-    bottom: 1.5rem;
-    right: 1.5rem;
-  }
-  
-  .scroll-to-top-button svg {
-    font-size: 1.3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .survey-intro-container {
-    padding: 2rem 0.25rem 1.5rem;
-    gap: 1rem;
-  }
-  
-  .survey-intro-heading {
-    font-size: 1.875rem !important;
-  }
-  
-  .survey-intro-text {
-    font-size: 0.95rem !important;
-    line-height: 1.4;
-  }
-  
-  .survey-embed-container {
-    padding: 8px 2px;
-  }
-  .scroll-to-top-button {
-    width: 2.5rem;
-    height: 2.5rem;
-    bottom: 1rem;
-    right: 1rem;
-  }
-  
-  .scroll-to-top-button svg {
-    font-size: 1.2rem;
-  }
-}
-
-/* Improved mobile experience */
-@media (max-width: 768px) {
-  .survey-intro-heading.animate {
-    transition-duration: 0.6s;
-  }
-  
-  .survey-intro-text.animate {
-    transition-duration: 0.6s;
-  }
-}
 
 /* Existing styles below */
 .survey-embed-container {
@@ -320,6 +224,7 @@
   padding: 16px 8px;
   background-color: #f4f6f8;
   width: 100%;
+  border-radius: 12px;
 }
 
 .survey-widget-box {
@@ -357,13 +262,13 @@
   text-align: center;
 }
 
-.glow-text {
+/* .glow-text {
   color: white;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.8),
                0 0 16px rgba(25, 118, 210, 0.7),
                0 0 24px rgba(25, 118, 210, 0.5);
   font-weight: bold;
-}
+} */
 
 /* Survey Responses Section */
 .survey-responses-section {
@@ -373,6 +278,7 @@
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease;
+  border-radius: 12px;
 }
 
 .survey-responses-section.visible {
@@ -384,14 +290,23 @@
   text-align: center;
   color: #be0303d1;
   font-weight: 700 !important;
-  margin-bottom: 1rem !important;
+  margin-bottom: 1.3rem !important;
   font-size: 2.5rem !important;
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.responses-title.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .responses-subtitle {
   text-align: center;
   color: #586579;
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
   max-width: 600px;
   margin: 0 auto 3rem !important;
   line-height: 1.6;
@@ -592,7 +507,7 @@
 }
 
 /* Responsive Design for Survey Responses */
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .responses-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -605,12 +520,39 @@
   .responses-subtitle {
     font-size: 1.1rem !important;
   }
+} */
+
+@media (max-width: 1200px) {
+  .survey-intro-container {
+    padding: 2rem 0.5rem 3rem;
+  }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 880px) and (min-width: 768px) {
+  .responses-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.survey-intro-heading {
+  font-size: 2.1rem !important;
+  font-weight: 800 !important;
+  color: #d40505d1;
+}
+
+
+
+.survey-intro-text {
+  font-size: 1.2rem !important;
+  max-width: 700px;
+  font-weight: 300;
+}
+
+ @media (max-width: 768px) {
   .survey-responses-section {
     padding: 3rem 1rem;
-    margin-top: 2rem;
   }
   
   .responses-grid {
@@ -624,12 +566,10 @@
   
   .responses-subtitle {
     font-size: 1rem !important;
-    margin-bottom: 2rem !important;
   }
   
   .response-navigation {
     gap: 1.5rem;
-    margin-bottom: 2rem;
   }
   
   .nav-arrow {
@@ -643,28 +583,60 @@
   }
   
   .response-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; /* Change from column to row */
+    align-items: flex-start; /* Align items to the top */
     gap: 0.5rem;
+    justify-content: space-between; /* Space between content and arrow */
+  }
+  
+  .response-main-content {
+    flex: 1; /* Take up available space */
   }
   
   .expand-arrow {
-    align-self: flex-end;
+    align-self: flex-start; /* Align to top instead of bottom */
     margin-top: 0;
+    flex-shrink: 0; /* Prevent arrow from shrinking */
+  }
+}
+
+@media (max-width: 500px) {
+  .survey-intro-container {
+    padding: 2rem 0.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Change from 'left' to 'flex-start' */
+    gap: 16px;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .survey-intro-heading {
+    text-align: left !important; /* Align heading to left */
+    font-size: 1.875rem !important; /* Slightly smaller for mobile */
+  }
+  
+  .survey-intro-text {
+    text-align: left !important; /* Align text to left */
+    font-size: 1rem !important; /* Smaller font for mobile */
+    max-width: 100%; /* Full width on small screens */
+    margin: 0; /* Remove auto margins */
+  }
+  
+  .responses-title {
+    font-size: 1.5rem !important;
+    text-align: left !important;
+  }
+  
+  .responses-subtitle {
+    font-size: 0.95rem !important;
+    text-align: left !important;
   }
 }
 
 @media (max-width: 480px) {
   .survey-responses-section {
     padding: 2rem 0.5rem;
-  }
-  
-  .responses-title {
-    font-size: 1.75rem !important;
-  }
-  
-  .responses-subtitle {
-    font-size: 0.95rem !important;
   }
   
   .response-navigation {
@@ -689,5 +661,10 @@
   .response-question,
   .response-answer {
     font-size: 0.85rem !important;
+  }
+
+  .survey-social-proof-image {
+    max-width: 90% !important;
+    height: 90% !important;
   }
 }
