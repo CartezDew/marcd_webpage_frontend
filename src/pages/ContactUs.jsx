@@ -311,7 +311,24 @@ function ContactUs() {
                           onChange={handleChange}
                           renderValue={(value) => {
                             const selectedType = contactTypes.find(type => type.value === value);
-                            return selectedType ? selectedType.label : "General Inquiry";
+                            const label = selectedType ? selectedType.label : "General Inquiry";
+                            return (
+                              <div style={{
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                width: '100%'
+                              }}>
+                                {label}
+                              </div>
+                            );
+                          }}
+                          sx={{
+                            '& .MuiSelect-select': {
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis'
+                            }
                           }}
                         >
                           {contactTypes.map((type) => (
