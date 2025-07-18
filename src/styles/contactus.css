@@ -441,7 +441,27 @@
     }
     
     .MuiFormHelperText-root {
-      font-size: 0.7rem !important;
+      font-size: 0.6rem !important;
+    }
+
+    /* Fix alignment between TextField and Select components */
+    .MuiTextField-root {
+      height: 56px !important;
+    }
+
+    .MuiFormControl-root {
+      height: 56px !important;
+    }
+
+    .MuiSelect-select {
+      height: 56px !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 16.5px 14px !important;
+    }
+
+    .MuiInputBase-root {
+      height: 56px !important;
     }
   }
 
@@ -494,17 +514,9 @@
       margin-right: 0;
     }
 
-    /* .MuiSelect-select {
-      font-size: 0.7rem !important;
-    }
+  }
 
-    .MuiMenuItem-root {
-      font-size: 0.8rem !important;
-    }
-  } */
-  
-  /* @media (max-width: 410px) {
-
+  @media (max-width: 410px) {
     .MuiSelect-select {
       font-size: 0.6rem !important;
     }
@@ -512,16 +524,15 @@
     .MuiMenuItem-root {
       font-size: 0.7rem !important;
     }
-  } */
+  }
 
   @media (max-width: 360px) {
-
     .MuiSelect-select {
-      font-size: 0.7rem !important;
+      font-size: 0.5rem !important;
     }
 
     .MuiMenuItem-root {
-      font-size: 0.8rem !important;
+      font-size: 0.6rem !important;
     }
   }
 
