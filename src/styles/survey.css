@@ -553,6 +553,7 @@
  @media (max-width: 768px) {
   .survey-responses-section {
     padding: 3rem 1rem;
+    margin-top: 2rem; /* Reduce top margin on mobile */
   }
   
   .responses-grid {
@@ -637,6 +638,7 @@
 @media (max-width: 480px) {
   .survey-responses-section {
     padding: 2rem 0.5rem;
+    margin-top: 1.5rem; /* Further reduce top margin on very small screens */
   }
   
   .response-navigation {

@@ -178,13 +178,14 @@ function Survey() {
           setIsResponsesVisible(true);
           setHasResponsesAnimated(true);
         }
-        if (entry.isIntersecting) {
+        // Only set isFirstViewport to false when the responses section is significantly visible
+        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
           setIsFirstViewport(false);
         }
       },
       {
-        threshold: 0.7,
-        rootMargin: '0px'
+        threshold: [0.1, 0.3, 0.5],
+        rootMargin: '-20px 0px 0px 0px'
       }
     );
 
@@ -248,10 +249,25 @@ function Survey() {
     if (isFirstViewport) {
       // If we're in the first viewport, scroll to responses section
       if (responsesRef.current) {
+        // Use scrollIntoView with specific options for better mobile support
         responsesRef.current.scrollIntoView({
           behavior: 'smooth',
-          block: 'start'
+          block: 'start',
+          inline: 'nearest'
         });
+        
+        // For mobile devices, add a small delay and then adjust if needed
+        setTimeout(() => {
+          const rect = responsesRef.current.getBoundingClientRect();
+          if (rect.top > 10) { // If not at the very top, adjust
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const targetPosition = scrollTop + rect.top - 10;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
       }
     } else {
       // If we're in the responses section, scroll back to top
