@@ -110,7 +110,7 @@
   white-space: nowrap;
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.3s ease;
+  transition: all 8s ease-out;
   pointer-events: none;
   margin-bottom: 0.5rem;
 }
@@ -127,7 +127,7 @@
   border-top: 0.25rem solid rgba(0, 0, 0, 0.8);
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.3s ease;
+  transition: all 8s ease-out;
   pointer-events: none;
   margin-bottom: 0.25rem;
 }
@@ -139,7 +139,7 @@
   transform: translateY(0);
 }
 
-/* Ensure hover messages work on mobile devices */
+/* Desktop hover only */
 @media (hover: hover) {
   .scroll-to-top-button.other-viewport:hover::before,
   .scroll-to-top-button.other-viewport:hover::after {
@@ -148,13 +148,21 @@
   }
 }
 
-/* For touch devices, show messages on touch */
+/* Mobile touch only */
 @media (hover: none) {
   .scroll-to-top-button.other-viewport:active::before,
   .scroll-to-top-button.other-viewport:active::after {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Auto-show messages for all devices */
+.scroll-to-top-button.other-viewport.show-message::before,
+.scroll-to-top-button.other-viewport.show-message::after {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 8s ease-out;
 }
 
 /* Hover message for first-viewport */
@@ -171,7 +179,7 @@
   white-space: nowrap;
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.3s ease;
+  transition: all 3s ease-out;
   pointer-events: none;
   margin-bottom: 0.5rem;
 }
@@ -188,7 +196,7 @@
   border-top: 0.25rem solid rgba(0, 0, 0, 0.8);
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.3s ease;
+  transition: all 3s ease-out;
   pointer-events: none;
   margin-bottom: 0.25rem;
 }
@@ -200,7 +208,7 @@
   transform: translateY(0);
 }
 
-/* Ensure hover messages work on mobile devices for first-viewport */
+/* Desktop hover only for first-viewport */
 @media (hover: hover) {
   .scroll-to-top-button.first-viewport:hover::before,
   .scroll-to-top-button.first-viewport:hover::after {
@@ -209,13 +217,21 @@
   }
 }
 
-/* For touch devices, show messages on touch for first-viewport */
+/* Mobile touch only for first-viewport */
 @media (hover: none) {
   .scroll-to-top-button.first-viewport:active::before,
   .scroll-to-top-button.first-viewport:active::after {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Auto-show messages for all devices first-viewport */
+.scroll-to-top-button.first-viewport.show-message::before,
+.scroll-to-top-button.first-viewport.show-message::after {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 3s ease-out;
 }
 
 .scroll-to-top-button:hover {

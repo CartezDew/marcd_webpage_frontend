@@ -31,6 +31,7 @@ function Survey() {
   const [hasIntroAnimated, setHasIntroAnimated] = useState(false);
   const [hasResponsesAnimated, setHasResponsesAnimated] = useState(false);
   const [isManualScrolling, setIsManualScrolling] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   const widgetRef = useRef(null);
   const introRef = useRef(null);
   const responsesRef = useRef(null);
@@ -196,6 +197,36 @@ function Survey() {
     };
   }, [hasResponsesAnimated]);
 
+  // Auto-show message logic for mobile
+  useEffect(() => {
+    let timeoutId;
+    let hideTimeoutId;
+    
+    // Reset message state when viewport changes
+    setShowMessage(false);
+    
+    if (isFirstViewport) {
+      // Show message after 4 seconds in intro section
+      timeoutId = setTimeout(() => {
+        setShowMessage(true);
+        // Hide message after 2 seconds + 3 second delay for fade-out
+        hideTimeoutId = setTimeout(() => setShowMessage(false), 5000);
+      }, 4000);
+    } else {
+      // Show message after 3 seconds in responses section
+      timeoutId = setTimeout(() => {
+        setShowMessage(true);
+        // Hide message after 2 seconds + 8 second delay for fade-out
+        hideTimeoutId = setTimeout(() => setShowMessage(false), 10000);
+      }, 3000);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (hideTimeoutId) clearTimeout(hideTimeoutId);
+    };
+  }, [isFirstViewport]);
+
   // Close expanded cards when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -288,7 +319,7 @@ function Survey() {
     <>
       {/* Dynamic Scroll Button */}
       <Box 
-        className={`scroll-to-top-button ${isFirstViewport ? 'first-viewport' : 'other-viewport'}`}
+        className={`scroll-to-top-button ${isFirstViewport ? 'first-viewport' : 'other-viewport'} ${showMessage ? 'show-message' : ''}`}
         onClick={handleScrollAction}
       >
         {isFirstViewport ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
