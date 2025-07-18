@@ -309,6 +309,10 @@ function ContactUs() {
                           value={formData.feedback_type}
                           label="Contact Reason"
                           onChange={handleChange}
+                          renderValue={(value) => {
+                            const selectedType = contactTypes.find(type => type.value === value);
+                            return selectedType ? selectedType.label : "General Inquiry";
+                          }}
                         >
                           {contactTypes.map((type) => (
                             <MenuItem key={type.value} value={type.value}>
