@@ -41,7 +41,11 @@ function ContactUs() {
 
   const [width, height] = useWindowSize();
   const headerRef = useRef(null);
+  const cardRef = useRef(null);
+  const buttonRef = useRef(null);
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+  const [isCardVisible, setIsCardVisible] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -90,6 +94,44 @@ function ContactUs() {
       }
     };
   }, []);
+
+  // Intersection Observer for card animation
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            console.log('Card animation triggered!');
+            setIsCardVisible(true);
+            
+            // Trigger button animation after card animation completes
+            setTimeout(() => {
+              console.log('Button animation triggered!');
+              setIsButtonVisible(true);
+            }, 1200); // 1.2s delay to match card animation duration
+          }
+        });
+      },
+      observerOptions
+    );
+
+    if (cardRef.current) {
+      cardObserver.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        cardObserver.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -212,7 +254,7 @@ function ContactUs() {
       </Box>
 
       <form onSubmit={handleSubmit} id="contact-form">
-        <Card className="contact-card">
+        <Card ref={cardRef} className={`contact-card ${isCardVisible ? 'animate' : ''}`}>
           <CardContent>
             <Box sx={{ px: 1 }}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
@@ -336,12 +378,13 @@ function ContactUs() {
             </a>
           </Box>
           <Button
+            ref={buttonRef}
             type="submit"
             form="contact-form"
             variant="contained"
             color="primary"
             size="large"
-            className="submit-button"
+            className={`submit-button ${isButtonVisible ? 'animate' : ''}`}
           >
             {loading ? <CircularProgress size={24} /> : "Submit Message"}
           </Button>

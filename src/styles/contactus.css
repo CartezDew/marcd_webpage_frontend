@@ -8,6 +8,7 @@
     min-height: 500px;
     position: relative;
     z-index: 1;
+    border-radius: 12px;
   }
   
   .contact-card {
@@ -19,6 +20,26 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     border: 2px solid transparent;
     border-image: linear-gradient(to right, transparent 1.8rem, #be0303d1 20%, #010101d1 80%, transparent 90%) 1;
+    opacity: 0 !important;
+    transform: translateY(100px) !important;
+    transition: all 1.2s ease-out !important;
+  }
+
+  .contact-card.animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Target Material-UI Card component specifically */
+  .MuiCard-root.contact-card {
+    opacity: 0 !important;
+    transform: translateY(100px) !important;
+    transition: all 1.2s ease-out !important;
+  }
+
+  .MuiCard-root.contact-card.animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
   }
   
   .MuiCardContent-root {
@@ -39,55 +60,133 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-  
-  /* Stack vertically on screens below 600px */
-  @media (max-width: 600px) {
-    .bottom-controls {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .submit-button {
-      width: 35% !important;
-      min-width: 150px;
-      max-width: 200px;
-      padding: 1rem;
-      margin: 0 auto;
-    }
-  
-    .social-icons {
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
+
+  .contact-header-title {
+    font-weight: 600 !important;
+    color: #be0303 !important;
+    opacity: 0.9 !important;
   }
-  
-  .social-icons {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
-  
-  .social-icon-link {
-    display: inline-block;
-    transition: transform 0.3s ease;
-  }
-  
-  .social-icon-link:hover {
-    transform: translateY(-5px);
-  }
-  
-  .social-icon {
-    font-size: 2.2rem;
-    color: #3f51b5;
-  }
-  
+
+
   .social-icon.instagram {
-    animation: bounce 2s infinite;
-    animation-delay: 1s;
+    color: #be0303 !important;
+    opacity: .6 !important;
+    font-size: 2.3rem !important;
   }
-  
-  .social-icon.facebook:hover {
-    color: #1877f2;
+
+  .social-icon.facebook {
+    color: #be0303 !important;
+    opacity: .6 !important;
+    font-size: 2.3rem !important;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.social-icon-link {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.social-icon-link:hover {
+  transform: translateY(-5px);
+}
+
+
+.social-icon.instagram {
+  animation: bounce 2s infinite;
+  animation-delay: 1s;
+}
+
+ .social-icon.facebook:hover {
+   color: #2a5298 !important;
+   opacity: 1 !important;
+ }
+
+ .social-icon.instagram:hover {
+  color: #2a5298 !important;
+  opacity: 1 !important;
+ }
+
+
+  .submit-button {
+    width: 35% !important;
+    min-width: 120px;
+    max-width: 160px;
+    padding: 1rem;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
+    color: white !important;
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .submit-button:hover {
+    background: linear-gradient(135deg, #be0303, #0a0909, #be0303) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  /* Target Material-UI Button component specifically */
+  .MuiButton-root.submit-button {
+    background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
+    color: white !important;
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .MuiButton-root.submit-button:hover {
+    background: linear-gradient(135deg, #be0303, #0a0909, #be0303) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  /* Override Material-UI's primary color styles */
+  .MuiButton-containedPrimary.submit-button {
+    background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
+    color: white !important;
+  }
+
+  .MuiButton-containedPrimary.submit-button:hover {
+    background: linear-gradient(135deg, #be0303, #0a0909, #be0303) !important;
+  }
+
+  /* Button animation */
+  .submit-button {
+    opacity: 0 !important;
+    transform: translateY(50px) !important;
+    transition: all 0.8s ease-out !important;
+  }
+
+  .submit-button.animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Ensure Material-UI button styles don't override animation */
+  .MuiButton-root.submit-button {
+    opacity: 0 !important;
+    transform: translateY(50px) !important;
+    transition: all 0.8s ease-out !important;
+  }
+
+  .MuiButton-root.submit-button.animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
   }
 
   
@@ -192,6 +291,45 @@
   }
 
 
+  /* Stack vertically on screens below 600px */
+  @media (max-width: 625px) {
+
+    .contact-header-title {
+      font-size: 1.5rem !important;
+    }
+
+    .contact-intro-text {
+      font-size: 0.8rem !important;
+    }
+
+
+    /* Make dropdown text smaller on mobile */
+    .MuiSelect-select {
+      font-size: 0.9rem !important;
+    }
+
+    .MuiMenuItem-root {
+      font-size: 0.875rem !important;
+    }
+
+    .submit-button {
+      width: 40% !important;
+      padding: 1rem;
+      margin: 0 auto;
+      font-size: 0.875rem !important;
+    }
+
+    .MuiButton-root.submit-button {
+      font-size: 0.875rem !important;
+    }
+
+    .MuiButton-containedPrimary.submit-button {
+      font-size: 0.875rem !important;
+    }
+  }
+ 
+
+
   @media (max-width: 565px) {
     .social-icons {
       gap: 1rem;
@@ -212,7 +350,7 @@
     }
     
     .contact-intro-text {
-      font-size: 0.8rem !important;
+      font-size: 0.7rem !important;
       padding: 0.25rem !important;
     }
     
@@ -237,12 +375,12 @@
     }
     
     .contact-header-title {
-      font-size: 1.25rem !important;
+      font-size: 1.1rem !important;
     }
     
     .contact-intro-text {
-      font-size: 0.75rem !important;
-      padding: 0.25rem !important;
+      font-size: 0.65rem !important;
+      padding: 0.3rem !important;
       margin-bottom: 0.5rem;
     }
     
@@ -253,7 +391,15 @@
     }
     
     .social-icon {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .social-icon.instagram {
+      font-size: 1.8rem !important;
+    }
+
+    .social-icon.facebook {
+      font-size: 1.8rem !important;
     }
     
     .social-icons {
@@ -285,7 +431,8 @@
       font-size: 0.7rem !important;
     }
   }
-  
+
+ 
   /* Contact Header Section Animations */
   .contact-header-section {
     margin-bottom: .5rem;
@@ -313,6 +460,56 @@
   .contact-intro-text.animate {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  @media (max-width: 460px) {
+    .submit-button {
+      width: 55% !important;
+      min-width: 130px;
+      max-width: 140px;
+      padding: 0.75rem 0.5rem;
+      margin-left: auto !important;
+      margin-right: 0 !important;
+    }
+
+    .bottom-controls {
+      justify-content: space-between !important;
+      gap: 1rem;
+    }
+
+    .social-icons {
+      margin-right: 0;
+    }
+
+    .MuiSelect-select {
+      font-size: 0.7rem !important;
+    }
+
+    .MuiMenuItem-root {
+      font-size: 0.8rem !important;
+    }
+  }
+  
+  @media (max-width: 410px) {
+
+    .MuiSelect-select {
+      font-size: 0.6rem !important;
+    }
+
+    .MuiMenuItem-root {
+      font-size: 0.7rem !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+
+    .MuiSelect-select {
+      font-size: 0.5rem !important;
+    }
+
+    .MuiMenuItem-root {
+      font-size: 0.6rem !important;
+    }
   }
 
   /* Enhanced Contact Intro Text Style */
