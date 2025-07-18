@@ -30,6 +30,7 @@ function Survey() {
   const [expandedCard, setExpandedCard] = useState(null);
   const [hasIntroAnimated, setHasIntroAnimated] = useState(false);
   const [hasResponsesAnimated, setHasResponsesAnimated] = useState(false);
+  const [isManualScrolling, setIsManualScrolling] = useState(false);
   const widgetRef = useRef(null);
   const introRef = useRef(null);
   const responsesRef = useRef(null);
@@ -151,7 +152,6 @@ function Survey() {
           setIsIntroVisible(true);
           setHasIntroAnimated(true);
         }
-        setIsFirstViewport(entry.isIntersecting);
       },
       {
         threshold: 0.3,
@@ -177,10 +177,6 @@ function Survey() {
         if (entry.isIntersecting && !hasResponsesAnimated) {
           setIsResponsesVisible(true);
           setHasResponsesAnimated(true);
-        }
-        // Only set isFirstViewport to false when the responses section is significantly visible
-        if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
-          setIsFirstViewport(false);
         }
       },
       {
@@ -249,25 +245,30 @@ function Survey() {
     if (isFirstViewport) {
       // If we're in the first viewport, scroll to responses section
       if (responsesRef.current) {
-        // Use scrollIntoView with specific options for better mobile support
-        responsesRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-          inline: 'nearest'
+        setIsFirstViewport(false);
+        
+        // Get the target scroll position
+        const elementTop = responsesRef.current.offsetTop;
+        
+        // Check if we're on mobile (screen width <= 768px)
+        const isMobile = window.innerWidth <= 768;
+        
+        // For mobile, account for the margin-top of the section
+        const targetScrollTop = isMobile ? elementTop - 70 : elementTop; 
+        
+        // Scroll to the responses section
+        window.scrollTo({
+          top: targetScrollTop,
+          behavior: 'smooth'
         });
         
-        // For mobile devices, add a small delay and then adjust if needed
+        // Trigger animation after scroll completes
         setTimeout(() => {
-          const rect = responsesRef.current.getBoundingClientRect();
-          if (rect.top > 10) { // If not at the very top, adjust
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const targetPosition = scrollTop + rect.top - 10;
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
+          if (!hasResponsesAnimated) {
+            setIsResponsesVisible(true);
+            setHasResponsesAnimated(true);
           }
-        }, 100);
+        }, 800);
       }
     } else {
       // If we're in the responses section, scroll back to top
@@ -275,6 +276,11 @@ function Survey() {
         top: 0,
         behavior: 'smooth'
       });
+      
+      // Update viewport state after scroll completes
+      setTimeout(() => {
+        setIsFirstViewport(true);
+      }, 800);
     }
   };
 

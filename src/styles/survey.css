@@ -139,6 +139,24 @@
   transform: translateY(0);
 }
 
+/* Ensure hover messages work on mobile devices */
+@media (hover: hover) {
+  .scroll-to-top-button.other-viewport:hover::before,
+  .scroll-to-top-button.other-viewport:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* For touch devices, show messages on touch */
+@media (hover: none) {
+  .scroll-to-top-button.other-viewport:active::before,
+  .scroll-to-top-button.other-viewport:active::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Hover message for first-viewport */
 .scroll-to-top-button.first-viewport::before {
   content: 'See what our community is saying';
@@ -180,6 +198,24 @@
 .scroll-to-top-button.first-viewport:hover::after {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Ensure hover messages work on mobile devices for first-viewport */
+@media (hover: hover) {
+  .scroll-to-top-button.first-viewport:hover::before,
+  .scroll-to-top-button.first-viewport:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* For touch devices, show messages on touch for first-viewport */
+@media (hover: none) {
+  .scroll-to-top-button.first-viewport:active::before,
+  .scroll-to-top-button.first-viewport:active::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .scroll-to-top-button:hover {
