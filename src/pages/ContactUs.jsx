@@ -43,8 +43,10 @@ function ContactUs() {
   const headerRef = useRef(null);
   const cardRef = useRef(null);
   const buttonRef = useRef(null);
+  const iconsRef = useRef(null);
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [isIconsVisible, setIsIconsVisible] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -109,10 +111,16 @@ function ContactUs() {
             console.log('Card animation triggered!');
             setIsCardVisible(true);
             
-            // Trigger button animation after card animation completes
+            // Trigger icons animation after card animation completes
             setTimeout(() => {
-              console.log('Button animation triggered!');
-              setIsButtonVisible(true);
+              console.log('Icons animation triggered!');
+              setIsIconsVisible(true);
+              
+              // Trigger button animation after icons animation completes
+              setTimeout(() => {
+                console.log('Button animation triggered!');
+                setIsButtonVisible(true);
+              }, 800); // 0.8s delay to match icons animation duration
             }, 1200); // 1.2s delay to match card animation duration
           }
         });
@@ -369,7 +377,7 @@ function ContactUs() {
 
         {/* Social + Submit */}
         <Box className="bottom-controls">
-          <Box className="social-icons">
+          <Box ref={iconsRef} className={`social-icons ${isIconsVisible ? 'animate' : ''}`}>
                           <a href={import.meta.env.VITE_INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="social-icon-link">
               <FaInstagram className="social-icon instagram" />
             </a>

@@ -85,11 +85,19 @@
     margin-bottom: 1rem;
   }
 
-.social-icons {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
+  .social-icons {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+  }
+
+  .social-icons.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
 .social-icon-link {
   display: inline-block;
