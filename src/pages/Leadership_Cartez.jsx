@@ -1,5 +1,5 @@
 // src/pages/Leadership_Cartez.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Box, 
@@ -20,6 +20,10 @@ function Leadership_Cartez() {
   const [showBold, setShowBold] = useState(false);
   const [hasHover, setHasHover] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [isBioVisible, setIsBioVisible] = useState(false);
+  const [isBackButtonVisible, setIsBackButtonVisible] = useState(false);
+  const bioRef = useRef(null);
+  const backButtonRef = useRef(null);
 
   const fullText = "Software Engineer | U.S. Marine Veteran | Former Owner-Operator";
 
@@ -55,6 +59,57 @@ function Leadership_Cartez() {
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  // Bio animation observer
+  useEffect(() => {
+    const bioObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsBioVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the bio section is visible
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    const backButtonObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add a delay to ensure it triggers after the bio animation completes
+            setTimeout(() => {
+              setIsBackButtonVisible(true);
+            }, 800); // 0.8s delay to match the bio animation duration
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the back button section is visible
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (bioRef.current) {
+      bioObserver.observe(bioRef.current);
+    }
+
+    if (backButtonRef.current) {
+      backButtonObserver.observe(backButtonRef.current);
+    }
+
+    return () => {
+      if (bioRef.current) {
+        bioObserver.unobserve(bioRef.current);
+      }
+      if (backButtonRef.current) {
+        backButtonObserver.unobserve(backButtonRef.current);
+      }
+    };
   }, []);
   // Typewriter effect
   useEffect(() => {
@@ -114,20 +169,18 @@ function Leadership_Cartez() {
                 
                 <Box className="divider-line"></Box>
                 
-                {/* LinkedIn Button - only show on devices with hover */}
-                {hasHover && (
-                  <IconButton 
-                    className="linkedin-button"
-                    onClick={handleLinkedInClick}
-                    aria-label="Visit Cartez Dewberry's LinkedIn profile"
-                  >
-                    <img 
-                      src={linkedinIcon} 
-                      alt="LinkedIn" 
-                      className="linkedin-icon"
-                    />
-                  </IconButton>
-                )}
+                {/* LinkedIn Button - show on desktop */}
+                <IconButton 
+                  className="linkedin-button"
+                  onClick={handleLinkedInClick}
+                  aria-label="Visit Cartez Dewberry's LinkedIn profile"
+                >
+                  <img 
+                    src={linkedinIcon} 
+                    alt="LinkedIn" 
+                    className="linkedin-icon"
+                  />
+                </IconButton>
               </Box>
             </Box>
           </Box>
@@ -135,7 +188,7 @@ function Leadership_Cartez() {
           {/* Right Column - Bio Content */}
           <Box className="bio-content-section">
             {/* Bio Section */}
-            <Box className="bio-section">
+            <Box className="bio-section" ref={bioRef}>
               {/* Mobile Profile Wrapper - only visible on small screens */}
               <Box className="mobile-profile-wrapper">
                 {/* Mobile Profile Image */}
@@ -178,32 +231,32 @@ function Leadership_Cartez() {
                 {!isTypingComplete && <span className="typing-cursor">|</span>}
               </Typography>
 
-              <Typography className="bio-paragraph">
+              <Typography className={`bio-paragraph ${isBioVisible ? 'animate' : ''}`}>
                 For Cartez Dewberry, Marc'd is more than a mobile app—it's a mission rooted in legacy, service, and innovation.
               </Typography>
 
-              <Typography className="bio-paragraph">
+              <Typography className={`bio-paragraph ${isBioVisible ? 'animate' : ''}`}>
                 Cartez spent over a decade in the U.S. Marine Corps, where he developed grit, discipline, and a deep appreciation for teamwork and logistics. After transitioning out of the military, he became an owner-operator in the trucking industry, driving across the country and managing his own fleet. It was during these long hauls that he experienced firsthand the frustrations and gaps drivers face every day—from unreliable parking to limited access to healthy food and essential amenities.
               </Typography>
 
-              <Typography className="bio-paragraph">
+              <Typography className={`bio-paragraph ${isBioVisible ? 'animate' : ''}`}>
                 As the son of Marcus Dewberry, a commercial truck driver with over 30 years on the road, Cartez grew up understanding the sacrifices drivers make to keep America moving. His father's dedication inspired the name "Marc'd" and fuels the company's commitment to honoring the lifestyle and legacy of truckers.
               </Typography>
 
-              <Typography className="bio-paragraph">
+              <Typography className={`bio-paragraph ${isBioVisible ? 'animate' : ''}`}>
                 Later, Cartez pivoted into corporate America as a finacial analyst, helping companies solve financial and operational challenges using data-driven insights. But it wasn't until he pursued his Executive MBA at Georgia State University that his entrepreneurial path crystallized. Surrounded by seasoned leaders and fueled by a desire to make a broader impact, he discovered a passion for using technology to solve the very problems he once faced behind the wheel.
               </Typography>
 
-              <Typography className="bio-paragraph">
+              <Typography className={`bio-paragraph ${isBioVisible ? 'animate' : ''}`}>
                 Today, Cartez is a software developer and founder of Marc'd—a tech platform built from the ground up for commercial truckers. Marc'd combines GPS-based tools, real-time updates, and community-driven insights to improve life on the road. It's not just a business—it's Cartez's tribute to his father, his fellow drivers, and the future of trucking.
               </Typography>
             </Box>
 
             {/* Back Button */}
-            <Box className="action-section">
+            <Box className="action-section" ref={backButtonRef}>
               <Button 
                 variant="contained" 
-                className="back-button-our-story"
+                className={`back-button-our-story ${isBackButtonVisible ? 'animate' : ''}`}
                 onClick={handleBackClick}
                 size="large"
               >
@@ -211,14 +264,7 @@ function Leadership_Cartez() {
               </Button>
             </Box>
 
-            {/* Note for devices without hover or on mobile */}
-            {(!hasHover || isMobile) && (
-              <Box className="hover-note">
-                <Typography variant="body2" className="hover-note-text">
-                  💡 Click image for bio
-                </Typography>
-              </Box>
-            )}
+
           </Box>
         </Box>
       </Container>

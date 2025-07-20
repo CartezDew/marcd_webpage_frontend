@@ -4,7 +4,7 @@
   background: #ffffff;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  border-radius: 12px; /* Add rounded corners to the main container */
+  border-radius: 12px; 
 }
 
 /* About Us Hero Section - Two Column Layout */
@@ -13,6 +13,7 @@
   padding: 1rem 2rem;
   min-height: 18.75rem;
   border-radius: 12px; /* Add rounded corners to the main container */
+  padding-top: 2.5em;
 }
 
 .about-hero-content {
