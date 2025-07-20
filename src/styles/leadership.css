@@ -516,8 +516,8 @@
   }
   
   .bio-paragraph {
-    font-size: 0.9rem !important;
-    line-height: 1.9 !important;
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
     margin-bottom: 2.5rem !important;
     letter-spacing: 0.025em !important;
   }
@@ -569,13 +569,13 @@
   }
 
   .bio-tagline {
-    font-size: .8rem !important;
+    font-size: .9rem !important;
   }
   
   
   .bio-paragraph {
-    font-size: 0.9rem !important;
-    line-height: 1.5 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
     margin-bottom: 2.5rem !important;
     letter-spacing: 0.025em !important;
   }
@@ -611,35 +611,36 @@
   .mobile-profile-title {
     text-align: center;
     margin-bottom: 1rem;
+    font-size: 1.2rem !important;
   }
   
   .mobile-divider-line {
     margin: 0.5rem auto 1rem auto;
   }
   
-  .mobile-bio-header {
-    justify-content: left;
-    margin-bottom: 1.5rem;
+  .mobile-bio-subtitle {
+    font-size: 2.5rem !important;
   }
-  
+
   .bio-subtitle {
-    text-align: left;
-    margin-bottom: 1rem;
+    font-size: 1.3rem !important;
   }
   
   .bio-tagline {
     text-align: left;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem !important;
   }
   
   .bio-paragraph {
     text-align: left;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
+    font-size: 1rem !important;
   }
   
   .back-button-our-story {
     padding: 0.5rem 1rem !important;
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;
     border-radius: 8px !important;
   }
 }
