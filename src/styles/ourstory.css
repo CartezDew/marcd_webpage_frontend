@@ -1221,6 +1221,19 @@
 }
 }
 
+@media (max-width: 450px) {
+  .hero-image {
+    margin-right: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-image {
+    margin-right: 0rem  ;
+  }
+}
+
+
 @media (max-width: 380px) {
 
   /* About Us Section */

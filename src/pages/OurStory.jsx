@@ -86,7 +86,10 @@ function OurStory() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsStoryVisible(true);
+            // Add a delay to ensure it triggers after the "Empowering the Backbone" animation completes
+            setTimeout(() => {
+              setIsStoryVisible(true);
+            }, 1200); // 1.2s delay to match the animation duration of the previous section
           }
         });
       },
@@ -101,7 +104,10 @@ function OurStory() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsStoryImageVisible(true);
+            // Add a delay to ensure it triggers after the story headline animation completes
+            setTimeout(() => {
+              setIsStoryImageVisible(true);
+            }, 800); // 0.8s delay to match the story headline animation duration
           }
         });
       },
