@@ -20,15 +20,19 @@ function OurStory() {
   const storyRef = useRef(null);
   const storyImageRef = useRef(null);
   const leadershipRef = useRef(null);
-  const mvRef = useRef(null); // <-- Add this line
+  const mvRef = useRef(null);
+  const storyDescriptionRef = useRef(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isStoryVisible, setIsStoryVisible] = useState(false);
   const [isStoryImageVisible, setIsStoryImageVisible] = useState(false);
   const [isLeadershipVisible, setIsLeadershipVisible] = useState(false);
   const [isMVVisible, setIsMVVisible] = useState(false);
+  const [showHoverAnimation, setShowHoverAnimation] = useState(false);
+  const [isStoryDescriptionVisible, setIsStoryDescriptionVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [hasHover, setHasHover] = useState(true);
-  const [showHoverNote, setShowHoverNote] = useState(false);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+
 
   const leaders = [
     {
@@ -56,6 +60,8 @@ function OurStory() {
       navigate(leader.followRoute);
     }
   };
+
+
 
   useEffect(() => {
     const observerOptions = {
@@ -105,17 +111,13 @@ function OurStory() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsLeadershipVisible(true);
-            // Show hover note when leadership section becomes visible
-            if (!hasHover) {
-              setShowHoverNote(true);
-              // Hide the note after 3 seconds
-              setTimeout(() => {
-                setShowHoverNote(false);
-              }, 3000);
-            }
+            
+            // Start hover animation after leader cards animate
+            setTimeout(() => {
+              setShowHoverAnimation(true);
+            }, 1200); // 1.2s delay to match leader card animation duration
           } else {
-            // Reset the note visibility when section is not visible
-            setShowHoverNote(false);
+            setShowHoverAnimation(false);
           }
         });
       },
@@ -134,6 +136,21 @@ function OurStory() {
       observerOptions
     );
 
+    // Story description observer with 10% threshold
+    const storyDescriptionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsStoryDescriptionVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the description is visible
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
     // Observe all sections
     if (aboutRef.current) {
       aboutObserver.observe(aboutRef.current);
@@ -149,6 +166,9 @@ function OurStory() {
     }
     if (mvRef.current) {
       mvObserver.observe(mvRef.current);
+    }
+    if (storyDescriptionRef.current) {
+      storyDescriptionObserver.observe(storyDescriptionRef.current);
     }
 
     return () => {
@@ -167,6 +187,9 @@ function OurStory() {
       if (mvRef.current) {
         mvObserver.unobserve(mvRef.current);
       }
+      if (storyDescriptionRef.current) {
+        storyDescriptionObserver.unobserve(storyDescriptionRef.current);
+      }
     };
   }, []);
 
@@ -176,17 +199,17 @@ function OurStory() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Detect hover capability
+  // Alternating card animation effect
   useEffect(() => {
-    const checkHoverCapability = () => {
-      setHasHover(window.matchMedia('(hover: hover)').matches);
-    };
-    
-    checkHoverCapability();
-    window.addEventListener('resize', checkHoverCapability);
-    
-    return () => window.removeEventListener('resize', checkHoverCapability);
-  }, []);
+    if (!showHoverAnimation || isHovering) return;
+
+    const interval = setInterval(() => {
+      setActiveCardIndex(prevIndex => (prevIndex === 0 ? 1 : 0));
+    }, 8000); // Switch every 8 seconds (4 seconds per card)
+
+    return () => clearInterval(interval);
+  }, [showHoverAnimation, isHovering]);
+
 
   return (
     <Box className="our-story-container">
@@ -323,7 +346,7 @@ function OurStory() {
             {leaders.map((leader, index) => (
               <motion.div
               key={leader.name}
-              className="leader-card"
+              className={`leader-card ${showHoverAnimation && activeCardIndex === index ? 'animate-hover' : ''}`}
               initial={{ 
                 opacity: 0, 
                 x: index === 0 ? -60 : 60, 
@@ -341,6 +364,8 @@ function OurStory() {
                 ease: [0.25, 0.8, 0.25, 1], 
                 delay: index * 0.10 
               }}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
               >
                 <div className="leader-image-wrapper">
                   <img
@@ -378,14 +403,7 @@ function OurStory() {
             ))}
           </div>
           
-          {/* Note for devices without hover */}
-          {!hasHover && showHoverNote && (
-            <Box className="leadership-hover-note flash-animation">
-              <Typography variant="body2" className="leadership-hover-note-text">
-                (Click leader's image to view their bio)
-              </Typography>
-            </Box>
-          )}
+
         </Box>
 
 

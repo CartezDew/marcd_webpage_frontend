@@ -32,13 +32,13 @@
 .about-hero-headline {
   font-size: 3rem !important;
   font-weight: 700 !important;
-  color: #1d4ed8;
   color: #be0303d1;
   margin-bottom: 1.5rem;
   line-height: 1.2;
   opacity: 0;
   transform: translateX(-100px);
   transition: opacity 1s ease-out, transform 1s ease-out;
+  padding-bottom: 1rem;
 }
 
 .about-hero-headline.animate {
@@ -48,8 +48,8 @@
 
 .about-hero-description {
   color: #586579;
-  font-size: 1.25rem;
-  line-height: 1.6;
+  font-size: 1.3rem !important;
+  line-height: 1.7 !important;
   margin: 0;
 }
 
@@ -144,6 +144,8 @@
   transition: transform 0.3s ease;
   opacity: 0;
   transform: translateX(80px);
+  font-size: 1.8rem !important;
+  line-height: 1.7;
 }
 
 .mv-card:hover {
@@ -177,7 +179,17 @@
 .mv-desc {
   font-size: 1.05rem;
   color: #475569;
-  line-height: 1.6;
+  line-height: 1.6 !important;
+}
+
+/* Target Material-UI Typography component specifically */
+.MuiTypography-root.mv-desc {
+  line-height: 1.6 !important;
+}
+
+/* Override Material-UI's default line-height for Typography */
+.MuiTypography-body1.mv-desc {
+  line-height: 1.6 !important;
 }
 
 /* Our Story Section */
@@ -227,7 +239,7 @@
 
 .hero-headline {
   font-size: 2rem !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   color: #26304a;
   margin-bottom: 1rem;
   line-height: 1.3;
@@ -237,12 +249,13 @@
 .hero-highlight {
   display: block;
   font-style: italic !important;
-  color: #08245e;
+  color: #be0303d1;
   font-weight: 700;
   font-size: 1.1em;
   margin-bottom: 1.5rem;
   animation: slideIn 0.8s ease-out;
   padding-bottom: .5rem;
+  opacity: .7;
 }
 
 .MuiTypography-root.hero-highlight {
@@ -252,10 +265,9 @@
 
 .hero-subheadline {
   color: #586579;
-  font-size: 1.125rem;
   max-width: 700px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.7 !important;
   text-align: center;
 }
 
@@ -341,7 +353,7 @@
   font-size: 2.5rem !important;
   font-weight: 700 !important;
   color: #be0303d1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem !important;
   line-height: 1.2;
   padding-bottom: .5rem;
   opacity: 0;
@@ -356,8 +368,8 @@
 
 .story-hero-description {
   color: #586579;
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1.1rem !important;
+  line-height: 1.7 !important;
   margin-bottom: 1.5rem;
 }
 
@@ -468,12 +480,22 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
   border-radius: 18px;
   z-index: 2;
 }
 
+/* Auto-show animation for hover overlay */
+.leader-card.animate-hover .leader-hover-overlay {
+  animation: autoShowHover 10s ease-in-out infinite;
+  animation-delay: 0.9s; /* Start after card animation completes */
+}
+
 .leader-card:hover .leader-hover-overlay {
+  opacity: 1 !important;
+  animation-play-state: paused;
+}
+
+.leader-hover-overlay.auto-show {
   opacity: 1;
 }
 
@@ -532,6 +554,18 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes autoShowHover {
+  0%, 15% {
+    opacity: 0;
+  }
+  15%, 70% {
+    opacity: 1;
+  }
+  75%, 100% {
+    opacity: 0;
+  }
+}
+
 @keyframes slideIn {
   from { opacity: 0; transform: translateX(-20px); }
   to { opacity: 1; transform: translateX(0); }
@@ -549,6 +583,23 @@
 }
 
 /* Responsive Design */
+
+
+@media (max-width: 1060px) {
+
+  .about-hero-headline   {
+    font-size: 2.2rem !important;
+  }
+
+  .about-hero-description {
+    font-size: 1.1rem !important;
+  }
+}
+
+.mv-card {
+  font-size: 1.5rem !important;
+}
+  
 
   /* Leadership Section */
 
@@ -865,51 +916,3 @@
   }
 }
 
-/* Leadership hover note styles */
-.leadership-hover-note {
-  margin-top: 2rem;
-  text-align: center;
-  padding: 1rem;
-  /* background: rgba(190, 3, 3, 0.1); */
-  border-radius: 8px;
-  border: 1px solid rgba(190, 3, 3, 0.2);
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.leadership-hover-note-text {
-  color: #be0303 !important;
-  font-weight: 500 !important;
-  font-size: 0.9rem !important;
-  margin: 0 !important;
-}
-
-/* Flash animation for hover note */
-@keyframes flash {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-    background: rgba(190, 3, 3, 0.1);
-  }
-  25% {
-    opacity: 0.7;
-    transform: scale(1.05);
-    background: rgba(190, 3, 3, 0.2);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-    background: rgba(190, 3, 3, 0.1);
-  }
-  75% {
-    opacity: 0.7;
-    transform: scale(1.05);
-    background: rgba(190, 3, 3, 0.2);
-  }
-}
-
-.flash-animation {
-  animation: flash 0.8s ease-in-out 5;
-  animation-fill-mode: forwards;
-}
