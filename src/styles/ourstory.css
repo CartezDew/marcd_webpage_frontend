@@ -971,7 +971,7 @@
 
   /* Center the hero title and description */
   .about-hero-text {
-    text-align: center !important;
+    text-align: left !important;
   }
 
   .about-hero-headline {
@@ -980,6 +980,8 @@
 
   .about-hero-description {
     text-align: center !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .mv-card {
