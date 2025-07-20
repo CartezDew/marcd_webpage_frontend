@@ -932,8 +932,7 @@
 @media (max-width: 600px) {
 
   .about-hero-description {
-    font-size: 1. !important;
-    padding-bottom: 1rem;
+    font-size: 1rem !important;
   }
   
   .about-hero-headline {
@@ -963,25 +962,11 @@
     display: block;
     max-width: 100% !important;
     max-height: 200px; /* Constrain height to make image smaller */
-    width: 80% !important; /* Stretch width to fill container */
+    width: 100% !important; /* Stretch width to fill container */
     object-fit: cover; /* Maintain aspect ratio while filling width */
     padding-bottom: .5rem;
+    margin-right: 4.5rem;
 
-  }
-
-  /* Center the hero title and description */
-  .about-hero-text {
-    text-align: left !important;
-  }
-
-  .about-hero-headline {
-    text-align: center !important;
-  }
-
-  .about-hero-description {
-    text-align: center !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
   }
 
   .mv-card {
