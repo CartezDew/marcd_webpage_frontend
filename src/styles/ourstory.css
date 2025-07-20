@@ -9,13 +9,13 @@
 /* About Us Hero Section - Two Column Layout */
 .about-us-hero {
   background: #f7faff;
-  padding: 2rem 2rem;
+  padding: 1rem 2rem;
   min-height: 18.75rem;
 }
 
 .about-hero-content {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   max-width: 1200px;
   margin: 0 auto;
   gap: 3rem;
@@ -326,7 +326,6 @@
   transform: translateX(100px);
   transition: opacity 1s ease-out, transform 1s ease-out;
   transition-delay: 0.4s;
-  max-width: 300px;
   /* Remove box shadow & border-radius for better blend */
   border-radius: 0;
   box-shadow: none;
@@ -663,8 +662,41 @@
     line-height: 1.6 !important;
     margin: 0;
   }
+
+  .hero-headline {
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    padding-bottom: .8rem;
+  }
+
+  .hero-highlight {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    padding-bottom: .8rem;
+  }
+
+  .hero-subheadline {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
 }
 
+@media (max-width: 805px) {
+  .our-story-hero {
+    align-items: flex-start;
+  }
+
+  .hero-highlight {
+    text-align: left !important;
+    padding-bottom: 1rem;
+  }
+
+  .hero-subheadline {
+    text-align: left !important;
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+  }
+}
 
 
   @media (max-width: 750px) {
@@ -683,43 +715,44 @@
 
 @media (max-width: 700px) {
 
-
-
   /* About Us Section */
   .about-hero-content {
-    flex-direction: column;
-    text-align: left;
-    gap: 2rem;
+    gap: 1rem; /* Reduced gap between text and image */
   }
   
   .about-hero-text {
     text-align: left;
     max-width: 100%;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
-  
-  .about-hero-image {
-    max-width: 80%;
-    order: -1;
+
+  .about-hero-description {
+    font-size: 1.1rem !important;
   }
   
   .about-hero-headline {
-    font-size: 2.25rem !important;
+    font-size: 2.2rem !important;
     padding-bottom: 1rem;
   }
 
-  /* Story Section */
-  .story-image {
-    float: right;
-    margin: 0 0 1rem 1rem;
-    max-width: 200px;
-    width: 35%;
+  .about-hero-image {
+    max-width: 45%; /* Reduced to ensure image edges are visible */
+    min-width: 250px; /* Ensure minimum width for visibility */
   }
 
-  .story-hero-description {
-    text-align: left;
+  .hero-image {
+    width: 100%;
+    height: auto; /* Remove height stretching */
+    object-fit: contain; /* Show full image without cropping */
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
+
+  /* Story Section */
+  .
+
+  
 
   /* cards */
 
