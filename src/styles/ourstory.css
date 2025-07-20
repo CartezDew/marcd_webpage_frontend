@@ -932,7 +932,8 @@
 @media (max-width: 600px) {
 
   .about-hero-description {
-    font-size: 1rem !important;
+    font-size: 1. !important;
+    padding-bottom: 1rem;
   }
   
   .about-hero-headline {
@@ -966,6 +967,19 @@
     object-fit: cover; /* Maintain aspect ratio while filling width */
     padding-bottom: .5rem;
 
+  }
+
+  /* Center the hero title and description */
+  .about-hero-text {
+    text-align: center !important;
+  }
+
+  .about-hero-headline {
+    text-align: center !important;
+  }
+
+  .about-hero-description {
+    text-align: center !important;
   }
 
   .mv-card {
