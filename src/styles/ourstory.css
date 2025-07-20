@@ -4,6 +4,7 @@
   background: #ffffff;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
+  border-radius: 12px; /* Add rounded corners to the main container */
 }
 
 /* About Us Hero Section - Two Column Layout */
@@ -11,6 +12,7 @@
   background: #f7faff;
   padding: 1rem 2rem;
   min-height: 18.75rem;
+  border-radius: 12px; /* Add rounded corners to the main container */
 }
 
 .about-hero-content {
@@ -382,6 +384,8 @@
   background: #f7faff;
   padding: 2rem 1.5rem;
   margin-top: 0;
+  border-bottom-left-radius: 12px; /* Add rounded corners to bottom left */
+  border-bottom-right-radius: 12px; /* Add rounded corners to bottom right */
 }
 
 .leadership-heading {
@@ -598,6 +602,10 @@
   .about-hero-description {
     font-size: 1.1rem !important;
   }
+
+  .story-hero-headline {
+    font-size: 2.2rem !important;
+  }
 }
 
 .mv-card {
@@ -624,9 +632,6 @@
 
 @media (max-width: 825px) {
 
-  .our-story-container {
-    padding-top: 1rem;
-  }
 
   .about-hero-content {
     align-items: stretch;

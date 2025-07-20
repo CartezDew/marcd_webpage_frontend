@@ -81,7 +81,7 @@ function OurStory() {
       observerOptions
     );
 
-    // Story section observer
+    // Story section observer with 5% threshold for early triggering
     const storyObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -90,7 +90,10 @@ function OurStory() {
           }
         });
       },
-      observerOptions
+      {
+        threshold: 0.05, // Trigger when 5% of the section is visible
+        rootMargin: '0px 0px -50px 0px' // Trigger slightly before the section is fully visible
+      }
     );
 
     // Story image observer
