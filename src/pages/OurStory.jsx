@@ -298,15 +298,11 @@ function OurStory() {
               >
                 Our Story
               </Typography>
-              {/* Conditionally render image inside text for mobile */}
-              {windowWidth <= 800 && (
-                <img 
-                  src={sisterAndDadImg} 
-                  alt="Family legacy in trucking industry" 
-                  className="story-image animate"
-                  style={{ float: 'right', margin: '0 0 1rem 1rem', maxWidth: '60%', height: 'auto', display: 'block' }}
-                />
-              )}
+              <img 
+                src={sisterAndDadImg} 
+                alt="Family legacy in trucking industry" 
+                className={`story-image ${isStoryVisible ? 'animate' : ''}`}
+              />
               <Typography className="story-hero-description">
                 Marc'd was built from lived experience and a generational connection to the trucking industry. Its founder, Cartez Dewberry, carries the legacy of his late father, Marcus Dewberry—a commercial truck driver with more than 30 years behind the wheel. For decades, Marcus shared stories of the challenges truckers face on the road: limited access to safe parking, healthy food, clean facilities, and long periods of isolation.
               </Typography>
@@ -319,16 +315,6 @@ function OurStory() {
                 Marc'd was created to bridge those gaps. Named in honor of Marcus Dewberry, the platform is a living tribute—one that carries his name, his mission, and the mark he left on the industry. It's not just a tech solution; it's a commitment to making life on the road safer, healthier, and more connected for the drivers who keep America moving.
               </Typography>
             </Box>
-            {/* Only show image in side column for desktop */}
-            {windowWidth > 800 && (
-              <Box className="story-hero-image" ref={storyImageRef}>
-                <img 
-                  src={sisterAndDadImg} 
-                  alt="Family legacy in trucking industry" 
-                  className={`story-image${isStoryVisible ? ' animate' : ''}`}
-                />
-              </Box>
-            )}
           </Box>
         </Box>
       </Box>
