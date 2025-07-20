@@ -173,8 +173,8 @@
   position: absolute;
   left: 0;
   font-size: 1.8rem;
-  color: #2563eb;
   color: #be0303d1;
+  opacity: 0.7;
 }
 
 .mv-title {
@@ -711,13 +711,55 @@
       margin: 0 auto;
       padding: 1rem;
     }
-  }
 
+    /* Move hover overlay content higher on the card */
+    .leader-hover-overlay {
+      align-items: flex-start !important;
+      justify-content: center;
+      padding-top: 3.5rem; /* Add top padding to move content higher */
+    }
+
+    .hover-actions {
+      margin-top: 1rem; /* Additional spacing from the top */
+    }
+
+    .hero-image {
+      padding-bottom: 3rem;
+    }
+
+    /* Reduce bottom spacing of About Us hero container */
+    .about-us-hero {
+      padding-bottom: .2rem; /* Reduced from default padding */
+    }
+
+    /* Reduce gap between image and description */
+    .about-hero-content {
+      gap: .5rem; /* Reduced from 3rem to bring image and text closer */
+    }
+
+    .mv-row {
+      gap: 2rem; 
+    }
+
+    /* Reduce margins around MV cards to bring them closer to container border */
+    .mv-section {
+      padding: 2rem 1rem; /* Reduced from 3rem 1.5rem to bring cards closer to edges */
+    }
+  }  
+      
+      
 @media (max-width: 700px) {
 
   /* About Us Section */
+  .about-us-hero {
+    background: #f7faff;
+    padding: 1rem 1rem;
+    min-height: 18.75rem;
+  }
+
   .about-hero-content {
     gap: 1rem; /* Reduced gap between text and image */
+    align-items: stretch; /* Stretch items to match height */
   }
   
   .about-hero-text {
@@ -734,25 +776,38 @@
   .about-hero-headline {
     font-size: 2.2rem !important;
     padding-bottom: 1rem;
+    margin-top: 0; /* Ensure no top margin */
   }
 
   .about-hero-image {
-    max-width: 45%; /* Reduced to ensure image edges are visible */
-    min-width: 250px; /* Ensure minimum width for visibility */
+    display: flex;
+    align-items: stretch; /* Stretch image to match container height */
+    height: auto; /* Let container determine height */
+    max-width: 75% !important;
+    padding-bottom: 2rem;
   }
 
   .hero-image {
     width: 100%;
-    height: auto; /* Remove height stretching */
-    object-fit: contain; /* Show full image without cropping */
+    height: 100%; /* Fill the container height */
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
+    object-position: center; /* Center the image */
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
 
   /* Story Section */
-  .
+  .story-image {
+    float: right;
+    margin: 0 0 1rem 1rem;
+    max-width: 80% !important; /* Added !important to override 480px rule */
+    width: 50% !important; /* Added width and !important to override 480px rule */
+    height: auto;
+  }
 
-  
+  .story-hero-description {
+    text-align: left;
+  }
 
   /* cards */
 
@@ -772,7 +827,8 @@
   .story-hero-image img {
     float: right;
     margin: 0 0 1rem 1rem;
-    max-width: 50%;
+    max-width: 80% !important; /* Added !important to override 480px rule */
+    width: 50% !important; /* Added width and !important to override 480px rule */
     height: auto;
   }
 
@@ -840,9 +896,64 @@
 }
 }
 
+@media (max-width: 650px) {
+
+   /* Move hover overlay content higher on the card */
+   .leader-hover-overlay {
+     align-items: flex-start !important;
+     justify-content: center;
+     padding-top: 2rem; /* Add top padding to move content higher */
+   }
+
+   /* Reduce gap between hover overlay buttons */
+   .hover-actions {
+     gap: 1rem; /* Reduced from 2rem to bring buttons closer together */
+   }
+
+   
+}
+ 
+
 
 
 @media (max-width: 600px) {
+
+  .about-hero-description {
+    font-size: 1rem !important;
+  }
+  
+  .about-hero-headline {
+    font-size: 2rem !important;
+    padding-bottom: 1rem;
+    margin-top: 0; /* Ensure no top margin */
+  }
+
+  /* Move hero image below the description */
+  .about-hero-content {
+    flex-direction: column; /* Stack text and image vertically */
+    gap: 1rem;
+  }
+
+  /* Center the hero image */
+  .about-hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100% !important; /* Override max-width to allow full centering */
+    flex: unset !important; /* Remove flex properties */
+  }
+
+  /* Center the image itself */
+  .hero-image {
+    margin: 0 auto; /* Center the image horizontally */
+    display: block;
+    max-width: 100% !important;
+    max-height: 200px; /* Constrain height to make image smaller */
+    width: 80% !important; /* Stretch width to fill container */
+    object-fit: cover; /* Maintain aspect ratio while filling width */
+    padding-bottom: .5rem;
+
+  }
 
   .mv-card {
     
@@ -884,6 +995,63 @@
     max-width: 90%;
     margin: 0 auto;
     padding: 1rem;
+  }
+
+  /* Make leader names and titles smaller */
+  .leader-name {
+    font-size: .9rem !important; /* Reduced from 1.25rem */
+  }
+
+  .leader-title {
+    font-size: 0.85rem !important; /* Reduced from 1rem */
+  }
+
+   /* Move hover overlay content higher on the card */
+   .leader-hover-overlay {
+    align-items: flex-start !important;
+    justify-content: center;
+    padding-top: 1rem; /* Add top padding to move content higher */
+  }
+
+  /* Reduce gap between hover overlay buttons */
+  .hover-actions {
+    gap: .5rem; /* Reduced from 2rem to bring buttons closer together */
+  }
+}
+
+
+@media (max-width: 535px) {
+
+  /* Make cards smaller to maintain horizontal layout */
+  .leader-card {
+    max-width: 200px; /* Reduced from 300px to fit horizontally */
+    min-width: 160px; /* Reduced minimum width */
+  }
+
+  .leader-name {
+    font-size: .8rem !important; /* Reduced from 1.25rem */
+  }
+
+  /* Adjust grid to ensure horizontal layout */
+  .leaders-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 140px)); /* Smaller minmax values */
+    gap: 2rem; /* Reduced gap to fit cards better */
+  }
+
+  /* Make hover overlay buttons smaller */
+  .hover-button {
+    min-width: 70px; /* Reduced from 80px */
+    min-height: 60px; /* Reduced from 80px */
+    padding: 0.5rem; /* Reduced from 0.75rem */
+  }
+
+  .button-icon {
+    font-size: 1.2rem; /* Reduced from 1.5rem */
+    margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+  }
+
+  .button-label {
+    font-size: 0.6rem !important; /* Reduced from 0.75rem */
   }
 }
 
@@ -979,11 +1147,11 @@
 }
 
 .leader-name {
-  font-size: .75rem !important;
+  font-size: 1rem !important;
 }
 
 .leader-title {
-  font-size: .7rem !important;
+  font-size: .9rem !important;
 }
 .leaders-grid {
   display: grid;
@@ -1009,6 +1177,22 @@
   aspect-ratio: 3 / 4;
   display: flex;
   flex-direction: column;
+}
+
+/* Make hover overlay buttons smaller */
+.hover-button {
+  min-width: 80px; /* Reduced from 80px */
+  min-height: 80px; /* Reduced from 80px */
+  padding: 0.5rem; /* Reduced from 0.75rem */
+}
+
+.button-icon {
+  font-size: 2rem; /* Reduced from 1.5rem */
+  margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+}
+
+.button-label {
+  font-size: .8rem !important; /* Reduced from 0.75rem */
 }
 }
 
