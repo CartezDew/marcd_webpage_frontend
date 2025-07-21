@@ -1,23 +1,121 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, Typography, InputAdornment, IconButton, Link, Card, CardContent, Container, Grid } from '@mui/material';
-import { Visibility, VisibilityOff, Lock, Email } from '@mui/icons-material';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Container, 
+  Card, 
+  CardContent, 
+  Typography, 
+  TextField, 
+  Button, 
+  Box, 
+  Grid, 
+  Link, 
+  InputAdornment, 
+  IconButton 
+} from '@mui/material';
+import { Email, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../services/users';
 import '../styles/signin.css';
 
 function SignIn() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [editingEmail, setEditingEmail] = useState(false);
+  const [error, setError] = useState('');
   const [registerMessage, setRegisterMessage] = useState('');
   const [headerVisible, setHeaderVisible] = useState(false);
-  const navigate = useNavigate();
+  const [primaryButtonVisible, setPrimaryButtonVisible] = useState(false);
+  const [secondaryButtonVisible, setSecondaryButtonVisible] = useState(false);
+  
+  const headerRef = useRef(null);
+  const primaryButtonRef = useRef(null);
+  const secondaryButtonRef = useRef(null);
 
+  // Header animation observer
   useEffect(() => {
-    setTimeout(() => setHeaderVisible(true), 100);
+    const headerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setHeaderVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the header is visible
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (headerRef.current) {
+      headerObserver.observe(headerRef.current);
+    }
+
+    return () => {
+      if (headerRef.current) {
+        headerObserver.unobserve(headerRef.current);
+      }
+    };
+  }, []);
+
+  // Primary button animation observer
+  useEffect(() => {
+    const primaryButtonObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Start primary button animation immediately when visible
+            setPrimaryButtonVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the button is visible
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (primaryButtonRef.current) {
+      primaryButtonObserver.observe(primaryButtonRef.current);
+    }
+
+    return () => {
+      if (primaryButtonRef.current) {
+        primaryButtonObserver.unobserve(primaryButtonRef.current);
+      }
+    };
+  }, []);
+
+  // Secondary button animation observer
+  useEffect(() => {
+    const secondaryButtonObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Start secondary button animation after primary button animation completes
+            setTimeout(() => {
+              setSecondaryButtonVisible(true);
+            }, 800); // 0.8s delay to match primary button animation duration
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the button is visible
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    if (secondaryButtonRef.current) {
+      secondaryButtonObserver.observe(secondaryButtonRef.current);
+    }
+
+    return () => {
+      if (secondaryButtonRef.current) {
+        secondaryButtonObserver.unobserve(secondaryButtonRef.current);
+      }
+    };
   }, []);
 
   const handleSignIn = async (e) => {
@@ -56,7 +154,7 @@ function SignIn() {
             <Box sx={{ px: 1 }}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
                 <Grid item xs={12} sx={{ width: '90%' }}>
-                  <div className="signin-header">
+                  <div className="signin-header" ref={headerRef}>
                     <Typography
                       variant="h6"
                       className={`signin-title${headerVisible ? ' animate' : ''}`}
@@ -109,16 +207,18 @@ function SignIn() {
                   </div>
                   {error && <div className="signin-error">{error}</div>}
                   <Button
+                    ref={primaryButtonRef}
                     type="submit"
                     fullWidth
-                    className="signin-btn primary"
+                    className={`signin-btn primary${primaryButtonVisible ? ' animate' : ''}`}
                     disabled={loading}
                   >
                     {loading ? 'Signing in...' : 'Sign in'}
                   </Button>
                   <Button
+                    ref={secondaryButtonRef}
                     fullWidth
-                    className="signin-btn secondary"
+                    className={`signin-btn secondary${secondaryButtonVisible ? ' animate' : ''}`}
                   >
                     Sign in with one-time code
                   </Button>

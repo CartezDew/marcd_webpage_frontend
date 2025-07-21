@@ -175,6 +175,20 @@ function Nav() {
             </ListItemButton>
           </ListItem>
         ))}
+        {isHomePage && (
+          <ListItem disablePadding>
+            <ListItemButton 
+              component={Link}
+              to="/signin"
+              className="nav-drawer-item"
+            >
+              <ListItemIcon className="nav-drawer-icon">
+                <LoginIcon />
+              </ListItemIcon>
+              <ListItemText primary="Log In" />
+            </ListItemButton>
+          </ListItem>
+        )}
         {!isHomePage && (
           <ListItem disablePadding>
             <ListItemButton 

@@ -111,32 +111,42 @@ function Leadership_Cartez() {
       }
     };
   }, []);
-  // Typewriter effect
+  // Typewriter effect - disabled at 960px and below
   useEffect(() => {
-    const startTyping = setTimeout(() => {
-      let currentIndex = 0;
-      const typingInterval = setInterval(() => {
-        if (currentIndex < fullText.length) {
-          setDisplayedText(fullText.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          clearInterval(typingInterval);
-          setIsTypingComplete(true);
-          
-          // Show bold for 1 second, then revert
-          setTimeout(() => {
-            setShowBold(true);
+    const isSmallScreen = window.innerWidth <= 960;
+    
+    if (isSmallScreen) {
+      // For small screens, show full text immediately
+      setDisplayedText(fullText);
+      setIsTypingComplete(true);
+      setShowBold(false);
+    } else {
+      // For larger screens, use typewriter effect
+      const startTyping = setTimeout(() => {
+        let currentIndex = 0;
+        const typingInterval = setInterval(() => {
+          if (currentIndex < fullText.length) {
+            setDisplayedText(fullText.slice(0, currentIndex + 1));
+            currentIndex++;
+          } else {
+            clearInterval(typingInterval);
+            setIsTypingComplete(true);
+            
+            // Show bold for 1 second, then revert
             setTimeout(() => {
-              setShowBold(false);
-            }, 1000);
-          }, 200);
-        }
-      }, 50); // Typing speed (50ms per character)
+              setShowBold(true);
+              setTimeout(() => {
+                setShowBold(false);
+              }, 1000);
+            }, 200);
+          }
+        }, 50); // Typing speed (50ms per character)
 
-      return () => clearInterval(typingInterval);
-    }, 3000); // Start typing after 3 seconds
+        return () => clearInterval(typingInterval);
+      }, 3000); // Start typing after 3 seconds
 
-    return () => clearTimeout(startTyping);
+      return () => clearTimeout(startTyping);
+    }
   }, [fullText]);
 
   return (
