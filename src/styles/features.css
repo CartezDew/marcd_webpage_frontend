@@ -32,7 +32,7 @@
 .features-header {
   text-align: center;
   margin-bottom: 4rem;
-  opacity: 0;
+  font-weight: 800 !important;
   transform: translateY(20px);
   transition: all 0.8s ease;
 }
@@ -52,7 +52,7 @@
 }
 
 .features-subtitle {
-  font-size: 1.25rem !important;
+  font-size: 1.5rem !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
   color: #a1a1aa !important;
@@ -465,7 +465,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 900px) {
   .features-title {
     font-size: 2.5rem !important;
   }
@@ -475,7 +475,7 @@
   }
   
   .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
   }
   
@@ -485,11 +485,13 @@
     display: none;
   }
   
-  /* Tablet borders - 2 columns with fading */
+  /* Tablet borders - 3 columns with fading */
   .feature-card-1::after,
-  .feature-card-3::after,
+  .feature-card-2::after,
+  .feature-card-4::after,
   .feature-card-5::after,
-  .feature-card-7::after {
+  .feature-card-7::after,
+  .feature-card-8::after {
     display: block;
     content: '';
     position: absolute;
@@ -538,6 +540,64 @@
   .confetti-particle {
     top: 3.5rem; /* Adjust for smaller padding + icon position */
     left: 3.5rem; /* Adjust for smaller padding */
+  }
+}
+
+@media (max-width: 899px) and (min-width: 769px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+  
+  /* Reset all pseudo-elements for mobile */
+  .feature-card::before,
+  .feature-card::after {
+    display: none;
+  }
+  
+  /* Mobile borders - 2 columns with fading */
+  .feature-card-1::after,
+  .feature-card-3::after,
+  .feature-card-5::after,
+  .feature-card-7::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: 0;
+    bottom: 15%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(255, 255, 255, 0.12) 75%,
+      transparent 100%
+    );
+  }
+  
+  .feature-card-1::before,
+  .feature-card-2::before,
+  .feature-card-3::before,
+  .feature-card-4::before,
+  .feature-card-5::before,
+  .feature-card-6::before,
+  .feature-card-7::before,
+  .feature-card-8::before {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(255, 255, 255, 0.12) 75%,
+      transparent 100%
+    );
   }
 }
 
