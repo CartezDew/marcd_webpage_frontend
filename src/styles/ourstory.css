@@ -1,6 +1,6 @@
 /* Our Story Page - Following Marc'd Design System */
 .our-story-container {
-  padding: 1;
+  padding: 1rem;
   background: #ffffff;
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
@@ -1039,8 +1039,8 @@
 
   /* Make cards smaller to maintain horizontal layout */
   .leader-card {
-    max-width: 200px; /* Reduced from 300px to fit horizontally */
-    min-width: 160px; /* Reduced minimum width */
+    max-width: 200px; 
+    min-width: 160px; 
   }
 
   .leader-name {
@@ -1049,24 +1049,24 @@
 
   /* Adjust grid to ensure horizontal layout */
   .leaders-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 140px)); /* Smaller minmax values */
-    gap: 2rem; /* Reduced gap to fit cards better */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 140px)); 
+    gap: 2rem; 
   }
 
   /* Make hover overlay buttons smaller */
   .hover-button {
-    min-width: 70px; /* Reduced from 80px */
-    min-height: 60px; /* Reduced from 80px */
-    padding: 0.5rem; /* Reduced from 0.75rem */
+    min-width: 70px; 
+    min-height: 60px; 
+    padding: 0.5rem; 
   }
 
   .button-icon {
-    font-size: 1.2rem; /* Reduced from 1.5rem */
-    margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+    font-size: 1.2rem; 
+    margin-bottom: 0.25rem; 
   }
 
   .button-label {
-    font-size: 0.6rem !important; /* Reduced from 0.75rem */
+    font-size: 0.6rem !important; 
   }
 }
 
@@ -1086,12 +1086,12 @@
 
   /* Reduce margins and padding for "Empowering the Backbone of America" section */
   .our-story-hero {
-    padding: 2rem 1rem 1.5rem; /* Reduced from 4rem 1.5rem 3rem */
+    padding: 2rem 1rem 1.5rem;
   }
 
   /* Reduce margins and padding for "Our Story" hero section */
   .story-section {
-    padding: 1.5rem 0.75rem; /* Further reduced from 2rem 1rem */
+    padding: 1.5rem 0.75rem; 
   }
 
   .about-hero-description {
@@ -1115,11 +1115,11 @@
 
   .mv-card {
     flex: 1 1 calc(50% - 1rem);
-    min-width: 200px; /* or try 180px */
+    min-width: 200px; 
     max-width: 500px;
-    font-size: 1.05rem; /* default size */
-    margin-left: -1rem;
-    margin-right: -1rem;
+    font-size: 1.05rem; 
+    margin-left: 0;
+    margin-right: 0;
   }
   
   .story-hero-content {
@@ -1147,7 +1147,7 @@
 
   .our-story-hero {
     align-items: flex-start;
-    padding: 2rem 1rem 1.5rem; /* Reduced from 4rem 1.5rem 3rem */
+    padding: 2rem 1rem 1.5rem; 
   }
   
   .hero-headline, h3 {
@@ -1182,7 +1182,7 @@
 .leaders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
-  gap: 1rem; /* reduced from 2rem */
+  gap: 1rem; 
   justify-content: center;
   align-items: start;
   max-width: 90%;
@@ -1207,18 +1207,18 @@
 
 /* Make hover overlay buttons smaller */
 .hover-button {
-  min-width: 80px; /* Reduced from 80px */
-  min-height: 80px; /* Reduced from 80px */
-  padding: 0.5rem; /* Reduced from 0.75rem */
+  min-width: 80px; 
+  min-height: 80px; 
+  padding: 0.5rem; 
 }
 
 .button-icon {
-  font-size: 2rem; /* Reduced from 1.5rem */
-  margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+  font-size: 2rem; 
+  margin-bottom: 0.25rem; 
 }
 
 .button-label {
-  font-size: .8rem !important; /* Reduced from 0.75rem */
+  font-size: .8rem !important; 
 }
 }
 
@@ -1237,7 +1237,6 @@
 
 @media (max-width: 380px) {
 
-  /* About Us Section */
 
   .about-hero-content {
     flex-direction: column;
@@ -1245,4 +1244,5 @@
     gap: 2rem;
   }
 }
+
 
