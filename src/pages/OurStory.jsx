@@ -88,7 +88,7 @@ function OurStory() {
           if (entry.isIntersecting) {
             // Add a delay to ensure it triggers after the "Empowering the Backbone" animation completes
             setTimeout(() => {
-              setIsStoryVisible(true);
+            setIsStoryVisible(true);
             }, 1200); // 1.2s delay to match the animation duration of the previous section
           }
         });
@@ -106,7 +106,7 @@ function OurStory() {
           if (entry.isIntersecting) {
             // Add a delay to ensure it triggers after the story headline animation completes
             setTimeout(() => {
-              setIsStoryImageVisible(true);
+            setIsStoryImageVisible(true);
             }, 800); // 0.8s delay to match the story headline animation duration
           }
         });
@@ -329,13 +329,13 @@ function OurStory() {
       </Box>
 
       {/* Leadership Section */}
-        <Box className="leadership-section" ref={leadershipRef}>
-          <Typography 
-            variant="h3" 
-            className={`leadership-heading ${isLeadershipVisible ? 'animate' : ''}`}
-          >
-            Leadership
-          </Typography>
+      <Box className="leadership-section" ref={leadershipRef}>
+        <Typography 
+          variant="h3" 
+          className={`leadership-heading ${isLeadershipVisible ? 'animate' : ''}`}
+        >
+          Leadership
+        </Typography>
 
           <div className="leaders-grid">
             {leaders.map((leader, index) => (
@@ -365,8 +365,8 @@ function OurStory() {
                 <div className="leader-image-wrapper">
                   <img
                     src={leader.image}
-                    alt={leader.name}
-                  />
+                  alt={leader.name}
+                />
                 </div>
                 <div className="leader-overlay">
                   <Typography className="leader-name">{leader.name}</Typography>
@@ -395,17 +395,17 @@ function OurStory() {
                   </div>
                 </div>
               </motion.div>
-            ))}
+          ))}
           </div>
           
 
-        </Box>
+      </Box>
 
 
 
 
 
-</Box>
+    </Box>
 
   );
 }

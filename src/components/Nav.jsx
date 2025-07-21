@@ -90,7 +90,7 @@ function Nav() {
 
   const goToWaitlist = () => {
     if (location.pathname !== '/') {
-      navigate('/#waitlist');
+    navigate('/#waitlist');
     } else {
       // If already on home, try to call scrollToWaitlist if available
       if (typeof window.scrollToWaitlist === 'function') {
@@ -171,8 +171,8 @@ function Nav() {
       </Tooltip>
       
       {/* Navigation content */}
-      <Box onClick={handleDrawerToggle} className="nav-drawer-content">
-        <List>
+    <Box onClick={handleDrawerToggle} className="nav-drawer-content">
+      <List>
         {navItems.map((item) => (
           <ListItem key={item.path} disablePadding>
             <ListItemButton 
@@ -212,8 +212,8 @@ function Nav() {
             </ListItemButton>
           </ListItem>
         )}
-        </List>
-      </Box>
+      </List>
+    </Box>
     </>
   );
 
@@ -255,13 +255,13 @@ function Nav() {
                 cursor: isHomePage ? 'default' : 'pointer',
                 transition: 'all 0.2s ease'
               }}
-            >
-              <img 
-                src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
-                alt="Marc'd Logo" 
+          >
+            <img 
+              src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
+              alt="Marc'd Logo" 
                 className={`nav-logo ${isHomePage ? 'disabled' : ''}`}
-              />
-            </Box>
+            />
+          </Box>
           </Tooltip>
 
           {isMobile ? (

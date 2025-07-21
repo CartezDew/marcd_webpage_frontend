@@ -2075,11 +2075,20 @@
 @media (max-width: 480px) {
   /* Features Container & Content */
   .features-title {
-    font-size: 1.6rem !important;
+    font-size: 1.4rem !important;
+  }
+
+
+  .feature-title {
+    font-size: 1rem !important;
+  }
+
+  .feature-description {
+    font-size: 0.9rem !important;
   }
   
   .feature-card {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.1rem;
   }
 
   /* Responsive confetti positioning for small mobile */
@@ -2094,14 +2103,6 @@
   
   .feature-icon svg {
     font-size: 2rem !important;
-  }
-
-  .navigation-title {
-    font-size: 1.4rem !important;
-  }
-
-  .navigation-description {
-    font-size: 0.9rem !important;
   }
   
   /* Enhanced mobile borders with shorter fade */
@@ -2134,7 +2135,7 @@
   }
 
   .navigation-title {
-    font-size: 1.75rem !important;
+    font-size: 1.2rem !important;
     margin-bottom: 0.75rem !important;
   }
 
