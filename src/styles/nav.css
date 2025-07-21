@@ -266,6 +266,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 /* Mobile hamburger menu button */
 .nav-mobile-toggle {
   color: #333 !important; /* Dark icon color */
+  
 }
 
 /* ===================================
@@ -292,14 +293,18 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 /* Mobile drawer content container */
 .nav-drawer-content {
   text-align: left !important; /* Center-align drawer content */
+  position: relative !important;
 }
 
 /* Mobile drawer logo container */
 .nav-drawer-logo-container {
-  margin-top: 16px !important; /* Top margin */
-  margin-bottom: 16px !important; /* Bottom margin */
+  margin-top: 35px !important; /* Independent spacing from close button */
+  margin-bottom: 10px !important; /* Bottom margin */
   display: flex !important;
-  justify-content: center !important; /* Center the logo */
+  justify-content: center !important; /* Center the logo horizontally */
+  align-items: center !important; /* Center the logo vertically */
+  width: 100% !important; /* Full width */
+  position: relative !important; /* Independent positioning */
 }
 
 /* Individual drawer menu item */
@@ -326,6 +331,40 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 /* Drawer item icon styling */
 .nav-drawer-icon {
   color: inherit !important; /* Inherit color from parent */
+}
+
+/* Mobile drawer close button */
+
+
+.nav-drawer-close-button:hover {
+  background-color: #cecbcb !important;
+  color: rgb(8, 8, 8) !important;
+  border-color: #131313 !important;
+  transform: scale(1.1) !important;
+}
+
+/* Material-UI IconButton overrides for close button */
+.MuiIconButton-root.nav-drawer-close-button {
+  position: fixed !important;
+  top: 0.5rem !important;
+  left: 0.4rem !important;
+  border: 2px solid #be0303 !important;
+  border-radius: 12px !important;
+  width: 30px !important;
+  height: 30px !important;
+  color: #be0303 !important;
+  background-color: transparent !important;
+  transition: all 0.3s ease !important;
+  z-index: 1000 !important;
+  padding-bottom: 10px !important;
+  opacity: 0.5 !important;
+}
+
+.MuiIconButton-root.nav-drawer-close-button:hover {
+  background-color: #cecbcb !important;
+  color: rgb(8, 8, 8) !important;
+  border-color: #131313 !important;
+  transform: scale(1.1) !important;
 }
 
 /* ===============================

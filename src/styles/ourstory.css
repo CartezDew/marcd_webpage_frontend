@@ -1073,10 +1073,6 @@
 
 @media (max-width: 480px) {
 
-  /* .about-hero-content {
-    margin-left: -3rem;
-    margin-right: -3rem;
-  } */
 
   .about-hero-text {
     font-size: 2rem !important;
@@ -1084,7 +1080,7 @@
     padding-right: .5rem;
   }
 
-  /* Reduce margins and padding for "Empowering the Backbone of America" section */
+
   .our-story-hero {
     padding: 2rem 1rem 1.5rem;
   }
@@ -1244,5 +1240,13 @@
     gap: 2rem;
   }
 }
+
+/*  {
+  outline: 1px solid red;
+}
+html, body {
+  overflow-x: hidden;
+} */
+
 
 

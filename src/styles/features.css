@@ -7,6 +7,7 @@
   position: relative;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 4rem 0;
+  border-radius: 12px;
 }
 
 .features-container::before {
@@ -88,9 +89,24 @@
   position: relative;
   cursor: pointer;
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease forwards;
+  transform: translateX(-50px);
   overflow: hidden;
+}
+
+/* Sequential card animation */
+.feature-card.card-animate-in {
+  animation: cardEaseInFromLeft 0.6s ease-out forwards;
+}
+
+@keyframes cardEaseInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Confetti Animation for Top Marc'er Rewards Card */
@@ -448,18 +464,6 @@
   opacity: 0.9;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
   .features-title {
@@ -559,8 +563,9 @@
   }
   
   .features-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
+    gap: 1rem;
   }
   
   /* Reset all pseudo-elements for mobile */
@@ -569,7 +574,7 @@
     display: none;
   }
   
-  /* Mobile borders - single column with fading bottom borders */
+  /* Two-column borders - bottom borders for all cards except last card */
   .feature-card-1::before,
   .feature-card-2::before,
   .feature-card-3::before,
@@ -594,7 +599,28 @@
     );
   }
   
-  /* No border on last card */
+  /* Right borders for left column cards */
+  .feature-card-1::after,
+  .feature-card-3::after,
+  .feature-card-5::after,
+  .feature-card-7::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    right: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 30%,
+      rgba(255, 255, 255, 0.1) 70%,
+      transparent 100%
+    );
+  }
+  
+  /* No borders on last card only */
   .feature-card-9::before {
     display: none;
   }

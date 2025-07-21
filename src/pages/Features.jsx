@@ -43,6 +43,8 @@ function Features() {
   const [isStatisticsVideoEnlarged, setIsStatisticsVideoEnlarged] = useState(false);
   const [isFeatureRequestVideoEnlarged, setIsFeatureRequestVideoEnlarged] = useState(false);
   const [isFirstViewport, setIsFirstViewport] = useState(true);
+  const [animatedCards, setAnimatedCards] = useState(new Set());
+  const [isGridInView, setIsGridInView] = useState(false);
   const featuresGridRef = useRef(null);
   const rewardsCardRef = useRef(null);
   const rewardsSectionRef = useRef(null);
@@ -79,6 +81,11 @@ function Features() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsFirstViewport(entry.isIntersecting);
+        if (entry.isIntersecting && !isGridInView) {
+          setIsGridInView(true);
+          // Start sequential animation
+          startSequentialAnimation();
+        }
       },
       {
         threshold: 0.3,
@@ -95,7 +102,19 @@ function Features() {
         observer.unobserve(featuresGridRef.current);
       }
     };
-  }, []);
+  }, [isGridInView]);
+
+  // Sequential animation function
+  const startSequentialAnimation = () => {
+    const animationDelay = 300; // 300ms between each card
+    const features = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Feature IDs in order
+    
+    features.forEach((featureId, index) => {
+      setTimeout(() => {
+        setAnimatedCards(prev => new Set([...prev, featureId]));
+      }, index * animationDelay);
+    });
+  };
 
   // Intersection Observer for the rewards card
   useEffect(() => {
@@ -698,8 +717,7 @@ function Features() {
           {features.map((feature, index) => (
             <Box 
               key={feature.id} 
-              className={`feature-card feature-card-${feature.id}`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`feature-card feature-card-${feature.id} ${animatedCards.has(feature.id) ? 'card-animate-in' : ''}`}
               ref={feature.id === 1 ? rewardsCardRef : null}
               onClick={() => handleCardClick(feature.route)}
             >

@@ -24,7 +24,8 @@ import {
   Menu,
   People,
   Apps,
-  Login as LoginIcon
+  Login as LoginIcon,
+  Close as CloseIcon
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { motion, useTime, useTransform, useSpring } from 'framer-motion';
@@ -119,7 +120,16 @@ function Nav() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} className="nav-drawer-content">
+    <>
+      {/* Close button for mobile drawer */}
+      <IconButton
+        onClick={handleDrawerToggle}
+        className="nav-drawer-close-button"
+      >
+        <CloseIcon />
+      </IconButton>
+      
+      {/* Logo container - separate from close button */}
       <Tooltip 
         title={isHomePage ? "" : "Back to home page"} 
         placement="right"
@@ -159,7 +169,10 @@ function Nav() {
           />
         </Box>
       </Tooltip>
-      <List>
+      
+      {/* Navigation content */}
+      <Box onClick={handleDrawerToggle} className="nav-drawer-content">
+        <List>
         {navItems.map((item) => (
           <ListItem key={item.path} disablePadding>
             <ListItemButton 
@@ -199,8 +212,9 @@ function Nav() {
             </ListItemButton>
           </ListItem>
         )}
-      </List>
-    </Box>
+        </List>
+      </Box>
+    </>
   );
 
   return (
