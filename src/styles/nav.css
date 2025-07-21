@@ -228,12 +228,31 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 }
 
 /* Mobile drawer join button */
+/* Keyframes for subtle button animation */
+@keyframes subtlePulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(190, 3, 3, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(190, 3, 3, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(190, 3, 3, 0.3);
+  }
+}
+
 .nav-drawer-join-button {
   text-align: center !important; /* Center-align text */
-  background-color: #be0303d1 !important; /* Red background */
+  background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
   color: white !important; /* White text */
-  margin: 8px 16px !important; /* Margin around button */
+  margin: 5px 10px !important; /* Margin around button */
   border-radius: 8px !important; /* Rounded corners */
+  margin-top: 10px !important;
+  animation: subtlePulse 3s ease-in-out infinite !important; /* Subtle infinite animation */
+  transition: all 0.3s ease !important; /* Smooth transitions */
 }
 
 .nav-drawer-join-button:hover {
@@ -255,18 +274,24 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 
 /* Mobile drawer container */
 .nav-drawer {
-  background-color: #f5f5f5 !important; /* Light gray background */
+  background: linear-gradient(to bottom, #f5f5f5 0%, #f5f5f5 60%, rgba(245, 245, 245, 0.9) 70%, rgba(245, 245, 245, 0.7) 80%, rgba(245, 245, 245, 0.3) 90%, rgba(245, 245, 245, 0.1) 95%, transparent 100%) !important; /* Solid top, completely fading to transparent bottom */
   color: #333 !important; /* Dark text color */
   width: 240px !important; /* Fixed drawer width */
+  height: fit-content !important; /* Fit content height instead of full height */
+  max-height: 100vh !important; /* Don't exceed viewport height */
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important; /* Right shadow */
-  border-right: 1px solid #ddd !important; /* Right border */
+  
   border-radius: 0 !important; /* No rounded corners */
   box-sizing: border-box !important; /* Include padding in width calculation */
+  position: fixed !important; /* Fixed positioning */
+  top: 0 !important; /* Align to top */
+  left: 0 !important; /* Align to left */
+  padding-bottom: 50px !important;
 }
 
 /* Mobile drawer content container */
 .nav-drawer-content {
-  text-align: center !important; /* Center-align drawer content */
+  text-align: left !important; /* Center-align drawer content */
 }
 
 /* Mobile drawer logo container */
@@ -279,13 +304,18 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 
 /* Individual drawer menu item */
 .nav-drawer-item {
-  text-align: center !important; /* Center-align text */
+  text-align: left !important; 
+  opacity: 0.9 !important;
 }
 
 /* Selected drawer item styling */
 .nav-drawer-item.Mui-selected {
-  background-color: #be0303d1 !important; /* Red background for selected item */
-  color: white !important; /* White text for selected item */
+  color: rgb(10, 9, 9) !important; /* White text for selected item */
+  border: 2px solid #be0303d1 !important;
+  border-radius: 10px !important; /* Curved oval-like corners */
+  margin-right: 40px !important;
+  margin-left: 1px !important;
+  opacity: 1 !important;
 }
 
 /* Selected drawer item hover effect */
@@ -352,6 +382,12 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 .MuiDrawer-paper {
   box-sizing: border-box !important;
   width: 240px !important;
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important; /* Slower, smoother drawer animation */
+}
+
+/* Override Material-UI's default drawer transition for smoother closing */
+.MuiDrawer-root .MuiDrawer-paper {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) !important; /* Slower, smoother drawer animation */
 }
 
 /* ===============================

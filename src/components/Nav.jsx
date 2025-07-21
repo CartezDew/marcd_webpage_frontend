@@ -195,7 +195,7 @@ function Nav() {
               onClick={goToWaitlist}
               className="nav-drawer-join-button"
             >
-              <ListItemText primary="Join" />
+              <ListItemText primary="Join Waitlist" />
             </ListItemButton>
           </ListItem>
         )}
