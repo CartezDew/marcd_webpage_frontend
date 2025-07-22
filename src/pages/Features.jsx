@@ -20,10 +20,10 @@ import '../styles/features.css';
 // Import images
 import navigationImage from '../assets/App_Navigation.png';
 import parkingImage from '../assets/App_Parking.png';
-import alertsVideo from '../assets/Alerts_Demo.mp4';
-import spotterVideo from '../assets/Requesting_Spotter_Demo.mp4';
-import statisticsVideo from '../assets/Statistics_Demo.mp4';
-import featureRequestVideo from '../assets/Feature_Request_Demo.mp4';
+// import alertsVideo from './public/videos/Alerts_Demo.mp4';
+// import spotterVideo from './public/videos/Requesting_Spotter_Demo.mp4';
+// import statisticsVideo from './public/videos/Statistics_Demo.mp4';
+// import featureRequestVideo from './public/videos/Feature_Request_Demo.mp4';
 
 function Features() {
   const [isVisible, setIsVisible] = useState(false);
@@ -778,7 +778,6 @@ function Features() {
                 <div className="statistics-video-container">
                   <video 
                     ref={statisticsVideoRef}
-                    src={statisticsVideo}
                     className={`statistics-video ${isStatisticsVideoEnlarged ? 'enlarged' : ''}`}
                     loop
                     muted
@@ -787,7 +786,10 @@ function Features() {
                     onClick={handleStatisticsVideoClick}
                     onMouseEnter={() => !isMobile() && setIsStatisticsVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsStatisticsVideoEnlarged(false)}
-                  />
+                  >
+                    <source src="/videos/Statistics_Demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   {isMobile() && !isStatisticsVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
@@ -933,7 +935,6 @@ function Features() {
                 <div className="spotter-video-container">
                   <video 
                     ref={spotterVideoRef}
-                    src={spotterVideo}
                     className={`spotter-video ${isSpotterVideoEnlarged ? 'enlarged' : ''}`}
                     loop
                     muted
@@ -942,7 +943,10 @@ function Features() {
                     onClick={handleSpotterVideoClick}
                     onMouseEnter={() => !isMobile() && setIsSpotterVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsSpotterVideoEnlarged(false)}
-                  />
+                    >
+                      <source src="/videos/Requesting_Spotter_Demo.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   {isMobile() && !isSpotterVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
@@ -1021,7 +1025,6 @@ function Features() {
                 <div className="alerts-video-container">
                   <video 
                     ref={alertsVideoRef}
-                    src={alertsVideo}
                     className={`alerts-video ${isVideoEnlarged ? 'enlarged' : ''}`}
                     loop
                     muted
@@ -1030,7 +1033,10 @@ function Features() {
                     onClick={handleVideoClick}
                     onMouseEnter={() => !isMobile() && setIsVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsVideoEnlarged(false)}
-                  />
+                  >
+                    <source src="/videos/Alerts_Demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   {isMobile() && !isVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
@@ -1118,7 +1124,6 @@ function Features() {
                 <div className="feature-request-video-container">
                   <video 
                     ref={featureRequestVideoRef}
-                    src={featureRequestVideo}
                     className={`feature-request-video ${isFeatureRequestVideoEnlarged ? 'enlarged' : ''}`}
                     loop
                     muted
@@ -1127,7 +1132,10 @@ function Features() {
                     onClick={handleFeatureRequestVideoClick}
                     onMouseEnter={() => !isMobile() && setIsFeatureRequestVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsFeatureRequestVideoEnlarged(false)}
-                  />
+                  >
+                    <source src="/videos/Feature_Request_Demo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   {isMobile() && !isFeatureRequestVideoEnlarged && (
                     <Typography className="video-instruction">
                       <em>(Click to enlarge)</em>
