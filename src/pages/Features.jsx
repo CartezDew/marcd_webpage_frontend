@@ -782,6 +782,7 @@ function Features() {
                     className={`statistics-video ${isStatisticsVideoEnlarged ? 'enlarged' : ''}`}
                     loop
                     muted
+                    autoPlay
                     playsInline
                     onClick={handleStatisticsVideoClick}
                     onMouseEnter={() => !isMobile() && setIsStatisticsVideoEnlarged(true)}
@@ -937,6 +938,7 @@ function Features() {
                     loop
                     muted
                     playsInline
+                    autoPlay
                     onClick={handleSpotterVideoClick}
                     onMouseEnter={() => !isMobile() && setIsSpotterVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsSpotterVideoEnlarged(false)}
@@ -1024,6 +1026,7 @@ function Features() {
                     loop
                     muted
                     playsInline
+                    autoPlay
                     onClick={handleVideoClick}
                     onMouseEnter={() => !isMobile() && setIsVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsVideoEnlarged(false)}
@@ -1120,6 +1123,7 @@ function Features() {
                     loop
                     muted
                     playsInline
+                    autoPlay
                     onClick={handleFeatureRequestVideoClick}
                     onMouseEnter={() => !isMobile() && setIsFeatureRequestVideoEnlarged(true)}
                     onMouseLeave={() => !isMobile() && setIsFeatureRequestVideoEnlarged(false)}
