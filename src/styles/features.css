@@ -462,7 +462,7 @@
 
 /* Feature Description */
 .feature-description {
-  font-size: 1rem !important;
+  font-size: 1.1rem !important;
   font-weight: 400 !important;
   line-height: 1.6 !important;
   color: #a1a1aa !important;
@@ -529,8 +529,9 @@
   align-self: flex-start !important;
 }
 
+
 .navigation-description {
-  font-size: 1.125rem !important;
+  font-size: 1.2rem !important;
   font-weight: 400 !important;
   line-height: 1.6 !important;
   color: #a1a1aa !important;
@@ -1420,11 +1421,11 @@
 @media (max-width: 1024px) and (min-width: 900px) {
   /* Features Grid - 3 Columns */
   .features-title {
-    font-size: 2.5rem !important;
+    font-size: 2.6rem !important;
   }
   
   .features-subtitle {
-    font-size: 1.125rem !important;
+    font-size: 1.25rem !important;
   }
   
   .features-grid {
@@ -1513,22 +1514,28 @@
   }
 
   .navigation-title {
-    font-size: 2.5rem !important;
+    font-size: 2.2rem !important;
   }
 
   .navigation-description {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
   }
 }
+
 
 @media (max-width: 1024px) and (min-width: 769px) {
   /* Video Styling */
   .alerts-video {
-    border-radius: 2.2rem;
+    border-radius: 2.6rem;
+  }
+
+  .alerts-video {
+    max-width: 70%;
+    width: 70%;
   }
   
   .alerts-video.enlarged {
-    border-radius: 2.2rem;
+    border-radius: 2.6rem;
   }
 
   .statistics-video {
@@ -1540,7 +1547,12 @@
   }
 
   .spotter-video {
-    border-radius: 2.5rem;
+    border-radius: 2.7rem;
+  }
+
+  .spotter-video {
+    max-width: 70%;
+    width: 70%;
   }
   
   .spotter-video.enlarged {
@@ -1548,11 +1560,11 @@
   }
 
   .feature-request-video {
-    border-radius: 1.5rem !important;
+    border-radius: 1rem !important;
   }
   
   .feature-request-video.enlarged {
-    border-radius: 2.5rem;
+    border-radius: 2rem;
   }
 
   /* Icon Containers */
@@ -1640,6 +1652,7 @@
   }
 }
 
+
 @media (max-width: 899px) and (min-width: 769px) {
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1703,6 +1716,188 @@
   
   .features-subtitle {
     font-size: 1.3rem !important;
+  }
+
+}
+
+@media (max-width: 865px) {
+  /* Stack layout - text on top, image below */
+  .navigation-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto !important;
+    gap: 2rem;
+  }
+  
+  .navigation-text-content {
+    grid-row: 1 !important;
+    order: 1 !important;
+  }
+  
+  .navigation-image-content {
+    grid-row: 2 !important;
+    order: 2 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .features-title {
+    font-size: 2rem !important;
+  }
+
+  .features-subtitle {
+    font-size: 1.1rem !important;
+  }
+
+  .feature-title {
+    font-size: 1.2rem !important;
+  }
+
+  .feature-description {
+    font-size: 1rem !important;
+  }
+
+  .navigation-title {
+    font-size: 1.8rem !important;
+  }
+
+  .navigation-description {
+    font-size: 1rem !important;
+  }
+  
+  /* Add click to enlarge message for navigation images and videos */
+  .navigation-image-content:has(.navigation-image)::after,
+  .alerts-video-container::after,
+  .statistics-video-container::after,
+  .spotter-video-container::after,
+  .feature-request-video-container::after {
+    content: '(Click to enlarge)';
+    color: #a1a1aa !important;
+    font-size: 0.875rem !important;
+    font-style: italic !important;
+    text-align: center;
+    margin-top: 0.5rem !important;
+    opacity: 0.8;
+  }
+  
+  /* Hide message when image or video is enlarged */
+  .navigation-image.enlarged + .navigation-image-content::after,
+  .navigation-image-content:has(.navigation-image.enlarged)::after,
+  .alerts-video.enlarged + .alerts-video-container::after,
+  .alerts-video-container:has(.alerts-video.enlarged)::after,
+  .statistics-video.enlarged + .statistics-video-container::after,
+  .statistics-video-container:has(.statistics-video.enlarged)::after,
+  .spotter-video.enlarged + .spotter-video-container::after,
+  .spotter-video-container:has(.spotter-video.enlarged)::after,
+  .feature-request-video.enlarged + .feature-request-video-container::after,
+  .feature-request-video-container:has(.feature-request-video.enlarged)::after {
+    display: none !important;
+  }
+
+  .navigation-title {
+    position: relative;
+    display: inline-block;
+    color: #f3f0f0d1 !important;
+    font-weight: 600 !important;
+    text-align: left;
+    margin-left: 0;
+    margin-bottom: 2rem !important;
+  }
+
+  .navigation-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      #be0303d1 0%,     
+      #858484d1 50%,    
+      #505050d1 85%,     /* Darker gray toward the end */
+      transparent 100%   /* Fades out */
+    );
+  }
+
+  .navigation-image {
+    max-width: 45%;
+    height: auto;
+  }
+  
+  .navigation-image.enlarged {
+    transform: scale(1.2
+    );
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+    z-index: 10;
+    border-radius: 2rem;
+    position: relative;
+    margin-top: .5rem; 
+    margin-bottom: 2rem;
+  }
+  
+  .navigation-image:hover:not(.enlarged) {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+  }
+
+  .statistics-video {
+    border-radius: 3rem;
+    max-width: 70%;
+    max-height: 70%;
+  }
+  
+  .statistics-video.enlarged {
+    border-radius: 3rem;
+    transform: scale(1.2);
+    margin-bottom: 1rem;
+    margin-top: .5rem;
+  }
+
+  .alerts-video {
+    border-radius: 2.6rem;
+  }
+
+  .alerts-video {
+    max-width: 65%;
+    max-height: 65%;
+    border-radius: 3rem;
+  }
+  
+  .alerts-video.enlarged {
+    border-radius: 3rem;
+    transform: scale(1.2);
+    margin-bottom: 1rem;
+    margin-top: .5rem;
+  }
+
+
+  
+  .spotter-video.enlarged {
+    border-radius: 2.5rem;
+    margin-bottom: 1rem;
+    margin-top: .5rem;
+    transform: scale(1.2);
+  }
+
+  .feature-request-video {
+    max-width: 60%;
+    max-height: 60%;
+    border-radius: 3rem;
+  }
+  
+  .feature-request-video.enlarged {
+    border-radius: 2rem;
+    transform: scale(1.2);
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .feature-request-button {
+    font-size: .8rem !important;
   }
 }
 
