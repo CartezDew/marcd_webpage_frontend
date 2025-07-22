@@ -555,15 +555,24 @@
 }
 
 .navigation-image {
-  max-width: 70%;
+  max-width: 65%;
   height: auto;
   border-radius: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navigation-image:hover {
+.navigation-image.enlarged {
+  transform: scale(1.15);
+  box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+  z-index: 10;
+  border-radius: 2rem;
+  position: relative;
+}
+
+.navigation-image:hover:not(.enlarged) {
   transform: scale(1.05);
   box-shadow: 0 25px 50px rgba(37, 99, 235, 0.2);
+  border-radius: 2rem;
 }
 
 
@@ -625,7 +634,7 @@
 
 
 .alerts-video.enlarged {
-  transform: scale(1.2);
+  transform: scale(1.15);
   box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
   z-index: 10;
   position: relative;
@@ -642,7 +651,8 @@
 .alerts-video.enlarged + .video-instruction,
 .spotter-video.enlarged + .video-instruction,
 .statistics-video.enlarged + .video-instruction,
-.feature-request-video.enlarged + .video-instruction {
+.feature-request-video.enlarged + .video-instruction,
+.navigation-image.enlarged + .video-instruction {
   display: none !important;
 }
 
@@ -686,10 +696,10 @@
 }
 
 .spotter-video {
-  max-width: 75%;
-  width: 75%;
+  max-width: 80%;
+  width: 80%;
   height: auto;
-  border-radius: 3rem; 
+  border-radius: 3.1rem; 
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -697,7 +707,7 @@
 
 
 .spotter-video.enlarged {
-  transform: scale(1.2);
+  transform: scale(1.15);
   box-shadow: 0 30px 60px rgba(37, 99, 235, 0.3);
   z-index: 10;
   position: relative;

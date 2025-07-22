@@ -42,6 +42,7 @@ function Features() {
   const [isSpotterVideoEnlarged, setIsSpotterVideoEnlarged] = useState(false);
   const [isStatisticsVideoEnlarged, setIsStatisticsVideoEnlarged] = useState(false);
   const [isFeatureRequestVideoEnlarged, setIsFeatureRequestVideoEnlarged] = useState(false);
+  const [isNavigationImageEnlarged, setIsNavigationImageEnlarged] = useState(false);
   const [isFirstViewport, setIsFirstViewport] = useState(true);
   const [animatedCards, setAnimatedCards] = useState(new Set());
   const [isGridInView, setIsGridInView] = useState(false);
@@ -560,6 +561,15 @@ function Features() {
     setIsFeatureRequestVideoEnlarged(!isFeatureRequestVideoEnlarged);
   };
 
+  const handleNavigationImageClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('Navigation image clicked! Current state:', isNavigationImageEnlarged);
+    const newState = !isNavigationImageEnlarged;
+    console.log('Setting new state to:', newState);
+    setIsNavigationImageEnlarged(newState);
+  };
+
   // Check if user is on mobile device
   const isMobile = () => {
     return window.innerWidth <= 768;
@@ -568,20 +578,22 @@ function Features() {
   // Handle clicks outside of videos to shrink them
   useEffect(() => {
     const handleDocumentClick = (event) => {
-      // Check if click is outside of any video element
+      // Check if click is outside of any video element or navigation image
       const isVideoClick = event.target.closest('.alerts-video, .spotter-video, .statistics-video, .feature-request-video');
+      const isNavigationImageClick = event.target.closest('.navigation-image');
       
-      if (!isVideoClick) {
-        // Reset all video enlargement states
+      if (!isVideoClick && !isNavigationImageClick) {
+        // Reset all video and image enlargement states
         setIsVideoEnlarged(false);
         setIsSpotterVideoEnlarged(false);
         setIsStatisticsVideoEnlarged(false);
         setIsFeatureRequestVideoEnlarged(false);
+        setIsNavigationImageEnlarged(false);
       }
     };
 
-    // Add event listener when any video is enlarged
-    if (isVideoEnlarged || isSpotterVideoEnlarged || isStatisticsVideoEnlarged || isFeatureRequestVideoEnlarged) {
+    // Add event listener when any video or image is enlarged
+    if (isVideoEnlarged || isSpotterVideoEnlarged || isStatisticsVideoEnlarged || isFeatureRequestVideoEnlarged || isNavigationImageEnlarged) {
       document.addEventListener('click', handleDocumentClick);
     }
 
@@ -589,7 +601,12 @@ function Features() {
     return () => {
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [isVideoEnlarged, isSpotterVideoEnlarged, isStatisticsVideoEnlarged, isFeatureRequestVideoEnlarged]);
+  }, [isVideoEnlarged, isSpotterVideoEnlarged, isStatisticsVideoEnlarged, isFeatureRequestVideoEnlarged, isNavigationImageEnlarged]);
+
+  // Debug useEffect to monitor navigation image state
+  useEffect(() => {
+    console.log('Navigation image enlarged state changed to:', isNavigationImageEnlarged);
+  }, [isNavigationImageEnlarged]);
 
   // Scroll function - scrolls to next section if in first viewport, otherwise scrolls to top
   const handleScrollAction = () => {
@@ -824,7 +841,9 @@ function Features() {
                 <img 
                   src={navigationImage} 
                   alt="Marc'd Navigation App Interface showing truck-optimized GPS with weigh stations, truck stops, and route planning"
-                  className="navigation-image"
+                  className={`navigation-image ${isNavigationImageEnlarged ? 'enlarged' : ''}`}
+                  onClick={handleNavigationImageClick}
+                  style={{ cursor: 'pointer' }}
                 />
               </Box>
             </Box>
@@ -859,7 +878,9 @@ function Features() {
                 <img 
                   src={parkingImage} 
                   alt="Marc'd Real-time Parking App Interface showing available parking spots and community updates"
-                  className="navigation-image"
+                  className={`navigation-image ${isNavigationImageEnlarged ? 'enlarged' : ''}`}
+                  onClick={handleNavigationImageClick}
+                  style={{ cursor: 'pointer' }}
                 />
               </Box>
             </Box>
