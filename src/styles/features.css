@@ -3,7 +3,7 @@
 
 .features-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f1419 10%, #1a1a2e 30%,  #be0303d1 80%, #0f1419 95%);
+  background: linear-gradient(135deg, #0f1419 10%, #be0303d1 75%,  #be0303d1 70%, #0f1419 100%);
   position: relative;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 4rem 0;
@@ -474,7 +474,12 @@
 /* Navigation Feature Detail Section */
 .navigation-feature-section {
   padding: 4rem 0;
-  background: linear-gradient(135deg, rgba(221, 231, 251, 0.1) 0%, rgba(246, 189, 189, 0.1) 100%);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   margin-top: 3rem;
   opacity: 0;
   transform: translateY(30px);
