@@ -495,13 +495,17 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .navigation-text-content {
   opacity: 0;
   transform: translateX(-30px);
   transition: all 0.8s ease 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .navigation-feature-section.animate .navigation-text-content {
@@ -516,6 +520,8 @@
   color: #ffffff !important;
   margin-bottom: 1.5rem !important;
   letter-spacing: -0.02em !important;
+  text-align: left !important;
+  align-self: flex-start !important;
 }
 
 .navigation-description {
@@ -524,6 +530,8 @@
   line-height: 1.6 !important;
   color: #a1a1aa !important;
   margin-bottom: 2rem !important;
+  text-align: left !important;
+  align-self: flex-start !important;
 }
 
 .navigation-image-content {
@@ -533,6 +541,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: center;
 }
 
 .navigation-feature-section.animate .navigation-image-content {

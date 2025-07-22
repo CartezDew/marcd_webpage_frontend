@@ -1128,7 +1128,6 @@ function Features() {
                     loop
                     muted
                     playsInline
-                    style={{ width: '100%', height: 'auto', maxWidth: '100%', display: 'block', border: '2px solid red' }}
                     autoPlay
                     onClick={handleFeatureRequestVideoClick}
                     onMouseEnter={() => !isMobile() && setIsFeatureRequestVideoEnlarged(true)}
