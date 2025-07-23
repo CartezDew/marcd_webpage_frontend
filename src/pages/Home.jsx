@@ -26,6 +26,7 @@ function home() {
   const waitlistRef = useRef(null);
   const didYouKnowRef = useRef(null);
   const solutionsRef = useRef(null);
+  const carouselRef = useRef(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isDidYouKnowVisible, setIsDidYouKnowVisible] = useState(false);
   const [isSolutionsVisible, setIsSolutionsVisible] = useState(false);
@@ -35,6 +36,7 @@ function home() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [expandedCard, setExpandedCard] = useState(null);
   const [currentSection, setCurrentSection] = useState('hero');
+  const [arrowLeft, setArrowLeft] = useState('50%');
   
   // Action words for cycling animation
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
@@ -71,17 +73,16 @@ function home() {
   });
 
   // Add pulsing animation
-  const pulse = useSpring(0, { damping: 0, mass: 5, stiffness: 10 });
+  const pulse = useSpring(0, { damping: 0, mass: 3, stiffness: 10 });
   const pulsingBg = useTransform(pulse, (r) => {
-    return `blur(${r}px)`;
+    // return `blur(${r * 2}px)`;
   });
 
-  // Auto-rotate carousel and action words every 8 seconds
+  // Auto-rotate carousel every 8 seconds
   useEffect(() => {
     if (isAutoRotating && !carouselHovered) {
       autoRotateIntervalRef.current = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
       }, 8000);
     } else {
       if (autoRotateIntervalRef.current) {
@@ -96,7 +97,39 @@ function home() {
         autoRotateIntervalRef.current = null;
       }
     };
-  }, [isAutoRotating, carouselHovered, heroImages.length, actionWords.length]);
+  }, [isAutoRotating, carouselHovered, heroImages.length]);
+
+  // Auto-rotate action words every 4 seconds (independent of carousel)
+  useEffect(() => {
+    const actionWordInterval = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
+    }, 4000);
+
+    return () => {
+      clearInterval(actionWordInterval);
+    };
+  }, [actionWords.length]);
+
+  // Calculate arrow position based on carousel container center
+  useEffect(() => {
+    const updateArrowPosition = () => {
+      if (carouselRef.current) {
+        const carouselRect = carouselRef.current.getBoundingClientRect();
+        const carouselCenter = carouselRect.left + carouselRect.width / 2.2;
+        const viewportWidth = window.innerWidth;
+        const arrowLeftPercent = (carouselCenter / viewportWidth) * 100;
+        setArrowLeft(`${arrowLeftPercent}%`);
+      }
+    };
+
+    // Update position on mount and resize
+    updateArrowPosition();
+    window.addEventListener('resize', updateArrowPosition);
+
+    return () => {
+      window.removeEventListener('resize', updateArrowPosition);
+    };
+  }, []);
 
   // Manual image navigation functions
   const goToPrevImage = () => {
@@ -556,6 +589,7 @@ function home() {
 
           {/* Image Container with Swipe Support */}
           <Box 
+            ref={carouselRef}
             className="carousel-image-container"
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
@@ -609,18 +643,23 @@ function home() {
         </Box>
 
         {/* Dynamic Scroll Arrow */}
-        <Box 
-          className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}
-          onClick={handleDynamicScroll}
-          tabIndex={0}
+        <Tooltip 
+          title={<span className="scroll-tooltip">{currentSection === 'waitlist' ? 'Back to top' : 'Next page'}</span>} 
+          placement="top" 
+          arrow 
+          classes={{ popper: 'scroll-tooltip-popper' }}
         >
-          <div className="scroll-arrow-message">
-            {currentSection === 'waitlist' ? 'Back to top' : 'Next page'}
-          </div>
-          <FaChevronDown 
-            className={`arrow-icon ${currentSection === 'waitlist' ? 'rotated' : ''}`} 
-          />
-        </Box>
+          <Box 
+            className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}
+            onClick={handleDynamicScroll}
+            tabIndex={0}
+            style={{ left: arrowLeft }}
+          >
+            <FaChevronDown 
+              className={`arrow-icon ${currentSection === 'waitlist' ? 'rotated' : ''}`} 
+            />
+          </Box>
+        </Tooltip>
       </Box>
 
       {/* Did You Know Section */}
