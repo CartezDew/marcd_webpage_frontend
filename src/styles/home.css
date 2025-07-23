@@ -55,9 +55,9 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 2rem;
+    padding: 0rem 0rem;
     padding-bottom: 8rem;
-    gap: clamp(2rem, 4vw, 4rem);
+    gap: clamp(2rem, 4vw, 2rem);
     border-color: #03be44d1;
     border-width: 2px;
     border-style: solid;
@@ -85,7 +85,6 @@
     flex: 1 1 45%;
     min-width: 300px;
     max-width: 48%;
-    padding-right: 3rem;
     box-sizing: border-box;
     overflow: visible;
     word-wrap: break-word;
@@ -179,31 +178,66 @@
   
   .carousel-image-container {
     position: relative;
-    width: 100%;
-    max-width: 700px;
-    max-height: 650px;
+    min-width: 300px;
+    max-width: 100%;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Ensure consistent image sizing */
+    width: 100%;
+    height: 100%;
+    /* Adjust container for different image sizes */
+    min-height: 600px;
   }
   .home-hero-image-carousel {
     flex: 1 1 45%;
-    min-width: 300px;
+    min-width: 00px;
     max-width: 48%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     height: auto;
-    min-height: 400px;
+    min-height: 600px;
     width: 100%;
     border-color: #03b2bed1;
     border-width: 2px;
     border-style: solid;
     border-radius: 12px;
+  }
+
+  /* Ensure consistent image sizing */
+  .home-main-image {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 8px;
+  }
+
+  /* Small images (Main Hero and Landing Page) */
+.home-main-image.small-image {
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  height: 500px !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  border-color: #03b2bed1;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 12px;
+}
+
+  /* Large images (Statistics, Alerts, Parking, Places, Navigation) */
+  .home-main-image.large-image {
+    max-height: 900px;
+    max-width: 100%;
+    height: 900px;
+    width: auto;
+    object-fit: contain;
   }
 
 

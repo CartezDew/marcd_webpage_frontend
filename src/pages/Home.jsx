@@ -40,16 +40,22 @@ function home() {
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
-  // Hero image cycling animation
-  const heroImages = [
+  // Hero image cycling animation - separated by size
+  const smallHeroImages = [
     Main_Hero_Img, 
-    Landing_Page_Img, 
+    Landing_Page_Img
+  ];
+  
+  const largeHeroImages = [
     Statistics_Img, 
     Alerts_Img,
     Parking_Img, 
     Places_Img, 
     Navigation_Img
   ];
+  
+  // Combined array for cycling
+  const heroImages = [...smallHeroImages, ...largeHeroImages];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [carouselHovered, setCarouselHovered] = useState(false);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
@@ -172,6 +178,11 @@ function home() {
       "Marc'd app navigation - GPS and route planning features"
     ];
     return altTexts[index] || `Marc'd app view ${index + 1}`;
+  };
+
+  // Function to determine if current image is small or large
+  const isCurrentImageSmall = () => {
+    return currentImageIndex < smallHeroImages.length;
   };
 
   // Email validation function
@@ -559,16 +570,17 @@ function home() {
                 key={currentImageIndex}
                 src={heroImages[currentImageIndex]}
                 alt={getImageAltText(currentImageIndex)}
-                className={`home-main-image ${isAboutVisible ? 'animate' : ''}`}
+                className={`home-main-image ${isAboutVisible ? 'animate' : ''} ${isCurrentImageSmall() ? 'small-image' : 'large-image'}`}
                 variants={imageVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 style={{
-                  width: '100%',
-                  height: 'auto',
+                  width: isCurrentImageSmall() ? '100%' : '100%',
+                  height: isCurrentImageSmall() ? '600px' : '100%',
                   maxWidth: '100%',
-                  objectFit: 'contain'
+                  objectFit: isCurrentImageSmall() ? 'cover' : 'contain',
+                  objectPosition: 'center'
                 }}
               />
             </AnimatePresence>
