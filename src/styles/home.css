@@ -556,6 +556,7 @@
     gap: 1.2rem;
     width: 100%;
     max-width: 1200px;
+    align-items: start;
   }
 
   .fact-item {
@@ -568,9 +569,14 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    min-height: 120px;
+    height: 200px;
     opacity: 0;
     transform: translateY(50px);
+  }
+
+  .fact-item.expanded {
+    height: auto;
+    min-height: 200px;
   }
 
   .did-you-know-section.visible .fact-item {
@@ -803,6 +809,8 @@
   .fact-detail-container {
     overflow: hidden;
     margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .fact-detail {
@@ -945,6 +953,7 @@
     width: 100%;
     max-width: 1400px;
     margin-bottom: 3rem;
+    align-items: start;
   }
 
   .marcd-solutions-content .solution-item {
@@ -957,9 +966,14 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    min-height: 120px;
+    height: 200px;
     opacity: 0;
     transform: translateY(50px);
+  }
+
+  .marcd-solutions-content .solution-item.expanded {
+    height: auto;
+    min-height: 200px;
   }
 
   .marcd-solutions-section.visible .solution-item {

@@ -260,7 +260,14 @@ function Survey() {
   }, []);
 
   const toggleCard = (cardIndex) => {
-    setExpandedCard(expandedCard === cardIndex ? null : cardIndex);
+    // Force only one card to be expanded at a time
+    if (expandedCard === cardIndex) {
+      // If clicking the same card, collapse it
+      setExpandedCard(null);
+    } else {
+      // If clicking a different card, expand only this one
+      setExpandedCard(cardIndex);
+    }
   };
 
   const nextResponseSet = () => {
@@ -434,7 +441,12 @@ function Survey() {
                 <motion.div
                   key={`${currentResponseSet}-${index}-${isResponsesVisible}`}
                   className={`response-card ${expandedCard === index ? 'expanded' : ''}`}
-                  onClick={() => isTruncated && toggleCard(index)}
+                  onClick={(e) => {
+                    if (isTruncated) {
+                      e.stopPropagation();
+                      toggleCard(index);
+                    }
+                  }}
                   title={isTruncated ? (expandedCard === index ? "" : "Click for full response") : undefined}
                   style={{ cursor: isTruncated ? 'pointer' : 'default' }}
                   variants={cardVariants}

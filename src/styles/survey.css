@@ -411,6 +411,7 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  align-items: start;
 }
 
 .response-card {
@@ -424,6 +425,15 @@
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.6s ease forwards;
+  height: 200px;
+  overflow: hidden;
+}
+
+.response-card.expanded {
+  height: auto;
+  min-height: 200px;
+  border-color: #be0303d1;
+  box-shadow: 0 8px 25px rgba(190, 3, 3, 0.2);
 }
 
 .survey-responses-section.visible .responses-grid .response-card {
@@ -449,10 +459,7 @@
   border-color: #be0303d1;
 }
 
-.response-card.expanded {
-  border-color: #be0303d1;
-  box-shadow: 0 8px 25px rgba(190, 3, 3, 0.2);
-}
+
 
 .response-header {
   display: flex;
