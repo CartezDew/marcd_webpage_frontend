@@ -2,13 +2,19 @@
 
 /* Base AppBar styling with blur effect and transparency */
 .nav-appbar {
-  background-color: rgba(2255, 255, 255, 0.95) !important; /* Semi-transparent white background */
+  background-color: rgba(255, 255, 255, 0.95) !important; /* Semi-transparent white background */
   backdrop-filter: blur(10px) !important; /* Blur effect for modern glass look */
   border-bottom: 1px solid #ddd !important; /* Subtle bottom border */
   height: 60px; /* Default height */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: height 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Optimized transitions */
   border-radius: 0 !important; /* Remove any rounded edges */
+  will-change: height, box-shadow; /* Optimize for animations */
+  /* Prevent layout issues */
+  overflow: visible !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1100 !important;
 }
 
 /* Shrinks the navbar height when user scrolls */
@@ -25,7 +31,8 @@
   padding-top: 8px !important; /* Top padding */
   padding-bottom: 8px !important; /* Bottom padding */
   min-height: 60px !important; /* Match AppBar height */
-  transition: min-height 0.3s ease; /* Smooth height transition */
+  transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Optimized height transition */
+  will-change: min-height; /* Optimize for animations */
 }
 
 /* Toolbar height adjustment when navbar shrinks */
@@ -43,13 +50,19 @@
   display: flex !important;
   align-items: center !important;
   text-decoration: none !important; /* Remove link underline */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Optimized transitions */
+  will-change: transform; /* Optimize for animations */
+  /* Prevent layout shifts */
+  min-height: 60px;
+  justify-content: flex-start;
 }
 
 /* Logo image styling */
 .nav-logo {
   height: 95px; /* Fixed logo height */
   padding: 5px; /* Small padding around logo */
-  transition: all 0.2s ease; /* Smooth transitions */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Optimized transitions */
+  will-change: transform, filter; /* Optimize for animations */
 }
 
 /* Logo click animation */
@@ -181,7 +194,8 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   text-transform: none !important; /* Preserve original text case */
   background-color: transparent !important; /* Default transparent background */
   box-shadow: none !important; /* No shadow by default */
-  transition: all 0.3s ease; /* Smooth transitions for all properties */
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Optimized transitions */
+  will-change: background-color; /* Optimize for animations */
 }
 
 /* Active navigation button styling */
@@ -217,7 +231,8 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   border: none !important; /* No border */
   position: relative !important; /* For z-index stacking */
   z-index: 1 !important; /* Above the animated border */
-  transition: all 0.3s ease !important; /* Smooth transitions */
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; /* Optimized transitions */
+  will-change: background-color, transform, box-shadow; /* Optimize for animations */
 }
 
 /* Join button hover effect */
@@ -407,7 +422,8 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   min-height: 60px !important;
   padding-left: 16px !important;
   padding-right: 16px !important;
-  transition: min-height 0.3s ease;
+  transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: min-height;
 }
 
 /* Shrink when scrolling */

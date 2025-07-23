@@ -27,7 +27,7 @@ import {
   Login as LoginIcon,
   Close as CloseIcon
 } from '@mui/icons-material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, useTime, useTransform, useSpring } from 'framer-motion';
 import '../styles/nav.css';
 import marcDLogo from '../assets/Marc-d_Logo.png';
@@ -57,18 +57,33 @@ function Nav() {
     return `blur(${r}px)`;
   });
 
+  // Throttled scroll handler with useCallback for better performance
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    // Add buffer zone to prevent rapid state changes
+    if (scrollY > 50) {
+      setScrolled(true);
+    } else if (scrollY < 30) {
+      setScrolled(false);
+    }
+  }, []);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    let ticking = false;
+    
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, [handleScroll]);
 
   const isActive = (path) => {
     return location.pathname === path;
