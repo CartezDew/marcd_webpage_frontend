@@ -37,6 +37,10 @@ function home() {
   const [expandedCard, setExpandedCard] = useState(null);
   const [currentSection, setCurrentSection] = useState('hero');
   const [arrowLeft, setArrowLeft] = useState('50%');
+  const [showScrollTooltip, setShowScrollTooltip] = useState(false);
+  const [isScrollingToTop, setIsScrollingToTop] = useState(false);
+  const [firstArrowClicked, setFirstArrowClicked] = useState(false);
+  const [firstSolutionArrowClicked, setFirstSolutionArrowClicked] = useState(false);
   
   // Action words for cycling animation
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
@@ -115,7 +119,7 @@ function home() {
     const updateArrowPosition = () => {
       if (carouselRef.current) {
         const carouselRect = carouselRef.current.getBoundingClientRect();
-        const carouselCenter = carouselRect.left + carouselRect.width / 2.2;
+        const carouselCenter = carouselRect.left + carouselRect.width / 2.1;
         const viewportWidth = window.innerWidth;
         const arrowLeftPercent = (carouselCenter / viewportWidth) * 100;
         setArrowLeft(`${arrowLeftPercent}%`);
@@ -296,27 +300,61 @@ function home() {
 
   // Dynamic scroll function based on current section
   const handleDynamicScroll = () => {
+    // Show tooltip when clicked
+    setShowScrollTooltip(true);
+    
     switch (currentSection) {
       case 'hero':
         didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Hide tooltip after 2 seconds for forward navigation
+        setTimeout(() => {
+          setShowScrollTooltip(false);
+        }, 2000);
         break;
       case 'didYouKnow':
         solutionsRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Hide tooltip after 2 seconds for forward navigation
+        setTimeout(() => {
+          setShowScrollTooltip(false);
+        }, 2000);
         break;
       case 'solutions':
         waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Hide tooltip after 2 seconds for forward navigation
+        setTimeout(() => {
+          setShowScrollTooltip(false);
+        }, 2000);
         break;
       case 'waitlist':
+        setIsScrollingToTop(true);
         aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Keep tooltip visible during scroll and add 2-second delay after reaching top
+        // Use a longer timeout to ensure the scroll completes, then add 2 seconds
+        setTimeout(() => {
+          setShowScrollTooltip(false);
+          setIsScrollingToTop(false);
+        }, 8000); // 8 seconds total: ~6 seconds for scroll + 2 seconds delay at top
         break;
       default:
         didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Hide tooltip after 2 seconds for forward navigation
+        setTimeout(() => {
+          setShowScrollTooltip(false);
+        }, 2000);
     }
   };
 
   // Toggle card expansion
   const toggleCard = (cardIndex) => {
     setExpandedCard(expandedCard === cardIndex ? null : cardIndex);
+    // Stop the first arrow animation when it's clicked
+    if (cardIndex === 0) {
+      setFirstArrowClicked(true);
+    }
+    // Stop the first solution arrow animation when it's clicked
+    if (cardIndex === 8) {
+      setFirstSolutionArrowClicked(true);
+    }
   };
 
   // Handle click outside to collapse cards
@@ -343,7 +381,9 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsAboutVisible(true);
-            setCurrentSection('hero');
+            if (!isScrollingToTop) {
+              setCurrentSection('hero');
+            }
           }
         });
       },
@@ -356,7 +396,9 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsDidYouKnowVisible(true);
-            setCurrentSection('didYouKnow');
+            if (!isScrollingToTop) {
+              setCurrentSection('didYouKnow');
+            }
           }
         });
       },
@@ -369,7 +411,9 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsSolutionsVisible(true);
-            setCurrentSection('solutions');
+            if (!isScrollingToTop) {
+              setCurrentSection('solutions');
+            }
           }
         });
       },
@@ -382,7 +426,9 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsWaitlistVisible(true);
-            setCurrentSection('waitlist');
+            if (!isScrollingToTop) {
+              setCurrentSection('waitlist');
+            }
           }
         });
       },
@@ -417,7 +463,7 @@ function home() {
         waitlistObserver.unobserve(waitlistRef.current);
       }
     };
-  }, []);
+  }, [isScrollingToTop]);
 
   // Animation variants for the action words
   const wordVariants = {
@@ -647,6 +693,8 @@ function home() {
           title={<span className="scroll-tooltip">{currentSection === 'waitlist' ? 'Back to top' : 'Next page'}</span>} 
           placement="top" 
           arrow 
+          open={showScrollTooltip}
+          onClose={() => setShowScrollTooltip(false)}
           classes={{ popper: 'scroll-tooltip-popper' }}
         >
           <Box 
@@ -725,7 +773,7 @@ function home() {
             ].map((fact, index) => (
               <Box 
                 key={index} 
-                className={`fact-item ${expandedCard === index ? 'expanded' : ''}`}
+                className={`fact-item ${expandedCard === index ? 'expanded' : ''} ${index === 0 && firstArrowClicked ? 'arrow-clicked' : ''}`}
                 onClick={() => toggleCard(index)}
                 title={expandedCard === index ? "" : "Click for more details"}
               >
@@ -840,7 +888,7 @@ function home() {
             ].map((solution, index) => (
               <Box 
                 key={index} 
-                className={`solution-item ${expandedCard === index + 8 ? 'expanded' : ''}`}
+                className={`solution-item ${expandedCard === index + 8 ? 'expanded' : ''} ${index === 0 && firstSolutionArrowClicked ? 'arrow-clicked' : ''}`}
                 onClick={() => toggleCard(index + 8)}
                 title={expandedCard === index + 8 ? "" : "Click for more details"}
               >
