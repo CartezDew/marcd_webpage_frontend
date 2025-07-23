@@ -20,17 +20,37 @@ import truckIcon from '../assets/Truck_Icon.png';
 import launchingSoonImg from '../assets/Launching_Soon.png';
 import socialProofImg from '../assets/Social_Proof.png';
 
+// Import scroll images
+import scrollImage1 from '../assets/Scroll Images/Image- 1.png';
+import scrollImage2 from '../assets/Scroll Images/Image-2.png';
+import scrollImage3 from '../assets/Scroll Images/Image-3.png';
+import scrollImage4 from '../assets/Scroll Images/Image-4.png';
+import scrollImage5 from '../assets/Scroll Images/Image-5.png';
+import scrollImage6 from '../assets/Scroll Images/Image-6.png';
+import scrollImage7 from '../assets/Scroll Images/Image-7.png';
+import scrollImage8 from '../assets/Scroll Images/Image-8.png';
+import scrollImage9 from '../assets/Scroll Images/Image-9.png';
+import scrollImage10 from '../assets/Scroll Images/Image-10.png';
+import scrollImage11 from '../assets/Scroll Images/Image-11.png';
+import scrollImage12 from '../assets/Scroll Images/Image-12.png';
+import scrollImage13 from '../assets/Scroll Images/Image-13.png';
+import scrollImage14 from '../assets/Scroll Images/Image-14.png';
+import scrollImage15 from '../assets/Scroll Images/Image-15.png';
+import scrollImage16 from '../assets/Scroll Images/Image-16.png';
+
 function home() {
   const navigate = useNavigate();
   const aboutRef = useRef(null);
   const waitlistRef = useRef(null);
   const didYouKnowRef = useRef(null);
   const solutionsRef = useRef(null);
+  const marcItRef = useRef(null);
   const carouselRef = useRef(null);
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isDidYouKnowVisible, setIsDidYouKnowVisible] = useState(false);
   const [isSolutionsVisible, setIsSolutionsVisible] = useState(false);
   const [isWaitlistVisible, setIsWaitlistVisible] = useState(false);
+  const [isMarcItVisible, setIsMarcItVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -41,10 +61,31 @@ function home() {
   const [isScrollingToTop, setIsScrollingToTop] = useState(false);
   const [firstArrowClicked, setFirstArrowClicked] = useState(false);
   const [firstSolutionArrowClicked, setFirstSolutionArrowClicked] = useState(false);
+  const [isManualScrolling, setIsManualScrolling] = useState(false);
   
   // Action words for cycling animation
   const actionWords = ['Reward', 'Empower', 'Support', 'Appreciate', 'Value'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+  // Scroll words for Marc It! section
+  const scrollWords = [
+    { id: 1, text: 'DOT', image: scrollImage1 },
+    { id: 2, text: 'Parking', image: scrollImage2 },
+    { id: 3, text: 'Crime', image: scrollImage3 },
+    { id: 4, text: 'Traffic', image: scrollImage4 },
+    { id: 5, text: 'Police', image: scrollImage5 },
+    { id: 6, text: 'Accident', image: scrollImage6 },
+    { id: 7, text: 'Hazard', image: scrollImage7 },
+    { id: 8, text: 'No Trucks', image: scrollImage8 },
+    { id: 9, text: 'Bad Weather', image: scrollImage9 },
+    { id: 10, text: 'Vegetarian', image: scrollImage10 },
+    { id: 11, text: 'Clean Restrooms', image: scrollImage11 },
+    { id: 12, text: 'Clean Showers', image: scrollImage12 },
+    { id: 13, text: 'Healthy Food', image: scrollImage13 },
+    { id: 14, text: 'Gym', image: scrollImage14 },
+    { id: 15, text: 'Trucker Lounge', image: scrollImage15 },
+    { id: 16, text: 'Halal Prepared Meals', image: scrollImage16 },
+  ];
 
   // Hero image cycling animation - separated by size
   const smallHeroImages = [
@@ -113,6 +154,36 @@ function home() {
       clearInterval(actionWordInterval);
     };
   }, [actionWords.length]);
+
+  // Infinite scroll animation for Marc It! section
+  useEffect(() => {
+    const scrollers = document.querySelectorAll(".scroller");
+
+    // If a user hasn't opted in for reduced motion, then we add the animation
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      addAnimation();
+    }
+
+    function addAnimation() {
+      scrollers.forEach((scroller) => {
+        // add data-animated="true" to every `.scroller` on the page
+        scroller.setAttribute("data-animated", true);
+
+        // Make an array from the elements within `.scroller-inner`
+        const scrollerInner = scroller.querySelector(".scroller__inner");
+        const scrollerContent = Array.from(scrollerInner.children);
+
+        // For each item in the array, clone it
+        // add aria-hidden to it
+        // add it into the `.scroller-inner`
+        scrollerContent.forEach((item) => {
+          const duplicatedItem = item.cloneNode(true);
+          duplicatedItem.setAttribute("aria-hidden", true);
+          scrollerInner.appendChild(duplicatedItem);
+        });
+      });
+    }
+  }, []);
 
   // Calculate arrow position based on carousel container center
   useEffect(() => {
@@ -288,11 +359,6 @@ function home() {
     }
   }, []);
 
-  // Smooth scroll to next section (Did You Know)
-  const scrollToNextSection = () => {
-    didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   // Smooth scroll to top (Hero section)
   const scrollToTop = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -303,43 +369,124 @@ function home() {
     // Show tooltip when clicked
     setShowScrollTooltip(true);
     
+    console.log('Current section:', currentSection);
+    
+    // Set manual scrolling flag to prevent intersection observer interference
+    setIsManualScrolling(true);
+    
+    // Force trigger animations for the target section
+    const triggerAnimations = (sectionRef, sectionClass) => {
+      if (sectionRef.current) {
+        const container = sectionRef.current;
+        container.classList.add('animate');
+        
+        // Special handling for hero section
+        if (sectionClass === 'home-hero-section') {
+          const title = container.querySelector('.home-hero-headline');
+          const description = container.querySelector('.home-hero-description');
+          const button = container.querySelector('.hero-button-container');
+          
+          if (title) title.classList.add('animate');
+          setTimeout(() => {
+            if (description) description.classList.add('animate');
+          }, 200);
+          setTimeout(() => {
+            if (button) button.classList.add('animate');
+          }, 400);
+        } else {
+          // Trigger all child animations for other sections
+          const animatedElements = container.querySelectorAll('[class*="animate"]');
+          animatedElements.forEach(el => {
+            if (!el.classList.contains('animate')) {
+              el.classList.add('animate');
+            }
+          });
+        }
+      }
+    };
+    
     switch (currentSection) {
       case 'hero':
+        setCurrentSection('marcIt');
+        marcItRef.current?.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
+        // Additional scroll adjustment to ensure proper positioning
+        setTimeout(() => {
+          const element = marcItRef.current;
+          if (element) {
+            const elementTop = element.offsetTop;
+            const scrollTop = elementTop - 100; // 100px buffer above the container
+            window.scrollTo({
+              top: scrollTop,
+              behavior: 'smooth'
+            });
+            // Trigger Marc It! animations
+            triggerAnimations(marcItRef, 'marc-it-outer-container');
+          }
+        }, 100);
+        // Hide tooltip after 2 seconds for forward navigation
+        setTimeout(() => {
+          setShowScrollTooltip(false);
+          setIsManualScrolling(false);
+        }, 2000);
+        break;
+      case 'marcIt':
+        setCurrentSection('didYouKnow');
         didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
         // Hide tooltip after 2 seconds for forward navigation
         setTimeout(() => {
           setShowScrollTooltip(false);
+          setIsManualScrolling(false);
         }, 2000);
         break;
       case 'didYouKnow':
+        setCurrentSection('solutions');
         solutionsRef.current?.scrollIntoView({ behavior: 'smooth' });
         // Hide tooltip after 2 seconds for forward navigation
         setTimeout(() => {
           setShowScrollTooltip(false);
+          setIsManualScrolling(false);
         }, 2000);
         break;
       case 'solutions':
+        setCurrentSection('waitlist');
         waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Trigger waitlist animations
+        setTimeout(() => {
+          triggerAnimations(waitlistRef, 'waitlist-section');
+        }, 100);
         // Hide tooltip after 2 seconds for forward navigation
         setTimeout(() => {
           setShowScrollTooltip(false);
+          setIsManualScrolling(false);
         }, 2000);
         break;
       case 'waitlist':
+        setCurrentSection('hero');
         setIsScrollingToTop(true);
         aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Trigger hero animations
+        setTimeout(() => {
+          triggerAnimations(aboutRef, 'home-hero-section');
+        }, 100);
         // Keep tooltip visible during scroll and add 2-second delay after reaching top
         // Use a longer timeout to ensure the scroll completes, then add 2 seconds
         setTimeout(() => {
           setShowScrollTooltip(false);
           setIsScrollingToTop(false);
-        }, 8000); // 8 seconds total: ~6 seconds for scroll + 2 seconds delay at top
+          setIsManualScrolling(false);
+        }, 2000); // 2 seconds total: ~6 seconds for scroll + 1 seconds delay at top
         break;
       default:
-        didYouKnowRef.current?.scrollIntoView({ behavior: 'smooth' });
+        setCurrentSection('marcIt');
+        marcItRef.current?.scrollIntoView({ behavior: 'smooth' });
         // Hide tooltip after 2 seconds for forward navigation
         setTimeout(() => {
           setShowScrollTooltip(false);
+          setIsManualScrolling(false);
         }, 2000);
     }
   };
@@ -381,13 +528,35 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsAboutVisible(true);
-            if (!isScrollingToTop) {
+            if (!isScrollingToTop && !isManualScrolling) {
               setCurrentSection('hero');
+            }
+            
+            // Trigger hero animations when section is 5% visible
+            if (entry.intersectionRatio >= 0.05) {
+              console.log('Triggering hero animations');
+              const container = entry.target;
+              const title = container.querySelector('.home-hero-headline');
+              const description = container.querySelector('.home-hero-description');
+              const button = container.querySelector('.hero-button-container');
+              
+              // Animate title
+              if (title) title.classList.add('animate');
+              
+              // Animate description after title
+              setTimeout(() => {
+                if (description) description.classList.add('animate');
+              }, 200);
+              
+              // Animate button after description
+              setTimeout(() => {
+                if (button) button.classList.add('animate');
+              }, 400);
             }
           }
         });
       },
-      observerOptions
+      { threshold: [0.05, 0.3], rootMargin: '0px 0px -100px 0px' }
     );
 
     // Did You Know section observer
@@ -396,7 +565,7 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsDidYouKnowVisible(true);
-            if (!isScrollingToTop) {
+            if (!isScrollingToTop && !isManualScrolling) {
               setCurrentSection('didYouKnow');
             }
           }
@@ -411,7 +580,7 @@ function home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsSolutionsVisible(true);
-            if (!isScrollingToTop) {
+            if (!isScrollingToTop && !isManualScrolling) {
               setCurrentSection('solutions');
             }
           }
@@ -420,38 +589,131 @@ function home() {
       observerOptions
     );
 
-    // Waitlist section observer
-    const waitlistObserver = new IntersectionObserver(
+    // Marc It! section observer
+    const marcItObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsWaitlistVisible(true);
-            if (!isScrollingToTop) {
-              setCurrentSection('waitlist');
+                      if (entry.isIntersecting) {
+              console.log('Marc It! section is intersecting, ratio:', entry.intersectionRatio);
+              setIsMarcItVisible(true);
+              if (!isScrollingToTop && !isManualScrolling) {
+                console.log('Setting current section to marcIt');
+                setCurrentSection('marcIt');
+              }
+            
+            // Trigger animations when section is 5% visible
+            if (entry.intersectionRatio >= 0.05) {
+              console.log('Triggering Marc It! animations');
+              const container = entry.target;
+              const title = container.querySelector('.marc-it-title');
+              const scrollItems = container.querySelectorAll('.scroll-item');
+              
+              // Animate container
+              container.classList.add('animate');
+              
+              // Animate title after container animation
+              setTimeout(() => {
+                if (title) title.classList.add('animate');
+              }, 400);
+              
+              // Animate scroll items after title animation
+              setTimeout(() => {
+                scrollItems.forEach((item, index) => {
+                  setTimeout(() => {
+                    item.classList.add('animate');
+                  }, index * 50); // 50ms stagger between each item
+                });
+              }, 600);
             }
           }
         });
       },
-      observerOptions
+      { threshold: [0.05, 0.3], rootMargin: '0px 0px -100px 0px' }
+    );
+
+    // Waitlist section observer
+    const waitlistObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+              console.log('Waitlist section is intersecting, ratio:', entry.intersectionRatio);
+              setIsWaitlistVisible(true);
+              if (!isScrollingToTop && !isManualScrolling) {
+                setCurrentSection('waitlist');
+              }
+            
+            // Trigger animations when section is 5% visible
+            if (entry.intersectionRatio >= 0.05) {
+              console.log('Triggering waitlist animations');
+              const container = entry.target;
+              const title = container.querySelector('.waitlist-title');
+              const launchingSoon = container.querySelector('.launching-soon-container');
+              const perks = container.querySelector('.perks-section');
+              const description = container.querySelector('.waitlist-description');
+              const form = container.querySelector('.waitlist-form');
+              
+              // Animate container
+              container.classList.add('animate');
+              
+              // Animate title after container animation
+              setTimeout(() => {
+                if (title) title.classList.add('animate');
+              }, 200);
+              
+              // Animate launching soon image
+              setTimeout(() => {
+                if (launchingSoon) launchingSoon.classList.add('animate');
+              }, 400);
+              
+              // Animate perks section
+              setTimeout(() => {
+                if (perks) perks.classList.add('animate');
+              }, 600);
+              
+              // Animate description
+              setTimeout(() => {
+                if (description) description.classList.add('animate');
+              }, 800);
+              
+              // Animate form
+              setTimeout(() => {
+                if (form) form.classList.add('animate');
+              }, 1000);
+            }
+          }
+        });
+      },
+      { threshold: [0.05, 0.3], rootMargin: '0px 0px -100px 0px' }
     );
 
     // Observe all sections
     if (aboutRef.current) {
       aboutObserver.observe(aboutRef.current);
+      console.log('Observing about section');
+    }
+    if (marcItRef.current) {
+      marcItObserver.observe(marcItRef.current);
+      console.log('Observing Marc It! section');
     }
     if (didYouKnowRef.current) {
       didYouKnowObserver.observe(didYouKnowRef.current);
+      console.log('Observing Did You Know section');
     }
     if (solutionsRef.current) {
       solutionsObserver.observe(solutionsRef.current);
+      console.log('Observing solutions section');
     }
     if (waitlistRef.current) {
       waitlistObserver.observe(waitlistRef.current);
+      console.log('Observing waitlist section');
     }
 
     return () => {
       if (aboutRef.current) {
         aboutObserver.unobserve(aboutRef.current);
+      }
+      if (marcItRef.current) {
+        marcItObserver.unobserve(marcItRef.current);
       }
       if (didYouKnowRef.current) {
         didYouKnowObserver.unobserve(didYouKnowRef.current);
@@ -463,7 +725,7 @@ function home() {
         waitlistObserver.unobserve(waitlistRef.current);
       }
     };
-  }, [isScrollingToTop]);
+  }, [isScrollingToTop, isManualScrolling]);
 
   // Animation variants for the action words
   const wordVariants = {
@@ -554,7 +816,7 @@ function home() {
             </Box>
             truckers.
           </Typography>
-          <Typography className="home-hero-description">
+          <Typography className={`home-hero-description ${isAboutVisible ? 'animate' : ''}`}>
             Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
           </Typography>
           <motion.div
@@ -583,7 +845,7 @@ function home() {
               <span>community</span>
             </Box>
           </motion.div>
-          <Box className="hero-button-container" sx={{ position: 'relative' }}>
+          <Box className={`hero-button-container ${isAboutVisible ? 'animate' : ''}`} sx={{ position: 'relative' }}>
             <motion.div
               className="absolute -inset-[1.5px] rounded-md"
               style={{
@@ -708,6 +970,46 @@ function home() {
             />
           </Box>
         </Tooltip>
+      </Box>
+
+      {/* Marc It! Infinite Scroll Section */}
+      <Box className="marc-it-outer-container" ref={marcItRef}>
+        <Box className="marc-it-inner-container">
+          <Typography variant="h2" className="marc-it-title">
+            You have helpful information to share.
+            <br />
+            <br />
+            We have a place to Marc It!
+          </Typography>
+          
+          {/* Words scrolling to the right */}
+          <div className="scroller" data-direction="right" data-speed="slow">
+            <ul className="tag-list scroller__inner">
+              {scrollWords.map((word) => (
+                <li key={`word-${word.id}`} className="scroll-item word-item">
+                  <span className="scroll-text">{word.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Images scrolling to the left */}
+          <div className="scroller" data-direction="left" data-speed="slow">
+            <ul className="tag-list scroller__inner">
+              {scrollWords.map((word) => (
+                <li key={`image-${word.id}`} className="scroll-item image-item">
+                  <div className="scroll-content">
+                    <img 
+                      src={word.image} 
+                      alt={word.text}
+                      className="scroll-image"
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Box>
       </Box>
 
       {/* Did You Know Section */}
