@@ -52,9 +52,8 @@ function home() {
   ];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [carouselHovered, setCarouselHovered] = useState(false);
-  const [hasHoveredOnce, setHasHoveredOnce] = useState(false);
-  const carouselIntervalRef = useRef(null);
-  const carouselFirstHoverRef = useRef(false);
+  const [isAutoRotating, setIsAutoRotating] = useState(true);
+  const autoRotateIntervalRef = useRef(null);
 
   // Animated border setup following tutorial
   const time = useTime();
@@ -71,23 +70,38 @@ function home() {
     return `blur(${r}px)`;
   });
 
-  // Cycle through action words every 9 seconds
+  // Auto-rotate carousel and action words every 8 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
-    }, 4000);
+    if (isAutoRotating && !carouselHovered) {
+      autoRotateIntervalRef.current = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % actionWords.length);
+      }, 8000);
+    } else {
+      if (autoRotateIntervalRef.current) {
+        clearInterval(autoRotateIntervalRef.current);
+        autoRotateIntervalRef.current = null;
+      }
+    }
 
-    return () => clearInterval(interval);
-  }, [actionWords.length]);
+    return () => {
+      if (autoRotateIntervalRef.current) {
+        clearInterval(autoRotateIntervalRef.current);
+        autoRotateIntervalRef.current = null;
+      }
+    };
+  }, [isAutoRotating, carouselHovered, heroImages.length, actionWords.length]);
 
   // Manual image navigation functions
   const goToPrevImage = () => {
+    setIsAutoRotating(false);
     setCurrentImageIndex((prevIndex) => 
       prevIndex === 0 ? heroImages.length - 1 : prevIndex - 1
     );
   };
 
   const goToNextImage = () => {
+    setIsAutoRotating(false);
     setCurrentImageIndex((prevIndex) => 
       (prevIndex + 1) % heroImages.length
     );
@@ -121,31 +135,30 @@ function home() {
     }
   };
 
-  // Auto-advance on hover every 7 seconds, and advance immediately on first hover
-  useEffect(() => {
-    if (carouselHovered) {
-      if (!carouselFirstHoverRef.current) {
-        goToNextImage();
-        carouselFirstHoverRef.current = true;
-      }
-      carouselIntervalRef.current = setInterval(() => {
-        goToNextImage();
-      }, 7000);
+  // Handle carousel hover events
+  const handleCarouselMouseEnter = () => {
+    setCarouselHovered(true);
+  };
+
+  const handleCarouselMouseLeave = () => {
+    setCarouselHovered(false);
+  };
+
+  // Handle manual navigation clicks
+  const handleManualNavigation = (direction) => {
+    setIsAutoRotating(false);
+    if (direction === 'next') {
+      goToNextImage();
     } else {
-      if (carouselIntervalRef.current) {
-        clearInterval(carouselIntervalRef.current);
-        carouselIntervalRef.current = null;
-      }
-      carouselFirstHoverRef.current = false;
+      goToPrevImage();
     }
-    return () => {
-      if (carouselIntervalRef.current) {
-        clearInterval(carouselIntervalRef.current);
-        carouselIntervalRef.current = null;
-      }
-      carouselFirstHoverRef.current = false;
-    };
-  }, [carouselHovered]);
+  };
+
+  // Handle indicator clicks
+  const handleIndicatorClick = (index) => {
+    setIsAutoRotating(false);
+    setCurrentImageIndex(index);
+  };
 
   // Get descriptive alt text for each image
   const getImageAltText = (index) => {
@@ -391,143 +404,157 @@ function home() {
 
   // Animation variants for the hero image carousel (no exit animation)
   const imageVariants = {
-    initial: { 
+    initial: {
       opacity: 0,
-      x: 20
+      x: 50,
+      scale: 0.98
     },
-    animate: { 
+    animate: {
       opacity: 1,
       x: 0,
+      scale: 1,
       transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    },
+    exit: {
+      opacity: 0,
+      x: -50,
+      scale: 0.98,
+      transition: {
+        duration: 0.4,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   return (
     <Box className="home-page-container">
-      {/* home Hero Section - Full Viewport */}
+      {/* Home Hero Section - Full Viewport */}
       <Box className="home-hero-section" ref={aboutRef}>
-        <Box className="home-hero-content">
-          <Box className="home-hero-text">
-            <Typography 
-              variant="h1" 
-              className={`home-hero-headline ${isAboutVisible ? 'animate' : ''}`}
-            >
-              Built to
-              <br />
-              <Box component="span" style={{ display: 'block', minHeight: '1.2em', position: 'relative' }}>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={actionWords[currentWordIndex]}
-                    variants={wordVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    style={{
-                      display: 'block',
-                      background: 'linear-gradient(to left, rgb(235, 4, 4), rgb(202, 2, 2), rgb(220, 217, 217), rgb(212, 2, 9))',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    {actionWords[currentWordIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </Box>
-              truckers.
-            </Typography>
-            <Typography className="home-hero-description">
-              Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
-            </Typography>
-            <motion.div
-              className="home-hero-bullets"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ 
-                opacity: isAboutVisible ? 1 : 0, 
-                x: isAboutVisible ? 0 : -50 
-              }}
-              transition={{ 
-                duration: 0.8, 
-                ease: "easeOut",
-                delay: 0.3
-              }}
-            >
-              <Box className="hero-bullet">
-                <ParkingIcon className="hero-bullet-icon" />
-                <span>parking</span>
-              </Box>
-              <Box className="hero-bullet">
-                <UpdateIcon className="hero-bullet-icon" />
-                <span>updates</span>
-              </Box>
-              <Box className="hero-bullet">
-                <PeopleIcon className="hero-bullet-icon" />
-                <span>community</span>
-              </Box>
-            </motion.div>
-            <Box className="hero-button-container" sx={{ position: 'relative' }}>
-              <motion.div
-                className="absolute -inset-[1.5px] rounded-md"
-                style={{
-                  position: 'absolute',
-                  inset: '-1px',
-                  borderRadius: '8px',
-                  background: rotatingBg,
-                  zIndex: 0,
-                  filter: 'blur(5px)',
-                }}
-              />
-              <Button 
-                className="hero-button"
-                onClick={scrollToWaitlist}
-              >
-                Join Waitlist
-              </Button>
+        {/* Left Column - Text Content */}
+        <Box className="home-hero-text">
+          <Typography 
+            variant="h1" 
+            className={`home-hero-headline ${isAboutVisible ? 'animate' : ''}`}
+          >
+            Built to
+            <br />
+            <Box component="span" style={{ display: 'block', minHeight: '1.2em', position: 'relative' }}>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={actionWords[currentWordIndex]}
+                  variants={wordVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  style={{
+                    display: 'block',
+                    background: 'linear-gradient(to left, rgb(235, 4, 4), rgb(202, 2, 2), rgb(220, 217, 217), rgb(212, 2, 9))',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  {actionWords[currentWordIndex]}
+                </motion.span>
+              </AnimatePresence>
             </Box>
+            truckers.
+          </Typography>
+          <Typography className="home-hero-description">
+            Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
+          </Typography>
+          <motion.div
+            className="home-hero-bullets"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ 
+              opacity: isAboutVisible ? 1 : 0, 
+              x: isAboutVisible ? 0 : -50 
+            }}
+            transition={{ 
+              duration: 0.8, 
+              ease: "easeOut",
+              delay: 0.3
+            }}
+          >
+            <Box className="hero-bullet">
+              <ParkingIcon className="hero-bullet-icon" />
+              <span>parking</span>
+            </Box>
+            <Box className="hero-bullet">
+              <UpdateIcon className="hero-bullet-icon" />
+              <span>updates</span>
+            </Box>
+            <Box className="hero-bullet">
+              <PeopleIcon className="hero-bullet-icon" />
+              <span>community</span>
+            </Box>
+          </motion.div>
+          <Box className="hero-button-container" sx={{ position: 'relative' }}>
             <motion.div
-              className="social-proof-container"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: isAboutVisible ? 1 : 0, y: isAboutVisible ? 0 : 30 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.7 }}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginTop: '1rem' }}
+              className="absolute -inset-[1.5px] rounded-md"
+              style={{
+                position: 'absolute',
+                inset: '-1px',
+                borderRadius: '8px',
+                background: rotatingBg,
+                zIndex: 0,
+                filter: 'blur(5px)',
+              }}
+            />
+            <Button 
+              className="hero-button"
+              onClick={scrollToWaitlist}
             >
-              <img 
-                src={socialProofImg} 
-                alt="Social proof - trusted by truckers" 
-                className="social-proof-image"
-              />
-              <Box className="social-proof-text">
-                Stephen L. and 200+ others have already joined.
-              </Box>
-            </motion.div>
+              Join Waitlist
+            </Button>
           </Box>
-          <Box className="home-hero-image-carousel">
-            {/* Left Navigation Arrow (Desktop) */}
-            <Tooltip title={<span className="carousel-tooltip">Click for Next Image</span>} placement="left" arrow classes={{ popper: 'carousel-tooltip-popper' }}>
-              <IconButton 
-                className="carousel-nav-left"
-                onClick={goToPrevImage}
-                aria-label="Previous image"
-              >
-                <ChevronLeft />
-              </IconButton>
-            </Tooltip>
+          <motion.div
+            className="social-proof-container"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: isAboutVisible ? 1 : 0, y: isAboutVisible ? 0 : 30 }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.7 }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginTop: '1rem' }}
+          >
+            <img 
+              src={socialProofImg} 
+              alt="Social proof - trusted by truckers" 
+              className="social-proof-image"
+            />
+            <Box className="social-proof-text">
+              Stephen L. and 200+ others have already joined.
+            </Box>
+          </motion.div>
+        </Box>
 
-            {/* Image Container with Swipe Support */}
-            <Box 
-              className="carousel-image-container"
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-              onClick={goToNextImage}
-              onMouseEnter={() => setCarouselHovered(true)}
-              onMouseLeave={() => setCarouselHovered(false)}
-              style={{ cursor: 'pointer' }}
+        {/* Right Column - Image Carousel */}
+        <Box className="home-hero-image-carousel">
+          {/* Left Navigation Arrow (Desktop) */}
+          <Tooltip title={<span className="carousel-tooltip">Click for Previous Image</span>} placement="left" arrow classes={{ popper: 'carousel-tooltip-popper' }}>
+            <IconButton 
+              className="carousel-nav-left"
+              onClick={() => handleManualNavigation('prev')}
+              aria-label="Previous image"
             >
+              <ChevronLeft />
+            </IconButton>
+          </Tooltip>
+
+          {/* Image Container with Swipe Support */}
+          <Box 
+            className="carousel-image-container"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onClick={() => handleManualNavigation('next')}
+            onMouseEnter={handleCarouselMouseEnter}
+            onMouseLeave={handleCarouselMouseLeave}
+            style={{ cursor: 'pointer' }}
+          >
+            <AnimatePresence mode="wait">
               <motion.img
                 key={currentImageIndex}
                 src={heroImages[currentImageIndex]}
@@ -536,6 +563,7 @@ function home() {
                 variants={imageVariants}
                 initial="initial"
                 animate="animate"
+                exit="exit"
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -543,31 +571,31 @@ function home() {
                   objectFit: 'contain'
                 }}
               />
-              {/* Image Indicators */}
-              <Box className="carousel-indicators">
-                {heroImages.map((_, index) => (
-                  <Box
-                    key={index}
-                    className={`carousel-dot ${index === currentImageIndex ? 'active' : ''}`}
-                    onClick={() => setCurrentImageIndex(index)}
-                  />
-                ))}
-              </Box>
+            </AnimatePresence>
+            {/* Image Indicators */}
+            <Box className="carousel-indicators">
+              {heroImages.map((_, index) => (
+                <Box
+                  key={index}
+                  className={`carousel-dot ${index === currentImageIndex ? 'active' : ''}`}
+                  onClick={() => handleIndicatorClick(index)}
+                />
+              ))}
             </Box>
-
-            {/* Right Navigation Arrow (Desktop) */}
-            <Tooltip title={<span className="carousel-tooltip">Click for Next Image</span>} placement="right" arrow classes={{ popper: 'carousel-tooltip-popper' }}>
-              <IconButton 
-                className="carousel-nav-right"
-                onClick={goToNextImage}
-                aria-label="Next image"
-              >
-                <ChevronRight />
-              </IconButton>
-            </Tooltip>
           </Box>
+
+          {/* Right Navigation Arrow (Desktop) */}
+          <Tooltip title={<span className="carousel-tooltip">Click for Next Image</span>} placement="right" arrow classes={{ popper: 'carousel-tooltip-popper' }}>
+            <IconButton 
+              className="carousel-nav-right"
+              onClick={() => handleManualNavigation('next')}
+              aria-label="Next image"
+            >
+              <ChevronRight />
+            </IconButton>
+          </Tooltip>
         </Box>
-        
+
         {/* Dynamic Scroll Arrow */}
         <Box 
           className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}

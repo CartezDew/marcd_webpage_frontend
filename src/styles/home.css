@@ -14,21 +14,10 @@
   --fs-400: 1rem;
 }
 
-@media (min-width: 40em) {
-  :root {
-    --fs-600: 3rem;
-    --fs-400: 1.125rem;
-  }
-}
+
 
 /* Override main-content styling for home page */
-.main-content:has(.home-page-container) {
-    padding: 0 !important;
-    max-width: none !important;
-    margin: 0 !important;
-    width: 100vw !important;
-    overflow-x: hidden !important;
-  }
+
   
   /* Fallback for browsers that don't support :has() */
   body:has(.home-page-container) .main-content {
@@ -51,7 +40,7 @@
     min-height: 100vh;
     width: 100vw;
     padding: 2rem 8rem;
-    background: linear-gradient(to right, rgba(10, 10, 10, 0.96) 0%, rgba(0, 0, 0, 1) 30%, rgb(109, 2, 2) 70%, rgb(212, 2, 9) 100%) !important;
+    background: linear-gradient(135deg, #040505 20%, #be0303d1 30%,  #be0303d1 60%, #0f1419 100%) !important;
     position: relative;
     overflow-x: hidden;
   }
@@ -60,35 +49,21 @@
   .home-hero-section {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     position: relative;
-    max-width: 1600px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 2rem;
     padding-bottom: 8rem;
-  }
-  
-  .home-hero-content {
-    display: flex;
-    align-items: center;
     gap: clamp(2rem, 4vw, 4rem);
-    flex-wrap: wrap;
+    border-color: #03be44d1;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
     width: 100%;
-    max-width: 1400px;
   }
-  
-  .home-hero-text {
-    flex: 1 1 45%;
-    min-width: 300px;
-    max-width: 48%;
-    padding-right: 3rem;
-    box-sizing: border-box;
-    overflow: visible;
-    word-wrap: break-word;
-  }
-  
   .home-hero-headline {
     font-family: var(--ff-heading) !important;
     font-size: clamp(3rem, 5vw, 5rem) !important;
@@ -105,19 +80,26 @@
     white-space: normal;
     overflow: hidden;
   }
-
-  /* More specific selector to override Material-UI & Main font-size heading  */
-  .MuiTypography-root.home-hero-headline,
-  .MuiTypography-h1.home-hero-headline {
-    font-family: var(--ff-heading) !important;
-    font-size: clamp(3rem, 5vw, 5rem) !important;
-    font-weight: 700 !important;
-    color: var(--clr-neutral-100) !important;
-    letter-spacing: 0.5px !important;
-    margin-bottom: 3rem !important;
-    line-height: 1.1 !important;
-    text-align: left !important;
+  
+  .home-hero-text {
+    flex: 1 1 45%;
+    min-width: 300px;
+    max-width: 48%;
+    padding-right: 3rem;
+    box-sizing: border-box;
+    overflow: visible;
+    word-wrap: break-word;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-color: #f5f3f2d1;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
   }
+
   
   .home-hero-headline.animate {
     opacity: 1;
@@ -126,21 +108,13 @@
   
   .home-hero-description {
     font-family: 'Inter', 'Segoe UI', sans-serif !important;
-    font-size: clamp(1.5rem, 2.5vw, 2rem) !important;
-    line-height: 1.6 !important;
-    color: #cccccc !important;
-    margin-top: 2rem !important;
-  }
-  
-  /* More specific selector to override Material-UI for description */
-  .MuiTypography-root.home-hero-description {
-    font-family: 'Inter', 'Segoe UI', sans-serif !important;
     font-size: clamp(1rem, 2vw, 1.5rem) !important;
     line-height: 1.6 !important;
     color: #cccccc !important;
     margin-top: 2rem !important;
     text-align: left !important;
   }
+  
   
   /* Hero Button with Animated Border */
   .hero-button-container {
@@ -203,19 +177,6 @@
     padding-left: .5rem;
   }
   
-  .home-hero-image-carousel {
-    flex: 1 1 45%;
-    min-width: 300px;
-    max-width: 48%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-    position: relative;
-    height: auto;
-    min-height: 400px;
-  }
-
   .carousel-image-container {
     position: relative;
     width: 100%;
@@ -227,6 +188,25 @@
     align-items: center;
     justify-content: center;
   }
+  .home-hero-image-carousel {
+    flex: 1 1 45%;
+    min-width: 300px;
+    max-width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: auto;
+    min-height: 400px;
+    width: 100%;
+    border-color: #03b2bed1;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
+  }
+
+
 
   .carousel-nav-left,
   .carousel-nav-right {
@@ -245,11 +225,11 @@
   }
 
   .carousel-nav-left {
-    left: 15px !important;
+    left: 1px !important;
   }
 
   .carousel-nav-right {
-    right: 15px !important;
+    right: 1px !important;
   }
 
   .carousel-nav-left:hover,
@@ -290,384 +270,7 @@
     transform: scale(1.3);
   }
 
-  /* Larger images on bigger screens */
-  @media (min-width: 1200px) {
-    .carousel-image-container {
-      max-width: 800px;
-      max-height: 700px;
-    }
-    
-    .home-main-image {
-      max-height: 650px;
-    }
-  }
 
-  @media (min-width: 1400px) {
-    .carousel-image-container {
-      max-width: 900px;
-      max-height: 750px;
-    }
-    
-    .home-main-image {
-      max-height: 700px;
-    }
-  }
-
-  /* Hide navigation arrows on mobile devices */
-  @media (max-width: 768px) {
-    .carousel-nav-left,
-    .carousel-nav-right {
-      display: none !important;
-    }
-
-    .carousel-image-container {
-      max-width: 100%;
-      max-height: 500px;
-      margin: 0 1rem;
-    }
-    
-    .home-main-image {
-      max-height: 450px;
-    }
-
-    .carousel-indicators {
-      bottom: 10px;
-    }
-
-    .carousel-dot {
-      width: 10px;
-      height: 10px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .carousel-image-container {
-      margin: 0 0.5rem;
-      border-radius: 8px;
-      max-height: 400px;
-    }
-
-    .home-main-image {
-      max-height: 350px;
-    }
-
-    .carousel-indicators {
-      bottom: 8px;
-      gap: 6px;
-    }
-
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-    }
-  }
-  
-  .home-main-image {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    max-height: 600px;
-    object-fit: contain;
-    opacity: 0;
-    transform: translateX(100px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  .home-main-image.animate {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  
-  /* Responsive Design */
- 
-
-  @media (max-width: 1200px) {
-    .home-hero-text {
-      max-width: 52%;
-    }
-    
-    .home-hero-image {
-      max-width: 45%;
-    }
-    
-    .home-hero-headline,
-    .MuiTypography-root.home-hero-headline,
-    .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(2rem, 3.5vw, 3rem) !important;
-    }
-  }
-  
-  @media (max-width: 1000px) {
-    .home-hero-text {
-      max-width: 100%;
-      padding-right: 1rem;
-    }
-    
-    .home-hero-image {
-      max-width: 42%;
-    }
-    
-    .home-hero-headline,
-    .MuiTypography-root.home-hero-headline,
-    .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(5rem, 3vw, 2rem) !important;
-    }
-  }
-
-  @media (max-width: 950px) {
-    .home-hero-text {
-      max-width: 58%;
-      padding-right: 0.5rem;
-    }
-    
-    .home-hero-image {
-      max-width: 40%;
-    }
-    
-    .home-hero-headline,
-    .MuiTypography-root.home-hero-headline,
-    .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(1rem, 2.5vw, 1.8rem) !important;
-    }
-  }
-  
-  /* Key breakpoint - image moves below button */
-  @media (max-width: 900px) {
-    .home-page-container {
-      padding: 2rem 1rem;
-      min-height: auto;
-    }
-    
-    .home-hero-section {
-      padding: 1rem;
-      min-height: auto;
-      padding-bottom: 6rem;
-    }
-    
-    .home-hero-content {
-      flex-direction: column;
-      text-align: center;
-      gap: 3rem;
-      align-items: center;
-    }
-    
-    .home-hero-text {
-      max-width: 100%;
-      min-width: 100%;
-      order: 1;
-      padding-right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .home-hero-image {
-      max-width: 100%;
-      min-width: 100%;
-      order: 2;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 6rem;
-      margin-top: 2rem;
-    }
-    
-    .hero-button {
-      margin-bottom: 2rem !important;
-    }
-    
-    .social-proof-image {
-      max-height: 30px;
-    }
-    
-    .social-proof-text {
-      font-size: 0.7rem;
-    }
-    
-    .home-hero-headline,
-    .MuiTypography-root.home-hero-headline,
-    .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
-    }
-    
-    .home-main-image {
-      width: 100%;
-      max-width: 500px;
-      max-height: 500px;
-      height: auto;
-      object-fit: contain;
-      min-height: 280px;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .home-page-container {
-      padding: 1rem 0.5rem;
-      width: 100%;
-      min-height: auto;
-    }
-    
-    .home-hero-section {
-      padding: 0.5rem;
-      min-height: auto;
-      padding-bottom: 5rem;
-    }
-    
-    .home-hero-content {
-      gap: 1.5rem;
-    }
-    
-    .home-hero-description {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      text-align: center;
-      max-width: 90%;
-      margin: 1rem auto;
-    }
-    
-    .home-hero-image {
-      margin-bottom: 1.5rem;
-    }
-    
-    .home-main-image {
-      max-width: 85vw;
-      max-height: 400px;
-      min-height: 250px;
-      object-fit: contain;
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .hero-button {
-      font-size: 1.1rem !important;
-      padding: 15px 28px !important;
-      margin-top: 1.5rem !important;
-      width: auto;
-      min-width: 200px;
-    }
-    
-    .home-hero-image {
-      margin-bottom: 1rem;
-    }
-    
-    .home-main-image {
-      max-width: 80vw;
-      max-height: 360px;
-      min-height: 220px;
-      object-fit: contain;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .home-page-container {
-      padding: 0.5rem;
-      min-height: auto;
-      width: 100%;
-    }
-    
-    .home-hero-section {
-      padding: 0.5rem;
-      min-height: auto;
-      padding-bottom: 4rem;
-    }
-    
-    .home-hero-content {
-      gap: 1.5rem;
-    }
-    
-    .home-hero-headline,
-    .MuiTypography-root.home-hero-headline,
-    .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
-    }
-    
-    .home-hero-description {
-      font-size: clamp(0.9rem, 3vw, 1rem);
-      margin: 0.75rem auto;
-      max-width: 95%;
-      text-align: center;
-    }
-    
-    .hero-button {
-      font-size: 1rem !important;
-      padding: 14px 24px !important;
-      margin-top: 1rem !important;
-      width: auto;
-      min-width: 180px;
-    }
-    
-    .social-proof-image {
-      max-height: 25px;
-    }
-    
-    .social-proof-text {
-      font-size: 0.65rem;
-    }
-    
-    .home-hero-image {
-      margin-bottom: 1rem;
-    }
-    
-    .home-main-image {
-      max-width: 85vw;
-      max-height: 320px;
-      min-height: 200px;
-      object-fit: contain;
-    }
-  }
-  
-  @media (max-width: 375px) {
-    .home-page-container {
-      padding: 0.25rem;
-      width: 100%;
-      min-height: auto;
-    }
-    
-    .home-hero-section {
-      padding-bottom: 3rem;
-    }
-    
-    .home-hero-content {
-      gap: 1rem;
-    }
-    
-    .home-hero-headline,
-    .MuiTypography-root.home-hero-headline,
-    .MuiTypography-h1.home-hero-headline {
-      font-size: clamp(1.1rem, 4.5vw, 1.5rem) !important;
-    }
-    
-    .home-hero-description {
-      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
-      max-width: 98%;
-      margin: 0.5rem auto;
-    }
-    
-    .hero-button {
-      font-size: 0.9rem !important;
-      padding: 12px 20px !important;
-      margin-top: 0.75rem !important;
-      min-width: 160px;
-    }
-    
-    .social-proof-image {
-      max-height: 20px;
-    }
-    
-    .social-proof-text {
-      font-size: 0.6rem;
-    }
-    
-    .home-hero-image {
-      margin-bottom: 0.75rem;
-    }
-    
-    .home-main-image {
-      max-width: 90vw;
-      max-height: 300px;
-      min-height: 180px;
-      object-fit: contain;
-    }
-  }
-  
   /* Scroll Down Arrow - Always visible in viewport THIS IS WHERE I CHANGED THE POSITIONING FOR THE SCROLL DOWN ARROW */
   .scroll-down-arrow {
     position: fixed;
@@ -685,23 +288,6 @@
   }
 
   /* Fine-tune positioning for different desktop widths */
-  @media (max-width: 1200px) {
-    .scroll-down-arrow {
-      left: 69.5%;
-    }
-  }
-  
-  @media (max-width: 1000px) {
-    .scroll-down-arrow {
-      left: 69%;
-    }
-  }
-  
-  @media (max-width: 950px) {
-    .scroll-down-arrow {
-      left: 68.5%;
-    }
-  }
   
   .arrow-icon {
     font-size: 2rem;
@@ -759,44 +345,6 @@
     }
     60% {
       transform: translateX(-50%) translateY(5px);
-    }
-  }
-  
-  /* Responsive Design for Scroll Arrow */
-  @media (max-width: 900px) {
-    /* When layout becomes single column, center the arrow */
-    .scroll-down-arrow {
-      left: 50%;
-      bottom: 2rem;
-      padding: 10px;
-    }
-    
-    .arrow-icon {
-      font-size: 1.8rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .scroll-down-arrow {
-      left: 50%;
-      bottom: 2.5rem;
-      padding: 10px;
-    }
-    
-    .arrow-icon {
-      font-size: 1.5rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .scroll-down-arrow {
-      left: 50%;
-      bottom: 2rem;
-      padding: 8px;
-    }
-    
-    .arrow-icon {
-      font-size: 1.3rem;
     }
   }
   
@@ -868,8 +416,6 @@
     width: 100%;
     max-width: 1400px;
   }
-
-
 
   .fact-item {
     background: rgba(255, 255, 255, 0.1);
@@ -1070,8 +616,6 @@
       box-shadow: 0 2px 8px rgba(190, 3, 3, 0.4);
     }
   }
-
-
 
   .expand-arrow svg {
     width: 14px;
@@ -1656,48 +1200,48 @@
     border-radius: 8px !important;
     border: 1px solid rgba(76, 175, 80, 0.3) !important;
   }
-  
-  /* Responsive Design for Waitlist */
-  @media (max-width: 768px) {
-    .waitlist-title {
-      font-size: 2.5rem !important;
+
+@media (min-width: 1400px) {
+    .carousel-image-container {
+      max-width: 900px;
+      max-height: 750px;
     }
     
-    .waitlist-description {
-      font-size: 1.1rem !important;
-    }
-    
-    .email-input-wrapper {
-      max-width: 400px;
-    }
-    
-    .email-input-field {
-      height: 56px;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-    }
-    
-    .join-button {
-      font-size: 0.9rem;
-      aspect-ratio: 2.2;
-    }
-    
-    .launching-soon-image {
-      max-width: 380px;
-    }
-    
-    .perks-title {
-      font-size: clamp(1rem, 2.5vw, 1.3rem) !important;
-    }
-    
-    .confetti {
-      font-size: 1.4rem;
-      margin: 0 2px;
+    .home-main-image {
+      max-height: 700px;
     }
   }
-  
-  /* Did You Know Section - Responsive */
-  @media (max-width: 1200px) {
+/* 
+@media (min-width: 1200px) {
+    .carousel-image-container {
+      max-width: 800px;
+      max-height: 700px;
+    }
+    
+    .home-main-image {
+      max-height: 650px;
+    }
+  }
+
+@media (max-width: 1200px) {
+    .home-hero-text {
+      max-width: 52%;
+    }
+    
+    .home-hero-image-carousel {
+      max-width: 45%;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(2rem, 3.5vw, 3rem) !important;
+    }
+
+    .scroll-down-arrow {
+      left: 69.5%;
+    }
+
     .facts-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: 1.2rem;
@@ -1709,7 +1253,7 @@
     }
   }
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
     .facts-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 1.2rem;
@@ -1758,6 +1302,126 @@
 
     .marcd-solutions-content .solution-text {
       font-size: 1rem !important;
+    }
+  }
+
+@media (max-width: 1000px) {
+    .home-hero-text {
+      max-width: 100%;
+      padding-right: 1rem;
+    }
+    
+    .home-hero-image-carousel {
+      max-width: 42%;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(5rem, 3vw, 2rem) !important;
+    }
+
+    .scroll-down-arrow {
+      left: 69%;
+    }
+  }
+
+@media (max-width: 950px) {
+    .home-hero-text {
+      max-width: 58%;
+      padding-right: 0.5rem;
+    }
+    
+    .home-hero-image-carousel {
+      max-width: 40%;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1rem, 2.5vw, 1.8rem) !important;
+    }
+
+    .scroll-down-arrow {
+      left: 68.5%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-page-container {
+      padding: 2rem 1rem;
+      min-height: auto;
+    }
+    
+    .home-hero-section {
+      padding: 1rem;
+      min-height: auto;
+      padding-bottom: 6rem;
+    }
+    
+    .home-hero-section {
+      flex-direction: column;
+      text-align: center;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .home-hero-text {
+      max-width: 100%;
+      min-width: 100%;
+      order: 1;
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .home-hero-image-carousel {
+      max-width: 100%;
+      min-width: 100%;
+      order: 2;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 6rem;
+      margin-top: 2rem;
+    }
+    
+    .hero-button {
+      margin-bottom: 2rem !important;
+    }
+    
+    .social-proof-image {
+      max-height: 30px;
+    }
+    
+    .social-proof-text {
+      font-size: 0.7rem;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+    }
+    
+    .home-main-image {
+      width: 100%;
+      max-width: 500px;
+      max-height: 500px;
+      height: auto;
+      object-fit: contain;
+      min-height: 280px;
+    } */
+
+    /* When layout becomes single column, center the arrow */
+    /* .scroll-down-arrow {
+      left: 50%;
+      bottom: 2rem;
+      padding: 10px;
+    }
+    
+    .arrow-icon {
+      font-size: 1.8rem;
     }
   }
 
@@ -1861,8 +1525,6 @@
       padding: 4px 8px;
     }
 
-
-
     .solutions-section {
       padding: 2rem;
     }
@@ -1904,7 +1566,261 @@
     }
   }
 
-  @media (max-width: 480px) {
+  .home-hero-bullets {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  
+  .hero-bullet {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.4rem, 2vw, 0.7rem);
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 600;
+    color: #9f9d9d;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  }
+  
+  .hero-bullet-icon {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #be0303;
+    opacity: 1;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  }
+  
+  .carousel-tooltip-popper .MuiTooltip-tooltip {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.35rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .carousel-tooltip-popper .MuiTooltip-arrow {
+    color: rgba(0, 0, 0, 0.85);
+  }
+  .carousel-tooltip {
+    font-size: 0.97rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.01em;
+  }
+
+.scroll-arrow-message {
+  position: fixed;
+  bottom: 3rem;
+  left: calc(50% + 15%); /* adjust this based on where the carousel sits */
+  /* transform: translateX(-50%) translateY(0);
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.35rem;
+  font-size: 0.97rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.3s, transform 0.3s;
+  margin-bottom: 0.4rem;
+}
+.scroll-down-arrow:hover .scroll-arrow-message,
+.scroll-down-arrow:focus .scroll-arrow-message {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(-4px);
+}
+.scroll-arrow-message::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 0.35rem solid transparent;
+  border-right: 0.35rem solid transparent;
+  border-top: 0.35rem solid rgba(0, 0, 0, 0.85);
+}
+  
+.scroll-down-arrow {
+  position: fixed;
+  bottom: 3rem;
+  left: calc(50% + 18%);
+  transform: translateX(300px); /* adjust until centered on the image */
+  /* rest of your styles... */
+/* }   */
+/* 
+@media (max-width: 768px) {
+    .carousel-nav-left,
+    .carousel-nav-right {
+      display: none !important;
+    }
+
+    .carousel-image-container {
+      max-width: 100%;
+      max-height: 500px;
+      margin: 0 1rem;
+    }
+    
+    .home-main-image {
+      max-height: 450px;
+    }
+
+    .carousel-indicators {
+      bottom: 10px;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .home-page-container {
+      padding: 1rem 0.5rem;
+      width: 100%;
+      min-height: auto;
+    }
+    
+    .home-hero-section {
+      padding: 0.5rem;
+      min-height: auto;
+      padding-bottom: 5rem;
+      gap: 1.5rem;
+    }
+    
+    .home-hero-description {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      text-align: center;
+      max-width: 90%;
+      margin: 1rem auto;
+    }
+    
+    .home-hero-image-carousel {
+      margin-bottom: 1.5rem;
+    }
+    
+    .home-main-image {
+      max-width: 85vw;
+      max-height: 400px;
+      min-height: 250px;
+      object-fit: contain;
+    }
+
+    .scroll-down-arrow {
+      left: 50%;
+      bottom: 2.5rem;
+      padding: 10px;
+    }
+    
+    .arrow-icon {
+      font-size: 1.5rem;
+    }
+
+    .waitlist-title {
+      font-size: 2.5rem !important;
+    }
+    
+    .waitlist-description {
+      font-size: 1.1rem !important;
+    }
+    
+    .email-input-wrapper {
+      max-width: 400px;
+    }
+    
+    .email-input-field {
+      height: 56px;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .join-button {
+      font-size: 0.9rem;
+      aspect-ratio: 2.2;
+    }
+    
+    .launching-soon-image {
+      max-width: 380px;
+    }
+    
+    .perks-title {
+      font-size: clamp(1rem, 2.5vw, 1.3rem) !important;
+    }
+    
+    .confetti {
+      font-size: 1.4rem;
+      margin: 0 2px;
+    }
+
+    .home-hero-bullets {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-button {
+      font-size: 1.1rem !important;
+      padding: 15px 28px !important;
+      margin-top: 1.5rem !important;
+      width: auto;
+      min-width: 200px;
+    }
+    
+    .home-hero-image-carousel {
+      margin-bottom: 1rem;
+    }
+    
+    .home-main-image {
+      max-width: 80vw;
+      max-height: 360px;
+      min-height: 220px;
+      object-fit: contain;
+    }
+  }  
+
+@media (max-width: 480px) {
+    .carousel-image-container {
+      margin: 0 0.5rem;
+      border-radius: 8px;
+      max-height: 400px;
+    }
+
+    .home-main-image {
+      max-height: 350px;
+    }
+
+    .carousel-indicators {
+      bottom: 8px;
+      gap: 6px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    .scroll-down-arrow {
+      left: 50%;
+      bottom: 2rem;
+      padding: 8px;
+    }
+    
+    .arrow-icon {
+      font-size: 1.3rem;
+    }
+
     .did-you-know-section {
       padding: 3rem 1rem;
     }
@@ -1958,111 +1874,116 @@
     .waitlist-description {
       font-size: 1rem !important;
     }
-  }
-  
-  .home-hero-bullets {
-    display: flex;
-    flex-direction: row;
-    gap: clamp(1rem, 3vw, 2.5rem);
-    margin-top: 1.2rem;
-    margin-bottom: 0.5rem;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  
-  .hero-bullet {
-    display: flex;
-    align-items: center;
-    gap: clamp(0.4rem, 2vw, 0.7rem);
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-weight: 600;
-    color: #9f9d9d;
-    letter-spacing: 0.01em;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.07);
-  }
-  
-  .hero-bullet-icon {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: #be0303;
-    opacity: 1;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
-  }
-  
-  /* Center on smaller screens */
-  @media (max-width: 768px) {
-    .home-hero-bullets {
-      justify-content: center;
+
+    .home-page-container {
+      padding: 0.5rem;
+      min-height: auto;
+      width: 100%;
+    }
+    
+    .home-hero-section {
+      padding: 0.5rem;
+      min-height: auto;
+      padding-bottom: 4rem;
+    }
+    
+    .home-hero-section {
+      gap: 1.5rem;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
+    }
+    
+    .home-hero-description {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      margin: 0.75rem auto;
+      max-width: 95%;
+      text-align: center;
+    }
+    
+    .hero-button {
+      font-size: 1rem !important;
+      padding: 14px 24px !important;
+      margin-top: 1rem !important;
+      width: auto;
+      min-width: 180px;
+    }
+    
+    .social-proof-image {
+      max-height: 25px;
+    }
+    
+    .social-proof-text {
+      font-size: 0.65rem;
+    }
+    
+    .home-hero-image-carousel {
+      margin-bottom: 1rem;
+    }
+    
+    .home-main-image {
+      max-width: 85vw;
+      max-height: 320px;
+      min-height: 200px;
+      object-fit: contain;
     }
   }
-  
-  
-  .carousel-tooltip-popper .MuiTooltip-tooltip {
-    background: rgba(0, 0, 0, 0.85);
-    color: #fff;
-    font-size: 0.95rem;
-    padding: 0.5rem 0.9rem;
-    border-radius: 0.35rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-  }
-  .carousel-tooltip-popper .MuiTooltip-arrow {
-    color: rgba(0, 0, 0, 0.85);
-  }
-  .carousel-tooltip {
-    font-size: 0.97rem;
-    font-weight: 500;
-    color: #fff;
-    letter-spacing: 0.01em;
-  }
 
-.scroll-arrow-message {
-  position: fixed;
-  bottom: 3rem;
-  left: calc(50% + 15%); /* adjust this based on where the carousel sits */
-  transform: translateX(-50%) translateY(0);
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 0.5rem 0.9rem;
-  border-radius: 0.35rem;
-  font-size: 0.97rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1000;
-  transition: opacity 0.3s, transform 0.3s;
-  margin-bottom: 0.4rem;
-}
-.scroll-down-arrow:hover .scroll-arrow-message,
-.scroll-down-arrow:focus .scroll-arrow-message {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(-4px);
-}
-.scroll-arrow-message::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 0.35rem solid transparent;
-  border-right: 0.35rem solid transparent;
-  border-top: 0.35rem solid rgba(0, 0, 0, 0.85);
-}
-  
-.scroll-down-arrow {
-  position: fixed;
-  bottom: 3rem;
-  left: calc(50% + 18%);
-  transform: translateX(300px); /* adjust until centered on the image */
-  /* rest of your styles... */
-}
+@media (max-width: 375px) {
+    .home-page-container {
+      padding: 0.25rem;
+      width: 100%;
+      min-height: auto;
+    }
+    
+    .home-hero-section {
+      padding-bottom: 3rem;
+    }
+    
+    .home-hero-content {
+      gap: 1rem;
+    }
+    
+    .home-hero-headline,
+    .MuiTypography-root.home-hero-headline,
+    .MuiTypography-h1.home-hero-headline {
+      font-size: clamp(1.1rem, 4.5vw, 1.5rem) !important;
+    }
+    
+    .home-hero-description {
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      max-width: 98%;
+      margin: 0.5rem auto;
+    }
+    
+    .hero-button {
+      font-size: 0.9rem !important;
+      padding: 12px 20px !important;
+      margin-top: 0.75rem !important;
+      min-width: 160px;
+    }
+    
+    .social-proof-image {
+      max-height: 20px;
+    }
+    
+    .social-proof-text {
+      font-size: 0.6rem;
+    }
+    
+    .home-hero-image-carousel {
+      margin-bottom: 0.75rem;
+    }
+    
+    .home-main-image {
+      max-width: 90vw;
+      max-height: 300px;
+      min-height: 180px;
+      object-fit: contain;
+    }
+  } */
 
-  
   
