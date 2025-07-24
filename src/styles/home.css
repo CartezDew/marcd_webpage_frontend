@@ -2640,28 +2640,301 @@
      .scroll-item {
       min-width: 90px !important;
      }
+    }
 
   @media (max-width: 600px) {
+
+    .home-page-container {
+      background: linear-gradient(135deg,  #000000  10%, #be0303d1 30%,  #be0303d1 70%, #0f1419 100%) !important;
+      padding: 2rem !important;
+
     .home-hero-section {
       flex-direction: column !important;
     }
 
     .home-hero-text {
-      padding-top: 3rem !important;
+      padding-top: 0rem !important;
     }
     .home-hero-headline {
-      font-size: 1.5rem !important;
+      font-size: 3rem !important;
     }
 
     .home-hero-description {
-      font-size: 0.7rem !important;
+      font-size: 1.1rem !important;
+    }
+
+    .social-proof-text {
+      font-size: 0.9rem !important;
     }
 
     .did-you-know-title {
       font-size: 1.1rem !important;
     }
+
+         .scroll-down-arrow,
+     .scroll-down-arrow[style] {
+       padding: 12px !important;
+       left: calc(100vw - 60px) !important;
+       right: auto !important;
+       transform: none !important;
+       display: flex !important;
+       align-items: center !important;
+       justify-content: center !important;
+       width: 48px !important;
+       height: 48px !important;
+       border-radius: 50% !important;
+       position: fixed !important;
+     }
+
+     .scroll-image {
+      width: 50px !important;
+      height: 50px !important;
+     }
+
+     .arrow-icon {
+      font-size: 1rem !important;
+      padding-bottom: 2px !important;
+     }
+
+     .scroll-item {
+      min-width: 90px !important;
+     }
+  
+    /* Small images (Main Hero and Landing Page) */
+  .home-main-image.small-image {
+    max-width: 500px !important;
+    margin: 0 auto !important;
+    height: 400px !important;
+    width: 100% !important;
+    object-fit: contain !important;
+    object-position: top center !important;
+  }
+  
+  .home-main-image.large-image {
+    max-height: 460px !important;
+    height: auto !important;
+    object-fit: contain !important; 
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .carousel-nav-left,
+  .carousel-nav-right {
+    background-color: #212121 !important;
+    color: white !important;
+  }
+  
+  .carousel-nav-left:active,
+  .carousel-nav-right:active {
+    background-color: #be0303 !important;
+    color: white !important;
+  }
+  
+  .carousel-indicators {
+    bottom: -20px !important;
+  }
+
+     .carousel-dot.active {
+     background-color: black !important;
+   }
+
+   .fact-text {
+    text-align: left !important;
+  }
+
+  .fact-detail {
+    text-align: left !important;
+  }
     
-    
+  }
    }  
 
+  @media (max-width: 520px) {
+
+    .email-input-field {
+      width: 70% !important;
+      font-size: .7rem !important;
+      padding-right: 80px !important;
+     }
+
+     .join-button {
+      font-size: .8rem !important;
+      position: absolute !important;
+      right: 59px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      height: calc(100% - 10px) !important;
+      width: 70px !important;
+     }
+     
+     .email-input-wrapper {
+      position: relative !important;
+     }  
+   }
+
+   @media (max-width: 515px) {
+
+    .fact-text {
+      font-size: 0.8rem !important;
+    }
+
+    .fact-detail {
+      font-size: 0.9rem !important;
+    }
+
+     .marcd-solutions-section {
+       background: #000000 !important;
+     }
+
+     .marcd-solutions-section .background-video {
+       display: none !important;
+     }
+
+     
+   }
+
+  @media (max-width: 490px) {
+
+    .marcd-solutions-content .solution-text{
+      font-size: 0.73rem !important;
+      text-align: left !important;
+    }
+
+    .marcd-solutions-content .solution-stat-icon {
+      font-size: 2rem !important;
+    }
+
+    .marcd-solutions-content .solution-stat-image {
+      width: 35px !important;
+      height: 35px !important;
+    }
+
+    .fact-detail {
+      font-size: 0.8rem !important;
+      text-align: left !important;
+    }
+
+    .fact-text {
+      text-align: left !important;
+    }
+
+    .fact-detail {
+      text-align: left !important;
+    }
+  }
+
+
+    
+    
+  @media (max-width: 485px) {
+
+    .fact-text {
+      font-size: 0.76rem !important;
+    }
+
+    .fact-detail {
+      font-size: 0.8rem !important;
+    }
+  }
+
+  @media (max-width: 475px) {
+
+    .fact-text {
+      font-size: 0.7rem !important;
+    }
+
+    .fact-detail {
+      font-size: 0.75rem !important;
+    }
+
+    .email-input-field {
+      width: 70% !important;
+      font-size: .7rem !important;
+      padding-right: 80px !important;
+     }
+
+     .join-button {
+      font-size: .8rem !important;
+      position: absolute !important;
+      right: 55px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      height: calc(100% - 10px) !important;
+      width: 70px !important;
+     }
+     
+     .email-input-wrapper {
+      position: relative !important;
+     } 
+
+          .home-main-image.large-image,
+     .carousel-image-container .home-main-image.large-image {
+       max-height: 350px !important;
+       height: 350px !important;
+       object-fit: contain !important; 
+       width: 100% !important;
+       max-width: 100% !important;
+       min-height: unset !important;
+     }
+
+     .carousel-image-container {
+       max-height: 300px !important;
+     }
+
+     .home-hero-image-carousel {
+       max-height: 300px !important;
+     }
+
+     @media (max-width: 455px) {
+
+      .fact-text {
+        font-size: 0.7rem !important;
+      }
   
+      .fact-detail {
+        font-size: 0.75rem !important;
+      }
+  
+      .email-input-field {
+        width: 70% !important;
+        font-size: .6rem !important;
+        padding-right: 80px !important;
+       }
+  
+     }}
+
+    @media (max-width: 450px) {
+
+    .marc-it-title {
+      font-size: .8rem !important;
+    }
+
+    .scroll-text {
+      font-size: 0.8rem !important;
+    }
+
+  }
+
+
+
+    @media (max-width: 430px) {
+      
+       .home-hero-section .home-hero-headline {
+           font-size: 2.2rem !important;
+       }
+
+         .home-hero-description,
+         .home-hero-section .home-hero-description {
+           font-size: 1rem !important;
+         }
+
+   .marc-it-title {
+    font-size: .9rem !important;
+   }
+
+   .did-you-know-title {
+    font-size: 1.2rem !important;
+   }
+         
+     }
+      

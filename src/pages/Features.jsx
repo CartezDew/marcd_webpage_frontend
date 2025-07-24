@@ -84,12 +84,15 @@ function Features() {
         setIsFirstViewport(entry.isIntersecting);
         if (entry.isIntersecting && !isGridInView) {
           setIsGridInView(true);
-          // Start sequential animation
-          startSequentialAnimation();
+          // Start sequential animation after header animations complete
+          // Header animation is 0.8s + grid animation delay of 0.3s = 1.1s total
+          setTimeout(() => {
+            startSequentialAnimation();
+          }, 1100);
         }
       },
       {
-        threshold: 0.3,
+        threshold: 0.05, // Trigger when 5% of the grid is visible
         rootMargin: '0px'
       }
     );
@@ -103,7 +106,7 @@ function Features() {
         observer.unobserve(featuresGridRef.current);
       }
     };
-  }, [isGridInView]);
+  }, [isGridInView])
 
   // Sequential animation function
   const startSequentialAnimation = () => {
