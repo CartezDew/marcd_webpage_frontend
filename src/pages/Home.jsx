@@ -1086,46 +1086,44 @@ function home() {
                 onClick={() => toggleCard(index)}
                 title={expandedCard === index ? "" : "Click for more details"}
               >
-                <Box className="fact-header">
-                  <Box className="fact-main-content">
-                    {fact.stat && fact.stat !== "image" && fact.stat !== "icon" && (
-                      <Typography className="fact-stat">{fact.stat}</Typography>
-                    )}
-                    {fact.stat === "image" && fact.statImage && (
-                      <img src={fact.statImage} alt="Healthy food" className="fact-stat-image" />
-                    )}
-                    {fact.stat === "icon" && fact.statIcon && (
-                      <fact.statIcon className="fact-stat-icon" />
-                    )}
-                    <Typography className="fact-text">
-                      {fact.text}
-                    </Typography>
-                  </Box>
-                  <motion.div
-                    className={`expand-arrow ${expandedCard === index ? 'expanded' : ''}`}
-                    animate={{ 
-                      rotate: expandedCard === index ? 90 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path 
-                        d="M9 18l6-6-6-6" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                      <path 
-                        d="M5 18l6-6-6-6" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </motion.div>
+                <Box className="fact-main-content">
+                  {fact.stat && fact.stat !== "image" && fact.stat !== "icon" && (
+                    <Typography className="fact-stat">{fact.stat}</Typography>
+                  )}
+                  {fact.stat === "image" && fact.statImage && (
+                    <img src={fact.statImage} alt="Healthy food" className="fact-stat-image" />
+                  )}
+                  {fact.stat === "icon" && fact.statIcon && (
+                    <fact.statIcon className="fact-stat-icon" />
+                  )}
+                  <Typography className="fact-text">
+                    {fact.text}
+                  </Typography>
                 </Box>
+                <motion.div
+                  className={`expand-arrow ${expandedCard === index ? 'expanded' : ''}`}
+                  animate={{ 
+                    rotate: expandedCard === index ? 90 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path 
+                      d="M9 18l6-6-6-6" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    />
+                    <path 
+                      d="M5 18l6-6-6-6" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
                 <AnimatePresence>
                   {expandedCard === index && (
                     <motion.div
@@ -1168,12 +1166,12 @@ function home() {
                 icon: <ParkingIcon className="solution-stat-icon" />,
                 title: "Real-time parking",
                 text: "Shows available safe spots right now, so you stop wasting hours hunting.",
-                detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally—save time, fuel, and avoid violations."
+                detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally, save time, fuel, and avoid violations."
               },
               {
                 icon: <img src={healthFoodImg} alt="Healthy food" className="solution-stat-image" />,
                 title: "Wellness support",
-                text: "Locates cleaner stops, healthier food—even halal options—so you can take care of yourself on the road.",
+                text: "Locates cleaner stops, healthier food, even halal options, so you can take care of yourself on the road.",
                 detail: "Find truck stops with healthy meal options, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it while on the road."
               },
               {
@@ -1191,7 +1189,7 @@ function home() {
               {
                 icon: <Typography className="solution-stat-emoji">🤝</Typography>,
                 title: "Community updates",
-                text: "Drivers help each other with parking, hazards, or spotting—and earn rewards for it.",
+                text: "Drivers help each other with parking, hazards, or spotting, and earn rewards for it.",
                 detail: "Join a supportive community where drivers look out for each other. Share parking updates, road conditions, and spotting assistance while earning Marc'er points that convert to real cash rewards."
               }
             ].map((solution, index) => (
@@ -1201,38 +1199,36 @@ function home() {
                 onClick={() => toggleCard(index + 8)}
                 title={expandedCard === index + 8 ? "" : "Click for more details"}
               >
-                <Box className="solution-header">
-                  <Box className="solution-main-content">
-                    {solution.icon}
-                    <Typography className="solution-text">
-                      {solution.text}
-                    </Typography>
-                  </Box>
-                  <motion.div
-                    className={`expand-arrow ${expandedCard === index + 8 ? 'expanded' : ''}`}
-                    animate={{ 
-                      rotate: expandedCard === index + 8 ? 90 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path 
-                        d="M9 18l6-6-6-6" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                      <path 
-                        d="M5 18l6-6-6-6" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </motion.div>
+                <Box className="solution-main-content">
+                  {solution.icon}
+                  <Typography className="solution-text">
+                    {solution.text}
+                  </Typography>
                 </Box>
+                <motion.div
+                  className={`expand-arrow ${expandedCard === index + 8 ? 'expanded' : ''}`}
+                  animate={{ 
+                    rotate: expandedCard === index + 8 ? 90 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path 
+                      d="M9 18l6-6-6-6" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    />
+                    <path 
+                      d="M5 18l6-6-6-6" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
                 <AnimatePresence>
                   {expandedCard === index + 8 && (
                     <motion.div
