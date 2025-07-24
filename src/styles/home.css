@@ -130,6 +130,10 @@
     .arrow-icon {
       font-size: 2.1rem;
     }
+    
+    .marc-it-outer-container {
+      margin-top: 0rem !important;
+    }
   }
   .home-hero-headline {
     font-family: var(--ff-heading) !important;
@@ -2075,6 +2079,8 @@
         object-fit: contain;
       }
 
+    }
+
   @media (max-width: 930px) {
     .social-proof-image {
       max-height: 45px !important;
@@ -2118,8 +2124,34 @@
       justify-content: center !important;
       padding-bottom: 10px !important;
     }
+
+    .marc-it-title {
+      font-size: 1.6rem !important;
+    }
+
+    .did-you-know-title {
+      font-size: 2rem !important;
+    }
+
   
-   }
+     
+     .marc-it-outer-container {
+       margin-top: 0rem !important;
+     }
+     
+     .facts-grid {
+       grid-template-columns: repeat(3, 1fr) !important;
+     }
+     
+     .solutions-grid {
+       grid-template-columns: repeat(3, 1fr) !important;
+     }
+     
+     .marcd-solutions-content .solutions-grid {
+       grid-template-columns: repeat(3, 1fr) !important;
+     }
+
+    }
 
    @media (max-width: 900px) {
     .marc-it-title {
@@ -2269,27 +2301,132 @@
      .carousel-indicators {
       bottom: -50px !important;
      }
-  }
-  
-     
-/*     
-  @media (max-width: 850px)  {
-    .home-hero-section {
-      flex-direction: column !important;
-    }
-  } */
 
-  
+           .home-hero-section .scroll-down-arrow {
+       padding: 9px !important;
+       left: calc(67% - 9px) !important;
+       display: flex !important;
+       align-items: center !important;
+       justify-content: center !important;
+       padding-bottom: 10px !important;
+     }
+
+     .marc-it-title {
+      font-size: 1.3rem !important;
+     }
+
+     .scroll-item {
+      min-width: 100px !important;
+      padding: 0.5rem !important;
+     }
+
+           .scroll-image {
+       width: 50px !important;
+       height: 50px !important;
+      }
+    
+    .fact-stat {
+      font-size: 1.1rem !important;
+    }
+
+    .fact-text {
+      font-size: .9rem !important;
+    }
   }
+  
+
+  @media (max-width: 880px) {
+
+
+    .carousel-nav-left,
+    .carousel-nav-right {
+     width: 30px !important;
+     height: 30px !important;
+     top: 50% !important;
+     transform: translateY(-50%) !important;
+     background-color: #8d0404 !important;
+     color: white !important;
+     position: absolute !important;
+     z-index: 20 !important;
+     opacity: 1 !important;
+    }
+    
+    .carousel-nav-left {
+     left: 20px !important;
+    }
+    
+    .carousel-nav-right {
+     right: 20px !important;
+    }
+    
+    .carousel-nav-left:active,
+    .carousel-nav-right:active {
+     background-color: #000000 !important;
+     color: white !important;
+    }
+
+   .carousel-indicators {
+    bottom: -50px !important;
+   }
+   
+   .fact-item {
+     height: 180px !important;
+   }
+   
+   .fact-item.expanded {
+     height: auto !important;
+     min-height: 180px !important;
+   }
+
+   .perks-title {
+    font-size: 1.1rem !important;
+   }
+
+  }
+
+     @media (max-width: 850px) {
+     .home-hero-headline {
+       margin-bottom: 2rem !important;
+     }
+     
+     .home-hero-description {
+       margin-bottom: 0rem !important;
+     }
+     
+    .hero-button-container {
+    margin-top: -2rem !important;
+       }
+    .home-main-image.large-image {
+      max-height: 420px !important;
+      height: auto !important;
+      object-fit: contain !important; 
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .fact-stat-image {
+      width: 40px !important;
+      height: 35px !important;
+    }
+  
+   }
   /* Responsive adjustments */
   @media (max-width: 768px) {
+    
+    .home-hero-text {
+      padding-top: 4rem !important;
+    }
+
+    .carousel-image-container {
+      padding-top: 3rem !important;
+    }
+
     .marc-it-section {
       padding: 3rem 1rem;
     }
 
     .marc-it-title {
-      font-size: clamp(2rem, 4vw, 3rem) !important;
-      margin-bottom: 2rem !important;
+      font-size: 1.3rem !important;
     }
 
     .scroll-item {
@@ -2305,7 +2442,226 @@
     .scroll-text {
       font-size: 0.9rem;
     }
+
+         .home-hero-headline {
+       font-size: 2.3rem !important;
+     }
+
+     .home-hero-description {
+       font-size: 0.9rem !important;
+     }
+
+     .did-you-know-title {
+       font-size: 1.4rem !important;
+     }
+
+     .fact-stat {
+       font-size: 0.9rem !important;
+     }
+
+     .fact-text {
+       font-size: 0.75rem !important;
+     }
+
+     .fact-detail {
+       font-size: 0.8rem !important;
+     }
+
+     .marcd-solutions-content .solutions-title {
+       font-size: 1.4rem !important;
+     }
+
+     .marcd-solutions-content .solution-text {
+       font-size: 0.7rem !important;
+       font-weight: 500 !important;
+     }
+
+     .marcd-solutions-content .solution-detail {
+      font-size: 0.8rem !important;
+     }
+
+       .waitlist-title,
+       .MuiTypography-root.waitlist-title,
+       .MuiTypography-h3.waitlist-title {
+         font-size: 1.6rem !important;
+       }
+
+      .waitlist-description,
+      .MuiTypography-root.waitlist-description,
+      .MuiTypography-body1.waitlist-description {
+        font-size: 1rem !important;
+      }
+
+     .launching-soon-image {
+       max-width: 350px !important;
+     }
+
+     .perks-title {
+       font-size: 0.9rem !important;
+     }
+
+           .email-input-field {
+       width: 70% !important;
+       font-size: .8rem !important;
+       padding-right: 80px !important;
+      }
+
+      .join-button {
+       font-size: .8rem !important;
+       position: absolute !important;
+       right: 64px !important;
+       top: 50% !important;
+       transform: translateY(-50%) !important;
+       height: calc(100% - 10px) !important;
+       width: 70px !important;
+      }
+      
+      .email-input-wrapper {
+       position: relative !important;
+      }  
+
   }
 
+  @media (max-width: 650px) {
+
+    .home-hero-headline {
+      font-size: 2rem !important;
+    }
+
+    .home-hero-description {
+      font-size: 0.8rem !important;
+    }
+
+    .social-proof-text {
+      font-size: 0.8rem !important;
+    }
+
+    .did-you-know-title {
+      font-size: 1.2rem !important;
+    }
+
+    .fact-stat {
+      font-size: 0.8rem !important;
+    }
+
+    .home-main-image.large-image {
+      max-height: 320px !important;
+      height: auto !important;
+      object-fit: contain !important; 
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .marc-it-title {
+      font-size: 1.1rem !important;
+    }
+
+         .fact-stat-image {
+       width: 30px !important;
+       height: 30px !important;
+     }
+     
+     .marcd-solutions-content .solutions-grid {
+       grid-template-columns: repeat(2, 1fr) !important;
+     }
+     
+     .marcd-solutions-content .solution-item {
+       min-height: 120px !important;
+     }
+
+     .marcd-solutions-content .solutions-title {
+      font-size: 1.2rem !important;
+      padding-bottom: 0rem !important;
+      margin-bottom: 2rem !important;
+     }
+
+     .marcd-solutions-content .solution-text {
+      font-size: 0.8rem !important;
+     }
+
+     .marcd-solutions-content .solution-detail {
+      font-size: 0.83rem !important;
+     }
+
+     .did-you-know-title {
+      font-size: 1.2rem !important;
+      margin-bottom: 1rem !important;
+     }
+
+     .fact-stat {
+      font-size: 1rem !important;
+     }
+     .facts-grid {
+       grid-template-columns: repeat(2, 1fr) !important;
+     }
+     
+     .fact-item {
+       height: 160px !important;
+     }
+     
+     .fact-item.expanded {
+       height: auto !important;
+       min-height: 160px !important;
+     }
+
+     .fact-stat {
+      font-size: 1rem !important;
+     }
+
+     .fact-text {
+      font-size: 0.9rem !important;
+     }
+
+     .waitlist-title,
+     .MuiTypography-root.waitlist-title,
+     .MuiTypography-h3.waitlist-title {
+      font-size: 1.7rem !important;
+      margin-bottom: 1rem !important;
+     }
+
+     .waitlist-description,
+     .MuiTypography-root.waitlist-description {
+      font-size: 0.8rem !important;
+     }
+
+     .launching-soon-image {
+      max-width: 300px !important;
+      margin-bottom: -1rem !important;
+     }
+
+     .perks-title {
+      font-size: .8rem !important;
+     }
+
+     .marc-it-title {
+      font-size: 1rem !important;
+     }
+
+     .scroll-item {
+      min-width: 90px !important;
+     }
+
+  @media (max-width: 600px) {
+    .home-hero-section {
+      flex-direction: column !important;
+    }
+
+    .home-hero-text {
+      padding-top: 3rem !important;
+    }
+    .home-hero-headline {
+      font-size: 1.5rem !important;
+    }
+
+    .home-hero-description {
+      font-size: 0.7rem !important;
+    }
+
+    .did-you-know-title {
+      font-size: 1.1rem !important;
+    }
+    
+    
+   }  
 
   
