@@ -14,11 +14,13 @@ import Parking_Img from '../assets/App_Parking.png';
 import Places_Img from '../assets/App_Marc\'d_Places.png';
 import Navigation_Img from '../assets/App_Navigation.png';
 import Alerts_Img from '../assets/App_Alerts_Image.png';
-import truckParkingVideo from '../assets/Truck_Parking_Home_Page.mp4';
 import healthFoodImg from '../assets/Health_Food.png';
 import truckIcon from '../assets/Truck_Icon.png';
 import launchingSoonImg from '../assets/Launching_Soon.png';
 import socialProofImg from '../assets/Social_Proof.png';
+
+// Video imports
+const truckParkingVideo = '/videos/Truck_Parking_Home_Page.mp4';
 
 // Import scroll images
 import scrollImage1 from '../assets/Scroll Images/Image- 1.png';
@@ -1020,8 +1022,13 @@ function home() {
           autoPlay 
           loop 
           muted 
+          playsInline
+          preload="auto"
           className="background-video"
-        />
+        >
+          <source src={truckParkingVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <Box className="did-you-know-content">
           <Typography variant="h3" className="did-you-know-title">
             <img src={truckIcon} alt="Truck" className="truck-icon" />
