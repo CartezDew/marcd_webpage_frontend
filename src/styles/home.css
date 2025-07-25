@@ -1196,6 +1196,11 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  .waitlist-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   
   .waitlist-content {
     max-width: 600px;
@@ -2749,27 +2754,26 @@
   }
    }  
 
-  @media (max-width: 520px) {
-
+  @media (max-width: 524px) {
     .email-input-field {
       width: 70% !important;
       font-size: .7rem !important;
       padding-right: 80px !important;
      }
+ 
+     
+  }
+
+  @media (max-width: 520px) {
+
+  
 
      .join-button {
-      font-size: .8rem !important;
-      position: absolute !important;
-      right: 59px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
-      height: calc(100% - 10px) !important;
-      width: 70px !important;
+      right: 62px !important;
+    
      }
      
-     .email-input-wrapper {
-      position: relative !important;
-     }  
+      
    }
 
    @media (max-width: 515px) {
@@ -2791,6 +2795,25 @@
      }
 
      
+   }
+
+   @media (max-width: 510px) {
+    .join-button {
+      right: 60px !important;
+     }
+   }
+
+   @media (max-width: 498px) {
+    .join-button {
+      right: 59px !important;
+      font-size: .8rem !important;
+     }
+   }
+
+   @media (max-width: 493px) {
+    .join-button {
+      right: 57px !important;
+     }
    }
 
   @media (max-width: 490px) {
@@ -2896,12 +2919,28 @@
       }
   
       .email-input-field {
-        width: 70% !important;
-        font-size: .6rem !important;
-        padding-right: 80px !important;
+        font-size: .7rem !important;
+       }
+
+       .join-button {
+        right: 52px !important;
        }
   
      }}
+
+     @media (max-width: 461px) {
+
+      .email-input-field {
+        width: 90% !important;
+        font-size: .82rem !important;
+       }
+
+      .join-button {
+        right: 21px !important;
+        font-size: .9rem !important;
+       }
+
+     }
 
     @media (max-width: 450px) {
 
@@ -2911,6 +2950,10 @@
 
     .scroll-text {
       font-size: 0.8rem !important;
+    }
+
+    .join-button {
+      right: 19px !important;
     }
 
   }
@@ -2935,6 +2978,123 @@
    .did-you-know-title {
     font-size: 1.2rem !important;
    }
-         
+  }
+
+   @media (max-width: 415px) {
+
+    .join-button {
+      right: 17px !important;
+      font-size: .85rem !important;
+    }
+
+    .email-input-field {
+      font-size: .78rem !important;
      }
-      
+
+   }
+
+   @media (max-width: 403px) {
+
+    .join-button {
+      right: 18px !important;
+    }
+
+    .email-input-field {
+      font-size: .75rem !important;
+     }
+
+   }
+
+   @media (max-width: 395px) {
+
+    .join-button {
+      right: 17px !important;
+    }
+
+    .email-input-field {
+      font-size: .7rem !important;
+     }
+
+   }
+
+   @media (max-width: 388px) {
+    .email-input-field {
+        font-size: .8rem !important;
+        text-align: center !important;
+        align-items: center !important;
+        justify-content: center !important;
+        display: flex !important;
+        width: 100% !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .join-button {
+           position: static !important;
+           margin-top: 40px !important;
+           margin-left: auto !important;
+           margin-right: auto !important;
+           display: block !important;
+           width: 120px !important;
+           height: 45px !important;
+         }
+
+         .waitlist-title,
+     .MuiTypography-root.waitlist-title,
+     .MuiTypography-h3.waitlist-title {
+       font-size: 1.3rem !important;
+      }
+  }    
+
+  /* Overlay animations */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideOutDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes contentSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(50px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes contentSlideOut {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.95);
+    }
+  }
+
+  /* Ensure immediate hiding when not visible */
+  .waitlist-section:not(.visible) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }

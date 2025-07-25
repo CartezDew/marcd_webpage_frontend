@@ -1,11 +1,12 @@
 // src/pages/home.jsx
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/material';
 import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
 import { validateWaitlistEmail, validateEmailRealTime } from '../utils/emailValidation';
+import { useWaitlist } from '../context/WaitlistContext';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -43,6 +44,8 @@ import scrollImage16 from '../assets/Scroll Images/Image-16.png';
 
 function home() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { showWaitlist, hideWaitlist, triggerWaitlist } = useWaitlist();
   const aboutRef = useRef(null);
   const waitlistRef = useRef(null);
   const didYouKnowRef = useRef(null);
@@ -53,6 +56,7 @@ function home() {
   const [isDidYouKnowVisible, setIsDidYouKnowVisible] = useState(false);
   const [isSolutionsVisible, setIsSolutionsVisible] = useState(false);
   const [isWaitlistVisible, setIsWaitlistVisible] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [isMarcItVisible, setIsMarcItVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -307,6 +311,16 @@ function home() {
   };
 
   // Handle waitlist submission
+  const handleCloseWaitlist = () => {
+    setIsClosing(true);
+    hideWaitlist();
+    // Wait for animation to complete, then hide
+    setTimeout(() => {
+      setIsWaitlistVisible(false);
+      setIsClosing(false);
+    }, 500);
+  };
+
   const handleWaitlistSubmit = (e) => {
     e.preventDefault();
     
@@ -507,6 +521,37 @@ function home() {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  // Effect to handle waitlist from URL parameters and context
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const showWaitlistParam = urlParams.get('waitlist');
+    
+    if (showWaitlistParam === 'true') {
+      setIsWaitlistVisible(true);
+      // Clear the URL parameter
+      navigate(location.pathname, { replace: true });
+    } else if (showWaitlist) {
+      // Handle context trigger
+      setIsWaitlistVisible(true);
+      hideWaitlist();
+    }
+  }, [location.search, navigate, showWaitlist, hideWaitlist]);
+
+  // Effect to trigger animation when waitlist becomes visible
+  useEffect(() => {
+    if (isWaitlistVisible && waitlistRef.current) {
+      // Small delay to ensure DOM is ready, then add visible class for animation
+      setTimeout(() => {
+        if (waitlistRef.current) {
+          waitlistRef.current.classList.add('visible');
+        }
+      }, 50);
+    } else if (!isWaitlistVisible && waitlistRef.current) {
+      // Remove visible class immediately when hiding
+      waitlistRef.current.classList.remove('visible');
+    }
+  }, [isWaitlistVisible]);
 
   useEffect(() => {
     const observerOptions = {
@@ -851,7 +896,9 @@ function home() {
             />
             <Button 
               className="hero-button"
-              onClick={scrollToWaitlist}
+              onClick={() => {
+                triggerWaitlist();
+              }}
             >
               Join Waitlist
             </Button>
@@ -963,6 +1010,135 @@ function home() {
           </Box>
         </Tooltip>
       </Box>
+
+      {/* Join Waitlist Section - Conditionally Rendered */}
+      {isWaitlistVisible && (
+        <Box 
+          id="waitlist" 
+          className="waitlist-section visible" 
+          ref={waitlistRef}
+          style={{ 
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            animation: isWaitlistVisible && !isClosing ? 'slideInUp 0.6s ease-out' : isClosing ? 'slideOutDown 0.5s ease-in' : 'none'
+          }}
+        >
+          {/* Overlay background - clickable to close */}
+          <div
+            onClick={handleCloseWaitlist}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(5px)',
+              cursor: 'pointer'
+            }}
+          />
+          {/* Close button */}
+          <button
+            onClick={handleCloseWaitlist}
+            style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '2rem',
+              cursor: 'pointer',
+              zIndex: 10000,
+              padding: '10px',
+              borderRadius: '50%',
+              width: '50px',
+              height: '50px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background-color 0.3s ease'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+          >
+            ×
+          </button>
+
+                      <Box 
+              className="waitlist-content"
+              style={{
+                animation: isWaitlistVisible && !isClosing ? 'contentSlideIn 0.7s ease-out 0.3s both' : isClosing ? 'contentSlideOut 0.5s ease-in both' : 'none'
+              }}
+            >
+              <Typography variant="h3" className="waitlist-title animate">
+                Join the Waitlist
+              </Typography>
+              <Box className="launching-soon-container animate">
+              <img 
+                src={launchingSoonImg} 
+                alt="Launching Soon" 
+                className="launching-soon-image"
+              />
+            </Box>
+                          <Box className="perks-section animate">
+                <div className="perks-title-container">
+                <h2 className="perks-title">
+                  Get early access, exclusive perks, and special launch rewards.
+                </h2>
+                <span className="confetti-container">
+                  <span className="confetti">🎉</span>
+                  <span className="confetti">✨</span>
+                  <span className="confetti">🎊</span>
+                  <span className="confetti">⭐</span>
+                  <span className="confetti">🎁</span>
+                </span>
+              </div>
+            </Box>
+                          <Typography className="waitlist-description animate">
+                Be the first to experience Marc'd when we launch. Enter your email to get notified and receive the latest updates.
+              </Typography>
+              
+              <Box component="form" onSubmit={handleWaitlistSubmit} className="waitlist-form animate">
+              <Box className="email-input-wrapper">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  placeholder="Enter your email address"
+                  className="email-input-field"
+                />
+                <button
+                  type="submit"
+                  className="join-button"
+                  disabled={!email || !!emailError}
+                >
+                  Join
+                </button>
+              </Box>
+              {emailError && (
+                <Typography className="error-message">
+                  {emailError}
+                </Typography>
+              )}
+              
+              {isSubmitted && (
+                <Typography className="success-message">
+                  🎉 Thank you! You've been added to our waitlist.
+                </Typography>
+              )}
+            </Box>
+          </Box>
+        </Box>
+      )}
 
       {/* Marc It! Infinite Scroll Section */}
       <Box className="marc-it-outer-container" ref={marcItRef}>
@@ -1267,68 +1443,6 @@ function home() {
         </Box>
       </Box>
 
-      {/* Join Waitlist Section - Different Background */}
-      <Box id="waitlist" className={`waitlist-section ${isWaitlistVisible ? 'visible' : ''}`} ref={waitlistRef}>
-        <Box className="waitlist-content">
-          <Typography variant="h3" className="waitlist-title">
-            Join the Waitlist
-          </Typography>
-          <Box className="launching-soon-container">
-            <img 
-              src={launchingSoonImg} 
-              alt="Launching Soon" 
-              className="launching-soon-image"
-            />
-          </Box>
-          <Box className="perks-section">
-            <div className="perks-title-container">
-              <h2 className="perks-title">
-                Get early access, exclusive perks, and special launch rewards.
-              </h2>
-              <span className="confetti-container">
-                <span className="confetti">🎉</span>
-                <span className="confetti">✨</span>
-                <span className="confetti">🎊</span>
-                <span className="confetti">⭐</span>
-                <span className="confetti">🎁</span>
-              </span>
-            </div>
-          </Box>
-          <Typography className="waitlist-description">
-            Be the first to experience Marc'd when we launch. Enter your email to get notified and receive the latest updates.
-          </Typography>
-          
-          <Box component="form" onSubmit={handleWaitlistSubmit} className="waitlist-form">
-            <Box className="email-input-wrapper">
-              <input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="Enter your email address"
-                className="email-input-field"
-              />
-              <button
-                type="submit"
-                className="join-button"
-                disabled={!email || !!emailError}
-              >
-                Join
-              </button>
-            </Box>
-            {emailError && (
-              <Typography className="error-message">
-                {emailError}
-              </Typography>
-            )}
-            
-            {isSubmitted && (
-              <Typography className="success-message">
-                🎉 Thank you! You've been added to our waitlist.
-              </Typography>
-            )}
-          </Box>
-        </Box>
-      </Box>
     </Box>
   );
 }

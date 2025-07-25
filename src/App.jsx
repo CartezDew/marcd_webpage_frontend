@@ -18,6 +18,7 @@ import SignIn from './pages/SignIn';
 
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import { WaitlistProvider } from './context/WaitlistContext';
 // Create a custom theme
 const theme = createTheme({
   palette: {
@@ -87,31 +88,33 @@ const NotFound = () => {
 function App() {
   // Remove userLocation and loading state
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Nav />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/survey" element={<Survey />} />
-            <Route path="/our-story" element={<OurStory />} />
-            <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
-            <Route path="/leadership/beth" element={<Leadership_Beth />} />
-            <Route path="/features" element={<Features />} />
-            <Route path="/signin" element={<SignIn />} />
+    <WaitlistProvider>
+      <div className="App">
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Nav />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/survey" element={<Survey />} />
+              <Route path="/our-story" element={<OurStory />} />
+              <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
+              <Route path="/leadership/beth" element={<Leadership_Beth />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/signin" element={<SignIn />} />
 
-            <Route path="/admin/dashboard" element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="*" element={<NotFound />} /> {/* fallback */}
-          </Routes>
-        </main>
-      </ThemeProvider>
-    </div>
+              <Route path="/admin/dashboard" element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="*" element={<NotFound />} /> {/* fallback */}
+            </Routes>
+          </main>
+        </ThemeProvider>
+      </div>
+    </WaitlistProvider>
   );
 }
 

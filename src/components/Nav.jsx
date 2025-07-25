@@ -31,6 +31,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, useTime, useTransform, useSpring } from 'framer-motion';
 import '../styles/nav.css';
 import marcDLogo from '../assets/Marc-d_Logo.png';
+import { useWaitlist } from '../context/WaitlistContext';
 
 function Nav() {
   const location = useLocation();
@@ -39,6 +40,7 @@ function Nav() {
   const isMobile = useMediaQuery('(max-width:800px)');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoClicked, setLogoClicked] = useState(false);
+  const { triggerWaitlist } = useWaitlist();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -104,19 +106,15 @@ function Nav() {
   };
 
   const goToWaitlist = () => {
+    // Close mobile drawer if open
+    setMobileOpen(false);
+    
     if (location.pathname !== '/') {
-    navigate('/#waitlist');
+      // If not on home page, navigate to home with waitlist parameter
+      navigate('/?waitlist=true');
     } else {
-      // If already on home, try to call scrollToWaitlist if available
-      if (typeof window.scrollToWaitlist === 'function') {
-        window.scrollToWaitlist();
-      } else {
-        // Fallback: scroll to element with id 'waitlist'
-        const el = document.getElementById('waitlist');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+      // If already on home, trigger waitlist via context
+      triggerWaitlist();
     }
   };
 
