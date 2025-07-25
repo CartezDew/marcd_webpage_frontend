@@ -167,7 +167,7 @@ function SignIn() {
           <CardContent>
             <Box sx={{ px: 1 }}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
-                <Grid item xs={12} sx={{ width: '90%' }}>
+                <Grid sx={{ width: '90%' }}>
                   <div className="signin-header" ref={headerRef}>
                     <Typography
                       variant="h6"

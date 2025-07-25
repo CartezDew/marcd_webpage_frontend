@@ -115,17 +115,14 @@ function ContactUs() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            console.log('Card animation triggered!');
             setIsCardVisible(true);
             
             // Trigger icons animation after card animation completes
             setTimeout(() => {
-              console.log('Icons animation triggered!');
               setIsIconsVisible(true);
               
               // Trigger button animation after icons animation completes
               setTimeout(() => {
-                console.log('Button animation triggered!');
                 setIsButtonVisible(true);
               }, 800); // 0.8s delay to match icons animation duration
             }, 1200); // 1.2s delay to match card animation duration
@@ -288,7 +285,7 @@ function ContactUs() {
             <Box sx={{ px: 1 }}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
                 {/* First + Last Name */}
-                <Grid item xs={12} sx={{width: "90%"}}>
+                <Grid sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -310,7 +307,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Email + Contact Reason */}
-                <Grid item xs={12} sx={{width: "90%"}}>
+                <Grid sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -368,7 +365,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Social Media + Phone */}
-                <Grid item xs={12} sx={{width: "90%"}}>
+                <Grid sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -396,7 +393,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Message */}
-                <Grid item xs={12} sx={{width: "90%"}}>
+                <Grid sx={{width: "90%"}}>
                   <TextField
                     fullWidth
                     required
@@ -410,7 +407,7 @@ function ContactUs() {
                 </Grid>
 
                 {error && (
-                  <Grid item xs={12}>
+                  <Grid>
                     <Typography color="error" align="center">{error}</Typography>
                   </Grid>
                 )}

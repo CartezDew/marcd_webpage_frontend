@@ -588,28 +588,32 @@
 }
 
 
-@media (max-width: 880px) and (min-width: 768px) {
+@media (max-width: 880px) and (min-width: 769px) {
   .responses-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
-}
 
 .survey-intro-heading {
-  font-size: 2.1rem !important;
+  font-size: 2rem !important;
   font-weight: 800 !important;
   color: #d40505d1;
+}
+
+.responses-title {
+  font-size: 2rem !important;
 }
 
 
 
 .survey-intro-text {
-  font-size: 1.2rem !important;
+  font-size: 1.1rem !important;
   max-width: 700px;
   font-weight: 300;
 }
+}
 
- @media (max-width: 768px) {
+@media (max-width: 768px) {
   .survey-responses-section {
     padding: 3rem 1rem;
     margin-top: 2rem; /* Reduce top margin on mobile */
@@ -621,7 +625,7 @@
   }
   
   .responses-title {
-    font-size: 2rem !important;
+    font-size: 1.9rem !important;
   }
   
   .responses-subtitle {
@@ -658,6 +662,43 @@
     margin-top: 0;
     flex-shrink: 0; /* Prevent arrow from shrinking */
   }
+
+  .survey-intro-text {
+    font-size: 1rem !important;
+  }
+
+  .survey-intro-heading {
+    font-size: 1.8rem !important;
+  }
+}
+
+@media (max-width: 685px) { 
+  .responses-title {
+    font-size: 1.7rem !important;
+  }
+
+  .responses-subtitle {
+    font-size: 0.9rem !important;
+  }
+
+  .survey-social-proof-image {
+    max-width: 40% !important;
+    height: 90% !important;
+  }
+}
+
+@media (max-width: 580px) {
+
+  .survey-intro-heading {
+    font-size: 1.7rem !important;
+  }
+
+  .survey-intro-text {
+    font-size: 0.9rem !important;
+  }
+  .responses-title {
+    font-size: 1.5rem !important;
+  }
 }
 
 @media (max-width: 500px) {
@@ -673,7 +714,7 @@
   
   .survey-intro-heading {
     text-align: left !important; /* Align heading to left */
-    font-size: 1.875rem !important; /* Slightly smaller for mobile */
+    font-size: 1.7rem !important; /* Slightly smaller for mobile */
   }
   
   .survey-intro-text {
@@ -689,8 +730,13 @@
   }
   
   .responses-subtitle {
-    font-size: 0.95rem !important;
+    font-size: 0.9rem !important;
     text-align: left !important;
+  }
+
+  .survey-social-proof-image {
+    max-width: 50% !important;
+    height: 90% !important;
   }
 }
 
@@ -725,7 +771,7 @@
   }
 
   .survey-social-proof-image {
-    max-width: 90% !important;
+    max-width: 55% !important;
     height: 90% !important;
   }
 }

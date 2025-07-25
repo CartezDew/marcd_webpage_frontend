@@ -324,23 +324,13 @@ function home() {
   const handleWaitlistSubmit = (e) => {
     e.preventDefault();
     
-    // Use comprehensive validation
-    const validation = validateWaitlistEmail(email);
-    if (!validation.isValid) {
-      setEmailError(validation.error);
+    if (!email || emailError) {
       return;
     }
 
-    // TODO: Add API call to submit email to waitlist
-    console.log('Submitting email to waitlist:', email);
     setIsSubmitted(true);
     setEmail('');
     setEmailError('');
-    
-    // Reset success message after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 3000);
   };
 
   // Smooth scroll to waitlist section
@@ -375,7 +365,7 @@ function home() {
     // Show tooltip when clicked
     setShowScrollTooltip(true);
     
-    console.log('Current section:', currentSection);
+
     
     // Set manual scrolling flag to prevent intersection observer interference
     setIsManualScrolling(true);
@@ -557,7 +547,6 @@ function home() {
             
             // Trigger hero animations when section is 5% visible
             if (entry.intersectionRatio >= 0.05) {
-              console.log('Triggering hero animations');
               const container = entry.target;
               const title = container.querySelector('.home-hero-headline');
               const description = container.querySelector('.home-hero-description');
@@ -617,16 +606,16 @@ function home() {
       (entries) => {
         entries.forEach((entry) => {
                       if (entry.isIntersecting) {
-              console.log('Marc It! section is intersecting, ratio:', entry.intersectionRatio);
+          
               setIsMarcItVisible(true);
               if (!isScrollingToTop && !isManualScrolling) {
-                console.log('Setting current section to marcIt');
+            
                 setCurrentSection('marcIt');
               }
             
             // Trigger animations when section is 5% visible
             if (entry.intersectionRatio >= 0.05) {
-              console.log('Triggering Marc It! animations');
+          
               const container = entry.target;
               const title = container.querySelector('.marc-it-title');
               const scrollItems = container.querySelectorAll('.scroll-item');
@@ -659,7 +648,7 @@ function home() {
       (entries) => {
         entries.forEach((entry) => {
                       if (entry.isIntersecting) {
-              console.log('Waitlist section is intersecting, ratio:', entry.intersectionRatio);
+          
               setIsWaitlistVisible(true);
               if (!isScrollingToTop && !isManualScrolling) {
                 setCurrentSection('waitlist');
@@ -667,7 +656,7 @@ function home() {
             
             // Trigger animations when section is 5% visible
             if (entry.intersectionRatio >= 0.05) {
-              console.log('Triggering waitlist animations');
+          
               const container = entry.target;
               const title = container.querySelector('.waitlist-title');
               const launchingSoon = container.querySelector('.launching-soon-container');
@@ -712,23 +701,18 @@ function home() {
     // Observe all sections
     if (aboutRef.current) {
       aboutObserver.observe(aboutRef.current);
-      console.log('Observing about section');
     }
     if (marcItRef.current) {
       marcItObserver.observe(marcItRef.current);
-      console.log('Observing Marc It! section');
     }
     if (didYouKnowRef.current) {
       didYouKnowObserver.observe(didYouKnowRef.current);
-      console.log('Observing Did You Know section');
     }
     if (solutionsRef.current) {
       solutionsObserver.observe(solutionsRef.current);
-      console.log('Observing solutions section');
     }
     if (waitlistRef.current) {
       waitlistObserver.observe(waitlistRef.current);
-      console.log('Observing waitlist section');
     }
 
     return () => {
