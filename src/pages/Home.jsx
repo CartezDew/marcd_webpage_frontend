@@ -458,19 +458,6 @@ function home() {
         }, 2000);
         break;
       case 'solutions':
-        setCurrentSection('waitlist');
-        waitlistRef.current?.scrollIntoView({ behavior: 'smooth' });
-        // Trigger waitlist animations
-        setTimeout(() => {
-          triggerAnimations(waitlistRef, 'waitlist-section');
-        }, 100);
-        // Hide tooltip after 2 seconds for forward navigation
-        setTimeout(() => {
-          setShowScrollTooltip(false);
-          setIsManualScrolling(false);
-        }, 2000);
-        break;
-      case 'waitlist':
         setCurrentSection('hero');
         setIsScrollingToTop(true);
         aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -479,12 +466,11 @@ function home() {
           triggerAnimations(aboutRef, 'home-hero-section');
         }, 100);
         // Keep tooltip visible during scroll and add 2-second delay after reaching top
-        // Use a longer timeout to ensure the scroll completes, then add 2 seconds
         setTimeout(() => {
           setShowScrollTooltip(false);
           setIsScrollingToTop(false);
           setIsManualScrolling(false);
-        }, 2000); // 2 seconds total: ~6 seconds for scroll + 1 seconds delay at top
+        }, 2000);
         break;
       default:
         setCurrentSection('marcIt');
@@ -991,7 +977,7 @@ function home() {
 
         {/* Dynamic Scroll Arrow */}
         <Tooltip 
-          title={<span className="scroll-tooltip">{currentSection === 'waitlist' ? 'Back to top' : 'Next page'}</span>} 
+          title={<span className="scroll-tooltip">{currentSection === 'solutions' ? 'Back to top' : 'Next page'}</span>} 
           placement="top" 
           arrow 
           open={showScrollTooltip}
@@ -999,13 +985,13 @@ function home() {
           classes={{ popper: 'scroll-tooltip-popper' }}
         >
           <Box 
-            className={`scroll-down-arrow ${currentSection === 'waitlist' ? 'back-to-top' : ''}`}
+            className={`scroll-down-arrow ${currentSection === 'solutions' ? 'back-to-top' : ''}`}
             onClick={handleDynamicScroll}
             tabIndex={0}
             style={{ left: arrowLeft }}
           >
             <FaChevronDown 
-              className={`arrow-icon ${currentSection === 'waitlist' ? 'rotated' : ''}`} 
+              className={`arrow-icon ${currentSection === 'solutions' ? 'rotated' : ''}`} 
             />
           </Box>
         </Tooltip>
