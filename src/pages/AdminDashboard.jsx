@@ -100,6 +100,7 @@ const AdminDashboard = () => {
   const [folderToDelete, setFolderToDelete] = useState(null);
   const [editingItem, setEditingItem] = useState(null); // { type: 'file' | 'folder', id: number, name: string }
   const [editName, setEditName] = useState('');
+  const [fileManagerCollapsed, setFileManagerCollapsed] = useState(true);
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -886,6 +887,10 @@ const AdminDashboard = () => {
     setDraggedFile(null);
   };
 
+  const toggleFileManager = () => {
+    setFileManagerCollapsed(!fileManagerCollapsed);
+  };
+
   if (loading) {
     return (
       <Box 
@@ -930,7 +935,7 @@ const AdminDashboard = () => {
         </motion.div>
 
         {/* Main Content Area */}
-        <Box sx={{ display: 'flex', gap: 3, height: 'calc(100vh - 200px)' }}>
+        <Box className="admin-main-content" sx={{ display: 'flex', gap: 3, height: 'calc(100vh - 200px)' }}>
           {/* File Management Panel */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -938,8 +943,9 @@ const AdminDashboard = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Paper
+              className={`admin-file-manager ${fileManagerCollapsed ? 'collapsed' : ''}`}
               sx={{
-                width: 300,
+                width: fileManagerCollapsed ? 'auto' : 300,
                 background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: 2,
@@ -979,28 +985,61 @@ const AdminDashboard = () => {
                       <CreateFolderIcon />
                     </IconButton>
                   </Tooltip>
+                  <Tooltip title={fileManagerCollapsed ? "Expand File Manager" : "Collapse File Manager"}>
+                    <IconButton
+                      size="small"
+                      onClick={toggleFileManager}
+                      sx={{ 
+                        color: '#a1a1aa',
+                        transform: fileManagerCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        '&:hover': {
+                          color: '#3b82f6',
+                          transform: fileManagerCollapsed ? 'rotate(180deg) scale(1.1)' : 'rotate(0deg) scale(1.1)',
+                          transition: 'all 0.2s ease'
+                        }
+                      }}
+                    >
+                      <ArrowBackIcon />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
               </Box>
 
-              {/* Drag Drop Instructions */}
-              {files.filter(file => file.path === currentPath).length > 0 && (
-                <Box sx={{ 
-                  p: 1, 
-                  background: 'rgba(59, 130, 246, 0.1)', 
-                  borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
-                }}>
-                  <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
-                    💡 Drag files to folders or drop in current directory
-                  </Typography>
-                </Box>
-              )}
-
-              {/* File Panel Content */}
-              <Box 
-                sx={{ flex: 1, overflow: 'auto', p: 1 }}
-                onDragOver={handleFileDragOver}
-                onDrop={handleFileDrop}
+              {/* File Manager Content - Only show when not collapsed */}
+              <motion.div 
+                className="admin-file-manager-content"
+                initial={{ opacity: 1, y: 0 }}
+                animate={{ 
+                  opacity: fileManagerCollapsed ? 0 : 1, 
+                  y: fileManagerCollapsed ? -10 : 0 
+                }}
+                transition={{ 
+                  duration: 0.3, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
               >
+                {!fileManagerCollapsed && (
+                  <>
+                  {/* Drag Drop Instructions */}
+                  {files.filter(file => file.path === currentPath).length > 0 && (
+                    <Box sx={{ 
+                      p: 1, 
+                      background: 'rgba(59, 130, 246, 0.1)', 
+                      borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
+                    }}>
+                      <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
+                        💡 Drag files to folders or drop in current directory
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {/* File Panel Content */}
+                  <Box 
+                    sx={{ flex: 1, overflow: 'auto', p: 1 }}
+                    onDragOver={handleFileDragOver}
+                    onDrop={handleFileDrop}
+                  >
                 {/* Current Path */}
                 <Box sx={{ 
                   p: 1.5, 
@@ -1134,8 +1173,18 @@ const AdminDashboard = () => {
                           </Box>
                         )
                       }
+                      secondary={
+                        folder.created_at && (
+                          <Typography variant="caption" sx={{ color: '#6b7280', fontSize: '0.7rem' }}>
+                            📅 Created {formatDate(folder.created_at)}
+                          </Typography>
+                        )
+                      }
                       primaryTypographyProps={{
                         sx: { color: 'white', fontSize: '0.875rem' }
+                      }}
+                      secondaryTypographyProps={{
+                        sx: { color: '#a1a1aa', fontSize: '0.75rem' }
                       }}
                     />
                     <ListItemSecondaryAction>
@@ -1279,7 +1328,18 @@ const AdminDashboard = () => {
                           </Box>
                         )
                       }
-                      secondary={formatFileSize(file.size)}
+                      secondary={
+                        <Box>
+                          <Typography variant="body2" sx={{ color: '#a1a1aa', fontSize: '0.75rem' }}>
+                            {formatFileSize(file.size)}
+                          </Typography>
+                          {file.uploaded_at && (
+                            <Typography variant="caption" sx={{ color: '#6b7280', fontSize: '0.7rem' }}>
+                              📅 {formatDate(file.uploaded_at)}
+                            </Typography>
+                          )}
+                        </Box>
+                      }
                       primaryTypographyProps={{
                         sx: { color: 'white', fontSize: '0.875rem' }
                       }}
@@ -1300,18 +1360,30 @@ const AdminDashboard = () => {
                   </Box>
                 )}
               </Box>
+                </>
+              )}
+              </motion.div>
             </Paper>
           </motion.div>
 
           {/* Main Content */}
-          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Box 
+            className="admin-content-area" 
+            sx={{ 
+              flex: 1, 
+              display: 'flex', 
+              flexDirection: 'column',
+              transition: 'margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              marginLeft: fileManagerCollapsed ? '0px' : '0px'
+            }}
+          >
             {/* Stats Cards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mb: 4 }}>
+              <Box className="admin-stats-grid" sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mb: 4 }}>
                 <Paper
                   sx={{
                     p: 3,
@@ -1470,23 +1542,23 @@ const AdminDashboard = () => {
 
             {/* Data Table */}
             <TableContainer>
-              <Table>
+              <Table className="admin-table">
                 <TableHead>
                   <TableRow sx={{ background: 'rgba(0, 0, 0, 0.2)' }}>
                     {activeTab === 0 ? (
                       <>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Name</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Email</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Type</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Status</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Created</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Actions</TableCell>
+                        <TableCell className="admin-column-name" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Name</TableCell>
+                        <TableCell className="admin-column-email" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Email</TableCell>
+                        <TableCell className="admin-column-type" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Type</TableCell>
+                        <TableCell className="admin-column-status" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Status</TableCell>
+                        <TableCell className="admin-column-created" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Created</TableCell>
+                        <TableCell className="admin-column-actions" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Actions</TableCell>
                       </>
                     ) : (
                       <>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Email</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Created</TableCell>
-                        <TableCell sx={{ color: '#a1a1aa', fontWeight: 600 }}>Actions</TableCell>
+                        <TableCell className="admin-column-email" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Email</TableCell>
+                        <TableCell className="admin-column-created" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Created</TableCell>
+                        <TableCell className="admin-column-actions" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Actions</TableCell>
                       </>
                     )}
                   </TableRow>
@@ -1637,6 +1709,9 @@ const AdminDashboard = () => {
               </Typography>
               {uploadingFiles.length > 0 && (
                 <Box sx={{ mt: 2 }}>
+                  <Typography variant="caption" sx={{ color: '#a1a1aa', fontSize: '0.75rem', mb: 1, display: 'block' }}>
+                    📅 Upload started at {formatDate(new Date().toISOString())}
+                  </Typography>
                   {uploadingFiles.map((file, index) => (
                     <Box key={index} sx={{ mb: 1 }}>
                       <Typography variant="body2" sx={{ color: 'white' }}>
