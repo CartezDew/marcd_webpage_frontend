@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
+const AuthCheck = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuth = () => {
@@ -12,12 +13,12 @@ const ProtectedRoute = ({ children }) => {
       const token = localStorage.getItem('token');
       
       if (!adminToken && !token) {
-        setIsAuthenticated(false);
-        setIsChecking(false);
+        // No tokens found, redirect to login
+        navigate('/signin');
         return;
       }
       
-      // Check if token is expired
+      // Check if token is expired (simple check - you might want to validate with backend)
       const tokenToCheck = adminToken || token;
       if (tokenToCheck) {
         try {
@@ -30,8 +31,7 @@ const ProtectedRoute = ({ children }) => {
             localStorage.removeItem('adminToken');
             localStorage.removeItem('token');
             localStorage.removeItem('adminEmail');
-            setIsAuthenticated(false);
-            setIsChecking(false);
+            navigate('/signin');
             return;
           }
           
@@ -42,7 +42,8 @@ const ProtectedRoute = ({ children }) => {
           localStorage.removeItem('adminToken');
           localStorage.removeItem('token');
           localStorage.removeItem('adminEmail');
-          setIsAuthenticated(false);
+          navigate('/signin');
+          return;
         }
       }
       
@@ -50,7 +51,7 @@ const ProtectedRoute = ({ children }) => {
     };
 
     checkAuth();
-  }, []);
+  }, [navigate]);
 
   if (isChecking) {
     return (
@@ -73,11 +74,7 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/signin" replace />;
-  }
-
-  return children;
+  return isAuthenticated ? children : null;
 };
 
-export default ProtectedRoute; 
+export default AuthCheck; 

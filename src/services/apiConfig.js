@@ -9,8 +9,13 @@ const api = axios.create({
 api.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Token ${token}`;
+    const adminToken = localStorage.getItem("adminToken");
+    
+    // Use admin token if available, otherwise use regular token
+    const authToken = adminToken || token;
+    
+    if (authToken) {
+      config.headers.Authorization = `Bearer ${authToken}`;
     }
     return config;
   },

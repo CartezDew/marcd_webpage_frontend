@@ -19,6 +19,7 @@ import SignIn from './pages/SignIn';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { WaitlistProvider } from './context/WaitlistContext';
+import Footer from './components/Footer';
 // Create a custom theme
 const theme = createTheme({
   palette: {
@@ -112,6 +113,7 @@ function App() {
               <Route path="*" element={<NotFound />} /> {/* fallback */}
             </Routes>
           </main>
+          <Footer />
         </ThemeProvider>
       </div>
     </WaitlistProvider>

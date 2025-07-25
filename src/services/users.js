@@ -12,9 +12,49 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
-    const resp = await api.post("/api/token/", credentials);
-    localStorage.setItem("token", resp.data.access);
-    return resp.data;
+    // Try different possible authentication endpoints and credential formats
+    let resp;
+    
+    // Try different endpoint variations
+    const endpoints = [
+      "/api/token/",
+      "/api/login/", 
+      "/api/auth/login/",
+      "/api/signin/",
+      "/auth/login/",
+      "/login/"
+    ];
+    
+    // Try different credential formats
+    const credentialFormats = [
+      credentials, // { username: email, password }
+      { email: credentials.username, password: credentials.password },
+      { username: credentials.username, password: credentials.password },
+      { user: credentials.username, password: credentials.password }
+    ];
+    
+    let lastError;
+    
+    for (const endpoint of endpoints) {
+      for (const format of credentialFormats) {
+        try {
+          console.log(`Trying endpoint: ${endpoint} with format:`, format);
+          resp = await api.post(endpoint, format);
+          console.log('Success! Response:', resp.data);
+          // If we get here, the request was successful
+          localStorage.setItem("token", resp.data.access);
+          return resp.data;
+        } catch (error) {
+          console.log(`Failed for ${endpoint}:`, error.response?.data || error.message);
+          lastError = error;
+          // Continue trying other combinations
+        }
+      }
+    }
+    
+    // If we get here, none of the combinations worked
+    console.log('All authentication attempts failed. Last error:', lastError.response?.data);
+    throw lastError;
   } catch (error) {
     throw error;
   }
