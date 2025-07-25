@@ -285,7 +285,7 @@ function ContactUs() {
             <Box sx={{ px: 1 }}>
               <Grid container spacing={2} justifyContent="center" alignItems="center">
                 {/* First + Last Name */}
-                <Grid sx={{width: "90%"}}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -307,7 +307,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Email + Contact Reason */}
-                <Grid sx={{width: "90%"}}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -365,7 +365,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Social Media + Phone */}
-                <Grid sx={{width: "90%"}}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
                     <TextField
                       fullWidth
@@ -393,7 +393,7 @@ function ContactUs() {
                 </Grid>
 
                 {/* Message */}
-                <Grid sx={{width: "90%"}}>
+                <Grid item xs={12} sx={{width: "90%"}}>
                   <TextField
                     fullWidth
                     required
@@ -407,7 +407,7 @@ function ContactUs() {
                 </Grid>
 
                 {error && (
-                  <Grid>
+                  <Grid item xs={12}>
                     <Typography color="error" align="center">{error}</Typography>
                   </Grid>
                 )}

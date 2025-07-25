@@ -2940,6 +2940,10 @@
         font-size: .9rem !important;
        }
 
+      .marc-it-title {
+        font-size: .9rem !important;
+      }
+
      }
 
     @media (max-width: 450px) {
@@ -2970,9 +2974,9 @@
          .home-hero-section .home-hero-description {
            font-size: 1rem !important;
          }
-
+       
    .marc-it-title {
-    font-size: .9rem !important;
+    font-size: .8rem !important;
    }
 
    .did-you-know-title {
@@ -3002,6 +3006,10 @@
     .email-input-field {
       font-size: .75rem !important;
      }
+
+    .marc-it-title {
+      font-size: .5rem !important;
+    }
 
    }
 
