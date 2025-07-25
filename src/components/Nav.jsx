@@ -25,7 +25,9 @@ import {
   People,
   Apps,
   Login as LoginIcon,
-  Close as CloseIcon
+  Close as CloseIcon,
+  Dashboard as DashboardIcon,
+  Logout as LogoutIcon
 } from '@mui/icons-material';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, useTime, useTransform, useSpring } from 'framer-motion';
@@ -43,6 +45,8 @@ function Nav() {
   const { triggerWaitlist } = useWaitlist();
 
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Framer Motion animation setup (same as Home component)
   const time = useTime();
@@ -87,6 +91,23 @@ function Nav() {
     return () => window.removeEventListener('scroll', throttledScroll);
   }, [handleScroll]);
 
+  // Check authentication status
+  useEffect(() => {
+    const adminToken = localStorage.getItem('adminToken');
+    const userToken = localStorage.getItem('token');
+    
+    if (adminToken || userToken) {
+      setIsLoggedIn(true);
+      // Check if it's an admin user (adminToken indicates admin login)
+      if (adminToken) {
+        setIsAdmin(true);
+      }
+    } else {
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+    }
+  }, [location.pathname]); // Re-check when route changes
+
   const isActive = (path) => {
     return location.pathname === path;
   };
@@ -129,6 +150,15 @@ function Nav() {
     setTimeout(() => setLogoClicked(false), 200);
     
     // Navigate to home page
+    navigate('/');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('adminEmail');
+    setIsLoggedIn(false);
+    setIsAdmin(false);
     navigate('/');
   };
 
@@ -201,7 +231,7 @@ function Nav() {
             </ListItemButton>
           </ListItem>
         ))}
-        {isHomePage && (
+        {isHomePage && !isLoggedIn && (
           <ListItem disablePadding>
             <ListItemButton 
               component={Link}
@@ -215,7 +245,34 @@ function Nav() {
             </ListItemButton>
           </ListItem>
         )}
-        {!isHomePage && (
+        {isLoggedIn && isAdmin && location.pathname !== '/admin/dashboard' && (
+          <ListItem disablePadding>
+            <ListItemButton 
+              component={Link}
+              to="/admin/dashboard"
+              className="nav-drawer-item"
+            >
+              <ListItemIcon className="nav-drawer-icon">
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Admin Dashboard" />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {isLoggedIn && (
+          <ListItem disablePadding>
+            <ListItemButton 
+              onClick={handleLogout}
+              className="nav-drawer-item"
+            >
+              <ListItemIcon className="nav-drawer-icon">
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {!isHomePage && !isAdmin && (
           <ListItem disablePadding>
             <ListItemButton 
               onClick={goToWaitlist}
@@ -299,7 +356,7 @@ function Nav() {
                   {item.label}
                 </Button>
               ))}
-              {isHomePage && (
+              {isHomePage && !isLoggedIn && (
                 <Button
                   component={Link}
                   to="/signin"
@@ -310,7 +367,28 @@ function Nav() {
                   Log In
                 </Button>
               )}
-              {!isHomePage && (
+              {isLoggedIn && isAdmin && location.pathname !== '/admin/dashboard' && (
+                <Button
+                  component={Link}
+                  to="/admin/dashboard"
+                  startIcon={<DashboardIcon />}
+                  className="nav-button"
+                  sx={{ ml: 2 }}
+                >
+                  Admin
+                </Button>
+              )}
+              {isLoggedIn && (
+                <Button
+                  onClick={handleLogout}
+                  startIcon={<LogoutIcon />}
+                  className="nav-button"
+                  sx={{ ml: 2 }}
+                >
+                  Logout
+                </Button>
+              )}
+              {!isHomePage && !isAdmin && (
                 <Box className="nav-join-button-container" sx={{ position: 'relative' }}>
                   <motion.div
                     className="absolute -inset-[1.5px] rounded-md"

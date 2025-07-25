@@ -36,8 +36,7 @@ import {
   Close as CloseIcon,
   Dashboard as DashboardIcon,
   ContactMail as ContactMailIcon,
-  People as PeopleIcon,
-  Logout as LogoutIcon
+  People as PeopleIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { fetchContactData, fetchWaitlistData } from '../services/adminApi';
@@ -116,12 +115,7 @@ const AdminDashboard = () => {
     setSelectedEntry(null);
   };
 
-  const handleLogout = () => {
-    // Clear admin token and redirect to signin
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
-    window.location.href = '/signin';
-  };
+
 
   const filterData = (data) => {
     if (!searchTerm) return data;
@@ -208,28 +202,13 @@ const AdminDashboard = () => {
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -20 }}
           transition={{ duration: 0.6 }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <DashboardIcon sx={{ fontSize: 40, color: '#3b82f6' }} />
               <Typography variant="h3" sx={{ fontWeight: 700, color: 'white' }}>
                 Admin Dashboard
               </Typography>
             </Box>
-            <Button
-              variant="outlined"
-              startIcon={<LogoutIcon />}
-              onClick={handleLogout}
-              sx={{
-                color: '#3b82f6',
-                borderColor: '#3b82f6',
-                '&:hover': {
-                  borderColor: '#60a5fa',
-                  backgroundColor: 'rgba(59, 130, 246, 0.1)'
-                }
-              }}
-            >
-              Logout
-            </Button>
           </Box>
         </motion.div>
 
