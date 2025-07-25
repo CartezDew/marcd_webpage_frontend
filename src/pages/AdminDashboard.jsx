@@ -156,13 +156,13 @@ const AdminDashboard = () => {
 
   const getFeedbackTypeColor = (type) => {
     const colors = {
-      'general': 'default',
+      'general': 'success',
       'bug': 'error',
       'feature': 'primary',
       'support': 'warning',
-      'other': 'secondary'
+      'other': 'info'
     };
-    return colors[type?.toLowerCase()] || 'default';
+    return colors[type?.toLowerCase()] || 'success';
   };
 
   const formatDate = (dateString) => {
@@ -544,6 +544,14 @@ const AdminDashboard = () => {
                       <Chip
                         label={selectedEntry.feedback_type}
                         color={getFeedbackTypeColor(selectedEntry.feedback_type)}
+                        sx={{
+                          fontWeight: 'bold',
+                          fontSize: '0.875rem',
+                          '& .MuiChip-label': {
+                            color: 'white',
+                            fontWeight: '600'
+                          }
+                        }}
                       />
                     </Box>
                     <Box sx={{ mb: 3 }}>

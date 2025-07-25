@@ -12,7 +12,7 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
-    const resp = await api.post("/token/", credentials);
+    const resp = await api.post("/api/token/", credentials);
     localStorage.setItem("token", resp.data.access);
     return resp.data;
   } catch (error) {
@@ -32,7 +32,7 @@ export const signOut = async () => {
 export const verifyUser = async () => {
   const token = localStorage.getItem("token");
   if (token) {
-    const resp = await api.post("/token/refresh/", { refresh: token });
+    const resp = await api.post("/api/token/refresh/", { refresh: token });
     localStorage.setItem("token", resp.data.access);
     return resp.data;
   }
