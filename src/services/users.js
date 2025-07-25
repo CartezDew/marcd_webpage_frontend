@@ -12,9 +12,9 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
-    const resp = await api.post("/users/login/", credentials);
+    const resp = await api.post("/token/", credentials);
     localStorage.setItem("token", resp.data.access);
-    return resp.data.user;
+    return resp.data;
   } catch (error) {
     throw error;
   }
@@ -32,9 +32,9 @@ export const signOut = async () => {
 export const verifyUser = async () => {
   const token = localStorage.getItem("token");
   if (token) {
-    const resp = await api.get("/users/token/refresh/");
+    const resp = await api.post("/token/refresh/", { refresh: token });
     localStorage.setItem("token", resp.data.access);
-    return resp.data.user;
+    return resp.data;
   }
   return false;
 };

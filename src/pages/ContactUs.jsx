@@ -25,6 +25,7 @@ import {
   FaQuestion,
 } from "react-icons/fa";
 import { contactUsAPI } from "../services/contactus";
+import { validateContactEmail, validateEmailRealTime } from "../utils/emailValidation";
 import "../styles/contactus.css";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@react-hook/window-size";
@@ -63,9 +64,15 @@ function ContactUs() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const isFormValid = useMemo(() => {
-    return formData.first_name && formData.last_name && formData.email && formData.message;
+    const emailValidation = validateContactEmail(formData.email);
+    return formData.first_name && 
+           formData.last_name && 
+           formData.email && 
+           formData.message && 
+           emailValidation.isValid;
   }, [formData]);
 
   // Intersection Observer for header animation
@@ -144,6 +151,12 @@ function ContactUs() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Add email validation for real-time feedback
+    if (name === 'email') {
+      const validation = validateEmailRealTime(value, 'contact');
+      setEmailError(validation.error);
+    }
   };
 
   const handlePhoneChange = (e) => {
@@ -178,12 +191,20 @@ function ContactUs() {
       return;
     }
   
+    // Validate email with comprehensive validation
+    const emailValidation = validateContactEmail(formData.email);
+    if (!emailValidation.isValid) {
+      setEmailError(emailValidation.error);
+      return;
+    }
+  
     if (formData.phone && formData.phone.replace(/\D/g, "").length !== 10) {
       setPhoneError("Phone number must be 10 digits.");
       return;
     }
   
     setPhoneError("");
+    setEmailError("");
     setLoading(true);
     setError("");
   
@@ -299,6 +320,8 @@ function ContactUs() {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
+                      error={Boolean(emailError)}
+                      helperText={emailError}
                     />
 
                       <FormControl sx={{ display: "flex", gap: "8px", width: "100%" }}>

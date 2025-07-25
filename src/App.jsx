@@ -9,11 +9,15 @@ import ContactUs from './pages/ContactUs';
 import Survey from './pages/Survey';
 import './styles/global.css';
 import './styles/components.css';
+import './styles/admin.css';
 import OurStory from './pages/OurStory';
 import Leadership_Cartez from './pages/Leadership_Cartez';
 import Leadership_Beth from './pages/Leadership_Beth';
 import Features from './pages/Features';
 import SignIn from './pages/SignIn';
+
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 // Create a custom theme
 const theme = createTheme({
   palette: {
@@ -97,6 +101,12 @@ function App() {
             <Route path="/leadership/beth" element={<Leadership_Beth />} />
             <Route path="/features" element={<Features />} />
             <Route path="/signin" element={<SignIn />} />
+
+            <Route path="/admin/dashboard" element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
             <Route path="*" element={<NotFound />} /> {/* fallback */}
           </Routes>
         </main>

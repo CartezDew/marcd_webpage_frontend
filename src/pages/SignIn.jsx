@@ -12,9 +12,10 @@ import {
   InputAdornment, 
   IconButton 
 } from '@mui/material';
-import { Email, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Person, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../services/users';
+
 import '../styles/signin.css';
 
 function SignIn() {
@@ -24,6 +25,7 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
   const [registerMessage, setRegisterMessage] = useState('');
   const [headerVisible, setHeaderVisible] = useState(false);
   const [primaryButtonVisible, setPrimaryButtonVisible] = useState(false);
@@ -124,19 +126,31 @@ function SignIn() {
     setLoading(true);
     try {
       if (!email || !password) {
-        setError('Please enter both email and password.');
+        setError('Please enter both email/username and password.');
         setLoading(false);
         return;
       }
-      await signIn({ email, password });
+
+      // Regular user signin
+      const userData = await signIn({ username: email, password });
       setLoading(false);
-      navigate('/');
+      
+      // Check if this is an admin user (staff or superuser)
+      if (userData.user && (userData.user.is_staff || userData.user.is_superuser)) {
+        // Store admin token and redirect to admin dashboard
+        localStorage.setItem('adminToken', userData.access);
+        localStorage.setItem('adminEmail', email);
+        navigate('/admin/dashboard');
+      } else {
+        // Regular user - redirect to home
+        navigate('/');
+      }
     } catch (err) {
       setLoading(false);
       setError(
         err?.response?.data?.detail ||
         err?.response?.data?.error ||
-        'Invalid email or password.'
+        'Invalid email/username or password.'
       );
     }
   };
@@ -161,20 +175,31 @@ function SignIn() {
                     >
                       Welcome back to Marc'd
                     </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ 
+                        color: '#a1a1aa', 
+                        textAlign: 'center', 
+                        mt: 1,
+                        fontSize: '0.75rem'
+                      }}
+                    >
+                      Sign in for user access or admin dashboard
+                    </Typography>
                   </div>
                   <TextField
-                    type="email"
+                    type="text"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     fullWidth
                     required
                     autoFocus
                     className="signin-input"
-                    placeholder="Email"
+                    placeholder="Username or Email"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <Email className="signin-icon" />
+                          <Person className="signin-icon" />
                         </InputAdornment>
                       ),
                     }}

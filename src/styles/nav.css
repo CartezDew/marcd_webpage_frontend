@@ -221,9 +221,9 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 
 /* Desktop join button styling */
 .nav-join-button {
-  background: rgba(255, 255, 255, 0.95) !important; /* Semi-transparent white background */
-  color: #333 !important; /* Dark text color to match other buttons */
-  font-weight: 500 !important; /* Medium font weight like other buttons */
+  background: rgba(8, 8, 8, 0.95) !important; /* Semi-transparent white background */
+  color: #be0303!important; /* Dark text color to match other buttons */
+  font-weight: 600 !important; /* Medium font weight like other buttons */
   border-radius: 12px !important; /* Rounded corners like other buttons */
   padding: 8px 20px !important; /* Same padding as other nav buttons */
   font-size: 0.875rem !important; /* Smaller font size for less prominence */

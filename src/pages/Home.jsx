@@ -5,6 +5,7 @@ import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/ma
 import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
+import { validateWaitlistEmail, validateEmailRealTime } from '../utils/emailValidation';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -295,35 +296,24 @@ function home() {
     return currentImageIndex < smallHeroImages.length;
   };
 
-  // Email validation function
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  // Handle email input change
+  // Handle email input change with comprehensive validation
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
     
-    if (value && !validateEmail(value)) {
-      setEmailError('Please enter a valid email address');
-    } else {
-      setEmailError('');
-    }
+    // Use real-time validation for better UX
+    const validation = validateEmailRealTime(value, 'waitlist');
+    setEmailError(validation.error);
   };
 
   // Handle waitlist submission
   const handleWaitlistSubmit = (e) => {
     e.preventDefault();
     
-    if (!email) {
-      setEmailError('Email is required');
-      return;
-    }
-    
-    if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address');
+    // Use comprehensive validation
+    const validation = validateWaitlistEmail(email);
+    if (!validation.isValid) {
+      setEmailError(validation.error);
       return;
     }
 
