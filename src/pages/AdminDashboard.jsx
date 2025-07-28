@@ -117,7 +117,6 @@ const AdminDashboard = () => {
   const [folderToDelete, setFolderToDelete] = useState(null);
   const [editingItem, setEditingItem] = useState(null); // { type: 'file' | 'folder', id: number, name: string }
   const [editName, setEditName] = useState('');
-  const [fileManagerCollapsed, setFileManagerCollapsed] = useState(true);
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -913,10 +912,6 @@ const AdminDashboard = () => {
     setDraggedFile(null);
   };
 
-  const toggleFileManager = () => {
-    setFileManagerCollapsed(!fileManagerCollapsed);
-  };
-
   if (loading) {
     return (
       <Box 
@@ -969,7 +964,7 @@ const AdminDashboard = () => {
               display: 'flex', 
               flexDirection: 'column',
               transition: 'margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              marginLeft: fileManagerCollapsed ? '0px' : '0px'
+              marginLeft: '0px' // Removed fileManagerCollapsed state
             }}
           >
             {/* Stats Cards */}
@@ -1249,9 +1244,10 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            sx={{ width: '100%' }}
           >
             <Paper
-              className={`admin-file-manager ${fileManagerCollapsed ? 'collapsed' : ''}`}
+              className="admin-file-manager"
               sx={{
                 width: '100%',
                 background: 'rgba(255, 255, 255, 0.05)',
@@ -1262,7 +1258,7 @@ const AdminDashboard = () => {
                 flexDirection: 'column'
               }}
             >
-              {/* File Panel Header */}
+              {/* File Panel Header - Inline Style */}
               <Box sx={{ 
                 p: 2, 
                 background: 'rgba(0, 0, 0, 0.2)', 
@@ -1271,7 +1267,11 @@ const AdminDashboard = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center'
               }}>
-                <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
+                <Typography variant="h6" sx={{ 
+                  color: 'white', 
+                  fontWeight: 600,
+                  fontSize: '1rem'
+                }}>
                   File Manager
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 1 }}>
@@ -1279,7 +1279,12 @@ const AdminDashboard = () => {
                     <IconButton
                       size="small"
                       onClick={() => setFileUploadDialogOpen(true)}
-                      sx={{ color: '#3b82f6' }}
+                      sx={{ 
+                        color: '#3b82f6',
+                        '&:hover': {
+                          backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                        }
+                      }}
                     >
                       <UploadIcon />
                     </IconButton>
@@ -1288,66 +1293,38 @@ const AdminDashboard = () => {
                     <IconButton
                       size="small"
                       onClick={() => setFolderDialogOpen(true)}
-                      sx={{ color: '#22c55e' }}
-                    >
-                      <CreateFolderIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={fileManagerCollapsed ? "Expand File Manager" : "Collapse File Manager"}>
-                    <IconButton
-                      size="small"
-                      onClick={toggleFileManager}
                       sx={{ 
-                        color: '#a1a1aa',
-                        transform: fileManagerCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        color: '#22c55e',
                         '&:hover': {
-                          color: '#3b82f6',
-                          transform: fileManagerCollapsed ? 'rotate(180deg) scale(1.1)' : 'rotate(0deg) scale(1.1)',
-                          transition: 'all 0.2s ease'
+                          backgroundColor: 'rgba(34, 197, 94, 0.1)'
                         }
                       }}
                     >
-                      <ArrowBackIcon />
+                      <CreateFolderIcon />
                     </IconButton>
                   </Tooltip>
                 </Box>
               </Box>
 
-              {/* File Manager Content - Only show when not collapsed */}
-              <motion.div 
-                className="admin-file-manager-content"
-                initial={{ opacity: 1, y: 0 }}
-                animate={{ 
-                  opacity: fileManagerCollapsed ? 0 : 1, 
-                  y: fileManagerCollapsed ? -10 : 0 
-                }}
-                transition={{ 
-                  duration: 0.3, 
-                  ease: [0.4, 0, 0.2, 1] 
-                }}
+              {/* File Manager Content - Always visible */}
+              <Box 
+                sx={{ flex: 1, overflow: 'auto', p: 1 }}
+                onDragOver={handleFileDragOver}
+                onDrop={handleFileDrop}
               >
-                {!fileManagerCollapsed && (
-                  <>
-                  {/* Drag Drop Instructions */}
-                  {files.filter(file => file.path === currentPath).length > 0 && (
-                    <Box sx={{ 
-                      p: 1, 
-                      background: 'rgba(59, 130, 246, 0.1)', 
-                      borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
-                    }}>
-                      <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
-                        💡 Drag files to folders or drop in current directory
-                      </Typography>
-                    </Box>
-                  )}
+                {/* Drag Drop Instructions */}
+                {files.filter(file => file.path === currentPath).length > 0 && (
+                  <Box sx={{ 
+                    p: 1, 
+                    background: 'rgba(59, 130, 246, 0.1)', 
+                    borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
+                  }}>
+                    <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
+                      💡 Drag files to folders or drop in current directory
+                    </Typography>
+                  </Box>
+                )}
 
-                  {/* File Panel Content */}
-                  <Box 
-                    sx={{ flex: 1, overflow: 'auto', p: 1 }}
-                    onDragOver={handleFileDragOver}
-                    onDrop={handleFileDrop}
-                  >
                 {/* Current Path */}
                 <Box sx={{ 
                   p: 1.5, 
@@ -1655,9 +1632,6 @@ const AdminDashboard = () => {
                   </Box>
                 )}
               </Box>
-                </>
-              )}
-              </motion.div>
             </Paper>
           </motion.div>
         </Box>
