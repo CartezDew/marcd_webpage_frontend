@@ -66,7 +66,7 @@ import {
   TextFields as TextIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { fetchContactData, fetchWaitlistData } from '../services/adminApi';
+import { fetchContactData, fetchWaitlistData, updateContactStatus } from '../services/adminApi';
 import fileApi from '../services/fileApi';
 
 const AdminDashboard = () => {
@@ -81,6 +81,23 @@ const AdminDashboard = () => {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  
+  // Sorting state - default to created column descending (most recent first)
+  const [sortField, setSortField] = useState('created');
+  const [sortDirection, setSortDirection] = useState('desc');
+  
+  // Column visibility state
+  const [columnVisibility, setColumnVisibility] = useState({
+    name: true,
+    email: true,
+    type: true,
+    status: true,
+    created: true,
+    actions: true
+  });
+  const [columnMenuAnchor, setColumnMenuAnchor] = useState(null);
+  
+
   
   // File management state
   const [files, setFiles] = useState([]);
@@ -214,10 +231,7 @@ const AdminDashboard = () => {
         };
       });
       
-      console.log('Raw files data:', filesArray);
-      console.log('Raw folders data:', foldersArray);
-      console.log('Converted files:', convertedFiles);
-      console.log('Converted folders:', convertedFolders);
+      // Files and folders loaded successfully
       setFiles(convertedFiles);
       setFolders(convertedFolders);
     } catch (err) {
@@ -261,7 +275,26 @@ const AdminDashboard = () => {
     setDetailDialogOpen(true);
   };
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = async () => {
+    // If this is a contact submission and it's unread, mark it as read when closing
+    if (activeTab === 0 && selectedEntry && !selectedEntry.is_read) {
+      try {
+        await updateContactStatus(selectedEntry.id, true);
+        
+        // Update the local state to reflect the change
+        setContactData(prevData => 
+          prevData.map(contact => 
+            contact.id === selectedEntry.id 
+              ? { ...contact, is_read: true }
+              : contact
+          )
+        );
+      } catch (error) {
+        console.error('Error marking contact as read:', error);
+        // Don't show error to user, just log it
+      }
+    }
+    
     setDetailDialogOpen(false);
     setSelectedEntry(null);
   };
@@ -753,20 +786,17 @@ const AdminDashboard = () => {
 
   // Drag and drop handlers
   const handleFileDragStart = (e, file) => {
-    console.log('Drag start:', file);
     setDraggedFile(file);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', file.id);
   };
 
   const handleFileDragEnd = () => {
-    console.log('Drag end');
     setDraggedFile(null);
     setDragOverFolder(null);
   };
 
   const handleFolderDragOver = (e, folder) => {
-    console.log('Drag over folder:', folder.name);
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     setDragOverFolder(folder);
@@ -777,8 +807,6 @@ const AdminDashboard = () => {
   };
 
   const handleFolderDrop = async (e, folder) => {
-    console.log('Drop on folder:', folder.name);
-    console.log('Dragged file:', draggedFile);
     e.preventDefault();
     e.stopPropagation(); // Prevent event from bubbling to parent drop zones
     
@@ -838,8 +866,6 @@ const AdminDashboard = () => {
   };
 
   const handleFileDrop = async (e) => {
-    console.log('Drop on file panel');
-    console.log('Dragged file:', draggedFile);
     e.preventDefault();
     if (draggedFile && draggedFile.id) {
       // Check if moving to the same location (already in root)
@@ -935,442 +961,11 @@ const AdminDashboard = () => {
         </motion.div>
 
         {/* Main Content Area */}
-        <Box className="admin-main-content" sx={{ display: 'flex', gap: 3, height: 'calc(100vh - 200px)' }}>
-          {/* File Management Panel */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -20 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Paper
-              className={`admin-file-manager ${fileManagerCollapsed ? 'collapsed' : ''}`}
-              sx={{
-                width: fileManagerCollapsed ? 'auto' : 300,
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: 2,
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-            >
-              {/* File Panel Header */}
-              <Box sx={{ 
-                p: 2, 
-                background: 'rgba(0, 0, 0, 0.2)', 
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-                  File Manager
-                </Typography>
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Tooltip title="Upload Files">
-                    <IconButton
-                      size="small"
-                      onClick={() => setFileUploadDialogOpen(true)}
-                      sx={{ color: '#3b82f6' }}
-                    >
-                      <UploadIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Create Folder">
-                    <IconButton
-                      size="small"
-                      onClick={() => setFolderDialogOpen(true)}
-                      sx={{ color: '#22c55e' }}
-                    >
-                      <CreateFolderIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title={fileManagerCollapsed ? "Expand File Manager" : "Collapse File Manager"}>
-                    <IconButton
-                      size="small"
-                      onClick={toggleFileManager}
-                      sx={{ 
-                        color: '#a1a1aa',
-                        transform: fileManagerCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                        '&:hover': {
-                          color: '#3b82f6',
-                          transform: fileManagerCollapsed ? 'rotate(180deg) scale(1.1)' : 'rotate(0deg) scale(1.1)',
-                          transition: 'all 0.2s ease'
-                        }
-                      }}
-                    >
-                      <ArrowBackIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Box>
-              </Box>
-
-              {/* File Manager Content - Only show when not collapsed */}
-              <motion.div 
-                className="admin-file-manager-content"
-                initial={{ opacity: 1, y: 0 }}
-                animate={{ 
-                  opacity: fileManagerCollapsed ? 0 : 1, 
-                  y: fileManagerCollapsed ? -10 : 0 
-                }}
-                transition={{ 
-                  duration: 0.3, 
-                  ease: [0.4, 0, 0.2, 1] 
-                }}
-              >
-                {!fileManagerCollapsed && (
-                  <>
-                  {/* Drag Drop Instructions */}
-                  {files.filter(file => file.path === currentPath).length > 0 && (
-                    <Box sx={{ 
-                      p: 1, 
-                      background: 'rgba(59, 130, 246, 0.1)', 
-                      borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
-                    }}>
-                      <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
-                        💡 Drag files to folders or drop in current directory
-                      </Typography>
-                    </Box>
-                  )}
-
-                  {/* File Panel Content */}
-                  <Box 
-                    sx={{ flex: 1, overflow: 'auto', p: 1 }}
-                    onDragOver={handleFileDragOver}
-                    onDrop={handleFileDrop}
-                  >
-                {/* Current Path */}
-                <Box sx={{ 
-                  p: 1.5, 
-                  mb: 1, 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 1,
-                  backgroundColor: currentPath !== '/' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  borderRadius: 1,
-                  border: currentPath !== '/' ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)'
-                }}>
-                  {currentPath !== '/' && (
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        const pathParts = currentPath.split('/').filter(part => part);
-                        const newPath = pathParts.length > 1 
-                          ? '/' + pathParts.slice(0, -1).join('/')
-                          : '/';
-                        setCurrentPath(newPath);
-                      }}
-                      sx={{ color: '#a1a1aa' }}
-                    >
-                      <ArrowBackIcon />
-                    </IconButton>
-                  )}
-                  {currentPath !== '/' && (
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        color: '#3b82f6',
-                        fontWeight: 600,
-                        fontSize: '0.875rem'
-                      }}
-                    >
-                      📁 {currentPath}
-                    </Typography>
-                  )}
-                </Box>
-
-                {/* Folders */}
-                {folders.filter(folder => {
-                  // Compare folder path with current path
-                  const matches = folder.path === currentPath;
-                  return matches;
-                }).map((folder) => {
-                  return (
-                    <ListItem
-                      key={folder.id}
-                      sx={{
-                        borderRadius: 1,
-                        mb: 0.5,
-                        cursor: 'pointer',
-                        backgroundColor: dragOverFolder?.id === folder.id ? 'rgba(59, 130, 246, 0.3)' : 'transparent',
-                        border: dragOverFolder?.id === folder.id ? '3px dashed #3b82f6' : '2px solid transparent',
-                        transition: 'all 0.2s ease',
-                        transform: dragOverFolder?.id === folder.id ? 'scale(1.02)' : 'scale(1)',
-                        '&:hover': {
-                          backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                        }
-                      }}
-                      onClick={(e) => {
-                        // Only navigate if not dragging a file
-                        if (!draggedFile) {
-                          setCurrentPath(currentPath === '/' ? `/${folder.name}` : `${currentPath}/${folder.name}`);
-                        }
-                      }}
-                      onDrop={(e) => handleFolderDrop(e, folder)}
-                      onDragOver={(e) => handleFolderDragOver(e, folder)}
-                      onDragLeave={handleFolderDragLeave}
-                    >
-                                          <ListItemIcon sx={{ color: '#22c55e', minWidth: 36 }}>
-                      <FolderIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        editingItem && editingItem.type === 'folder' && editingItem.id === folder.id ? (
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Input
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
-                              onKeyPress={handleEditKeyPress}
-                              onBlur={handleRename}
-                              autoFocus
-                              sx={{
-                                color: 'white',
-                                fontSize: '0.875rem',
-                                '& .MuiInput-input': {
-                                  color: 'white',
-                                  fontSize: '0.875rem',
-                                  padding: '4px 8px',
-                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                  borderRadius: 1,
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  '&:focus': {
-                                    borderColor: '#3b82f6',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.15)'
-                                  }
-                                }
-                              }}
-                            />
-                            <IconButton
-                              size="small"
-                              onClick={handleRename}
-                              sx={{ color: '#22c55e', p: 0.5 }}
-                            >
-                              <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
-                            </IconButton>
-                            <IconButton
-                              size="small"
-                              onClick={cancelEditing}
-                              sx={{ color: '#ef4444', p: 0.5 }}
-                            >
-                              <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
-                            </IconButton>
-                          </Box>
-                        ) : (
-                          <Box
-                            onClick={() => startEditing(folder, 'folder')}
-                            sx={{
-                              cursor: 'pointer',
-                              '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                borderRadius: 1,
-                                padding: '2px 4px',
-                                margin: '-2px -4px'
-                              }
-                            }}
-                          >
-                            {folder.name}
-                          </Box>
-                        )
-                      }
-                      secondary={
-                        folder.created_at && (
-                          <Typography variant="caption" sx={{ color: '#6b7280', fontSize: '0.7rem' }}>
-                            📅 Created {formatDate(folder.created_at)}
-                          </Typography>
-                        )
-                      }
-                      primaryTypographyProps={{
-                        sx: { color: 'white', fontSize: '0.875rem' }
-                      }}
-                      secondaryTypographyProps={{
-                        sx: { color: '#a1a1aa', fontSize: '0.75rem' }
-                      }}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteFolder(folder)}
-                        sx={{ 
-                          color: '#ef4444',
-                          width: 24,
-                          height: 24,
-                          '&:hover': {
-                            backgroundColor: 'rgba(239, 68, 68, 0.1)'
-                          }
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            border: '1.5px solid #ef4444',
-                            position: 'relative',
-                            '&::after': {
-                              content: '""',
-                              position: 'absolute',
-                              top: '50%',
-                              left: '50%',
-                              transform: 'translate(-50%, -50%)',
-                              width: '6px',
-                              height: '1.5px',
-                              backgroundColor: '#ef4444',
-                              borderRadius: '1px'
-                            }
-                          }}
-                        />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                    </ListItem>
-                  );
-                })}
-
-                <Divider sx={{ my: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-
-                {/* Files */}
-                {files.filter(file => {
-                  // Compare file path with current path
-                  const matches = file.path === currentPath;
-                  return matches;
-                }).map((file) => {
-                  return (
-                  <ListItem
-                    key={file.id}
-                    draggable
-                    onDragStart={(e) => handleFileDragStart(e, file)}
-                    onDragEnd={handleFileDragEnd}
-                    sx={{
-                      borderRadius: 1,
-                      mb: 0.5,
-                      cursor: 'grab',
-                      opacity: draggedFile?.id === file.id ? 0.3 : 1,
-                      backgroundColor: draggedFile?.id === file.id ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
-                      border: draggedFile?.id === file.id ? '2px solid #3b82f6' : '2px solid transparent',
-                      transform: draggedFile?.id === file.id ? 'scale(0.95)' : 'scale(1)',
-                      transition: 'all 0.2s ease',
-                      '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                      },
-                      '&:active': {
-                        cursor: 'grabbing'
-                      }
-                    }}
-                    secondaryAction={
-                      <IconButton
-                        size="small"
-                        onClick={(e) => handleFileMenuOpen(e, file)}
-                        sx={{ color: '#a1a1aa' }}
-                      >
-                        <AddIcon />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemIcon sx={{ color: '#3b82f6', minWidth: 36 }}>
-                      {getFileIcon(file.name)}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        editingItem && editingItem.type === 'file' && editingItem.id === file.id ? (
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Input
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
-                              onKeyPress={handleEditKeyPress}
-                              onBlur={handleRename}
-                              autoFocus
-                              sx={{
-                                color: 'white',
-                                fontSize: '0.875rem',
-                                '& .MuiInput-input': {
-                                  color: 'white',
-                                  fontSize: '0.875rem',
-                                  padding: '4px 8px',
-                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                  borderRadius: 1,
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  '&:focus': {
-                                    borderColor: '#3b82f6',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.15)'
-                                  }
-                                }
-                              }}
-                            />
-                            <IconButton
-                              size="small"
-                              onClick={handleRename}
-                              sx={{ color: '#22c55e', p: 0.5 }}
-                            >
-                              <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
-                            </IconButton>
-                            <IconButton
-                              size="small"
-                              onClick={cancelEditing}
-                              sx={{ color: '#ef4444', p: 0.5 }}
-                            >
-                              <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
-                            </IconButton>
-                          </Box>
-                        ) : (
-                          <Box
-                            onClick={() => startEditing(file, 'file')}
-                            sx={{
-                              cursor: 'pointer',
-                              '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                borderRadius: 1,
-                                padding: '2px 4px',
-                                margin: '-2px -4px'
-                              }
-                            }}
-                          >
-                            {file.name}
-                          </Box>
-                        )
-                      }
-                      secondary={
-                        <Box>
-                          <Typography variant="body2" sx={{ color: '#a1a1aa', fontSize: '0.75rem' }}>
-                            {formatFileSize(file.size)}
-                          </Typography>
-                          {file.uploaded_at && (
-                            <Typography variant="caption" sx={{ color: '#6b7280', fontSize: '0.7rem' }}>
-                              📅 {formatDate(file.uploaded_at)}
-                            </Typography>
-                          )}
-                        </Box>
-                      }
-                      primaryTypographyProps={{
-                        sx: { color: 'white', fontSize: '0.875rem' }
-                      }}
-                      secondaryTypographyProps={{
-                        sx: { color: '#a1a1aa', fontSize: '0.75rem' }
-                      }}
-                    />
-                  </ListItem>
-                );
-                })}
-
-                {files.filter(file => file.path === currentPath).length === 0 && 
-                 folders.filter(folder => folder.path === currentPath).length === 0 && (
-                  <Box sx={{ p: 2, textAlign: 'center' }}>
-                    <Typography variant="body2" sx={{ color: '#a1a1aa' }}>
-                      No files or folders
-                    </Typography>
-                  </Box>
-                )}
-              </Box>
-                </>
-              )}
-              </motion.div>
-            </Paper>
-          </motion.div>
-
+        <Box className="admin-main-content" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           {/* Main Content */}
           <Box 
             className="admin-content-area" 
             sx={{ 
-              flex: 1, 
               display: 'flex', 
               flexDirection: 'column',
               transition: 'margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -1564,7 +1159,7 @@ const AdminDashboard = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {getPaginatedData().map((entry, index) => (
+                  {getPaginatedData().map((entry) => (
                     <TableRow
                       key={activeTab === 0 ? entry.contact_id : entry.id}
                       sx={{
@@ -1589,7 +1184,7 @@ const AdminDashboard = () => {
                           <TableCell>
                             <Chip
                               label={entry.is_read ? 'Read' : 'Unread'}
-                              color={entry.is_read ? 'success' : 'warning'}
+                              color={entry.is_read ? 'success' : 'error'}
                               size="small"
                             />
                           </TableCell>
@@ -1648,6 +1243,423 @@ const AdminDashboard = () => {
           </Paper>
         </motion.div>
           </Box>
+
+          {/* File Management Panel - Now below the content area */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Paper
+              className={`admin-file-manager ${fileManagerCollapsed ? 'collapsed' : ''}`}
+              sx={{
+                width: '100%',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: 2,
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column'
+              }}
+            >
+              {/* File Panel Header */}
+              <Box sx={{ 
+                p: 2, 
+                background: 'rgba(0, 0, 0, 0.2)', 
+                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
+                  File Manager
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Tooltip title="Upload Files">
+                    <IconButton
+                      size="small"
+                      onClick={() => setFileUploadDialogOpen(true)}
+                      sx={{ color: '#3b82f6' }}
+                    >
+                      <UploadIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Create Folder">
+                    <IconButton
+                      size="small"
+                      onClick={() => setFolderDialogOpen(true)}
+                      sx={{ color: '#22c55e' }}
+                    >
+                      <CreateFolderIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title={fileManagerCollapsed ? "Expand File Manager" : "Collapse File Manager"}>
+                    <IconButton
+                      size="small"
+                      onClick={toggleFileManager}
+                      sx={{ 
+                        color: '#a1a1aa',
+                        transform: fileManagerCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        '&:hover': {
+                          color: '#3b82f6',
+                          transform: fileManagerCollapsed ? 'rotate(180deg) scale(1.1)' : 'rotate(0deg) scale(1.1)',
+                          transition: 'all 0.2s ease'
+                        }
+                      }}
+                    >
+                      <ArrowBackIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </Box>
+
+              {/* File Manager Content - Only show when not collapsed */}
+              <motion.div 
+                className="admin-file-manager-content"
+                initial={{ opacity: 1, y: 0 }}
+                animate={{ 
+                  opacity: fileManagerCollapsed ? 0 : 1, 
+                  y: fileManagerCollapsed ? -10 : 0 
+                }}
+                transition={{ 
+                  duration: 0.3, 
+                  ease: [0.4, 0, 0.2, 1] 
+                }}
+              >
+                {!fileManagerCollapsed && (
+                  <>
+                  {/* Drag Drop Instructions */}
+                  {files.filter(file => file.path === currentPath).length > 0 && (
+                    <Box sx={{ 
+                      p: 1, 
+                      background: 'rgba(59, 130, 246, 0.1)', 
+                      borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
+                    }}>
+                      <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
+                        💡 Drag files to folders or drop in current directory
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {/* File Panel Content */}
+                  <Box 
+                    sx={{ flex: 1, overflow: 'auto', p: 1 }}
+                    onDragOver={handleFileDragOver}
+                    onDrop={handleFileDrop}
+                  >
+                {/* Current Path */}
+                <Box sx={{ 
+                  p: 1.5, 
+                  mb: 1, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 1,
+                  backgroundColor: currentPath !== '/' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: 1,
+                  border: currentPath !== '/' ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)'
+                }}>
+                  {currentPath !== '/' && (
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        const pathParts = currentPath.split('/').filter(part => part);
+                        const newPath = pathParts.length > 1 
+                          ? '/' + pathParts.slice(0, -1).join('/')
+                          : '/';
+                        setCurrentPath(newPath);
+                      }}
+                      sx={{ color: '#a1a1aa' }}
+                    >
+                      <ArrowBackIcon />
+                    </IconButton>
+                  )}
+                  {currentPath !== '/' && (
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: '#3b82f6',
+                        fontWeight: 600,
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      📁 {currentPath}
+                    </Typography>
+                  )}
+                </Box>
+
+                {/* Folders */}
+                {folders.filter(folder => {
+                  // Compare folder path with current path
+                  const matches = folder.path === currentPath;
+                  return matches;
+                }).map((folder) => {
+                  return (
+                    <ListItem
+                      key={folder.id}
+                      sx={{
+                        borderRadius: 1,
+                        mb: 0.5,
+                        cursor: 'pointer',
+                        backgroundColor: dragOverFolder?.id === folder.id ? 'rgba(59, 130, 246, 0.3)' : 'transparent',
+                        border: dragOverFolder?.id === folder.id ? '3px dashed #3b82f6' : '2px solid transparent',
+                        transition: 'all 0.2s ease',
+                        transform: dragOverFolder?.id === folder.id ? 'scale(1.02)' : 'scale(1)',
+                        '&:hover': {
+                          backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                        }
+                      }}
+                      onClick={(e) => {
+                        // Only navigate if not dragging a file
+                        if (!draggedFile) {
+                          setCurrentPath(currentPath === '/' ? `/${folder.name}` : `${currentPath}/${folder.name}`);
+                        }
+                      }}
+                      onDrop={(e) => handleFolderDrop(e, folder)}
+                      onDragOver={(e) => handleFolderDragOver(e, folder)}
+                      onDragLeave={handleFolderDragLeave}
+                    >
+                      <ListItemIcon sx={{ color: '#22c55e', minWidth: 36 }}>
+                        <FolderIcon />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          editingItem && editingItem.type === 'folder' && editingItem.id === folder.id ? (
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <Input
+                                value={editName}
+                                onChange={(e) => setEditName(e.target.value)}
+                                onKeyPress={handleEditKeyPress}
+                                onBlur={handleRename}
+                                autoFocus
+                                sx={{
+                                  color: 'white',
+                                  fontSize: '0.875rem',
+                                  '& .MuiInput-input': {
+                                    color: 'white',
+                                    fontSize: '0.875rem',
+                                    padding: '4px 8px',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                    borderRadius: 1,
+                                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                                    '&:focus': {
+                                      borderColor: '#3b82f6',
+                                      backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                                    }
+                                  }
+                                }}
+                              />
+                              <IconButton
+                                size="small"
+                                onClick={handleRename}
+                                sx={{ color: '#22c55e', p: 0.5 }}
+                              >
+                                <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
+                              </IconButton>
+                              <IconButton
+                                size="small"
+                                onClick={cancelEditing}
+                                sx={{ color: '#ef4444', p: 0.5 }}
+                              >
+                                <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
+                              </IconButton>
+                            </Box>
+                          ) : (
+                            <Box
+                              onClick={() => startEditing(folder, 'folder')}
+                              sx={{
+                                cursor: 'pointer',
+                                '&:hover': {
+                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                  borderRadius: 1,
+                                  padding: '2px 4px',
+                                  margin: '-2px -4px'
+                                }
+                              }}
+                            >
+                              {folder.name}
+                            </Box>
+                          )
+                        }
+                        secondary={
+                          folder.created_at ? `📅 Created ${formatDate(folder.created_at)}` : ''
+                        }
+                        primaryTypographyProps={{
+                          sx: { color: 'white', fontSize: '0.875rem' }
+                        }}
+                        secondaryTypographyProps={{
+                          sx: { color: '#a1a1aa', fontSize: '0.75rem' }
+                        }}
+                      />
+                      <ListItemSecondaryAction>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleDeleteFolder(folder)}
+                          sx={{ 
+                            color: '#ef4444',
+                            width: 24,
+                            height: 24,
+                            '&:hover': {
+                              backgroundColor: 'rgba(239, 68, 68, 0.1)'
+                            }
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: 12,
+                              height: 12,
+                              borderRadius: '50%',
+                              border: '1.5px solid #ef4444',
+                              position: 'relative',
+                              '&::after': {
+                                content: '""',
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: '6px',
+                                height: '1.5px',
+                                backgroundColor: '#ef4444',
+                                borderRadius: '1px'
+                              }
+                            }}
+                          />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  );
+                })}
+
+                <Divider sx={{ my: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+
+                {/* Files */}
+                {files.filter(file => {
+                  // Compare file path with current path
+                  const matches = file.path === currentPath;
+                  return matches;
+                }).map((file) => {
+                  return (
+                  <ListItem
+                    key={file.id}
+                    draggable
+                    onDragStart={(e) => handleFileDragStart(e, file)}
+                    onDragEnd={handleFileDragEnd}
+                    sx={{
+                      borderRadius: 1,
+                      mb: 0.5,
+                      cursor: 'grab',
+                      opacity: draggedFile?.id === file.id ? 0.3 : 1,
+                      backgroundColor: draggedFile?.id === file.id ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+                      border: draggedFile?.id === file.id ? '2px solid #3b82f6' : '2px solid transparent',
+                      transform: draggedFile?.id === file.id ? 'scale(0.95)' : 'scale(1)',
+                      transition: 'all 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                      },
+                      '&:active': {
+                        cursor: 'grabbing'
+                      }
+                    }}
+                    secondaryAction={
+                      <IconButton
+                        size="small"
+                        onClick={(e) => handleFileMenuOpen(e, file)}
+                        sx={{ color: '#a1a1aa' }}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    }
+                  >
+                    <ListItemIcon sx={{ color: '#3b82f6', minWidth: 36 }}>
+                      {getFileIcon(file.name)}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        editingItem && editingItem.type === 'file' && editingItem.id === file.id ? (
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Input
+                              value={editName}
+                              onChange={(e) => setEditName(e.target.value)}
+                              onKeyPress={handleEditKeyPress}
+                              onBlur={handleRename}
+                              autoFocus
+                              sx={{
+                                color: 'white',
+                                fontSize: '0.875rem',
+                                '& .MuiInput-input': {
+                                  color: 'white',
+                                  fontSize: '0.875rem',
+                                  padding: '4px 8px',
+                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                  borderRadius: 1,
+                                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                                  '&:focus': {
+                                    borderColor: '#3b82f6',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                                  }
+                                }
+                              }}
+                            />
+                            <IconButton
+                              size="small"
+                              onClick={handleRename}
+                              sx={{ color: '#22c55e', p: 0.5 }}
+                            >
+                              <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              onClick={cancelEditing}
+                              sx={{ color: '#ef4444', p: 0.5 }}
+                            >
+                              <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
+                            </IconButton>
+                          </Box>
+                        ) : (
+                          <Box
+                            onClick={() => startEditing(file, 'file')}
+                            sx={{
+                              cursor: 'pointer',
+                              '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                borderRadius: 1,
+                                padding: '2px 4px',
+                                margin: '-2px -4px'
+                              }
+                            }}
+                          >
+                            {file.name}
+                          </Box>
+                        )
+                      }
+                      secondary={
+                        `${formatFileSize(file.size)}${file.uploaded_at ? ` • 📅 ${formatDate(file.uploaded_at)}` : ''}`
+                      }
+                      primaryTypographyProps={{
+                        sx: { color: 'white', fontSize: '0.875rem' }
+                      }}
+                      secondaryTypographyProps={{
+                        sx: { color: '#a1a1aa', fontSize: '0.75rem' }
+                      }}
+                    />
+                  </ListItem>
+                );
+                })}
+
+                {files.filter(file => file.path === currentPath).length === 0 && 
+                 folders.filter(folder => folder.path === currentPath).length === 0 && (
+                  <Box sx={{ p: 2, textAlign: 'center' }}>
+                    <Typography variant="body2" sx={{ color: '#a1a1aa' }}>
+                      No files or folders
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+                </>
+              )}
+              </motion.div>
+            </Paper>
+          </motion.div>
         </Box>
 
         {/* File Upload Dialog */}
@@ -1902,7 +1914,7 @@ const AdminDashboard = () => {
                       </Typography>
                       <Chip
                         label={selectedEntry.is_read ? 'Read' : 'Unread'}
-                        color={selectedEntry.is_read ? 'success' : 'warning'}
+                        color={selectedEntry.is_read ? 'success' : 'error'}
                       />
                     </Box>
                     <Box sx={{ mb: 3 }}>

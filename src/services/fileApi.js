@@ -1,3 +1,4 @@
+import { devLog } from "../utils/logger";
 import api from './apiConfig';
 
 // File and Folder API endpoints
@@ -17,7 +18,7 @@ export const fileApi = {
         return [];
       }
     } catch (error) {
-      console.error('Error fetching files:', error);
+      devLog('Error fetching files:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -40,7 +41,7 @@ export const fileApi = {
         return [];
       }
     } catch (error) {
-      console.error('Error fetching folders:', error);
+      devLog('Error fetching folders:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -51,7 +52,6 @@ export const fileApi = {
   // Upload file
   uploadFile: async (file, path = '/') => {
     try {
-      console.log(`Uploading file "${file.name}" to path: ${path}`);
       const formData = new FormData();
       formData.append('file', file);
       
@@ -65,10 +65,9 @@ export const fileApi = {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Upload response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error uploading file:', error);
+      devLog('Error uploading file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -91,7 +90,7 @@ export const fileApi = {
       const response = await api.post('/api/folders/', backendData);
       return response.data;
     } catch (error) {
-      console.error('Error creating folder:', error);
+      devLog('Error creating folder:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -102,24 +101,15 @@ export const fileApi = {
   // Move file
   moveFile: async (fileId, folderId) => {
     try {
-      console.log(`Attempting to move file ${fileId} to folder ${folderId}`);
-      console.log(`Making PATCH request to: /api/files/${fileId}/`);
-      
       // Prepare request body - folder can be null for root, or a folder ID
       const requestBody = folderId ? { folder: folderId } : { folder: null };
-      console.log(`Request body:`, requestBody);
       
       // Backend expects PATCH to /api/files/{id}/ with folder field
       const response = await api.patch(`/api/files/${fileId}/`, requestBody);
       
-      console.log('Move file response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error moving file:', error);
-      console.error('Error response:', error.response);
-      console.error('Error status:', error.response?.status);
-      console.error('Error data:', error.response?.data);
-      console.error('Error config:', error.config);
+      devLog('Error moving file:', error);
       
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
@@ -131,7 +121,6 @@ export const fileApi = {
       }
       
       if (error.response?.status === 500) {
-        console.error('Full error response:', error.response);
         throw new Error('Server error: The backend encountered an error while moving the file.');
       }
       
@@ -145,7 +134,7 @@ export const fileApi = {
       const response = await api.delete(`/api/files/${fileId}/`);
       return response.data;
     } catch (error) {
-      console.error('Error deleting file:', error);
+      devLog('Error deleting file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -156,15 +145,10 @@ export const fileApi = {
   // Delete folder
   deleteFolder: async (folderId) => {
     try {
-      console.log(`Attempting to delete folder ${folderId}`);
       const response = await api.delete(`/api/folders/${folderId}/`);
-      console.log('Delete folder response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error deleting folder:', error);
-      console.error('Error response:', error.response);
-      console.error('Error status:', error.response?.status);
-      console.error('Error data:', error.response?.data);
+      devLog('Error deleting folder:', error);
       
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
@@ -191,7 +175,7 @@ export const fileApi = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error downloading file:', error);
+      devLog('Error downloading file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -207,7 +191,7 @@ export const fileApi = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error renaming file:', error);
+      devLog('Error renaming file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -218,14 +202,12 @@ export const fileApi = {
   // Rename folder
   renameFolder: async (folderId, newName) => {
     try {
-      console.log(`Renaming folder ${folderId} to "${newName}"`);
       const response = await api.patch(`/api/folders/${folderId}/`, {
         name: newName
       });
-      console.log('Rename folder response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error renaming folder:', error);
+      devLog('Error renaming folder:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -239,7 +221,7 @@ export const fileApi = {
       const response = await api.patch(`/api/files/${fileId}/`, updates);
       return response.data;
     } catch (error) {
-      console.error('Error updating file:', error);
+      devLog('Error updating file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -255,7 +237,7 @@ export const fileApi = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error searching files:', error);
+      devLog('Error searching files:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
       }
@@ -271,9 +253,43 @@ export const fileApi = {
       });
       return response.data;
     } catch (error) {
-      console.error('Error getting files by tags:', error);
+      devLog('Error getting files by tags:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
+      }
+      throw error;
+    }
+  },
+
+  // Duplicate file
+  duplicateFile: async (fileId) => {
+    try {
+      const response = await api.post(`/api/files/${fileId}/duplicate/`);
+      return response.data;
+    } catch (error) {
+      devLog('Error duplicating file:', error);
+      if (error.response?.status === 401) {
+        throw new Error('Authentication required. Please log in again.');
+      }
+      if (error.response?.status === 404) {
+        throw new Error('Duplicate feature is not yet implemented on the backend. Please contact the development team.');
+      }
+      throw error;
+    }
+  },
+
+  // Duplicate folder
+  duplicateFolder: async (folderId) => {
+    try {
+      const response = await api.post(`/api/folders/${folderId}/duplicate/`);
+      return response.data;
+    } catch (error) {
+      devLog('Error duplicating folder:', error);
+      if (error.response?.status === 401) {
+        throw new Error('Authentication required. Please log in again.');
+      }
+      if (error.response?.status === 404) {
+        throw new Error('Duplicate feature is not yet implemented on the backend. Please contact the development team.');
       }
       throw error;
     }

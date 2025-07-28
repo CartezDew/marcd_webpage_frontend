@@ -1,3 +1,4 @@
+import { devLog } from "../utils/logger";
 import api from "./apiConfig";
 
 export const signUp = async (credentials) => {
@@ -38,14 +39,11 @@ export const signIn = async (credentials) => {
     for (const endpoint of endpoints) {
       for (const format of credentialFormats) {
         try {
-          console.log(`Trying endpoint: ${endpoint} with format:`, format);
           resp = await api.post(endpoint, format);
-          console.log('Success! Response:', resp.data);
           // If we get here, the request was successful
           localStorage.setItem("token", resp.data.access);
           return resp.data;
         } catch (error) {
-          console.log(`Failed for ${endpoint}:`, error.response?.data || error.message);
           lastError = error;
           // Continue trying other combinations
         }

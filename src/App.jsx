@@ -24,8 +24,8 @@ import Footer from './components/Footer';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#D32F2F', // Red color for highlights
-      dark: '#B71C1C',
+      main: '#FF9800', // Orange color for highlights
+      dark: '#F57C00',
     },
     secondary: {
       main: '#2c3e50',

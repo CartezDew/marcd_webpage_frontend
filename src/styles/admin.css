@@ -1,26 +1,42 @@
 /* Admin Dashboard Styles */
+
+/* Admin Dashboard Loading State */
+.admin-dashboard-loading {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-dashboard-loading .MuiCircularProgress-root {
+  color: #3b82f6;
+}
+
+/* Admin Dashboard Container */
 .admin-dashboard-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   color: white;
-  border-radius: 12px;
 }
 
 .admin-dashboard-container.animate {
   animation: fadeInUp 0.8s ease-out;
 }
 
-.admin-login-container {
+/* Admin Dashboard Container Main */
+.admin-dashboard-container-main {
   min-height: 100vh;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  color: white;
+  border-radius: 12px;
 }
 
-.admin-login-container.animate {
-  animation: fadeIn 0.8s ease-out;
+/* Container */
+.admin-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 12px;
 }
 
 /* Animation Keyframes */
@@ -44,542 +60,1425 @@
   }
 }
 
-/* Custom Scrollbar for Admin Dashboard */
-.admin-dashboard-container ::-webkit-scrollbar {
-  width: 8px;
+/* Header Section */
+.admin-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.admin-dashboard-container ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-.admin-dashboard-container ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.5);
-  border-radius: 4px;
-}
-
-.admin-dashboard-container ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.7);
-}
-
-/* Table Styles */
-.admin-table {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.admin-table .MuiTableHead-root {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.admin-table .MuiTableRow-root:hover {
-  background: rgba(59, 130, 246, 0.05);
-  transition: background-color 0.3s ease;
-}
-
-/* Card Styles */
-.admin-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.admin-card:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
-}
-
-/* Button Styles */
-.admin-button {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.admin-button:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-}
-
-.admin-button:disabled {
-  background: rgba(59, 130, 246, 0.5);
-  transform: none;
-  cursor: not-allowed;
-}
-
-/* Input Styles */
-.admin-input {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: white;
-  padding: 12px 16px;
-  transition: all 0.3s ease;
-}
-
-.admin-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  outline: none;
-}
-
-.admin-input::placeholder {
-  color: #a1a1aa;
-}
-
-/* Chip Styles */
-.admin-chip {
-  border-radius: 16px;
-  font-weight: 500;
-  font-size: 0.75rem;
-  padding: 4px 12px;
-}
-
-/* Dialog Styles */
-.admin-dialog {
-  background: rgba(15, 15, 35, 0.95);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .admin-dashboard-container {
-    padding: 1rem;
-  }
-  
-  .admin-login-container {
-    padding: 1rem;
-  }
-  
-  .admin-card {
-    margin-bottom: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .admin-dashboard-container {
-    padding: 0.5rem;
-  }
-  
-  .admin-login-container {
-    padding: 0.5rem;
-  }
-}
-
-/* Loading States */
-.admin-loading {
+.admin-header-content {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+
+.admin-header-icon {
+  font-size: 2.5rem;
+  color: #3b82f6;
+}
+
+.admin-header-title {
+  font-weight: 700;
+  color: white;
+}
+
+/* Main Content Area */
+.admin-main-content {
+  display: flex;
+  gap: 1.5rem;
+  min-height: calc(100vh - 200px);
+  height: auto;
+}
+
+/* File Manager Panel */
+.admin-file-manager-paper {
+  width: auto;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 1rem !important;
+}
+
+/* File Manager Header - Inline layout */
+.admin-file-manager-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.admin-file-manager-paper {
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: none;
+}
+
+.admin-file-manager-paper.expanded {
+  width: 300px;
+}
+
+/* File Manager Header */
+.admin-file-manager-header {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-file-manager-title {
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* File Manager Actions */
+.admin-file-manager-actions {
+  display: flex;
+  gap: 0.75rem;
   justify-content: center;
-  min-height: 200px;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.admin-file-manager-actions .MuiIconButton-root,
+.admin-upload-button,
+.admin-create-folder-button {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.admin-file-manager-actions .MuiIconButton-root:hover,
+.admin-upload-button:hover,
+.admin-create-folder-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.admin-upload-button {
+  color: #3b82f6 !important;
+}
+
+.admin-create-folder-button {
+  color: #22c55e !important;
+}
+
+/* File Manager Toggle Button */
+.admin-file-manager-toggle {
+  color: #be0303d1 !important;
+  transition: all 0.2s ease;
+  border-radius: 50% !important;
+  padding: 6px !important;
+  border: 1px solid #be0303d1 !important;
+  width: 22px !important;
+  height: 22px !important;
+  margin-left: 6px !important;
+}
+
+.admin-file-manager-toggle .MuiIconButton-root {
+  border: 1px solid #be0303d1 !important;
+  border-radius: 50% !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+}
+
+.admin-file-manager-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+  color: #999 !important;
+}
+
+/* Sort Icon Styles */
+.admin-sort-icon-inactive {
+  color: #666 !important;
+  opacity: 0.3 !important;
+}
+
+.admin-sort-icon-active {
+  color: #FF0000 !important;
+}
+
+/* Progress Bar Dynamic Width */
+.admin-upload-progress-bar {
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Dialog Title Styles */
+.admin-dialog-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+}
+
+/* Message Text Styles */
+.admin-message-text {
+  color: white !important;
+  white-space: pre-wrap !important;
+}
+
+/* Drag Drop Instructions */
+.admin-drag-drop-instructions {
+  padding: 0.5rem !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2) !important;
+}
+
+.admin-drag-drop-text {
+  color: #3b82f6 !important;
+  font-size: 0.75rem !important;
+}
+
+/* File Panel Content */
+.admin-file-panel-content {
+  flex: 1 !important;
+  overflow: auto !important;
+  padding: 0.5rem !important;
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(190, 3, 3, 0.4);
+  }
+}
+
+/* File Manager Content */
+.admin-file-manager-content {
+  flex: 1;
+  overflow: visible;
+  padding: 0.5rem;
+  max-height: none;
+  height: auto;
+}
+
+.admin-file-manager-content.collapsed {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.admin-file-manager-content.expanded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.admin-file-manager-content-container {
+  flex: 1;
+  overflow: visible;
+  padding: 0.5rem;
+  height: auto;
+}
+
+/* Breadcrumb */
+.admin-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}
+
+.admin-breadcrumb-item {
+  color: #3b82f6;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.admin-breadcrumb-item:hover {
+  text-decoration: underline;
+}
+
+/* Current Path Info */
+.admin-current-path-info {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.admin-current-path-info.root {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-current-path-text {
+  color: #3b82f6;
+  font-size: 0.75rem;
+}
+
+/* File/Folder List */
+.admin-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-folder-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+  cursor: grab;
+  margin-bottom: 0.5rem;
+  color: white !important;
+}
+
+/* Remove default list styling */
+/* .admin-folder-item .MuiListItem-root {
+  list-style: none !important;
+}
+
+.admin-folder-item .MuiListItemText-root {
+  color: white !important;
+}
+
+.admin-folder-item .MuiListItemText-primary {
+  color: white !important;
+}
+
+.admin-folder-item .MuiListItemText-secondary {
+  color: rgba(255, 255, 255, 0.7) !important;
+} */
+
+.admin-folder-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.admin-folder-item:active {
+  cursor: grabbing;
+}
+
+.admin-folder-item.drag-over {
+  background-color: rgba(34, 197, 94, 0.2);
+  border: 2px dashed #22c55e;
+}
+
+.admin-folder-item.dragging {
+  opacity: 0.3;
+  background-color: rgba(59, 130, 246, 0.2);
+  border: 2px solid #3b82f6;
+  transform: scale(0.95);
+  cursor: grabbing;
+}
+
+.admin-folder-icon {
+  color: #22c55e !important;
+  min-width: 2.25rem !important;
+}
+
+.admin-file-icon {
+  color: #3b82f6 !important;
+  min-width: 2.25rem !important;
+}
+
+/* File item styling */
+/* .admin-file-item {
+  color: white !important;
+}
+
+.admin-file-item .MuiListItem-root {
+  list-style: none !important;
+}
+
+.admin-file-item .MuiListItemText-root {
+  color: white !important;
+}
+
+.admin-file-item .MuiListItemText-primary {
+  color: white !important;
+}
+
+.admin-file-item .MuiListItemText-secondary {
+  color: rgba(255, 255, 255, 0.7) !important;
+} */
+
+/* Ensure all text in file manager is visible */
+/* .admin-file-manager-paper {
+  color: white !important;
+}
+
+.admin-file-manager-paper * {
+  color: inherit !important;
+}
+
+.admin-file-manager-paper .MuiTypography-root {
+  color: white !important;
+}
+
+.admin-file-manager-paper .MuiListItemText-root {
+  color: white !important;
+}
+
+.admin-file-manager-paper .MuiListItemText-primary {
+  color: white !important;
+}
+
+.admin-file-manager-paper .MuiListItemText-secondary {
+  color: rgba(255, 255, 255, 0.7) !important;
+} */
+
+/* Remove any list markers/bullets */
+/* .admin-file-manager-paper .MuiListItem-root {
+  list-style: none !important;
+}
+
+.admin-file-manager-paper .MuiListItem-root::before {
+  content: none !important;
+}
+
+.admin-file-manager-paper .MuiListItem-root::after {
+  content: none !important;
+} */
+
+/* Material-UI ListItemIcon color override */
+
+
+/* Edit Mode */
+.admin-edit-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-edit-input {
+  color: white;
+  font-size: 0.875rem;
+}
+
+.admin-edit-input .MuiInput-input {
+  color: white !important;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.admin-edit-input .MuiInput-input:focus {
+  border-color: #3b82f6 !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.admin-save-button {
+  color: #22c55e !important;
+  padding: 0.25rem;
+}
+
+.admin-cancel-button {
+  color: #ef4444 !important;
+  padding: 0.25rem;
+}
+
+.admin-edit-icon {
+  font-size: 0.75rem;
+}
+
+/* File/Folder Name */
+.admin-item-name {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  margin: -0.125rem -0.25rem;
+}
+
+.admin-item-name:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Delete Button */
+.admin-delete-button {
+  color: #ef4444 !important;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.admin-delete-button:hover {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+.admin-delete-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 1.5px solid #be0303d1;
+  position: relative;
+}
+
+.admin-delete-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 1px;
+  background-color: #be0303d1;
+  transform: translate(-50%, -50%);
+}
+
+/* Divider */
+.admin-divider {
+  margin: 0.5rem 0;
+  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Empty State */
 .admin-empty-state {
+  padding: 1rem;
   text-align: center;
-  padding: 3rem;
+}
+
+.admin-empty-state-text {
   color: #a1a1aa;
 }
 
-.admin-empty-state-icon {
-  font-size: 4rem;
-  color: #a1a1aa;
-  margin-bottom: 1rem;
+/* Content Area */
+.admin-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0px;
 }
 
-/* Success/Error States */
-.admin-success {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: #22c55e;
+/* Stats Grid */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.admin-error {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-}
-
-.admin-warning {
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  color: #f59e0b;
+@media (min-width: 768px) {
+  .admin-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Stats Cards */
 .admin-stats-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
   padding: 1.5rem;
-  transition: all 0.3s ease;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 1rem !important;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.admin-stats-card:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  transform: translateY(-2px);
+.admin-stats-card.green {
+  background: rgba(34, 197, 94, 0.1) !important;
+  border: 1px solid rgba(34, 197, 94, 0.3) !important;
+}
+
+.admin-stats-icon {
+  font-size: 2.5rem;
+  color: #3b82f6;
+}
+
+.admin-stats-icon.green {
+  color: #22c55e;
 }
 
 .admin-stats-number {
-  font-size: 2rem;
   font-weight: 700;
   color: white;
-  margin-bottom: 0.5rem;
+  font-size: 2rem;
 }
 
 .admin-stats-label {
   color: #a1a1aa;
-  font-size: 0.875rem;
 }
 
-/* Search Bar */
-.admin-search {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: white;
-  padding: 12px 16px;
-  width: 100%;
-  transition: all 0.3s ease;
-}
-
-.admin-search:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  outline: none;
-}
-
-.admin-search::placeholder {
-  color: #a1a1aa;
-}
-
-/* Pagination */
-.admin-pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.admin-pagination-button {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.admin-pagination-button:hover {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: #3b82f6;
-}
-
-.admin-pagination-button.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
-}
-
-.admin-pagination-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Error Alert */
+.admin-error-alert {
+  margin-bottom: 1.5rem;
 }
 
 /* Tabs */
-.admin-tabs {
-  background: rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.admin-tab {
-  color: #a1a1aa;
-  transition: color 0.3s ease;
-}
-
-.admin-tab.active {
-  color: #3b82f6;
-}
-
-.admin-tab:hover {
-  color: #3b82f6;
-}
-
-/* Badge */
-.admin-badge {
-  background: #3b82f6;
-  color: white;
-  border-radius: 12px;
-  padding: 2px 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* Tooltip */
-.admin-tooltip {
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  max-width: 200px;
-  word-wrap: break-word;
-}
-
-/* Modal Overlay */
-.admin-modal-overlay {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(4px);
-}
-
-/* Form Styles */
-.admin-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.admin-form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.admin-form-label {
-  color: #a1a1aa;
-  font-weight: 500;
-  font-size: 0.875rem;
-}
-
-.admin-form-input {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: white;
-  padding: 12px 16px;
-  transition: all 0.3s ease;
-}
-
-.admin-form-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  outline: none;
-}
-
-.admin-form-textarea {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: white;
-  padding: 12px 16px;
-  min-height: 100px;
-  resize: vertical;
-  transition: all 0.3s ease;
-}
-
-.admin-form-textarea:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-  outline: none;
-}
-
-/* Action Buttons */
-.admin-action-buttons {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.admin-action-button {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.875rem;
-}
-
-.admin-action-button:hover {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: #3b82f6;
-}
-
-.admin-action-button.primary {
-  background: #3b82f6;
-  border-color: #3b82f6;
-}
-
-.admin-action-button.primary:hover {
-  background: #2563eb;
-  border-color: #2563eb;
-}
-
-.admin-action-button.danger {
-  background: #ef4444;
-  border-color: #ef4444;
-}
-
-.admin-action-button.danger:hover {
-  background: #dc2626;
-  border-color: #dc2626;
-}
-
-/* Status Indicators */
-.admin-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.admin-status.online {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22c55e;
-}
-
-.admin-status.offline {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-}
-
-.admin-status.pending {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-}
-
-/* Data Table Enhancements */
-.admin-data-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
+.admin-tabs-container {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 1rem !important;
+  margin-bottom: 1.5rem;
   overflow: hidden;
 }
 
-.admin-data-table th {
-  background: rgba(0, 0, 0, 0.2);
-  color: #a1a1aa;
-  font-weight: 600;
-  padding: 16px;
-  text-align: left;
+.admin-tabs {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.admin-tab {
+  color: #a1a1aa !important;
+  text-transform: none;
+  font-weight: 500;
+}
+
+.admin-tab.Mui-selected {
+  color: #3b82f6 !important;
+}
+
+/* Material-UI Tab Overrides */
+.admin-tabs .MuiTab-root {
+  color: #a1a1aa !important;
+}
+
+.admin-tabs .MuiTab-root.Mui-selected {
+  color: #3b82f6 !important;
+}
+
+.admin-tabs .MuiTabs-indicator {
+  background-color: #3b82f6 !important;
+}
+
+/* Search Section */
+.admin-search-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.admin-data-table td {
-  padding: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: white;
-}
-
-.admin-data-table tr:hover {
-  background: rgba(59, 130, 246, 0.05);
-}
-
-/* Filter and Sort Controls */
-.admin-controls {
+.admin-search-container {
   display: flex;
-  gap: 1rem;
   align-items: center;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.admin-filter {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  color: white;
-  padding: 8px 12px;
-  min-width: 120px;
-}
-
-.admin-filter:focus {
-  border-color: #3b82f6;
-  outline: none;
-}
-
-/* Export and Import Controls */
-.admin-export-controls {
-  display: flex;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  flex: 1;
 }
 
-.admin-export-button {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: #22c55e;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.admin-search-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.75rem 1rem;
   font-size: 0.875rem;
 }
 
-.admin-export-button:hover {
-  background: rgba(34, 197, 94, 0.2);
-  border-color: #22c55e;
+.admin-search-input::placeholder {
+  color: #a1a1aa;
 }
 
-/* Notification Styles */
-.admin-notification {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  max-width: 300px;
-  animation: slideInRight 0.3s ease-out;
+.admin-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.15);
 }
 
-@keyframes slideInRight {
-  0% {
-    transform: translateX(100%);
+/* Material-UI TextField Overrides for Search */
+.admin-search-input .MuiOutlinedInput-root {
+  color: white !important;
+}
+
+.admin-search-input .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.admin-search-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.admin-search-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #3b82f6 !important;
+}
+
+.admin-search-input .MuiInputBase-input::placeholder {
+  color: #a1a1aa !important;
+  opacity: 1 !important;
+}
+
+.admin-search-icon {
+  color: #a1a1aa;
+}
+
+/* Table */
+.admin-table-container {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 1rem !important;
+  overflow: hidden;
+}
+
+.admin-table {
+  background: transparent !important;
+}
+
+.admin-table-header {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.admin-table-header-cell {
+  color: #a1a1aa !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+.admin-table-cell {
+  color: white !important;
+  max-width: 0;
+  overflow: hidden;
+}
+
+.admin-table-cell .MuiBox-root {
+  width: 100%;
+}
+
+/* Column width constraints for better truncation */
+.admin-column-name {
+  max-width: 200px;
+}
+
+.admin-column-email {
+  max-width: 250px;
+}
+
+.admin-column-type {
+  max-width: 120px;
+}
+
+.admin-column-status {
+  max-width: 100px;
+}
+
+.admin-column-created {
+  max-width: 150px;
+}
+
+.admin-column-actions {
+  max-width: 100px;
+}
+
+/* Tooltip management to prevent overlapping */
+.MuiTooltip-tooltip {
+  z-index: 9999 !important;
+}
+
+/* Ensure sort tooltips appear above content tooltips */
+.admin-table-header-cell .MuiTooltip-tooltip {
+  z-index: 10000 !important;
+}
+
+.admin-table-row:hover {
+  background: rgba(59, 130, 246, 0.05) !important;
+}
+
+/* Action Buttons */
+.admin-action-button {
+  color: #3b82f6 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  padding: 8px !important;
+}
+
+.admin-action-button:hover {
+  background: rgba(59, 130, 246, 0.1) !important;
+  transform: scale(1.1) !important;
+  color: #2563eb !important;
+}
+
+.admin-action-button:active {
+  transform: scale(0.95) !important;
+  background: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Pagination */
+.admin-pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  color: #a1a1aa !important;
+}
+
+/* Material-UI Pagination Overrides */
+.admin-pagination-container .MuiTablePagination-select {
+  color: white !important;
+}
+
+.admin-pagination-container .MuiTablePagination-selectIcon {
+  color: #a1a1aa !important;
+}
+
+/* Dialog Styles */
+.admin-detail-dialog,
+.admin-upload-dialog,
+.admin-folder-dialog,
+.admin-delete-dialog {
+  background: rgba(15, 15, 35, 0.95) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 1rem !important;
+  color: white !important;
+}
+
+/* Ensure dialogs stay within the main container */
+.admin-dashboard-container-main .MuiDialog-root {
+  position: relative !important;
+  z-index: 1300 !important;
+}
+
+.admin-dashboard-container-main .MuiDialog-paper {
+  position: relative !important;
+  margin: 16px !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 32px) !important;
+  overflow: auto !important;
+}
+
+/* Constrain dialog positioning to stay within the admin container */
+.admin-dashboard-container-main .MuiBackdrop-root {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 1200 !important;
+}
+
+/* Ensure success/error messages stay within container */
+.admin-dashboard-container-main .MuiAlert-root {
+  position: relative !important;
+  z-index: 1100 !important;
+  margin: 8px !important;
+  max-width: calc(100% - 16px) !important;
+}
+
+/* Admin container alert positioning */
+.admin-container .admin-error-alert {
+  margin: 1rem 0 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Menu positioning to stay within container */
+.admin-dashboard-container-main .MuiMenu-root {
+  position: relative !important;
+  z-index: 1400 !important;
+}
+
+.admin-dashboard-container-main .MuiMenu-paper {
+  position: relative !important;
+  max-width: calc(100vw - 32px) !important;
+  max-height: calc(100vh - 32px) !important;
+  overflow: auto !important;
+}
+
+/* Detail Dialog */
+.admin-detail-content {
+  margin-top: 1rem;
+}
+
+.admin-detail-section {
+  margin-bottom: 1.5rem;
+}
+
+.admin-detail-label {
+  color: #a1a1aa;
+  margin-bottom: 0.5rem;
+}
+
+.admin-detail-value {
+  color: white;
+}
+
+.admin-detail-message {
+  color: white;
+  white-space: pre-wrap;
+}
+
+.admin-detail-chip {
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.admin-detail-chip .MuiChip-label {
+  color: white;
+  font-weight: 600;
+}
+
+/* File Upload Dialog */
+.admin-upload-content {
+  margin-top: 1rem;
+}
+
+.admin-upload-section {
+  margin-bottom: 1rem;
+}
+
+.admin-upload-label {
+  color: #a1a1aa;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.admin-upload-file {
+  margin-bottom: 0.5rem;
+}
+
+.admin-upload-file-name {
+  color: white;
+}
+
+.admin-upload-progress {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+}
+
+.admin-upload-progress-bar {
+  background-color: #3b82f6;
+  border-radius: 0.5rem;
+  height: 0.25rem;
+}
+
+.admin-upload-progress-text {
+  color: #a1a1aa;
+  margin-top: 0.5rem;
+  font-weight: normal;
+}
+
+.admin-upload-actions {
+  margin-top: 1rem;
+}
+
+.admin-upload-cancel {
+  color: #a1a1aa !important;
+}
+
+/* Folder Dialog */
+.admin-folder-content {
+  margin-top: 1rem;
+}
+
+.admin-folder-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.admin-folder-input::placeholder {
+  color: #a1a1aa;
+}
+
+.admin-folder-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Material-UI TextField Overrides for Folder Input */
+.admin-folder-input .MuiOutlinedInput-root {
+  color: white !important;
+}
+
+.admin-folder-input .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.admin-folder-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.admin-folder-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #3b82f6 !important;
+}
+
+.admin-folder-input .MuiInputLabel-root {
+  color: #a1a1aa !important;
+}
+
+.admin-folder-actions {
+  margin-top: 1rem;
+}
+
+.admin-folder-cancel {
+  color: #a1a1aa !important;
+}
+
+.admin-folder-create {
+  color: #3b82f6 !important;
+}
+
+/* Delete Confirmation Dialog */
+.admin-delete-dialog-content {
+  padding: 1.5rem;
+}
+
+.admin-delete-dialog-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.admin-delete-dialog-icon-container {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.admin-delete-dialog-icon {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.admin-delete-dialog-title {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.admin-delete-dialog-text {
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.admin-delete-dialog-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+.admin-delete-dialog-warning-text {
+  color: #6b7280;
+}
+
+.admin-delete-dialog-actions {
+  padding: 1.5rem;
+  padding-top: 0;
+}
+
+.admin-delete-dialog-cancel {
+  margin-right: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #6b7280;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.admin-delete-dialog-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.admin-delete-dialog-confirm {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.admin-delete-dialog-confirm:hover {
+  background-color: #dc2626;
+}
+
+/* List Item Typography */
+.admin-list-item-primary {
+  color: white !important;
+  font-size: 0.875rem !important;
+}
+
+.admin-list-item-secondary {
+  color: #a1a1aa !important;
+  font-size: 0.75rem !important;
+}
+
+/* File Manager Responsive Behavior */
+@media (max-width: 950px) {
+  .admin-file-manager {
+    width: auto !important;
+    min-width: 200px;
+  }
+  
+  .admin-file-manager .admin-file-manager-content {
     opacity: 0;
+    transform: translateY(-10px);
   }
-  100% {
-    transform: translateX(0);
+  
+  .admin-file-manager.expanded .admin-file-manager-content {
     opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Fix admin content area to fit within container */
+  .admin-content-area {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  /* Shrink email column width */
+  .admin-column-email {
+    max-width: 150px !important;
+  }
+  
+  /* Shrink created column width */
+  .admin-column-created {
+    max-width: 120px !important;
+  }
+  
+  /* Ensure text truncation works properly */
+  .admin-table-cell.admin-column-email,
+  .admin-table-cell.admin-column-created {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Add tooltip hover for truncated text */
+  .admin-table-cell.admin-column-email .MuiBox-root,
+  .admin-table-cell.admin-column-created .MuiBox-root {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    width: 100% !important;
   }
 }
 
-.admin-notification.success {
-  border-color: #22c55e;
-  background: rgba(34, 197, 94, 0.95);
-  color: white;
+/* Truncated Text Class */
+.admin-truncated-text {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
 }
 
-.admin-notification.error {
-  border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.95);
-  color: white;
+@media (min-width: 951px) {
+  .admin-file-manager {
+    width: 300px !important;
+  }
+  
+  .admin-file-manager .admin-file-manager-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Restructure layout for larger screens */
+  .admin-main-content {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  
+  /* Move file manager below content area */
+  .admin-file-manager-paper {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-top: 2rem !important;
+  }
+  
+  /* Create compact file manager buttons section */
+  .admin-file-manager-compact {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-bottom: 1rem !important;
+    padding: 1rem !important;
+    background: rgba(15, 15, 35, 0.8) !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  }
+  
+  /* Compact button styles */
+  .admin-file-manager-compact .admin-upload-button,
+  .admin-file-manager-compact .admin-create-folder-button,
+  .admin-file-manager-compact .admin-document-button {
+    color: white !important;
+    transition: all 0.2s ease !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+  }
+
+  /*  button styles */
+
+  .admin-file-manager-compact .admin-upload-button,
+  .admin-file-manager-compact .admin-create-folder-button,
+  .admin-file-manager-compact .admin-document-button {
+    color: white !important;
+    transition: all 0.2s ease !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+  }
+  
+  .admin-file-manager-compact .admin-upload-button {
+    color: #3b82f6 !important;
+  }
+  
+  .admin-file-manager-compact .admin-create-folder-button {
+    color: #22c55e !important;
+  }
+  
+  .admin-file-manager-compact .admin-document-button {
+    color: #f59e0b !important;
+  }
+  
+  .admin-file-manager-compact .admin-upload-button:hover,
+  .admin-file-manager-compact .admin-create-folder-button:hover,
+  .admin-file-manager-compact .admin-document-button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    transform: scale(1.1) !important;
+  }
+  
+  /* Divider line */
+  .admin-section-divider {
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent) !important;
+    margin: 2rem 0 !important;
+    border: none !important;
+  }
+  
+  /* Hide the original file manager on larger screens */
+  .admin-file-manager-paper {
+    display: none !important;
+  }
+  
+  /* Show the compact version */
+  .admin-file-manager-compact {
+    display: flex !important;
+  }
+  
+  /* Show the moved file manager on larger screens */
+  .admin-file-manager-paper.moved {
+    display: block !important;
+  }
 }
 
-.admin-notification.warning {
-  border-color: #f59e0b;
-  background: rgba(245, 158, 11, 0.95);
-  color: white;
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-main-content {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+  }
+  
+  .admin-file-manager-paper {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+}
+
+@media (max-width: 1057px) {
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-table-header-cell.admin-column-type,
+  .admin-table-header-cell.admin-column-status {
+    display: none;
+  }
+  
+  .admin-table-cell.admin-column-type,
+  .admin-table-cell.admin-column-status {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-main-content {
+    height: auto;
+    min-height: auto;
+  }
+  
+  .admin-table-header-cell.admin-column-created {
+    display: none;
+  }
+  
+  .admin-table-cell.admin-column-created {
+    display: none;
+  }
+  
+  .admin-file-manager-paper {
+    height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-header-title {
+    font-size: 1.5rem;
+  }
+  
+  .admin-stats-card {
+    padding: 1rem;
+  }
+  
+  .admin-stats-number {
+    font-size: 1.5rem;
+  }
+  
+  .admin-table-header-cell.admin-column-email {
+    display: none;
+  }
+  
+  .admin-table-cell.admin-column-email {
+    display: none;
+  }
+  
+  .admin-main-content {
+    height: auto;
+    min-height: auto;
+  }
 } 
+
+/* Custom Status Chip Colors */
+.admin-status-chip-unread {
+  background-color: #be0303d1 !important;
+  color: white !important;
+}
+
+.admin-status-chip-unread .MuiChip-label {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.admin-status-chip-read {
+  background-color: #22c55e !important;
+  color: white !important;
+}
+
+.admin-status-chip-read .MuiChip-label {
+  color: white !important;
+  font-weight: 600 !important;
+} 
+
+/* Badge Color Override */
+.MuiBadge-badge {
+  background-color: #be0303d1 !important;
+  color: white !important;
+}
+
+/* Contact Submissions Badge - Red */
+.admin-tab:first-child .MuiBadge-badge {
+  background-color: #be0303d1 !important;
+  color: white !important;
+}
+
+/* Waitlist Entries Badge - Green */
+.admin-tab:last-child .MuiBadge-badge {
+  background-color: #016225 !important;
+  color: white !important;
+}
+
+/* Custom Icon Colors for File Manager */
+
+/* Action Buttons (Header) */
+.admin-upload-button {
+  color: #3b82f6 !important; /* Blue */
+}
+
+.admin-create-folder-button {
+  color: #22c55e !important; /* Green */
+}
+
+/* File Type Icons */
+.admin-file-icon {
+  color: #3b82f6 !important; /* Blue for generic files */
+}
+
+.admin-folder-icon {
+  color: #f59e0b !important; /* Orange for folders */
+}
+
+/* Specific File Type Icons */
+.admin-file-icon .MuiSvgIcon-root[data-testid="PdfIcon"] {
+  color: #ef4444 !important; /* Red for PDF */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="ExcelIcon"] {
+  color: #22c55e !important; /* Green for Excel */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="WordIcon"] {
+  color: #3b82f6 !important; /* Blue for Word */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="PowerPointIcon"] {
+  color: #f59e0b !important; /* Orange for PowerPoint */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="ImageIcon"] {
+  color: #8b5cf6 !important; /* Purple for images */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="VideoIcon"] {
+  color: #ec4899 !important; /* Pink for videos */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="AudioIcon"] {
+  color: #06b6d4 !important; /* Cyan for audio */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="ArchiveIcon"] {
+  color: #f97316 !important; /* Orange for archives */
+}
+
+.admin-file-icon .MuiSvgIcon-root[data-testid="TextIcon"] {
+  color: #64748b !important; /* Gray for text files */
+}
+
+/* Action Icons */
+.admin-delete-icon {
+  color: #be0303d1 !important; /* Red for delete */
+}
+
+.admin-edit-icon {
+  color: #f59e0b !important; /* Orange for edit */
+}
+
+/* Navigation Icons */
+.admin-breadcrumb .MuiIconButton-root {
+  color: #6b7280 !important; /* Gray for back button */
+}
+
+/* Sort Icons */
+.admin-sort-icon-active {
+  color: #FF0000 !important; /* Red for active sort */
+}
+
+.admin-sort-icon-inactive {
+  color: #666 !important; /* Gray for inactive sort */
+} 
+
+
+
+/* Menu Item Delete Icon */
+.MuiMenuItem-root .MuiSvgIcon-root[data-testid="DeleteIcon"] {
+  color: #be0303d1 !important; /* Red for menu item delete */
+}
+
+
+

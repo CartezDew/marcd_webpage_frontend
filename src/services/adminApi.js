@@ -1,35 +1,19 @@
+import { devLog, devError } from "../utils/logger";
 // Admin API service for fetching contact and waitlist data
+import api from './apiConfig';
 
-const API_BASE_URL = 'http://localhost:8000';
 
-// Helper function to handle API responses
-const handleResponse = async (response) => {
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
-  }
-  return response.json();
-};
-
-// Helper function to get auth headers
-const getAuthHeaders = () => {
-  const token = localStorage.getItem('adminToken');
-  return {
-    'Content-Type': 'application/json',
-    ...(token && { 'Authorization': `Bearer ${token}` })
-  };
-};
 
 // Fetch contact submissions
 export const fetchContactData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/contactus/`, {
-      method: 'GET',
-      headers: getAuthHeaders(),
-    });
-    return await handleResponse(response);
+    const response = await api.get('/contactus/');
+    devLog('Fetched contact data:', response.data);
+    devLog('is_read values in fetched data:', response.data.map(contact => ({ id: contact.id, contact_id: contact.contact_id, is_read: contact.is_read })));
+    devLog('Full fetched data:', JSON.stringify(response.data, null, 2));
+    return response.data;
   } catch (error) {
-    console.error('Error fetching contact data:', error);
+    devError('Error fetching contact data:', error);
     throw error;
   }
 };
@@ -37,28 +21,41 @@ export const fetchContactData = async () => {
 // Fetch waitlist entries
 export const fetchWaitlistData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/waitlist-entries/`, {
-      method: 'GET',
-      headers: getAuthHeaders(),
-    });
-    return await handleResponse(response);
+    const response = await api.get('/waitlist-entries/');
+    return response.data;
   } catch (error) {
-    console.error('Error fetching waitlist data:', error);
+    devError('Error fetching waitlist data:', error);
     throw error;
   }
 };
 
 // Update contact submission (mark as read/unread)
-export const updateContactStatus = async (contactId, isRead) => {
+export const updateContactStatus = async (contactId, isRead, contactData = null) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/contactus/${contactId}/`, {
-      method: 'PATCH',
-      headers: getAuthHeaders(),
-      body: JSON.stringify({ is_read: isRead }),
-    });
-    return await handleResponse(response);
+    let updateData;
+    
+    // Try sending just the is_read field first
+    updateData = { is_read: isRead };
+    
+    // If that doesn't work, we can try the complete object approach
+    // if (contactData) {
+    //   updateData = { ...contactData, is_read: isRead };
+    // }
+    
+    devLog('Sending update data:', updateData);
+    devLog('Contact ID:', contactId);
+    
+    const response = await api.patch(`/contactus/${contactId}/`, updateData);
+    devLog('Response from backend:', response.data);
+    devLog('is_read value in response:', response.data.is_read);
+    devLog('Full response object:', JSON.stringify(response.data, null, 2));
+    return response.data;
   } catch (error) {
-    console.error('Error updating contact status:', error);
+    devError('Error updating contact status:', error);
+    if (error.response) {
+      devError('Error response data:', error.response.data);
+      devError('Error response status:', error.response.status);
+    }
     throw error;
   }
 };
@@ -66,16 +63,10 @@ export const updateContactStatus = async (contactId, isRead) => {
 // Delete contact submission
 export const deleteContact = async (contactId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/contactus/${contactId}/`, {
-      method: 'DELETE',
-      headers: getAuthHeaders(),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return true;
+    const response = await api.delete(`/contactus/${contactId}/`);
+    return response.data;
   } catch (error) {
-    console.error('Error deleting contact:', error);
+    devError('Error deleting contact:', error);
     throw error;
   }
 };
@@ -83,16 +74,10 @@ export const deleteContact = async (contactId) => {
 // Delete waitlist entry
 export const deleteWaitlistEntry = async (entryId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/waitlist-entries/${entryId}/`, {
-      method: 'DELETE',
-      headers: getAuthHeaders(),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return true;
+    const response = await api.delete(`/waitlist-entries/${entryId}/`);
+    return response.data;
   } catch (error) {
-    console.error('Error deleting waitlist entry:', error);
+    devError('Error deleting waitlist entry:', error);
     throw error;
   }
 };
@@ -100,26 +85,20 @@ export const deleteWaitlistEntry = async (entryId) => {
 // Export data functions
 export const exportContactData = async (format = 'csv') => {
   try {
-    const response = await fetch(`${API_BASE_URL}/contactus/export/?format=${format}`, {
-      method: 'GET',
-      headers: getAuthHeaders(),
-    });
-    return await handleResponse(response);
+    const response = await api.get(`/contactus/export/?format=${format}`);
+    return response.data;
   } catch (error) {
-    console.error('Error exporting contact data:', error);
+    devError('Error exporting contact data:', error);
     throw error;
   }
 };
 
 export const exportWaitlistData = async (format = 'csv') => {
   try {
-    const response = await fetch(`${API_BASE_URL}/waitlist-entries/export/?format=${format}`, {
-      method: 'GET',
-      headers: getAuthHeaders(),
-    });
-    return await handleResponse(response);
+    const response = await api.get(`/waitlist-entries/export/?format=${format}`);
+    return response.data;
   } catch (error) {
-    console.error('Error exporting waitlist data:', error);
+    devError('Error exporting waitlist data:', error);
     throw error;
   }
 };
@@ -127,14 +106,8 @@ export const exportWaitlistData = async (format = 'csv') => {
 // Authentication functions
 export const adminLogin = async (email, password) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/login/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await handleResponse(response);
+    const response = await api.post('/admin/login/', { email, password });
+    const data = response.data;
     
     // Store token if login successful
     if (data.token) {
@@ -144,25 +117,22 @@ export const adminLogin = async (email, password) => {
     
     return data;
   } catch (error) {
-    console.error('Error during admin login:', error);
+    devError('Error during admin login:', error);
     throw error;
   }
 };
 
 export const adminLogout = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/logout/`, {
-      method: 'POST',
-      headers: getAuthHeaders(),
-    });
+    const response = await api.post('/admin/logout/');
     
     // Clear local storage regardless of response
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminEmail');
     
-    return await handleResponse(response);
+    return response.data;
   } catch (error) {
-    console.error('Error during admin logout:', error);
+    devError('Error during admin logout:', error);
     // Still clear local storage even if API call fails
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminEmail');
