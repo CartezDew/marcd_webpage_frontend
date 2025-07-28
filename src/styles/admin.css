@@ -439,7 +439,7 @@
 } */
 
 /* Remove any list markers/bullets */
-/* .admin-file-manager-paper .MuiListItem-root {
+.admin-file-manager-paper .MuiListItem-root {
   list-style: none !important;
 }
 
@@ -449,10 +449,290 @@
 
 .admin-file-manager-paper .MuiListItem-root::after {
   content: none !important;
-} */
+}
 
-/* Material-UI ListItemIcon color override */
+/* Additional marker removal for all list items */
+.admin-file-manager-paper .MuiList-root {
+  list-style: none !important;
+}
 
+.admin-file-manager-paper .MuiList-root .MuiListItem-root {
+  list-style: none !important;
+}
+
+.admin-file-manager-paper .MuiList-root .MuiListItem-root::marker {
+  display: none !important;
+  content: none !important;
+}
+
+/* Comprehensive marker removal for all list elements */
+.admin-file-manager-paper ul,
+.admin-file-manager-paper ol,
+.admin-file-manager-paper li {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.admin-file-manager-paper ul::marker,
+.admin-file-manager-paper ol::marker,
+.admin-file-manager-paper li::marker {
+  display: none !important;
+  content: none !important;
+}
+
+.admin-file-manager-paper ul::before,
+.admin-file-manager-paper ol::before,
+.admin-file-manager-paper li::before,
+.admin-file-manager-paper ul::after,
+.admin-file-manager-paper ol::after,
+.admin-file-manager-paper li::after {
+  content: none !important;
+}
+
+/* Target Material-UI specific classes */
+.admin-file-manager-paper .MuiList-root,
+.admin-file-manager-paper .MuiList-root ul,
+.admin-file-manager-paper .MuiList-root ol {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+
+.admin-file-manager-paper .MuiList-root li,
+.admin-file-manager-paper .MuiList-root .MuiListItem-root {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+
+/* Remove any default browser list styling */
+.admin-file-manager-paper * {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.admin-file-manager-paper *::marker {
+  display: none !important;
+  content: none !important;
+}
+
+/* Target individual ListItem components */
+.admin-file-manager-paper .MuiListItem-root,
+.admin-file-manager-paper .MuiListItem-root::marker,
+.admin-file-manager-paper .MuiListItem-root::before,
+.admin-file-manager-paper .MuiListItem-root::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  content: none !important;
+  display: block !important;
+}
+
+/* Force remove any remaining markers */
+.admin-file-manager-paper .MuiListItem-root {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.admin-file-manager-paper .MuiListItem-root::marker {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Target the file manager content area specifically */
+.admin-file-manager-content .MuiListItem-root,
+.admin-file-manager-content .MuiListItem-root::marker,
+.admin-file-manager-content .MuiListItem-root::before,
+.admin-file-manager-content .MuiListItem-root::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  content: none !important;
+  display: block !important;
+}
+
+/* Target any list elements within the file manager */
+.admin-file-manager-paper li,
+.admin-file-manager-paper li::marker,
+.admin-file-manager-paper li::before,
+.admin-file-manager-paper li::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  content: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Nuclear option - remove all list styling from the entire file manager */
+.admin-file-manager-paper,
+.admin-file-manager-paper *,
+.admin-file-manager-paper *::marker,
+.admin-file-manager-paper *::before,
+.admin-file-manager-paper *::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  content: none !important;
+}
+
+/* Ultra-aggressive marker removal */
+.admin-file-manager-paper .MuiListItem-root,
+.admin-file-manager-paper .MuiListItem-root::marker,
+.admin-file-manager-paper .MuiListItem-root::before,
+.admin-file-manager-paper .MuiListItem-root::after,
+.admin-file-manager-paper .MuiListItem-root li,
+.admin-file-manager-paper .MuiListItem-root li::marker,
+.admin-file-manager-paper .MuiListItem-root li::before,
+.admin-file-manager-paper .MuiListItem-root li::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  content: none !important;
+  display: block !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Target the specific container that holds the list items */
+.admin-file-manager-content,
+.admin-file-manager-content .MuiListItem-root,
+.admin-file-manager-content .MuiListItem-root::marker,
+.admin-file-manager-content .MuiListItem-root::before,
+.admin-file-manager-content .MuiListItem-root::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  content: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Comprehensive marker removal for all list items in file manager */
+.admin-file-manager-paper .MuiListItem-root {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.admin-file-manager-paper .MuiListItem-root::marker {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+
+.admin-file-manager-paper .MuiListItem-root::before {
+  content: none !important;
+  display: none !important;
+}
+
+.admin-file-manager-paper .MuiListItem-root::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Target the specific file manager container */
+.admin-file-manager-paper .admin-file-manager-content .MuiListItem-root,
+.admin-file-manager-paper .admin-file-manager-content .MuiListItem-root::marker,
+.admin-file-manager-paper .admin-file-manager-content .MuiListItem-root::before,
+.admin-file-manager-paper .admin-file-manager-content .MuiListItem-root::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  content: none !important;
+  display: block !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Remove any potential list markers from the entire file manager area */
+.admin-file-manager-paper [class*="MuiListItem"],
+.admin-file-manager-paper [class*="MuiListItem"]::marker,
+.admin-file-manager-paper [class*="MuiListItem"]::before,
+.admin-file-manager-paper [class*="MuiListItem"]::after {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  content: none !important;
+  display: block !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* Force remove any remaining visual indicators */
+.admin-file-manager-paper * {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+}
+
+.admin-file-manager-paper *::marker {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Target all possible Material-UI list classes */
+.admin-file-manager-paper [class*="MuiList"],
+.admin-file-manager-paper [class*="MuiListItem"],
+.admin-file-manager-paper [class*="MuiList-root"],
+.admin-file-manager-paper [class*="MuiListItem-root"] {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.admin-file-manager-paper [class*="MuiList"]::marker,
+.admin-file-manager-paper [class*="MuiListItem"]::marker,
+.admin-file-manager-paper [class*="MuiList-root"]::marker,
+.admin-file-manager-paper [class*="MuiListItem-root"]::marker {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Target any element that might have list styling */
+.admin-file-manager-paper div[role="listitem"],
+.admin-file-manager-paper li,
+.admin-file-manager-paper ul,
+.admin-file-manager-paper ol {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-image: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+.admin-file-manager-paper div[role="listitem"]::marker,
+.admin-file-manager-paper li::marker,
+.admin-file-manager-paper ul::marker,
+.admin-file-manager-paper ol::marker {
+  display: none !important;
+  content: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+}
 
 /* Edit Mode */
 .admin-edit-container {
