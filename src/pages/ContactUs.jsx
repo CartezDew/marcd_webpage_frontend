@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import {
   Container,
   TextField,
-  Grid,
   Button,
   CircularProgress,
   Typography,
@@ -13,6 +12,7 @@ import {
   Select,
   FormControl,
   InputLabel,
+  Stack,
 } from "@mui/material";
 
 
@@ -283,14 +283,13 @@ function ContactUs() {
         <Card ref={cardRef} className={`contact-card ${isCardVisible ? 'animate' : ''}`}>
           <CardContent>
             <Box sx={{ px: 1 }}>
-              <Grid container spacing={2} justifyContent="center" alignItems="center">
+              <Stack spacing={2} alignItems="center">
                 {/* First + Last Name */}
-                <Grid item xs={12} sx={{width: "90%"}}>
-                  <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
-                    <TextField
-                      fullWidth
-                      required
-                      label="First Name"
+                <Box sx={{ display: "flex", gap: "8px", width: "90%" }}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="First Name"
                       name="first_name"
                       value={formData.first_name}
                       onChange={handleChange}
@@ -303,13 +302,11 @@ function ContactUs() {
                       value={formData.last_name}
                       onChange={handleChange}
                     />
-                  </Box>
-                </Grid>
+                </Box>
 
                 {/* Email + Contact Reason */}
-                <Grid item xs={12} sx={{width: "90%"}}>
-                  <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
-                    <TextField
+                <Box sx={{ display: "flex", gap: "8px", width: "90%" }}>
+                  <TextField
                       fullWidth
                       required
                       label="Email"
@@ -361,13 +358,11 @@ function ContactUs() {
                         ))}
                       </Select>
                     </FormControl>
-                  </Box>
-                </Grid>
+                </Box>
 
                 {/* Social Media + Phone */}
-                <Grid item xs={12} sx={{width: "90%"}}>
-                  <Box sx={{ display: "flex", gap: "8px", width: "100%" }}>
-                    <TextField
+                <Box sx={{ display: "flex", gap: "8px", width: "90%" }}>
+                  <TextField
                       fullWidth
                       label="Social Media Handle"
                       name="social_media"
@@ -389,11 +384,10 @@ function ContactUs() {
                       error={Boolean(phoneError)}
                       helperText={phoneError}
                     />
-                  </Box>
-                </Grid>
+                </Box>
 
                 {/* Message */}
-                <Grid item xs={12} sx={{width: "90%"}}>
+                <Box sx={{ width: "90%" }}>
                   <TextField
                     fullWidth
                     required
@@ -404,14 +398,14 @@ function ContactUs() {
                     value={formData.message}
                     onChange={handleChange}
                   />
-                </Grid>
+                </Box>
 
                 {error && (
-                  <Grid item xs={12}>
+                  <Box sx={{ width: "90%" }}>
                     <Typography color="error" align="center">{error}</Typography>
-                  </Grid>
+                  </Box>
                 )}
-              </Grid>
+              </Stack>
             </Box>
           </CardContent>
         </Card>

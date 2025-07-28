@@ -19,6 +19,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   color: white;
+  border-radius: 12px;
 }
 
 .admin-container {
@@ -305,6 +306,55 @@
   color: white;
 }
 
+/* Text truncation for responsive columns */
+.admin-column-name,
+.admin-column-email,
+.admin-column-created {
+  max-width: 150px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Specific column widths for better responsive behavior */
+.admin-column-name {
+  max-width: 120px !important;
+}
+
+.admin-column-email {
+  max-width: 180px !important;
+}
+
+.admin-column-created {
+  max-width: 100px !important;
+}
+
+/* Ensure table cells in body also get truncation */
+.admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableCell-root {
+  max-width: 150px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Override for specific columns in table body */
+.admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-child(1) {
+  max-width: 120px !important; /* Name column */
+}
+
+.admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-child(2) {
+  max-width: 180px !important; /* Email column */
+}
+
+.admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-child(5) {
+  max-width: 100px !important; /* Created column for contact submissions */
+}
+
+/* For waitlist entries (only email and created columns) */
+.admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-child(2) {
+  max-width: 200px !important; /* Email column for waitlist */
+}
+
 .admin-view-button {
   color: #3b82f6;
 }
@@ -372,19 +422,29 @@
 }
 
 .admin-upload-button {
-  color: #3b82f6;
+  color: #3b82f6 !important;
+  background-color: transparent !important;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.2s ease;
 }
 
 .admin-upload-button:hover {
-  background-color: rgba(59, 130, 246, 0.1);
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #3b82f6 !important;
 }
 
 .admin-create-folder-button {
-  color: #22c55e;
+  color: #22c55e !important;
+  background-color: transparent !important;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.2s ease;
 }
 
 .admin-create-folder-button:hover {
-  background-color: rgba(34, 197, 94, 0.1);
+  background-color: rgba(34, 197, 94, 0.1) !important;
+  color: #22c55e !important;
 }
 
 .admin-file-manager-content {

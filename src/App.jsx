@@ -59,7 +59,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          backgroundColor: 'transparent',
+          backgroundColor: 'rgba(15, 15, 35, 0.6)',
           backgroundImage: 'none',
         },
       },
@@ -68,7 +68,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          backgroundColor: 'transparent',
+          backgroundColor: 'rgba(15, 15, 35, 0.6)',
           backgroundImage: 'none',
         },
       },
