@@ -8,11 +8,11 @@
 }
 
 .admin-dashboard-loading .MuiCircularProgress-root {
-  color: #3b82f6;
+  color: #be0303;
 }
 
 .admin-loading-spinner {
-  color: #3b82f6;
+  color: #be0303;
 }
 
 .admin-dashboard-main {
@@ -20,6 +20,13 @@
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   color: white;
   border-radius: 12px;
+}
+
+/* Override Material-UI Paper white backgrounds in admin dashboard */
+.admin-dashboard-main .css-irmood-MuiPaper-root,
+.admin-dashboard-main .MuiPaper-root {
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 .admin-container {
@@ -42,7 +49,7 @@
 
 .admin-dashboard-icon {
   font-size: 2.5rem;
-  color: #3b82f6;
+  color: #be0303;
 }
 
 .admin-title {
@@ -111,7 +118,8 @@
 
 .admin-stats-icon-contact {
   font-size: 2.5rem;
-  color: #3b82f6;
+  color: #be0303;
+  color: #4d4ddc;
 }
 
 .admin-stats-icon-waitlist {

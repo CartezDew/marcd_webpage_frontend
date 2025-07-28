@@ -59,7 +59,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          backgroundColor: 'rgba(15, 15, 35, 0.6)',
+          // backgroundColor: 'rgba(10, 9, 9, 0.6)',
           backgroundImage: 'none',
         },
       },
@@ -68,7 +68,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          backgroundColor: 'rgba(15, 15, 35, 0.6)',
+          backgroundColor: 'none',
           backgroundImage: 'none',
         },
       },
@@ -77,7 +77,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiTabs-indicator': {
-            backgroundColor: '#3b82f6 !important',
+            backgroundColor: '#be0303 !important',
             height: '3px !important',
           },
         },
@@ -92,7 +92,7 @@ const theme = createTheme({
           minHeight: '48px !important',
           padding: '0.75rem 1.5rem !important',
           '&.Mui-selected': {
-            color: '#3b82f6 !important',
+            color: '#be0303 !important',
             backgroundColor: 'transparent !important',
           },
           '&:hover': {
