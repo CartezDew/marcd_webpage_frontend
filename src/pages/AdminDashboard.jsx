@@ -63,7 +63,9 @@ import {
   VideoFile as VideoIcon,
   Audiotrack as AudioIcon,
   Archive as ArchiveIcon,
-  TextFields as TextIcon
+  TextFields as TextIcon,
+  MoreVert as MoreVertIcon,
+  Edit as EditIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { fetchContactData, fetchWaitlistData, updateContactStatus } from '../services/adminApi';
@@ -109,12 +111,15 @@ const AdminDashboard = () => {
   const [uploadingFiles, setUploadingFiles] = useState([]);
   const [fileMenuAnchor, setFileMenuAnchor] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [folderMenuAnchor, setFolderMenuAnchor] = useState(null);
+  const [selectedFolder, setSelectedFolder] = useState(null);
   const [draggedFile, setDraggedFile] = useState(null);
   const [dragOverFolder, setDragOverFolder] = useState(null);
   const [showMoveSuccess, setShowMoveSuccess] = useState(false);
   const [moveMessage, setMoveMessage] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [folderToDelete, setFolderToDelete] = useState(null);
+  const [deleteType, setDeleteType] = useState(null); // 'file' or 'folder'
   const [editingItem, setEditingItem] = useState(null); // { type: 'file' | 'folder', id: number, name: string }
   const [editName, setEditName] = useState('');
 
@@ -533,6 +538,16 @@ const AdminDashboard = () => {
     setSelectedFile(null);
   };
 
+  const handleFolderMenuOpen = (event, folder) => {
+    setFolderMenuAnchor(event.currentTarget);
+    setSelectedFolder(folder);
+  };
+
+  const handleFolderMenuClose = () => {
+    setFolderMenuAnchor(null);
+    setSelectedFolder(null);
+  };
+
   const handleDeleteFile = async () => {
     if (selectedFile) {
       try {
@@ -604,6 +619,8 @@ const AdminDashboard = () => {
   const cancelDeleteFolder = () => {
     setShowDeleteConfirm(false);
     setFolderToDelete(null);
+    setSelectedFile(null);
+    setDeleteType(null);
   };
 
   // Inline editing functions
@@ -682,30 +699,60 @@ const AdminDashboard = () => {
   };
 
   const handleDownloadFile = async () => {
-    if (selectedFile) {
-      try {
-        const blob = await fileApi.downloadFile(selectedFile.id);
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = selectedFile.name;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-        handleFileMenuClose();
-      } catch (error) {
-        if (error.message === 'Authentication required. Please log in again.') {
-          // Clear tokens and redirect to login
-          localStorage.removeItem('adminToken');
-          localStorage.removeItem('token');
-          localStorage.removeItem('adminEmail');
-          window.location.href = '/signin';
-          return;
-        }
-        setError('Failed to download file. Please try again.');
-        console.error('Error downloading file:', error);
-      }
+    if (!selectedFile) return;
+    
+    try {
+      const response = await fileApi.downloadFile(selectedFile.id);
+      
+      // Create a blob from the response data
+      const blob = new Blob([response.data], { 
+        type: response.headers['content-type'] || 'application/octet-stream' 
+      });
+      
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = selectedFile.name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      handleFileMenuClose();
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      setError('Failed to download file. Please try again.');
+    }
+  };
+
+  const handleDuplicateFile = async () => {
+    if (!selectedFile) return;
+    
+    try {
+      await fileApi.duplicateFile(selectedFile.id);
+      // Refresh the file list to show the new duplicate
+      await loadFileData();
+      handleFileMenuClose();
+      setError(null);
+    } catch (error) {
+      console.error('Error duplicating file:', error);
+      setError('Failed to duplicate file. Please try again.');
+    }
+  };
+
+  const handleDuplicateFolder = async () => {
+    if (!selectedFolder) return;
+    
+    try {
+      await fileApi.duplicateFolder(selectedFolder.id);
+      // Refresh the folder list to show the new duplicate
+      await loadFileData();
+      handleFolderMenuClose();
+      setError(null);
+    } catch (error) {
+      console.error('Error duplicating folder:', error);
+      setError('Failed to duplicate folder. Please try again.');
     }
   };
 
@@ -1471,36 +1518,10 @@ const AdminDashboard = () => {
                       <ListItemSecondaryAction>
                         <IconButton
                           size="small"
-                          onClick={() => handleDeleteFolder(folder)}
-                          sx={{ 
-                            color: '#ef4444',
-                            width: 24,
-                            height: 24,
-                            '&:hover': {
-                              backgroundColor: 'rgba(239, 68, 68, 0.1)'
-                            }
-                          }}
+                          onClick={(e) => handleFolderMenuOpen(e, folder)}
+                          sx={{ color: '#a1a1aa' }}
                         >
-                          <Box
-                            sx={{
-                              width: 12,
-                              height: 12,
-                              borderRadius: '50%',
-                              border: '1.5px solid #ef4444',
-                              position: 'relative',
-                              '&::after': {
-                                content: '""',
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)',
-                                width: '6px',
-                                height: '1.5px',
-                                backgroundColor: '#ef4444',
-                                borderRadius: '1px'
-                              }
-                            }}
-                          />
+                          <MoreVertIcon />
                         </IconButton>
                       </ListItemSecondaryAction>
                     </ListItem>
@@ -1543,7 +1564,7 @@ const AdminDashboard = () => {
                         onClick={(e) => handleFileMenuOpen(e, file)}
                         sx={{ color: '#a1a1aa' }}
                       >
-                        <AddIcon />
+                        <MoreVertIcon />
                       </IconButton>
                     }
                   >
@@ -1806,7 +1827,68 @@ const AdminDashboard = () => {
             </ListItemIcon>
             <ListItemText>Download</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleDeleteFile}>
+          <MenuItem onClick={handleDuplicateFile}>
+            <ListItemIcon>
+              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>📋</Box>
+            </ListItemIcon>
+            <ListItemText>Duplicate</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => {
+            setSelectedFile(selectedFile);
+            setDeleteType('file');
+            setShowDeleteConfirm(true);
+            handleFileMenuClose();
+          }}>
+            <ListItemIcon>
+              <DeleteIcon sx={{ color: '#ef4444' }} />
+            </ListItemIcon>
+            <ListItemText>Delete</ListItemText>
+          </MenuItem>
+        </Menu>
+
+        {/* Folder Menu */}
+        <Menu
+          anchorEl={folderMenuAnchor}
+          open={Boolean(folderMenuAnchor)}
+          onClose={handleFolderMenuClose}
+          PaperProps={{
+            sx: {
+              background: 'rgba(15, 15, 35, 0.95)',
+              border: '1px solid rgba(59, 130, 246, 0.3)',
+              color: 'white'
+            }
+          }}
+        >
+          <MenuItem onClick={() => {
+            startEditing(selectedFolder, 'folder');
+            handleFolderMenuClose();
+          }}>
+            <ListItemIcon>
+              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>✏️</Box>
+            </ListItemIcon>
+            <ListItemText>Rename</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => {
+            // TODO: Implement folder download functionality
+            handleFolderMenuClose();
+          }}>
+            <ListItemIcon>
+              <DownloadIcon sx={{ color: '#3b82f6' }} />
+            </ListItemIcon>
+            <ListItemText>Download</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleDuplicateFolder}>
+            <ListItemIcon>
+              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>📋</Box>
+            </ListItemIcon>
+            <ListItemText>Duplicate</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => {
+            setFolderToDelete(selectedFolder);
+            setDeleteType('folder');
+            setShowDeleteConfirm(true);
+            handleFolderMenuClose();
+          }}>
             <ListItemIcon>
               <DeleteIcon sx={{ color: '#ef4444' }} />
             </ListItemIcon>
@@ -1977,12 +2059,12 @@ const AdminDashboard = () => {
                 <DeleteIcon sx={{ color: 'white', fontSize: 24 }} />
               </Box>
               <Typography variant="h6" sx={{ color: '#1f2937', fontWeight: 600 }}>
-                Delete Folder
+                Delete {deleteType === 'file' ? 'File' : 'Folder'}
               </Typography>
             </Box>
             
             <Typography variant="body1" sx={{ color: '#374151', mb: 1 }}>
-              Are you sure you want to delete the folder
+              Are you sure you want to delete the {deleteType === 'file' ? 'file' : 'folder'}
             </Typography>
             <Typography 
               variant="body1" 
@@ -1996,10 +2078,13 @@ const AdminDashboard = () => {
                 display: 'inline-block'
               }}
             >
-              "{folderToDelete?.name}"
+              "{deleteType === 'file' ? selectedFile?.name : folderToDelete?.name}"
             </Typography>
             <Typography variant="body2" sx={{ color: '#6b7280' }}>
-              This action cannot be undone. All files and subfolders inside this folder will also be deleted.
+              {deleteType === 'file' 
+                ? 'This action cannot be undone. The file will be permanently deleted.'
+                : 'This action cannot be undone. All files and subfolders inside this folder will also be deleted.'
+              }
             </Typography>
           </DialogContent>
           
@@ -2018,7 +2103,7 @@ const AdminDashboard = () => {
               Cancel
             </Button>
             <Button
-              onClick={confirmDeleteFolder}
+              onClick={deleteType === 'file' ? handleDeleteFile : confirmDeleteFolder}
               variant="contained"
               sx={{
                 background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
@@ -2028,7 +2113,7 @@ const AdminDashboard = () => {
                 }
               }}
             >
-              Delete Folder
+              Delete {deleteType === 'file' ? 'File' : 'Folder'}
             </Button>
           </DialogActions>
         </Dialog>
