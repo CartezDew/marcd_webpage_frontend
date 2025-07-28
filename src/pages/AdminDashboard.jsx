@@ -298,7 +298,7 @@ const AdminDashboard = () => {
         // Don't show error to user, just log it
       }
     }
-    
+
     setDetailDialogOpen(false);
     setSelectedEntry(null);
   };
@@ -710,19 +710,19 @@ const AdminDashboard = () => {
       });
       
       // Create a download link
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = selectedFile.name;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = selectedFile.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       
-      handleFileMenuClose();
-    } catch (error) {
-      console.error('Error downloading file:', error);
-      setError('Failed to download file. Please try again.');
+        handleFileMenuClose();
+      } catch (error) {
+        console.error('Error downloading file:', error);
+    setError('Failed to download file. Please try again.');
     }
   };
 
@@ -961,41 +961,25 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <Box 
-        className="admin-dashboard-container"
-        sx={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <CircularProgress size={60} sx={{ color: '#3b82f6' }} />
+      <Box className="admin-dashboard-loading">
+        <CircularProgress size={60} className="admin-loading-spinner" />
       </Box>
     );
   }
 
   return (
-    <Box 
-      className={`admin-dashboard-container ${isVisible ? 'animate' : ''}`}
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)',
-        color: 'white'
-      }}
-    >
-      <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Box className={`admin-dashboard-main ${isVisible ? 'animate' : ''}`}>
+      <Container maxWidth="xl" className="admin-container">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -20 }}
           transition={{ duration: 0.6 }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', mb: 4 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <DashboardIcon sx={{ fontSize: 40, color: '#3b82f6' }} />
-              <Typography variant="h3" sx={{ fontWeight: 700, color: 'white' }}>
+          <Box className="admin-header">
+            <Box className="admin-header-content">
+              <DashboardIcon className="admin-dashboard-icon" />
+              <Typography variant="h3" className="admin-title">
                 Admin Dashboard
               </Typography>
             </Box>
@@ -1003,63 +987,35 @@ const AdminDashboard = () => {
         </motion.div>
 
         {/* Main Content Area */}
-        <Box className="admin-main-content" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box className="admin-main-content">
           {/* Main Content */}
-          <Box 
-            className="admin-content-area" 
-            sx={{ 
-              display: 'flex', 
-              flexDirection: 'column',
-              transition: 'margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              marginLeft: '0px' // Removed fileManagerCollapsed state
-            }}
-          >
+          <Box className="admin-content-area">
             {/* Stats Cards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Box className="admin-stats-grid" sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3, mb: 4 }}>
-                <Paper
-                  sx={{
-                    p: 3,
-                    background: 'rgba(59, 130, 246, 0.1)',
-                    border: '1px solid rgba(59, 130, 246, 0.3)',
-                    borderRadius: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2
-                  }}
-                >
-                  <ContactMailIcon sx={{ fontSize: 40, color: '#3b82f6' }} />
+              <Box className="admin-stats-grid">
+                <Paper className="admin-stats-card-contact">
+                  <ContactMailIcon className="admin-stats-icon-contact" />
                   <Box>
-                    <Typography variant="h4" sx={{ fontWeight: 700, color: 'white' }}>
+                    <Typography variant="h4" className="admin-stats-number">
                       {contactData.length}
                     </Typography>
-                    <Typography variant="body1" sx={{ color: '#a1a1aa' }}>
+                    <Typography variant="body1" className="admin-stats-label">
                       Contact Submissions
                     </Typography>
                   </Box>
                 </Paper>
 
-                <Paper
-                  sx={{
-                    p: 3,
-                    background: 'rgba(34, 197, 94, 0.1)',
-                    border: '1px solid rgba(34, 197, 94, 0.3)',
-                    borderRadius: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2
-                  }}
-                >
-                  <PeopleIcon sx={{ fontSize: 40, color: '#22c55e' }} />
+                <Paper className="admin-stats-card-waitlist">
+                  <PeopleIcon className="admin-stats-icon-waitlist" />
                   <Box>
-                    <Typography variant="h4" sx={{ fontWeight: 700, color: 'white' }}>
+                    <Typography variant="h4" className="admin-stats-number">
                       {waitlistData.length}
                     </Typography>
-                    <Typography variant="body1" sx={{ color: '#a1a1aa' }}>
+                    <Typography variant="body1" className="admin-stats-label">
                       Waitlist Entries
                     </Typography>
                   </Box>
@@ -1067,9 +1023,9 @@ const AdminDashboard = () => {
               </Box>
             </motion.div>
 
-        {/* Error Alert */}
+        {/* Error Display */}
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+          <Alert severity="error" className="admin-error-alert">
             {error}
           </Alert>
         )}
@@ -1092,110 +1048,73 @@ const AdminDashboard = () => {
           </Alert>
         )}
 
-        {/* Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Paper
-            sx={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: 2,
-              overflow: 'hidden'
+        {/* Tabs and Content */}
+        <Paper className="admin-tabs-container">
+          <Tabs
+            value={activeTab}
+            onChange={(e, newValue) => setActiveTab(newValue)}
+            className="admin-tabs-header"
+            TabIndicatorProps={{
+              className: 'admin-tabs-indicator'
             }}
           >
-            <Tabs
-              value={activeTab}
-              onChange={handleTabChange}
-              sx={{
-                background: 'rgba(0, 0, 0, 0.2)',
-                '& .MuiTab-root': {
-                  color: '#a1a1aa',
-                  '&.Mui-selected': {
-                    color: '#3b82f6'
-                  }
-                },
-                '& .MuiTabs-indicator': {
-                  backgroundColor: '#3b82f6'
-                }
-              }}
-            >
-              <Tab 
-                label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <ContactMailIcon />
-                    <span>Contact Submissions</span>
-                    <Badge badgeContent={contactData.length} color="primary" />
-                  </Box>
-                }
-              />
-              <Tab 
-                label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <PeopleIcon />
-                    <span>Waitlist Entries</span>
-                    <Badge badgeContent={waitlistData.length} color="success" />
-                  </Box>
-                }
-              />
-            </Tabs>
+            <Tab
+              className="admin-tab"
+              label={
+                <Box className="admin-tab-content">
+                  <span>Contact Submissions</span>
+                  <Badge badgeContent={contactData.length} color="error" />
+                </Box>
+              }
+            />
+            <Tab
+              className="admin-tab"
+              label={
+                <Box className="admin-tab-content">
+                  <span>Waitlist Entries</span>
+                  <Badge badgeContent={waitlistData.length} color="success" />
+                </Box>
+              }
+            />
+          </Tabs>
 
             {/* Search Bar */}
-            <Box sx={{ p: 3, borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <Box className="admin-search-container">
               <TextField
                 fullWidth
                 placeholder={`Search ${activeTab === 0 ? 'contacts' : 'waitlist entries'}...`}
                 value={searchTerm}
                 onChange={handleSearchChange}
+                className="admin-search-input"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon sx={{ color: '#a1a1aa' }} />
+                      <SearchIcon className="admin-search-icon" />
                     </InputAdornment>
-                  ),
-                  sx: {
-                    color: 'white',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'rgba(255, 255, 255, 0.2)'
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'rgba(59, 130, 246, 0.5)'
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#3b82f6'
-                    }
-                  }
-                }}
-                sx={{
-                  '& .MuiInputBase-input::placeholder': {
-                    color: '#a1a1aa',
-                    opacity: 1
-                  }
+                  )
                 }}
               />
             </Box>
 
             {/* Data Table */}
-            <TableContainer>
-              <Table className="admin-table">
+            <TableContainer className="admin-table-container">
+              <Table>
                 <TableHead>
-                  <TableRow sx={{ background: 'rgba(0, 0, 0, 0.2)' }}>
+                  <TableRow className="admin-table-header">
                     {activeTab === 0 ? (
                       <>
-                        <TableCell className="admin-column-name" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Name</TableCell>
-                        <TableCell className="admin-column-email" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Email</TableCell>
-                        <TableCell className="admin-column-type" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Type</TableCell>
-                        <TableCell className="admin-column-status" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Status</TableCell>
-                        <TableCell className="admin-column-created" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Created</TableCell>
-                        <TableCell className="admin-column-actions" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Actions</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-name">Name</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-email">Email</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-type">Type</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-status">Status</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-created">Created</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-actions">Actions</TableCell>
                       </>
                     ) : (
                       <>
-                        <TableCell className="admin-column-email" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Email</TableCell>
-                        <TableCell className="admin-column-created" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Created</TableCell>
-                        <TableCell className="admin-column-actions" sx={{ color: '#a1a1aa', fontWeight: 600 }}>Actions</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-email">Email</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-created">Created</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-actions">Actions</TableCell>
                       </>
                     )}
                   </TableRow>
@@ -1219,14 +1138,14 @@ const AdminDashboard = () => {
                           <TableCell>
                             <Chip
                               label={entry.feedback_type}
-                              color={getFeedbackTypeColor(entry.feedback_type)}
+                              className={`admin-feedback-chip-${entry.feedback_type.toLowerCase()}`}
                               size="small"
                             />
                           </TableCell>
                           <TableCell>
                             <Chip
                               label={entry.is_read ? 'Read' : 'Unread'}
-                              color={entry.is_read ? 'success' : 'error'}
+                              className={entry.is_read ? 'admin-status-chip-read' : 'admin-status-chip-unread'}
                               size="small"
                             />
                           </TableCell>
@@ -1283,55 +1202,22 @@ const AdminDashboard = () => {
               }}
             />
           </Paper>
-        </motion.div>
           </Box>
 
           {/* File Management Panel - Now below the content area */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            sx={{ width: '100%' }}
-          >
-            <Paper
-              className="admin-file-manager"
-              sx={{
-                width: '100%',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: 2,
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-            >
-              {/* File Panel Header - Inline Style */}
-              <Box sx={{ 
-                p: 2, 
-                background: 'rgba(0, 0, 0, 0.2)', 
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <Typography variant="h6" sx={{ 
-                  color: 'white', 
-                  fontWeight: 600,
-                  fontSize: '1rem'
-                }}>
+          <Box className="admin-file-manager-container">
+            <Paper className="admin-file-manager-paper">
+              {/* File Panel Header */}
+              <Box className="admin-file-manager-header">
+                <Typography variant="h6" className="admin-file-manager-title">
                   File Manager
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 1 }}>
+                <Box className="admin-file-manager-actions">
                   <Tooltip title="Upload Files">
                     <IconButton
                       size="small"
                       onClick={() => setFileUploadDialogOpen(true)}
-                      sx={{ 
-                        color: '#3b82f6',
-                        '&:hover': {
-                          backgroundColor: 'rgba(59, 130, 246, 0.1)'
-                        }
-                      }}
+                      className="admin-upload-button"
                     >
                       <UploadIcon />
                     </IconButton>
@@ -1340,12 +1226,7 @@ const AdminDashboard = () => {
                     <IconButton
                       size="small"
                       onClick={() => setFolderDialogOpen(true)}
-                      sx={{ 
-                        color: '#22c55e',
-                        '&:hover': {
-                          backgroundColor: 'rgba(34, 197, 94, 0.1)'
-                        }
-                      }}
+                      className="admin-create-folder-button"
                     >
                       <CreateFolderIcon />
                     </IconButton>
@@ -1359,18 +1240,18 @@ const AdminDashboard = () => {
                 onDragOver={handleFileDragOver}
                 onDrop={handleFileDrop}
               >
-                {/* Drag Drop Instructions */}
-                {files.filter(file => file.path === currentPath).length > 0 && (
-                  <Box sx={{ 
-                    p: 1, 
-                    background: 'rgba(59, 130, 246, 0.1)', 
-                    borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
-                  }}>
-                    <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
-                      💡 Drag files to folders or drop in current directory
-                    </Typography>
-                  </Box>
-                )}
+                  {/* Drag Drop Instructions */}
+                  {files.filter(file => file.path === currentPath).length > 0 && (
+                    <Box sx={{ 
+                      p: 1, 
+                      background: 'rgba(59, 130, 246, 0.1)', 
+                      borderBottom: '1px solid rgba(59, 130, 246, 0.2)'
+                    }}>
+                      <Typography variant="caption" sx={{ color: '#3b82f6', fontSize: '0.75rem' }}>
+                        💡 Drag files to folders or drop in current directory
+                      </Typography>
+                    </Box>
+                  )}
 
                 {/* Current Path */}
                 <Box sx={{ 
@@ -1419,7 +1300,7 @@ const AdminDashboard = () => {
                   return matches;
                 }).map((folder) => {
                   return (
-                    <ListItem
+                                        <ListItem
                       key={folder.id}
                       sx={{
                         borderRadius: 1,
@@ -1446,16 +1327,16 @@ const AdminDashboard = () => {
                       <ListItemIcon sx={{ color: '#22c55e', minWidth: 36 }}>
                         <FolderIcon />
                       </ListItemIcon>
-                      <ListItemText
-                        primary={
-                          editingItem && editingItem.type === 'folder' && editingItem.id === folder.id ? (
+                    <ListItemText
+                      primary={
+                        editingItem && editingItem.type === 'folder' && editingItem.id === folder.id ? (
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <Input
-                                value={editName}
-                                onChange={(e) => setEditName(e.target.value)}
-                                onKeyPress={handleEditKeyPress}
-                                onBlur={handleRename}
-                                autoFocus
+                            <Input
+                              value={editName}
+                              onChange={(e) => setEditName(e.target.value)}
+                              onKeyPress={handleEditKeyPress}
+                              onBlur={handleRename}
+                              autoFocus
                                 sx={{
                                   color: 'white',
                                   fontSize: '0.875rem',
@@ -1472,25 +1353,25 @@ const AdminDashboard = () => {
                                     }
                                   }
                                 }}
-                              />
-                              <IconButton
-                                size="small"
-                                onClick={handleRename}
+                            />
+                            <IconButton
+                              size="small"
+                              onClick={handleRename}
                                 sx={{ color: '#22c55e', p: 0.5 }}
-                              >
+                            >
                                 <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
-                              </IconButton>
-                              <IconButton
-                                size="small"
-                                onClick={cancelEditing}
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              onClick={cancelEditing}
                                 sx={{ color: '#ef4444', p: 0.5 }}
-                              >
+                            >
                                 <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
-                              </IconButton>
-                            </Box>
-                          ) : (
-                            <Box
-                              onClick={() => startEditing(folder, 'folder')}
+                            </IconButton>
+                          </Box>
+                        ) : (
+                          <Box
+                            onClick={() => startEditing(folder, 'folder')}
                               sx={{
                                 cursor: 'pointer',
                                 '&:hover': {
@@ -1500,30 +1381,30 @@ const AdminDashboard = () => {
                                   margin: '-2px -4px'
                                 }
                               }}
-                            >
-                              {folder.name}
-                            </Box>
-                          )
-                        }
+                          >
+                            {folder.name}
+                          </Box>
+                        )
+                      }
                         secondary={
                           folder.created_at ? `📅 Created ${formatDate(folder.created_at)}` : ''
                         }
-                        primaryTypographyProps={{
+                      primaryTypographyProps={{
                           sx: { color: 'white', fontSize: '0.875rem' }
-                        }}
-                        secondaryTypographyProps={{
+                      }}
+                      secondaryTypographyProps={{
                           sx: { color: '#a1a1aa', fontSize: '0.75rem' }
-                        }}
-                      />
-                      <ListItemSecondaryAction>
-                        <IconButton
-                          size="small"
+                      }}
+                    />
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        size="small"
                           onClick={(e) => handleFolderMenuOpen(e, folder)}
                           sx={{ color: '#a1a1aa' }}
-                        >
+                      >
                           <MoreVertIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
+                      </IconButton>
+                    </ListItemSecondaryAction>
                     </ListItem>
                   );
                 })}
@@ -1654,7 +1535,7 @@ const AdminDashboard = () => {
                 )}
               </Box>
             </Paper>
-          </motion.div>
+          </Box>
         </Box>
 
         {/* File Upload Dialog */}
@@ -1681,7 +1562,7 @@ const AdminDashboard = () => {
           </DialogTitle>
           <DialogContent>
             <Box sx={{ mt: 2 }}>
-              {currentPath !== '/' && (
+            {currentPath !== '/' && (
                 <Box sx={{ 
                   mb: 2, 
                   p: 2, 
@@ -1690,17 +1571,17 @@ const AdminDashboard = () => {
                   border: '1px solid rgba(59, 130, 246, 0.3)'
                 }}>
                   <Typography variant="body2" sx={{ color: '#3b82f6', fontWeight: 500 }}>
-                    📁 Uploading to folder: {currentPath}
-                  </Typography>
-                </Box>
-              )}
-              <Input
-                type="file"
-                inputProps={{ 
-                  multiple: true,
-                  accept: ".pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.svg,.bmp,.tiff,.webp,.ico,.mp4,.avi,.mov,.wmv,.flv,.webm,.mp3,.wav,.flac,.aac,.ogg,.zip,.rar,.7z,.tar,.gz,.txt,.md,.rtf"
-                }}
-                onChange={handleFileUpload}
+                  📁 Uploading to folder: {currentPath}
+                </Typography>
+              </Box>
+            )}
+            <Input
+              type="file"
+              inputProps={{ 
+                multiple: true,
+                accept: ".pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.gif,.svg,.bmp,.tiff,.webp,.ico,.mp4,.avi,.mov,.wmv,.flv,.webm,.mp3,.wav,.flac,.aac,.ogg,.zip,.rar,.7z,.tar,.gz,.txt,.md,.rtf"
+              }}
+              onChange={handleFileUpload}
                 sx={{ color: 'white' }}
               />
               <Typography 
@@ -1712,18 +1593,18 @@ const AdminDashboard = () => {
                   fontSize: '0.75rem'
                 }}
               >
-                Supported formats: PDF, Word, Excel, PowerPoint, Images, Videos, Audio, Archives, Text files
-              </Typography>
-              {uploadingFiles.length > 0 && (
+              Supported formats: PDF, Word, Excel, PowerPoint, Images, Videos, Audio, Archives, Text files
+            </Typography>
+            {uploadingFiles.length > 0 && (
                 <Box sx={{ mt: 2 }}>
                   <Typography variant="caption" sx={{ color: '#a1a1aa', fontSize: '0.75rem', mb: 1, display: 'block' }}>
-                    📅 Upload started at {formatDate(new Date().toISOString())}
-                  </Typography>
-                  {uploadingFiles.map((file, index) => (
+                  📅 Upload started at {formatDate(new Date().toISOString())}
+                </Typography>
+                {uploadingFiles.map((file, index) => (
                     <Box key={index} sx={{ mb: 1 }}>
                       <Typography variant="body2" sx={{ color: 'white' }}>
-                        {file.file.name}
-                      </Typography>
+                      {file.file.name}
+                    </Typography>
                       <Box sx={{ width: '100%', bgcolor: 'rgba(255, 255, 255, 0.1)', borderRadius: 1 }}>
                         <Box
                           sx={{
@@ -1733,12 +1614,12 @@ const AdminDashboard = () => {
                             borderRadius: 1,
                             transition: 'width 0.3s ease'
                           }}
-                        />
-                      </Box>
+                      />
                     </Box>
-                  ))}
-                </Box>
-              )}
+                  </Box>
+                ))}
+              </Box>
+            )}
             </Box>
           </DialogContent>
           <DialogActions>
@@ -1953,15 +1834,7 @@ const AdminDashboard = () => {
                       </Typography>
                       <Chip
                         label={selectedEntry.feedback_type}
-                        color={getFeedbackTypeColor(selectedEntry.feedback_type)}
-                        sx={{
-                          fontWeight: 'bold',
-                          fontSize: '0.875rem',
-                          '& .MuiChip-label': {
-                            color: 'white',
-                            fontWeight: '600'
-                          }
-                        }}
+                        className={`admin-feedback-chip-${selectedEntry.feedback_type.toLowerCase()}`}
                       />
                     </Box>
                     <Box sx={{ mb: 3 }}>
@@ -1970,7 +1843,7 @@ const AdminDashboard = () => {
                       </Typography>
                       <Chip
                         label={selectedEntry.is_read ? 'Read' : 'Unread'}
-                        color={selectedEntry.is_read ? 'success' : 'error'}
+                        className={selectedEntry.is_read ? 'admin-status-chip-read' : 'admin-status-chip-unread'}
                       />
                     </Box>
                     <Box sx={{ mb: 3 }}>

@@ -59,6 +59,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
+          backgroundColor: 'transparent',
+          backgroundImage: 'none',
         },
       },
     },
@@ -66,6 +68,36 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
+          backgroundColor: 'transparent',
+          backgroundImage: 'none',
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          '& .MuiTabs-indicator': {
+            backgroundColor: '#3b82f6 !important',
+            height: '3px !important',
+          },
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          color: '#a1a1aa !important',
+          fontWeight: '600 !important',
+          textTransform: 'none !important',
+          minHeight: '48px !important',
+          padding: '0.75rem 1.5rem !important',
+          '&.Mui-selected': {
+            color: '#3b82f6 !important',
+            backgroundColor: 'transparent !important',
+          },
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.05) !important',
+          },
         },
       },
     },
