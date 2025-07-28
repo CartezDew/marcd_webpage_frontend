@@ -240,6 +240,58 @@
   font-weight: 600 !important;
 }
 
+/* Sortable header styling */
+.admin-header-with-sort {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  padding: 4px 0 !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.admin-header-with-sort:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 4px !important;
+  padding: 4px 8px !important;
+  margin: -4px -8px !important;
+}
+
+/* Sort icon styles */
+.admin-sort-icon-inactive {
+  color: #6b7280 !important;
+  font-size: 1rem !important;
+  opacity: 0.6 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.admin-sort-icon-inactive:hover {
+  opacity: 1 !important;
+}
+
+.admin-sort-icon-active-blue {
+  color: #FF0000 !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+.admin-sort-icon-active-red {
+  color: #FF0000 !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+/* Ensure sort icons are properly aligned */
+.admin-header-with-sort span {
+  flex: 1 !important;
+}
+
+.admin-header-with-sort .MuiSvgIcon-root {
+  margin-left: 4px !important;
+  flex-shrink: 0 !important;
+}
+
 .admin-table-row {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: background-color 0.2s ease;

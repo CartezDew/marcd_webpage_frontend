@@ -65,7 +65,10 @@ import {
   Archive as ArchiveIcon,
   TextFields as TextIcon,
   MoreVert as MoreVertIcon,
-  Edit as EditIcon
+  Edit as EditIcon,
+  ArrowUpward as ArrowUpwardIcon,
+  ArrowDownward as ArrowDownwardIcon,
+  UnfoldMore as UnfoldMoreIcon
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { fetchContactData, fetchWaitlistData, updateContactStatus } from '../services/adminApi';
@@ -274,6 +277,45 @@ const AdminDashboard = () => {
     setPage(0);
   };
 
+  const handleSort = (field) => {
+    if (sortField === field) {
+      // If clicking the same field, toggle direction
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // If clicking a different field, set it and default to ascending
+      setSortField(field);
+      setSortDirection('asc');
+    }
+    setPage(0); // Reset to first page when sorting
+  };
+
+  const getSortIcon = (field) => {
+    if (sortField !== field) {
+      return (
+        <Tooltip title={`Sort by ${field}`} placement="top">
+          <UnfoldMoreIcon className="admin-sort-icon-inactive" />
+        </Tooltip>
+      );
+    }
+    
+    const isCreatedField = field === 'created';
+    const iconClass = isCreatedField ? 'admin-sort-icon-active-red' : 'admin-sort-icon-active-blue';
+    
+    if (sortDirection === 'asc') {
+      return (
+        <Tooltip title={`Sort by ${field} descending`} placement="top">
+          <ArrowUpwardIcon className={iconClass} />
+        </Tooltip>
+      );
+    } else {
+      return (
+        <Tooltip title={`Sort by ${field} ascending`} placement="top">
+          <ArrowDownwardIcon className={iconClass} />
+        </Tooltip>
+      );
+    }
+  };
+
   const handleViewDetails = (entry) => {
     setSelectedEntry(entry);
     setDetailDialogOpen(true);
@@ -327,7 +369,41 @@ const AdminDashboard = () => {
 
   const getFilteredData = () => {
     const data = activeTab === 0 ? contactData : waitlistData;
-    return filterData(data);
+    const filtered = filterData(data);
+    
+    // Sort the filtered data
+    return filtered.sort((a, b) => {
+      let aValue, bValue;
+      
+      switch (sortField) {
+        case 'name':
+          aValue = activeTab === 0 ? `${a.first_name} ${a.last_name}`.toLowerCase() : '';
+          bValue = activeTab === 0 ? `${b.first_name} ${b.last_name}`.toLowerCase() : '';
+          break;
+        case 'email':
+          aValue = a.email?.toLowerCase() || '';
+          bValue = b.email?.toLowerCase() || '';
+          break;
+        case 'type':
+          aValue = a.feedback_type?.toLowerCase() || '';
+          bValue = b.feedback_type?.toLowerCase() || '';
+          break;
+        case 'status':
+          aValue = a.is_read ? 'read' : 'unread';
+          bValue = b.is_read ? 'read' : 'unread';
+          break;
+        case 'created':
+          aValue = new Date(a.created_at);
+          bValue = new Date(b.created_at);
+          break;
+        default:
+          return 0;
+      }
+      
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
   };
 
   const getPaginatedData = () => {
@@ -354,6 +430,14 @@ const AdminDashboard = () => {
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
+    });
+  };
+
+  const formatTableDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
     });
   };
 
@@ -1103,17 +1187,52 @@ const AdminDashboard = () => {
                   <TableRow className="admin-table-header">
                     {activeTab === 0 ? (
                       <>
-                        <TableCell className="admin-table-header-cell admin-column-name">Name</TableCell>
-                        <TableCell className="admin-table-header-cell admin-column-email">Email</TableCell>
-                        <TableCell className="admin-table-header-cell admin-column-type">Type</TableCell>
-                        <TableCell className="admin-table-header-cell admin-column-status">Status</TableCell>
-                        <TableCell className="admin-table-header-cell admin-column-created">Created</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-name">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('name')}>
+                            <span>Name</span>
+                            {getSortIcon('name')}
+                          </Box>
+                        </TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-email">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('email')}>
+                            <span>Email</span>
+                            {getSortIcon('email')}
+                          </Box>
+                        </TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-type">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('type')}>
+                            <span>Type</span>
+                            {getSortIcon('type')}
+                          </Box>
+                        </TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-status">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('status')}>
+                            <span>Status</span>
+                            {getSortIcon('status')}
+                          </Box>
+                        </TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-created">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('created')}>
+                            <span>Created</span>
+                            {getSortIcon('created')}
+                          </Box>
+                        </TableCell>
                         <TableCell className="admin-table-header-cell admin-column-actions">Actions</TableCell>
                       </>
                     ) : (
                       <>
-                        <TableCell className="admin-table-header-cell admin-column-email">Email</TableCell>
-                        <TableCell className="admin-table-header-cell admin-column-created">Created</TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-email">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('email')}>
+                            <span>Email</span>
+                            {getSortIcon('email')}
+                          </Box>
+                        </TableCell>
+                        <TableCell className="admin-table-header-cell admin-column-created">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('created')}>
+                            <span>Created</span>
+                            {getSortIcon('created')}
+                          </Box>
+                        </TableCell>
                         <TableCell className="admin-table-header-cell admin-column-actions">Actions</TableCell>
                       </>
                     )}
@@ -1150,7 +1269,7 @@ const AdminDashboard = () => {
                             />
                           </TableCell>
                           <TableCell sx={{ color: 'white' }}>
-                            {formatDate(entry.created_at)}
+                            {formatTableDate(entry.created_at)}
                           </TableCell>
                           <TableCell>
                             <IconButton
