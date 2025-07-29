@@ -24,8 +24,8 @@ import Footer from './components/Footer';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FF9800', // Orange color for highlights
-      dark: '#F57C00',
+      main: '#be0303', // Red color for highlights
+      dark: '#9a0202',
     },
     secondary: {
       main: '#2c3e50',
@@ -70,6 +70,17 @@ const theme = createTheme({
           borderRadius: 12,
           backgroundColor: 'none',
           backgroundImage: 'none',
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: '#be0303 !important',
+          textDecoration: 'none',
+          '&:hover': {
+            textDecoration: 'underline',
+          },
         },
       },
     },
