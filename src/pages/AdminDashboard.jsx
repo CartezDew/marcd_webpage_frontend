@@ -128,6 +128,13 @@ const AdminDashboard = () => {
   const [deleteType, setDeleteType] = useState(null); // 'file' or 'folder'
   const [editingItem, setEditingItem] = useState(null); // { type: 'file' | 'folder', id: number, name: string }
   const [editName, setEditName] = useState('');
+  
+  // File upload confirmation state
+  const [showUploadConfirm, setShowUploadConfirm] = useState(false);
+  const [pendingUploadFiles, setPendingUploadFiles] = useState([]);
+  const [duplicateFileName, setDuplicateFileName] = useState('');
+  const [uploadAction, setUploadAction] = useState(''); // 'replace' or 'duplicate'
+  
   const prevPathRef = useRef('/');
 
   useEffect(() => {
@@ -187,6 +194,7 @@ const AdminDashboard = () => {
       
       // Convert backend data structure to frontend expected structure
       const convertedFiles = filesArray.map(file => {
+
         // Backend provides full_path field, use it to determine the path
         let path = '/';
         
@@ -219,7 +227,7 @@ const AdminDashboard = () => {
         return {
           ...file,
           path: path,
-          size: file.file_size || file.size || 0,
+          size: file.file_size || 0,
           // Ensure we have all required fields
           id: file.id,
           name: file.name,
@@ -525,13 +533,6 @@ const AdminDashboard = () => {
         event.target.value = ''; // Reset file input
         return;
       }
-      
-      // Check for duplicate file names
-      if (checkDuplicateFileName(file.name, currentPath)) {
-        setError(`File "${file.name}" already exists in this location. Please rename the file or choose a different location.`);
-        event.target.value = ''; // Reset file input
-        return;
-      }
 
       // Validate file name
       const validationError = validateFileName(file.name);
@@ -542,12 +543,18 @@ const AdminDashboard = () => {
       }
     }
     
-    setUploadingFiles(uploadedFiles.map(file => ({ file, progress: 0 })));
+    // Let the backend handle duplicate detection and conflict resolution
+    await performFileUpload(uploadedFiles, event);
+  };
+
+  // Perform the actual file upload
+  const performFileUpload = async (filesToUpload, event, conflictResolution = null) => {
+    setUploadingFiles(filesToUpload.map(file => ({ file, progress: 0 })));
     setError(''); // Clear any previous errors
     
     try {
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        const file = uploadedFiles[i];
+      for (let i = 0; i < filesToUpload.length; i++) {
+        const file = filesToUpload[i];
         
         // Simulate upload progress
         for (let progress = 0; progress <= 100; progress += 10) {
@@ -559,16 +566,35 @@ const AdminDashboard = () => {
           await new Promise(resolve => setTimeout(resolve, 50));
         }
         
-        // Upload file to backend
-        await fileApi.uploadFile(file, currentPath);
+        try {
+                  // Upload file to backend with folder ID and conflict resolution parameter
+        const currentFolderId = getCurrentFolderId();
+        await fileApi.uploadFile(file, currentFolderId, conflictResolution);
+        } catch (uploadError) {
+          console.log('Upload error response:', uploadError.response?.data);
+          console.log('Upload error status:', uploadError.response?.status);
+          console.log('Upload error options:', uploadError.response?.data?.options);
+          
+          // Check if this is a conflict error from the backend
+          if (uploadError.response?.status === 400 && uploadError.response?.data?.error?.includes('already exists')) {
+            // Show conflict resolution modal
+            setDuplicateFileName(file.name);
+            setPendingUploadFiles([file]);
+            setShowUploadConfirm(true);
+            setUploadingFiles([]);
+            if (event) event.target.value = ''; // Reset file input
+            return; // Exit early, let the modal handle the conflict
+          }
+          throw uploadError; // Re-throw other errors
+        }
       }
       
       // Reload file data from backend
       await loadFileData();
       const locationText = currentPath === '/' ? 'root directory' : `folder "${currentPath}"`;
-      setMoveMessage(`${uploadedFiles.length} file(s) uploaded successfully to ${locationText}!`);
-      setShowMoveSuccess(true);
-      setTimeout(() => setShowMoveSuccess(false), 3000);
+      setLocalFeedbackMessage(`${filesToUpload.length} file(s) uploaded successfully to ${locationText}!`);
+      setShowLocalFeedback(true);
+      setTimeout(() => setShowLocalFeedback(false), 3000);
     } catch (error) {
       if (error.message === 'Authentication required. Please log in again.') {
         // Clear tokens and redirect to login
@@ -578,13 +604,58 @@ const AdminDashboard = () => {
         window.location.href = '/signin';
         return;
       }
-      setError('Failed to upload files. Please try again.');
+      
+      // Log detailed error information
       console.error('Error uploading files:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      
+      // Show more specific error message
+      let errorMessage = 'Failed to upload files. Please try again.';
+      if (error.response?.data?.detail) {
+        errorMessage = `Upload failed: ${error.response.data.detail}`;
+      } else if (error.response?.data?.error) {
+        errorMessage = `Upload failed: ${error.response.data.error}`;
+      } else if (error.message) {
+        errorMessage = `Upload failed: ${error.message}`;
+      }
+      
+      setError(errorMessage);
     } finally {
       setUploadingFiles([]);
       setFileUploadDialogOpen(false);
-      event.target.value = ''; // Reset file input
+      if (event) event.target.value = ''; // Reset file input
     }
+  };
+
+  // Handle upload confirmation
+  const handleUploadConfirm = async () => {
+    try {
+      if (uploadAction === 'replace') {
+        // Upload with replace_existing parameter
+        await performFileUpload(pendingUploadFiles, null, 'replace_existing');
+      } else if (uploadAction === 'duplicate') {
+        // Upload with upload_as_duplicate parameter
+        await performFileUpload(pendingUploadFiles, null, 'upload_as_duplicate');
+      }
+      
+      // Reset confirmation state
+      setShowUploadConfirm(false);
+      setPendingUploadFiles([]);
+      setDuplicateFileName('');
+      setUploadAction('');
+    } catch (error) {
+      console.error('Error in handleUploadConfirm:', error);
+      setError('Failed to upload file. Please try again.');
+    }
+  };
+
+  // Handle upload confirmation cancel
+  const handleUploadCancel = () => {
+    setShowUploadConfirm(false);
+    setPendingUploadFiles([]);
+    setDuplicateFileName('');
+    setUploadAction('');
   };
 
   const handleCreateFolder = async () => {
@@ -932,8 +1003,44 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDownloadFolder = async () => {
+    if (!selectedFolder) return;
+    
+    try {
+      // Use the fileApi to download the folder with proper authentication
+      const response = await fileApi.downloadFolder(selectedFolder.id);
+      
+      // Create a blob from the response
+      const blob = new Blob([response.data], { 
+        type: 'application/zip' 
+      });
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${selectedFolder.name}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      handleFolderMenuClose();
+    } catch (error) {
+      if (error.message === 'Authentication required. Please log in again.') {
+        // Clear tokens and redirect to login
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('token');
+        localStorage.removeItem('adminEmail');
+        window.location.href = '/signin';
+        return;
+      }
+      setError('Failed to download folder. Please try again.');
+    }
+  };
+
   const formatFileSize = (bytes) => {
-    if (bytes === 0) return '0 Bytes';
+    if (!bytes || bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -1023,6 +1130,41 @@ const AdminDashboard = () => {
     
     const fileExtension = fileName.toLowerCase().substring(lastDotIndex);
     return allowedExtensions.includes(fileExtension);
+  };
+
+  // Generate numbered filename for duplicates
+  const generateNumberedFileName = (originalName, existingFiles) => {
+    const lastDotIndex = originalName.lastIndexOf('.');
+    const nameWithoutExt = lastDotIndex > 0 ? originalName.substring(0, lastDotIndex) : originalName;
+    const extension = lastDotIndex > 0 ? originalName.substring(lastDotIndex) : '';
+    
+    let counter = 1;
+    let newName = `${nameWithoutExt} (${counter})${extension}`;
+    
+    // Check if this numbered name also exists
+    while (existingFiles.some(file => file.name === newName)) {
+      counter++;
+      newName = `${nameWithoutExt} (${counter})${extension}`;
+    }
+    
+    return newName;
+  };
+
+  // Get current folder ID based on current path
+  const getCurrentFolderId = () => {
+    if (currentPath === '/') {
+      return null; // Root folder
+    }
+    
+    // Find folder by path
+    const folder = folders.find(f => {
+      if (f.full_path) {
+        return '/' + f.full_path === currentPath;
+      }
+      return '/' + f.name === currentPath;
+    });
+    
+    return folder ? folder.id : null;
   };
 
   // LocalStorage functions for file persistence
@@ -1805,6 +1947,9 @@ const AdminDashboard = () => {
           onClose={() => setFileUploadDialogOpen(false)}
           maxWidth="sm"
           fullWidth
+          disableEnforceFocus
+          disableAutoFocus
+          disableRestoreFocus
           PaperProps={{
             sx: {
               background: 'rgba(15, 15, 35, 0.95)',
@@ -1896,6 +2041,9 @@ const AdminDashboard = () => {
           onClose={() => setFolderDialogOpen(false)}
           maxWidth="sm"
           fullWidth
+          disableEnforceFocus
+          disableAutoFocus
+          disableRestoreFocus
           PaperProps={{
             sx: {
               background: 'rgba(15, 15, 35, 0.95)',
@@ -1942,18 +2090,19 @@ const AdminDashboard = () => {
         </Dialog>
 
         {/* File Menu */}
-        <Menu
-          anchorEl={fileMenuAnchor}
-          open={Boolean(fileMenuAnchor)}
-          onClose={handleFileMenuClose}
-          PaperProps={{
-            sx: {
-              background: 'rgba(15, 15, 35, 0.95)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              color: 'white'
-            }
-          }}
-        >
+        {fileMenuAnchor && (
+          <Menu
+            anchorEl={fileMenuAnchor}
+            open={Boolean(fileMenuAnchor)}
+            onClose={handleFileMenuClose}
+            PaperProps={{
+              sx: {
+                background: 'rgba(15, 15, 35, 0.95)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                color: 'white'
+              }
+            }}
+          >
           <MenuItem onClick={() => {
             startEditing(selectedFile, 'file');
             handleFileMenuClose();
@@ -1987,20 +2136,22 @@ const AdminDashboard = () => {
             <ListItemText>Delete</ListItemText>
           </MenuItem>
         </Menu>
+        )}
 
         {/* Folder Menu */}
-        <Menu
-          anchorEl={folderMenuAnchor}
-          open={Boolean(folderMenuAnchor)}
-          onClose={handleFolderMenuClose}
-          PaperProps={{
-            sx: {
-              background: 'rgba(15, 15, 35, 0.95)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              color: 'white'
-            }
-          }}
-        >
+        {folderMenuAnchor && (
+          <Menu
+            anchorEl={folderMenuAnchor}
+            open={Boolean(folderMenuAnchor)}
+            onClose={handleFolderMenuClose}
+            PaperProps={{
+              sx: {
+                background: 'rgba(15, 15, 35, 0.95)',
+                border: '1px solid rgba(59, 130, 246, 0.3)',
+                color: 'white'
+              }
+            }}
+          >
           <MenuItem onClick={() => {
             startEditing(selectedFolder, 'folder');
             handleFolderMenuClose();
@@ -2010,10 +2161,7 @@ const AdminDashboard = () => {
             </ListItemIcon>
             <ListItemText>Rename</ListItemText>
           </MenuItem>
-          <MenuItem onClick={() => {
-            // TODO: Implement folder download functionality
-            handleFolderMenuClose();
-          }}>
+          <MenuItem onClick={handleDownloadFolder}>
             <ListItemIcon>
               <DownloadIcon sx={{ color: '#3b82f6' }} />
             </ListItemIcon>
@@ -2038,6 +2186,7 @@ const AdminDashboard = () => {
             <ListItemText>Delete</ListItemText>
           </MenuItem>
         </Menu>
+        )}
 
         {/* Detail Dialog */}
         <Dialog
@@ -2045,6 +2194,9 @@ const AdminDashboard = () => {
           onClose={handleCloseDialog}
           maxWidth="md"
           fullWidth
+          disableEnforceFocus
+          disableAutoFocus
+          disableRestoreFocus
           PaperProps={{
             sx: {
               background: 'rgba(15, 15, 35, 0.95)',
@@ -2167,6 +2319,9 @@ const AdminDashboard = () => {
         <Dialog
           open={showDeleteConfirm}
           onClose={cancelDeleteFolder}
+          disableEnforceFocus
+          disableAutoFocus
+          disableRestoreFocus
           PaperProps={{
             sx: {
               background: 'rgba(255, 255, 255, 0.95)',
@@ -2255,6 +2410,150 @@ const AdminDashboard = () => {
               }}
             >
               Delete {deleteType === 'file' ? 'File' : 'Folder'}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* File Upload Confirmation Dialog */}
+        <Dialog
+          open={showUploadConfirm}
+          onClose={handleUploadCancel}
+          disableEnforceFocus
+          disableAutoFocus
+          disableRestoreFocus
+          PaperProps={{
+            sx: {
+              background: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 3,
+              minWidth: 400,
+              maxWidth: 500
+            }
+          }}
+        >
+          <DialogContent sx={{ p: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Box
+                sx={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  mr: 2
+                }}
+              >
+                <Box sx={{ color: 'white', fontSize: 24 }}>📁</Box>
+              </Box>
+              <Typography variant="h6" sx={{ color: '#1f2937', fontWeight: 600 }}>
+                File Already Exists
+              </Typography>
+            </Box>
+            
+            <Typography variant="body1" sx={{ color: '#374151', mb: 2 }}>
+              A file named <strong>"{duplicateFileName}"</strong> already exists in this location.
+            </Typography>
+            
+            <Typography variant="body2" sx={{ color: '#6b7280', mb: 3 }}>
+              Choose what you'd like to do with the uploaded file:
+            </Typography>
+            
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Button
+                onClick={() => setUploadAction('replace')}
+                variant={uploadAction === 'replace' ? 'contained' : 'outlined'}
+                sx={{
+                  justifyContent: 'flex-start',
+                  textAlign: 'left',
+                  border: uploadAction === 'replace' ? '2px solid #3b82f6' : '1px solid #d1d5db',
+                  backgroundColor: uploadAction === 'replace' ? '#3b82f6' : 'transparent',
+                  color: uploadAction === 'replace' ? 'white' : '#374151',
+                  '&:hover': {
+                    backgroundColor: uploadAction === 'replace' ? '#2563eb' : '#f9fafb',
+                    borderColor: uploadAction === 'replace' ? '#2563eb' : '#9ca3af'
+                  }
+                }}
+              >
+                <Box sx={{ mr: 2, fontSize: '1.2rem' }}>🔄</Box>
+                <Box sx={{ textAlign: 'left' }}>
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    Replace existing file
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: uploadAction === 'replace' ? 'rgba(255,255,255,0.8)' : '#6b7280' }}>
+                    The existing file will be permanently deleted and replaced with the new one.
+                  </Typography>
+                </Box>
+              </Button>
+              
+              <Button
+                onClick={() => setUploadAction('duplicate')}
+                variant={uploadAction === 'duplicate' ? 'contained' : 'outlined'}
+                sx={{
+                  justifyContent: 'flex-start',
+                  textAlign: 'left',
+                  border: uploadAction === 'duplicate' ? '2px solid #22c55e' : '1px solid #d1d5db',
+                  backgroundColor: uploadAction === 'duplicate' ? '#22c55e' : 'transparent',
+                  color: uploadAction === 'duplicate' ? 'white' : '#374151',
+                  '&:hover': {
+                    backgroundColor: uploadAction === 'duplicate' ? '#16a34a' : '#f9fafb',
+                    borderColor: uploadAction === 'duplicate' ? '#16a34a' : '#9ca3af'
+                  }
+                }}
+              >
+                <Box sx={{ mr: 2, fontSize: '1.2rem' }}>📋</Box>
+                <Box sx={{ textAlign: 'left' }}>
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    Upload as duplicate
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: uploadAction === 'duplicate' ? 'rgba(255,255,255,0.8)' : '#6b7280' }}>
+                    The file will be uploaded with a numbered suffix (e.g., "file (1).pdf").
+                  </Typography>
+                </Box>
+              </Button>
+            </Box>
+          </DialogContent>
+          
+          <DialogActions sx={{ p: 3, pt: 0 }}>
+            <Button
+              onClick={handleUploadCancel}
+              sx={{
+                color: '#6b7280',
+                border: '1px solid #d1d5db',
+                '&:hover': {
+                  backgroundColor: '#f9fafb',
+                  borderColor: '#9ca3af'
+                }
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleUploadConfirm}
+              variant="contained"
+              disabled={!uploadAction}
+              sx={{
+                background: 'linear-gradient(135deg, #0a0909, #be0303, #be0303)',
+                color: 'white',
+                borderRadius: '12px',
+                fontWeight: 500,
+                textTransform: 'none',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #be0303, #0a0909, #be0303)',
+                  transform: 'translateY(-1px)',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
+                },
+                '&:disabled': {
+                  background: '#d1d5db',
+                  color: '#6b7280',
+                  transform: 'none',
+                  boxShadow: 'none'
+                }
+              }}
+            >
+              {uploadAction === 'replace' ? 'Replace File' : uploadAction === 'duplicate' ? 'Upload Duplicate' : 'Continue'}
             </Button>
           </DialogActions>
         </Dialog>

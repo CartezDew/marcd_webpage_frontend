@@ -50,15 +50,37 @@ export const fileApi = {
   },
 
   // Upload file
-  uploadFile: async (file, path = '/') => {
+  uploadFile: async (file, folderId = null, conflictResolution = null) => {
     try {
       const formData = new FormData();
       formData.append('file', file);
       
-      // Backend expects folder_id, not path
-      // For now, we'll send the path and let the backend handle it
-      // The backend should parse the path and find/create the appropriate folder
-      formData.append('path', path);
+      // Backend expects folder_id, send the actual folder ID
+      if (folderId !== null) {
+        formData.append('folder', folderId);
+        console.log('Sending folder ID:', folderId);
+      }
+      
+      // Add conflict resolution parameters to FormData (backend expects them in request.data)
+      if (conflictResolution) {
+        if (conflictResolution === 'replace_existing') {
+          formData.append('replace_existing', 'true');
+        } else if (conflictResolution === 'upload_as_duplicate') {
+          formData.append('upload_as_duplicate', 'true');
+        }
+      }
+      
+      // Debug: Log what we're sending
+      console.log('Uploading file:', file.name);
+      console.log('Folder ID:', folderId);
+      console.log('Conflict resolution:', conflictResolution);
+      
+      // Log all form data being sent
+      console.log('=== FormData being sent ===');
+      for (let [key, value] of formData.entries()) {
+        console.log(`FormData - ${key}:`, value);
+      }
+      console.log('=== End FormData ===');
       
       const response = await api.post('/api/files/upload/', formData, {
         headers: {
@@ -67,6 +89,13 @@ export const fileApi = {
       });
       return response.data;
     } catch (error) {
+      console.error('Upload error details:', {
+        status: error.response?.status,
+        data: error.response?.data,
+        conflictResolution: conflictResolution,
+        fullError: error.response?.data,
+        requestData: error.config?.data
+      });
       devLog('Error uploading file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');
@@ -338,6 +367,25 @@ export const fileApi = {
       }
       if (error.response?.status === 404) {
         throw new Error('Duplicate feature is not yet implemented on the backend. Please contact the development team.');
+      }
+      throw error;
+    }
+  },
+
+  // Download folder as zip
+  downloadFolder: async (folderId) => {
+    try {
+      const response = await api.get(`/api/folders/${folderId}/download/`, {
+        responseType: 'blob'
+      });
+      return response;
+    } catch (error) {
+      devLog('Error downloading folder:', error);
+      if (error.response?.status === 401) {
+        throw new Error('Authentication required. Please log in again.');
+      }
+      if (error.response?.status === 404) {
+        throw new Error('Folder download feature is not yet implemented on the backend. Please contact the development team.');
       }
       throw error;
     }
