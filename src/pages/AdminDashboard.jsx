@@ -1477,29 +1477,6 @@ const AdminDashboard = () => {
                   {localFeedbackMessage}
                 </Box>
               )}
-                <Box
-                  sx={{
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    zIndex: 10000,
-                    background: 'rgba(34, 197, 94, 0.9)',
-                    color: 'white',
-                    padding: '12px 20px',
-                    borderRadius: '8px',
-                    fontSize: '0.875rem',
-                    fontWeight: 500,
-                    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)',
-                    animation: 'successMessageFloat 3s ease-in-out forwards',
-                    pointerEvents: 'none',
-                    minWidth: '200px',
-                    textAlign: 'center'
-                  }}
-                >
-                  {localFeedbackMessage}
-                </Box>
-              )}
 
               {/* File Manager Content - Always visible */}
               <Box 
