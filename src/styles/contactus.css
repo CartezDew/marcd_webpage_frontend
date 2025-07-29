@@ -312,7 +312,7 @@
     }
 
     .contact-intro-text {
-      font-size: 0.8rem !important;
+      font-size: 0.85rem !important;
     }
 
 
@@ -363,7 +363,7 @@
     }
     
     .contact-intro-text {
-      font-size: 0.7rem !important;
+      font-size: 0.75rem !important;
       padding: 0.25rem !important;
     }
     
@@ -376,6 +376,13 @@
       font-size: 1.8rem;
     }
   }
+
+  @media (max-width: 504px) {
+    .contact-intro-text {
+      font-size: 0.71rem !important;
+    }
+  }
+
 
   @media (max-width: 480px) {
     .contact-container {
@@ -392,7 +399,7 @@
     }
     
     .contact-intro-text {
-      font-size: 0.65rem !important;
+      font-size: 0.68rem !important;
       padding: 0.3rem !important;
       margin-bottom: 0.5rem;
     }
@@ -515,6 +522,12 @@
     transform: translateY(0);
   }
 
+  @media (max-width: 465px) {
+    .contact-intro-text {
+      font-size: 0.65rem !important;
+    }
+  }
+
   @media (max-width: 460px) {
     .submit-button {
       width: 55% !important;
@@ -534,6 +547,20 @@
       margin-right: 0;
     }
 
+  }
+
+  @media (max-width: 447px) {
+    .contact-intro-text {
+      font-size: 0.62rem !important;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .contact-intro-text {
+      font-size: 0.75rem !important;
+      margin-left: 0.3rem !important;
+      margin-right: 0.3rem !important;
+    }
   }
 
   @media (max-width: 410px) {

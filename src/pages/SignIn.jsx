@@ -176,17 +176,6 @@ function SignIn() {
                     >
                       Welcome back to Marc'd
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ 
-                        color: '#a1a1aa', 
-                        textAlign: 'center', 
-                        mt: 1,
-                        fontSize: '0.75rem'
-                      }}
-                    >
-                      Sign in for user access or admin dashboard
-                    </Typography>
                   </div>
                   <TextField
                     type="text"
