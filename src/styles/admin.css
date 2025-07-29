@@ -1251,3 +1251,49 @@
 .admin-file-icon-default {
   color: #6b7280 !important;
 }
+
+/* File Manager Menu Positioning - Custom Container Approach */
+.admin-file-manager-container {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Ensure file manager paper maintains proper positioning */
+.admin-file-manager-paper {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 1 !important;
+}
+
+/* Custom Menu Animations */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px) scale(0.95);
+  }
+}
+
+/* Custom menu styling */
+.admin-custom-menu {
+  transition: all 0.2s ease-out !important;
+}
+
+.admin-custom-menu.closing {
+  animation: slideOutToRight 0.2s ease-out forwards !important;
+}

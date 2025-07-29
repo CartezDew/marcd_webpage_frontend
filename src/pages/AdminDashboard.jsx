@@ -118,10 +118,13 @@ const AdminDashboard = () => {
   const [folderDialogOpen, setFolderDialogOpen] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
   const [uploadingFiles, setUploadingFiles] = useState([]);
-  const [fileMenuAnchor, setFileMenuAnchor] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [folderMenuAnchor, setFolderMenuAnchor] = useState(null);
   const [selectedFolder, setSelectedFolder] = useState(null);
+  const [fileMenuAnchor, setFileMenuAnchor] = useState(null);
+  const [folderMenuAnchor, setFolderMenuAnchor] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteType, setDeleteType] = useState(null);
+  const [folderToDelete, setFolderToDelete] = useState(null);
   const [draggedFile, setDraggedFile] = useState(null);
   const [dragOverFolder, setDragOverFolder] = useState(null);
   const [showMoveSuccess, setShowMoveSuccess] = useState(false);
@@ -129,17 +132,18 @@ const AdminDashboard = () => {
   const [feedbackPosition, setFeedbackPosition] = useState({ x: 0, y: 0 });
   const [showLocalFeedback, setShowLocalFeedback] = useState(false);
   const [localFeedbackMessage, setLocalFeedbackMessage] = useState('');
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [folderToDelete, setFolderToDelete] = useState(null);
-  const [deleteType, setDeleteType] = useState(null); // 'file' or 'folder'
   const [editingItem, setEditingItem] = useState(null); // { type: 'file' | 'folder', id: number, name: string }
   const [editName, setEditName] = useState('');
+  const [itemToDelete, setItemToDelete] = useState(null); // Store the actual item being deleted
   
   // File upload confirmation state
   const [showUploadConfirm, setShowUploadConfirm] = useState(false);
   const [pendingUploadFiles, setPendingUploadFiles] = useState([]);
   const [duplicateFileName, setDuplicateFileName] = useState('');
   const [uploadAction, setUploadAction] = useState(''); // 'replace' or 'duplicate'
+  
+  // File manager container ref
+  const fileManagerRef = useRef(null);
   
   const prevPathRef = useRef('/');
 
@@ -788,13 +792,13 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteFile = async () => {
-    if (selectedFile) {
+    if (itemToDelete) {
       try {
-        await fileApi.deleteFile(selectedFile.id);
+        await fileApi.deleteFile(itemToDelete.id);
         
         // Reload file data from backend
         await loadFileData();
-        setMoveMessage(`"${selectedFile.name}" deleted successfully`);
+        setMoveMessage(`"${itemToDelete.name}" deleted successfully`);
         setShowMoveSuccess(true);
         setTimeout(() => setShowMoveSuccess(false), 3000);
       } catch (error) {
@@ -809,7 +813,7 @@ const AdminDashboard = () => {
         setError('Failed to delete file. Please try again.');
       } finally {
         setShowDeleteConfirm(false);
-        setSelectedFile(null);
+        setItemToDelete(null);
         setDeleteType(null);
       }
     }
@@ -824,14 +828,14 @@ const AdminDashboard = () => {
   };
 
   const confirmDeleteFolder = async () => {
-    if (!folderToDelete) return;
+    if (!itemToDelete) return;
     
     try {
-      await fileApi.deleteFolder(folderToDelete.id);
+      await fileApi.deleteFolder(itemToDelete.id);
       
       // Reload file data from backend
       await loadFileData();
-      setMoveMessage(`"${folderToDelete.name}" deleted successfully`);
+      setMoveMessage(`"${itemToDelete.name}" deleted successfully`);
       setShowMoveSuccess(true);
       setTimeout(() => setShowMoveSuccess(false), 3000);
     } catch (error) {
@@ -853,13 +857,13 @@ const AdminDashboard = () => {
       }
     } finally {
       setShowDeleteConfirm(false);
-      setFolderToDelete(null);
+      setItemToDelete(null);
     }
   };
 
   const cancelDeleteFolder = () => {
     setShowDeleteConfirm(false);
-    setFolderToDelete(null);
+    setItemToDelete(null);
     setSelectedFile(null);
     setDeleteType(null);
   };
@@ -1437,6 +1441,35 @@ const AdminDashboard = () => {
     });
   };
 
+  // Handle clicks outside file manager to close menus
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (fileManagerRef.current && !fileManagerRef.current.contains(event.target)) {
+        if (fileMenuAnchor || folderMenuAnchor) {
+          // Add closing animation class before closing
+          const menuElements = document.querySelectorAll('.admin-custom-menu');
+          menuElements.forEach(menu => {
+            menu.classList.add('closing');
+          });
+          
+          // Close menus after animation
+          setTimeout(() => {
+            handleFileMenuClose();
+            handleFolderMenuClose();
+          }, 200);
+        }
+      }
+    };
+
+    if (fileMenuAnchor || folderMenuAnchor) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [fileMenuAnchor, folderMenuAnchor]);
+
   if (loading) {
     return (
       <Box className="admin-dashboard-loading">
@@ -1722,7 +1755,7 @@ const AdminDashboard = () => {
           <Divider className="admin-modern-divider" />
 
           {/* File Management Panel - Now below the content area */}
-          <Box className="admin-file-manager-container" sx={{ position: 'relative' }}>
+          <Box className="admin-file-manager-container" ref={fileManagerRef} sx={{ position: 'relative' }}>
             <Paper className="admin-file-manager-paper">
               {/* File Panel Header */}
               <Box className="admin-file-manager-header">
@@ -2108,6 +2141,152 @@ const AdminDashboard = () => {
                 )}
               </Box>
             </Paper>
+
+            {/* Custom Menu Container - Inside file manager */}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                pointerEvents: fileMenuAnchor || folderMenuAnchor ? 'all' : 'none',
+                zIndex: 1300,
+                padding: '2px'
+              }}
+              onClick={(e) => {
+                // Close menu if clicking on backdrop
+                if (e.target === e.currentTarget) {
+                  handleFileMenuClose();
+                  handleFolderMenuClose();
+                }
+              }}
+            >
+              {/* File Menu */}
+              {fileMenuAnchor && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    pointerEvents: 'all',
+                    background: 'rgba(15, 15, 35, 0.95)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    borderRadius: 1,
+                    minWidth: 180,
+                    maxWidth: 200,
+                    color: 'white',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                    animation: 'slideInFromRight 0.2s ease-out',
+                    transformOrigin: 'top right'
+                  }}
+                  className="admin-custom-menu"
+                >
+                  <MenuItem onClick={() => {
+                    startEditing(selectedFile, 'file');
+                    handleFileMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>✏️</Box>
+                    </ListItemIcon>
+                    <ListItemText>Rename</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                    handleDownloadFile();
+                    handleFileMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <DownloadIcon sx={{ color: '#3b82f6' }} />
+                    </ListItemIcon>
+                    <ListItemText>Download</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                    handleDuplicateFile();
+                    handleFileMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>📋</Box>
+                    </ListItemIcon>
+                    <ListItemText>Duplicate</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                    // Store the file being deleted
+                    setItemToDelete(selectedFile);
+                    setDeleteType('file');
+                    setShowDeleteConfirm(true);
+                    handleFileMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <DeleteIcon sx={{ color: '#ef4444' }} />
+                    </ListItemIcon>
+                    <ListItemText>Delete</ListItemText>
+                  </MenuItem>
+                </Box>
+              )}
+
+              {/* Folder Menu */}
+              {folderMenuAnchor && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    pointerEvents: 'all',
+                    background: 'rgba(15, 15, 35, 0.95)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    borderRadius: 1,
+                    minWidth: 180,
+                    maxWidth: 200,
+                    color: 'white',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+                    animation: 'slideInFromRight 0.2s ease-out',
+                    transformOrigin: 'top right'
+                  }}
+                  className="admin-custom-menu"
+                >
+                  <MenuItem onClick={() => {
+                    startEditing(selectedFolder, 'folder');
+                    handleFolderMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>✏️</Box>
+                    </ListItemIcon>
+                    <ListItemText>Rename</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                    handleDownloadFolder();
+                    handleFolderMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <DownloadIcon sx={{ color: '#3b82f6' }} />
+                    </ListItemIcon>
+                    <ListItemText>Download</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                    handleDuplicateFolder();
+                    handleFolderMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>📋</Box>
+                    </ListItemIcon>
+                    <ListItemText>Duplicate</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                    setItemToDelete(selectedFolder);
+                    setDeleteType('folder');
+                    setShowDeleteConfirm(true);
+                    handleFolderMenuClose();
+                  }} sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}>
+                    <ListItemIcon>
+                      <DeleteIcon sx={{ color: '#ef4444' }} />
+                    </ListItemIcon>
+                    <ListItemText>Delete</ListItemText>
+                  </MenuItem>
+                </Box>
+              )}
+            </Box>
           </Box>
         </Box>
 
@@ -2260,105 +2439,6 @@ const AdminDashboard = () => {
             </Button>
           </DialogActions>
         </Dialog>
-
-        {/* File Menu */}
-        {fileMenuAnchor && (
-          <Menu
-            anchorEl={fileMenuAnchor}
-            open={Boolean(fileMenuAnchor)}
-            onClose={handleFileMenuClose}
-            PaperProps={{
-              sx: {
-                background: 'rgba(15, 15, 35, 0.95)',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                color: 'white'
-              }
-            }}
-          >
-          <MenuItem onClick={() => {
-            startEditing(selectedFile, 'file');
-            handleFileMenuClose();
-          }}>
-            <ListItemIcon>
-              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>✏️</Box>
-            </ListItemIcon>
-            <ListItemText>Rename</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleDownloadFile}>
-            <ListItemIcon>
-              <DownloadIcon sx={{ color: '#3b82f6' }} />
-            </ListItemIcon>
-            <ListItemText>Download</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleDuplicateFile}>
-            <ListItemIcon>
-              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>📋</Box>
-            </ListItemIcon>
-            <ListItemText>Duplicate</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={() => {
-            setDeleteType('file');
-            setShowDeleteConfirm(true);
-            // Don't close the menu immediately to preserve selectedFile
-            setFileMenuAnchor(null);
-          }}>
-            <ListItemIcon>
-              <DeleteIcon sx={{ color: '#ef4444' }} />
-            </ListItemIcon>
-            <ListItemText>Delete</ListItemText>
-          </MenuItem>
-        </Menu>
-        )}
-
-        {/* Folder Menu */}
-        {folderMenuAnchor && (
-          <Menu
-            anchorEl={folderMenuAnchor}
-            open={Boolean(folderMenuAnchor)}
-            onClose={handleFolderMenuClose}
-            PaperProps={{
-              sx: {
-                background: 'rgba(15, 15, 35, 0.95)',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                color: 'white'
-              }
-            }}
-          >
-          <MenuItem onClick={() => {
-            startEditing(selectedFolder, 'folder');
-            handleFolderMenuClose();
-          }}>
-            <ListItemIcon>
-              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>✏️</Box>
-            </ListItemIcon>
-            <ListItemText>Rename</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleDownloadFolder}>
-            <ListItemIcon>
-              <DownloadIcon sx={{ color: '#3b82f6' }} />
-            </ListItemIcon>
-            <ListItemText>Download</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={handleDuplicateFolder}>
-            <ListItemIcon>
-              <Box sx={{ color: '#22c55e', fontSize: '1.2rem' }}>📋</Box>
-            </ListItemIcon>
-            <ListItemText>Duplicate</ListItemText>
-          </MenuItem>
-          <MenuItem onClick={() => {
-            setFolderToDelete(selectedFolder);
-            setDeleteType('folder');
-            setShowDeleteConfirm(true);
-            // Don't close the menu immediately to preserve selectedFolder
-            setFolderMenuAnchor(null);
-          }}>
-            <ListItemIcon>
-              <DeleteIcon sx={{ color: '#ef4444' }} />
-            </ListItemIcon>
-            <ListItemText>Delete</ListItemText>
-          </MenuItem>
-        </Menu>
-        )}
 
         {/* Detail Dialog */}
         <Dialog
@@ -2540,7 +2620,7 @@ const AdminDashboard = () => {
                 display: 'inline-block'
               }}
             >
-              "{deleteType === 'file' ? selectedFile?.name : folderToDelete?.name}"
+              "{itemToDelete?.name}"
             </Typography>
             <Typography variant="body2" sx={{ color: '#6b7280' }}>
               {deleteType === 'file' 
