@@ -91,6 +91,10 @@ const AdminDashboard = () => {
   const [sortField, setSortField] = useState('created');
   const [sortDirection, setSortDirection] = useState('desc');
   
+  // File sorting state
+  const [fileSortField, setFileSortField] = useState('created');
+  const [fileSortDirection, setFileSortDirection] = useState('desc');
+  
   // Column visibility state
   const [columnVisibility, setColumnVisibility] = useState({
     name: true,
@@ -102,7 +106,9 @@ const AdminDashboard = () => {
   });
   const [columnMenuAnchor, setColumnMenuAnchor] = useState(null);
   
-
+  // 1. Add folderSortField/folderSortDirection state after fileSortField/fileSortDirection
+  const [folderSortField, setFolderSortField] = useState('created');
+  const [folderSortDirection, setFolderSortDirection] = useState('desc');
   
   // File management state
   const [files, setFiles] = useState([]);
@@ -340,6 +346,58 @@ const AdminDashboard = () => {
     }
   };
 
+  // File sorting functions
+  const handleFileSort = (field) => {
+    if (fileSortField === field) {
+      // If clicking the same field, toggle direction
+      setFileSortDirection(fileSortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // If clicking a different field, set it and default to ascending
+      setFileSortField(field);
+      setFileSortDirection('asc');
+    }
+  };
+
+  const getFileSortIcon = (field) => {
+    if (fileSortField !== field) {
+      return <UnfoldMoreIcon className="admin-sort-icon-inactive" sx={{ fontSize: '1.2rem' }} />;
+    }
+    
+    const iconClass = 'admin-sort-icon-active-blue';
+    
+    if (fileSortDirection === 'asc') {
+      return <ArrowUpwardIcon className={iconClass} sx={{ fontSize: '1.2rem' }} />;
+    } else {
+      return <ArrowDownwardIcon className={iconClass} sx={{ fontSize: '1.2rem' }} />;
+    }
+  };
+
+  const getSortedFiles = () => {
+    const currentFiles = files.filter(file => file.path === currentPath);
+    return currentFiles.sort((a, b) => {
+      let aValue, bValue;
+      switch (fileSortField) {
+        case 'name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'created':
+          aValue = a.created_at || a.uploaded_at || '';
+          bValue = b.created_at || b.uploaded_at || '';
+          break;
+        case 'type':
+          aValue = (a.file_type || '').toLowerCase();
+          bValue = (b.file_type || '').toLowerCase();
+          break;
+        default:
+          return 0;
+      }
+      if (aValue < bValue) return fileSortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return fileSortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  };
+
   const handleViewDetails = (entry) => {
     setSelectedEntry(entry);
     setDetailDialogOpen(true);
@@ -470,17 +528,17 @@ const AdminDashboard = () => {
     const extension = fileName.split('.').pop()?.toLowerCase();
     switch (extension) {
       case 'pdf':
-        return <PdfIcon />;
+        return <PdfIcon className="admin-file-icon-pdf" />;
       case 'xlsx':
       case 'xls':
       case 'csv':
-        return <ExcelIcon />;
+        return <ExcelIcon className="admin-file-icon-excel" />;
       case 'doc':
       case 'docx':
-        return <WordIcon />;
+        return <WordIcon className="admin-file-icon-word" />;
       case 'ppt':
       case 'pptx':
-        return <PowerPointIcon />;
+        return <PowerPointIcon className="admin-file-icon-powerpoint" />;
       case 'jpg':
       case 'jpeg':
       case 'png':
@@ -490,32 +548,32 @@ const AdminDashboard = () => {
       case 'tiff':
       case 'webp':
       case 'ico':
-        return <ImageIcon />;
+        return <ImageIcon className="admin-file-icon-image" />;
       case 'mp4':
       case 'avi':
       case 'mov':
       case 'wmv':
       case 'flv':
       case 'webm':
-        return <VideoIcon />;
+        return <VideoIcon className="admin-file-icon-video" />;
       case 'mp3':
       case 'wav':
       case 'flac':
       case 'aac':
       case 'ogg':
-        return <AudioIcon />;
+        return <AudioIcon className="admin-file-icon-audio" />;
       case 'zip':
       case 'rar':
       case '7z':
       case 'tar':
       case 'gz':
-        return <ArchiveIcon />;
+        return <ArchiveIcon className="admin-file-icon-archive" />;
       case 'txt':
       case 'md':
       case 'rtf':
-        return <TextIcon />;
+        return <TextIcon className="admin-file-icon-text" />;
       default:
-        return <FileIcon />;
+        return <FileIcon className="admin-file-icon-default" />;
     }
   };
 
@@ -1167,6 +1225,44 @@ const AdminDashboard = () => {
     return folder ? folder.id : null;
   };
 
+  // Sort files and folders based on current sort settings
+  const getSortedFilesAndFolders = () => {
+    const currentFiles = files.filter(file => file.path === currentPath);
+    const currentFolders = folders.filter(folder => folder.path === currentPath);
+    
+    const sortedItems = [...currentFolders, ...currentFiles].sort((a, b) => {
+      let aValue, bValue;
+      
+      switch (fileSortField) {
+        case 'name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'created':
+          aValue = a.created_at || a.uploaded_at || '';
+          bValue = b.created_at || b.uploaded_at || '';
+          break;
+        case 'type':
+          // For folders, use 'folder', for files, use file extension
+          aValue = a.type === 'folder' ? 'folder' : (a.file_type || '').toLowerCase();
+          bValue = b.type === 'folder' ? 'folder' : (b.file_type || '').toLowerCase();
+          break;
+        default:
+          return 0;
+      }
+      
+      if (aValue < bValue) {
+        return fileSortDirection === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return fileSortDirection === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+    
+    return sortedItems;
+  };
+
   // LocalStorage functions for file persistence
 
 
@@ -1297,6 +1393,48 @@ const AdminDashboard = () => {
       }
     }
     setDraggedFile(null);
+  };
+
+  // 2. Add handleFolderSort, getFolderSortIcon, and getSortedFolders functions after getFileSortIcon
+  const handleFolderSort = (field) => {
+    if (folderSortField === field) {
+      setFolderSortDirection(folderSortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setFolderSortField(field);
+      setFolderSortDirection('asc');
+    }
+  };
+  const getFolderSortIcon = (field) => {
+    if (folderSortField !== field) {
+      return <UnfoldMoreIcon className="admin-sort-icon-inactive" sx={{ fontSize: '1.2rem' }} />;
+    }
+    const iconClass = 'admin-sort-icon-active-blue';
+    if (folderSortDirection === 'asc') {
+      return <ArrowUpwardIcon className={iconClass} sx={{ fontSize: '1.2rem' }} />;
+    } else {
+      return <ArrowDownwardIcon className={iconClass} sx={{ fontSize: '1.2rem' }} />;
+    }
+  };
+  const getSortedFolders = () => {
+    const currentFolders = folders.filter(folder => folder.path === currentPath);
+    return currentFolders.sort((a, b) => {
+      let aValue, bValue;
+      switch (folderSortField) {
+        case 'name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'created':
+          aValue = a.created_at || '';
+          bValue = b.created_at || '';
+          break;
+        default:
+          return 0;
+      }
+      if (aValue < bValue) return folderSortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return folderSortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
   };
 
   if (loading) {
@@ -1607,10 +1745,9 @@ const AdminDashboard = () => {
                       onClick={() => setFolderDialogOpen(true)}
                       className="admin-create-folder-button"
                     >
-                      <CreateFolderIcon />
+                      <CreateFolderIcon className="admin-create-folder-icon" />
                     </IconButton>
                   </Tooltip>
-
                 </Box>
               </Box>
 
@@ -1671,19 +1808,21 @@ const AdminDashboard = () => {
                   border: currentPath !== '/' ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
                   {currentPath !== '/' && (
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        const pathParts = currentPath.split('/').filter(part => part);
-                        const newPath = pathParts.length > 1 
-                          ? '/' + pathParts.slice(0, -1).join('/')
-                          : '/';
-                        setCurrentPath(newPath);
-                      }}
-                      sx={{ color: '#a1a1aa' }}
-                    >
-                      <ArrowBackIcon />
-                    </IconButton>
+                    <Tooltip title="Back">
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          const pathParts = currentPath.split('/').filter(part => part);
+                          const newPath = pathParts.length > 1 
+                            ? '/' + pathParts.slice(0, -1).join('/')
+                            : '/';
+                          setCurrentPath(newPath);
+                        }}
+                        sx={{ color: '#a1a1aa' }}
+                      >
+                        <ArrowBackIcon />
+                      </IconButton>
+                    </Tooltip>
                   )}
                   {currentPath !== '/' && (
                     <Typography 
@@ -1699,49 +1838,204 @@ const AdminDashboard = () => {
                   )}
                 </Box>
 
-                {/* Folders */}
-                {folders.filter(folder => {
-                  // Compare folder path with current path
-                  const matches = folder.path === currentPath;
-                  return matches;
-                }).map((folder) => {
-                  return (
-                                        <ListItem
-                      key={folder.id}
+                {/* Folders - Only show in root directory */}
+                {currentPath === '/' && (
+                  <Box sx={{ mb: 2 }}>
+                    {/* Folders Sort Bar */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                      <Typography variant="subtitle2" sx={{ color: '#a1a1aa', fontWeight: 600, mr: 1 }}>Folders</Typography>
+                      <Tooltip title="Sort by Name">
+                        <IconButton size="small" onClick={() => handleFolderSort('name')} sx={{ color: '#a1a1aa' }}>
+                          {getFolderSortIcon('name')}
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Sort by Created Date">
+                        <IconButton size="small" onClick={() => handleFolderSort('created')} sx={{ color: '#a1a1aa' }}>
+                          {getFolderSortIcon('created')}
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                    {/* Folders List */}
+                    {getSortedFolders().map((folder) => {
+                      return (
+                        <ListItem
+                          key={folder.id}
+                          sx={{
+                            borderRadius: 1,
+                            mb: 0.5,
+                            cursor: 'pointer',
+                            backgroundColor: dragOverFolder?.id === folder.id ? 'rgba(59, 130, 246, 0.3)' : 'transparent',
+                            border: dragOverFolder?.id === folder.id ? '3px dashed #3b82f6' : '2px solid transparent',
+                            transition: 'all 0.2s ease',
+                            transform: dragOverFolder?.id === folder.id ? 'scale(1.02)' : 'scale(1)',
+                            '&:hover': {
+                              backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                            }
+                          }}
+                          onClick={(e) => {
+                            // Only navigate if not dragging a file
+                            if (!draggedFile) {
+                              setCurrentPath(currentPath === '/' ? `/${folder.name}` : `${currentPath}/${folder.name}`);
+                            }
+                          }}
+                          onDrop={(e) => handleFolderDrop(e, folder)}
+                          onDragOver={(e) => handleFolderDragOver(e, folder)}
+                          onDragLeave={handleFolderDragLeave}
+                        >
+                          <ListItemIcon sx={{ minWidth: 36 }}>
+                            <FolderIcon className="admin-folder-icon" />
+                          </ListItemIcon>
+                        <ListItemText
+                          primary={
+                            editingItem && editingItem.type === 'folder' && editingItem.id === folder.id ? (
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <Input
+                                  value={editName}
+                                  onChange={(e) => setEditName(e.target.value)}
+                                  onKeyPress={handleEditKeyPress}
+                                  autoFocus
+                                    sx={{
+                                      color: 'white',
+                                      fontSize: '0.875rem',
+                                      '& .MuiInput-input': {
+                                        color: 'white',
+                                        fontSize: '0.875rem',
+                                        padding: '4px 8px',
+                                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                        borderRadius: 1,
+                                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                                        '&:focus': {
+                                          borderColor: '#3b82f6',
+                                          backgroundColor: 'rgba(255, 255, 255, 0.15)'
+                                        }
+                                      }
+                                    }}
+                                />
+                                <IconButton
+                                  size="small"
+                                  onClick={handleRename}
+                                    sx={{ color: '#22c55e', p: 0.5 }}
+                                >
+                                    <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
+                                </IconButton>
+                                <IconButton
+                                  size="small"
+                                  onClick={handleCancelRename}
+                                    sx={{ color: '#ef4444', p: 0.5 }}
+                                >
+                                    <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
+                                </IconButton>
+                              </Box>
+                            ) : (
+                              <Box
+                                onClick={() => {
+                                  // Navigate into the folder instead of editing
+                                  setCurrentPath(folder.full_path ? '/' + folder.full_path : '/' + folder.name);
+                                }}
+                                  sx={{
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                      borderRadius: 1,
+                                      padding: '2px 4px',
+                                      margin: '-2px -4px'
+                                    }
+                                  }}
+                              >
+                                {folder.name}
+                              </Box>
+                            )
+                          }
+                            secondary={
+                              folder.created_at ? `📅 Created ${formatDate(folder.created_at)}` : ''
+                            }
+                          primaryTypographyProps={{
+                              sx: { color: 'white', fontSize: '0.875rem' }
+                          }}
+                          secondaryTypographyProps={{
+                              sx: { color: '#a1a1aa', fontSize: '0.75rem' }
+                          }}
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            size="small"
+                              onClick={(e) => handleFolderMenuOpen(e, folder)}
+                              sx={{ color: '#a1a1aa' }}
+                          >
+                              <MoreVertIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                        </ListItem>
+                      );
+                    })}
+                  </Box>
+                )}
+                <Box>
+                  {/* Files Sort Bar */}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <Typography variant="subtitle2" sx={{ color: '#a1a1aa', fontWeight: 600, mr: 1 }}>Files</Typography>
+                    <Tooltip title="Sort by Name">
+                      <IconButton size="small" onClick={() => handleFileSort('name')} sx={{ color: '#a1a1aa' }}>
+                        {getFileSortIcon('name')}
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Sort by Created Date">
+                      <IconButton size="small" onClick={() => handleFileSort('created')} sx={{ color: '#a1a1aa' }}>
+                        {getFileSortIcon('created')}
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Sort by File Type">
+                      <IconButton size="small" onClick={() => handleFileSort('type')} sx={{ color: '#a1a1aa' }}>
+                        {getFileSortIcon('type')}
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                  {/* Files List */}
+                  {getSortedFiles().map((file) => {
+                    return (
+                    <ListItem
+                      key={file.id}
+                      draggable
+                      onDragStart={(e) => handleFileDragStart(e, file)}
+                      onDragEnd={handleFileDragEnd}
                       sx={{
                         borderRadius: 1,
                         mb: 0.5,
-                        cursor: 'pointer',
-                        backgroundColor: dragOverFolder?.id === folder.id ? 'rgba(59, 130, 246, 0.3)' : 'transparent',
-                        border: dragOverFolder?.id === folder.id ? '3px dashed #3b82f6' : '2px solid transparent',
+                        cursor: 'grab',
+                        opacity: draggedFile?.id === file.id ? 0.3 : 1,
+                        backgroundColor: draggedFile?.id === file.id ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+                        border: draggedFile?.id === file.id ? '2px solid #3b82f6' : '2px solid transparent',
+                        transform: draggedFile?.id === file.id ? 'scale(0.95)' : 'scale(1)',
                         transition: 'all 0.2s ease',
-                        transform: dragOverFolder?.id === folder.id ? 'scale(1.02)' : 'scale(1)',
                         '&:hover': {
                           backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        '&:active': {
+                          cursor: 'grabbing'
                         }
                       }}
-                      onClick={(e) => {
-                        // Only navigate if not dragging a file
-                        if (!draggedFile) {
-                          setCurrentPath(currentPath === '/' ? `/${folder.name}` : `${currentPath}/${folder.name}`);
-                        }
-                      }}
-                      onDrop={(e) => handleFolderDrop(e, folder)}
-                      onDragOver={(e) => handleFolderDragOver(e, folder)}
-                      onDragLeave={handleFolderDragLeave}
+                      secondaryAction={
+                        <IconButton
+                          size="small"
+                                                      onClick={(e) => handleFileMenuOpen(e, file)}
+                          sx={{ color: '#a1a1aa' }}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      }
                     >
-                      <ListItemIcon sx={{ color: '#22c55e', minWidth: 36 }}>
-                        <FolderIcon />
+                      <ListItemIcon sx={{ color: '#3b82f6', minWidth: 36 }}>
+                        {getFileIcon(file.name)}
                       </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        editingItem && editingItem.type === 'folder' && editingItem.id === folder.id ? (
+                      <ListItemText
+                        primary={
+                          editingItem && editingItem.type === 'file' && editingItem.id === file.id ? (
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Input
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
-                              onKeyPress={handleEditKeyPress}
-                              autoFocus
+                              <Input
+                                value={editName}
+                                onChange={(e) => setEditName(e.target.value)}
+                                onKeyPress={handleEditKeyPress}
+                                autoFocus
                                 sx={{
                                   color: 'white',
                                   fontSize: '0.875rem',
@@ -1758,179 +2052,52 @@ const AdminDashboard = () => {
                                     }
                                   }
                                 }}
-                            />
-                            <IconButton
-                              size="small"
-                              onClick={handleRename}
+                              />
+                              <IconButton
+                                size="small"
+                                onClick={handleRename}
                                 sx={{ color: '#22c55e', p: 0.5 }}
-                            >
+                              >
                                 <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
-                            </IconButton>
-                            <IconButton
-                              size="small"
-                              onClick={handleCancelRename}
+                              </IconButton>
+                              <IconButton
+                                size="small"
+                                onClick={handleCancelRename}
                                 sx={{ color: '#ef4444', p: 0.5 }}
-                            >
+                              >
                                 <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
-                            </IconButton>
-                          </Box>
-                        ) : (
-                          <Box
-                            onClick={() => {
-                              // Navigate into the folder instead of editing
-                              setCurrentPath(folder.full_path ? '/' + folder.full_path : '/' + folder.name);
-                            }}
+                              </IconButton>
+                            </Box>
+                          ) : (
+                            <Box
                               sx={{
-                                cursor: 'pointer',
+                                cursor: 'default',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
                                   borderRadius: 1,
                                   padding: '2px 4px',
                                   margin: '-2px -4px'
                                 }
                               }}
-                          >
-                            {folder.name}
-                          </Box>
-                        )
-                      }
-                        secondary={
-                          folder.created_at ? `📅 Created ${formatDate(folder.created_at)}` : ''
+                            >
+                              {file.name}
+                            </Box>
+                          )
                         }
-                      primaryTypographyProps={{
+                        secondary={
+                          `${formatFileSize(file.size)}${file.uploaded_at ? ` • 📅 ${formatDate(file.uploaded_at)}` : ''}`
+                        }
+                        primaryTypographyProps={{
                           sx: { color: 'white', fontSize: '0.875rem' }
-                      }}
-                      secondaryTypographyProps={{
+                        }}
+                        secondaryTypographyProps={{
                           sx: { color: '#a1a1aa', fontSize: '0.75rem' }
-                      }}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        size="small"
-                          onClick={(e) => handleFolderMenuOpen(e, folder)}
-                          sx={{ color: '#a1a1aa' }}
-                      >
-                          <MoreVertIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
+                        }}
+                      />
                     </ListItem>
                   );
-                })}
-
-                <Divider sx={{ my: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-
-                {/* Files */}
-                {files.filter(file => {
-                  // Compare file path with current path
-                  const matches = file.path === currentPath;
-                  return matches;
-                }).map((file) => {
-                  return (
-                  <ListItem
-                    key={file.id}
-                    draggable
-                    onDragStart={(e) => handleFileDragStart(e, file)}
-                    onDragEnd={handleFileDragEnd}
-                    sx={{
-                      borderRadius: 1,
-                      mb: 0.5,
-                      cursor: 'grab',
-                      opacity: draggedFile?.id === file.id ? 0.3 : 1,
-                      backgroundColor: draggedFile?.id === file.id ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
-                      border: draggedFile?.id === file.id ? '2px solid #3b82f6' : '2px solid transparent',
-                      transform: draggedFile?.id === file.id ? 'scale(0.95)' : 'scale(1)',
-                      transition: 'all 0.2s ease',
-                      '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                      },
-                      '&:active': {
-                        cursor: 'grabbing'
-                      }
-                    }}
-                    secondaryAction={
-                      <IconButton
-                        size="small"
-                                                    onClick={(e) => handleFileMenuOpen(e, file)}
-                        sx={{ color: '#a1a1aa' }}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemIcon sx={{ color: '#3b82f6', minWidth: 36 }}>
-                      {getFileIcon(file.name)}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        editingItem && editingItem.type === 'file' && editingItem.id === file.id ? (
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Input
-                              value={editName}
-                              onChange={(e) => setEditName(e.target.value)}
-                              onKeyPress={handleEditKeyPress}
-                              autoFocus
-                              sx={{
-                                color: 'white',
-                                fontSize: '0.875rem',
-                                '& .MuiInput-input': {
-                                  color: 'white',
-                                  fontSize: '0.875rem',
-                                  padding: '4px 8px',
-                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                  borderRadius: 1,
-                                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                                  '&:focus': {
-                                    borderColor: '#3b82f6',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.15)'
-                                  }
-                                }
-                              }}
-                            />
-                            <IconButton
-                              size="small"
-                              onClick={handleRename}
-                              sx={{ color: '#22c55e', p: 0.5 }}
-                            >
-                              <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
-                            </IconButton>
-                            <IconButton
-                              size="small"
-                              onClick={handleCancelRename}
-                              sx={{ color: '#ef4444', p: 0.5 }}
-                            >
-                              <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
-                            </IconButton>
-                          </Box>
-                        ) : (
-                          <Box
-                            sx={{
-                              cursor: 'default',
-                              '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                                borderRadius: 1,
-                                padding: '2px 4px',
-                                margin: '-2px -4px'
-                              }
-                            }}
-                          >
-                            {file.name}
-                          </Box>
-                        )
-                      }
-                      secondary={
-                        `${formatFileSize(file.size)}${file.uploaded_at ? ` • 📅 ${formatDate(file.uploaded_at)}` : ''}`
-                      }
-                      primaryTypographyProps={{
-                        sx: { color: 'white', fontSize: '0.875rem' }
-                      }}
-                      secondaryTypographyProps={{
-                        sx: { color: '#a1a1aa', fontSize: '0.75rem' }
-                      }}
-                    />
-                  </ListItem>
-                );
-                })}
-
+                  })}
+                </Box>
                 {files.filter(file => file.path === currentPath).length === 0 && 
                  folders.filter(folder => folder.path === currentPath).length === 0 && (
                   <Box sx={{ p: 2, textAlign: 'center' }}>

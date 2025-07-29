@@ -1197,3 +1197,57 @@
     0 0 8px rgba(190, 3, 3, 0.3),
     inset 0 1px 2px rgba(1, 1, 1, 0.1) !important;
 }
+
+/* File Type Icon Colors */
+/* PDF Icon - Red */
+.admin-file-icon-pdf {
+  color: #ef4444 !important;
+}
+
+/* Excel Icon - Green */
+.admin-file-icon-excel {
+  color: #22c55e !important;
+}
+
+/* Folder Icon - Yellow */
+.admin-folder-icon {
+  color: #fbbf24 !important;
+}
+
+/* Create Folder Icon - Yellow */
+.admin-create-folder-icon {
+  color: #fbbf24 !important;
+}
+
+/* File Icon Colors by Type */
+.admin-file-icon-image {
+  color: #3b82f6 !important;
+}
+
+.admin-file-icon-video {
+  color: #8b5cf6 !important;
+}
+
+.admin-file-icon-audio {
+  color: #ec4899 !important;
+}
+
+.admin-file-icon-archive {
+  color: #f59e0b !important;
+}
+
+.admin-file-icon-text {
+  color: #10b981 !important;
+}
+
+.admin-file-icon-word {
+  color: #3b82f6 !important;
+}
+
+.admin-file-icon-powerpoint {
+  color: #f97316 !important;
+}
+
+.admin-file-icon-default {
+  color: #6b7280 !important;
+}
