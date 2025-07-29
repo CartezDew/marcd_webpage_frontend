@@ -170,11 +170,59 @@ export const fileApi = {
   // Download file
   downloadFile: async (fileId) => {
     try {
-      const response = await api.get(`/api/files/${fileId}/download/`, {
-        responseType: 'blob'
-      });
-      return response.data;
+      console.log('fileApi.downloadFile called with fileId:', fileId);
+      
+      // First, get the file details to get the file URL
+      console.log('Getting file details first...');
+      const fileResponse = await api.get(`/api/files/${fileId}/`);
+      console.log('File details response:', fileResponse.data);
+      
+      const fileUrl = fileResponse.data.file;
+      console.log('File URL from response:', fileUrl);
+      
+      if (!fileUrl) {
+        throw new Error('File URL not found in response');
+      }
+      
+      // Try different download endpoints
+      const endpoints = [
+        `/api/files/${fileId}/download/`,
+        `/api/files/${fileId}/`,
+        fileUrl, // Direct file URL
+        `/media/uploads/${fileResponse.data.name}` // Media URL
+      ];
+      
+      let response;
+      let lastError;
+      
+      for (const endpoint of endpoints) {
+        try {
+          console.log('Trying download endpoint:', endpoint);
+          response = await api.get(endpoint, {
+            responseType: 'blob'
+          });
+          console.log('Download successful from endpoint:', endpoint);
+          break;
+        } catch (error) {
+          console.log('Failed endpoint:', endpoint, 'Error:', error.response?.status);
+          lastError = error;
+        }
+      }
+      
+      if (!response) {
+        throw lastError || new Error('All download endpoints failed');
+      }
+      
+      console.log('fileApi.downloadFile response received:', response);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      console.log('Response data type:', typeof response.data);
+      console.log('Response data size:', response.data ? response.data.size : 'undefined');
+      
+      return response;
     } catch (error) {
+      console.error('fileApi.downloadFile error:', error);
+      console.error('Error response:', error.response);
       devLog('Error downloading file:', error);
       if (error.response?.status === 401) {
         throw new Error('Authentication required. Please log in again.');

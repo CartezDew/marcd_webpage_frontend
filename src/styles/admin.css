@@ -48,14 +48,30 @@
 }
 
 .admin-dashboard-icon {
-  font-size: 2.5rem;
+  font-size: 2.5rem !important;
   color: #be0303;
 }
 
 .admin-title {
-  font-weight: 700;
-  color: white;
+  margin: 0 !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 3.75rem !important;
+  line-height: 1.2 !important;
+  color: white !important;
 }
+
+/* Target Material-UI Typography component specifically for Admin Dashboard */
+.admin-header-content .admin-title.MuiTypography-h3 {
+  margin: 0 !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 2.5rem !important;
+  line-height: 1.2 !important;
+  color: white !important;
+}
+
+
 
 .admin-main-content {
   display: flex;
@@ -399,6 +415,43 @@
   width: 100%;
 }
 
+/* Remove all list markers from file manager */
+.admin-file-manager-container ul,
+.admin-file-manager-container ol,
+.admin-file-manager-container li {
+  list-style: none !important;
+  list-style-type: none !important;
+  list-style-position: outside !important;
+  list-style-image: none !important;
+}
+
+.admin-file-manager-container li::marker,
+.admin-file-manager-container ul li::marker,
+.admin-file-manager-container ol li::marker {
+  display: none !important;
+  content: none !important;
+}
+
+.admin-file-manager-container ul li::before,
+.admin-file-manager-container ol li::before,
+.admin-file-manager-container li::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Target Material-UI List components specifically */
+.admin-file-manager-container .MuiList-root,
+.admin-file-manager-container .MuiListItem-root {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.admin-file-manager-container .MuiList-root li::marker,
+.admin-file-manager-container .MuiListItem-root::marker {
+  display: none !important;
+  content: none !important;
+}
+
 /* Override Material-UI generated class for file manager ListItems */
 .admin-file-manager-container .css-1fnzh3y {
   padding: 0 !important;
@@ -489,9 +542,23 @@
 }
 
 .admin-file-manager-title {
-  color: white; 
-  font-weight: 600;
-  font-size: 1rem;
+  margin: 0 !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 2rem !important;
+  line-height: 1.2 !important;
+  color: white !important;
+}
+
+/* Target Material-UI Typography component specifically for File Manager */
+.admin-file-manager-header .MuiTypography-h6.admin-file-manager-title {
+  margin: 0 !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1.7rem !important;
+  line-height: 1.2 !important;
+  color: white !important;
+  opacity: 0.8 !important;
 }
 
 .admin-file-manager-actions {

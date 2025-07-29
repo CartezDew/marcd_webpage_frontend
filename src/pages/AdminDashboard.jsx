@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Container,
@@ -125,6 +125,7 @@ const AdminDashboard = () => {
   const [deleteType, setDeleteType] = useState(null); // 'file' or 'folder'
   const [editingItem, setEditingItem] = useState(null); // { type: 'file' | 'folder', id: number, name: string }
   const [editName, setEditName] = useState('');
+  const prevPathRef = useRef('/');
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -139,6 +140,20 @@ const AdminDashboard = () => {
     fetchData();
     loadFileData();
   }, []);
+
+  // Debug file menu state
+  useEffect(() => {
+    console.log('File menu anchor changed:', fileMenuAnchor);
+    console.log('Selected file changed:', selectedFile);
+  }, [fileMenuAnchor, selectedFile]);
+
+  // Clear editing state when path changes
+  useEffect(() => {
+    if (editingItem && currentPath !== prevPathRef.current) {
+      cancelEditing();
+    }
+    prevPathRef.current = currentPath;
+  }, [currentPath]);
 
   const fetchData = async () => {
     try {
@@ -613,11 +628,13 @@ const AdminDashboard = () => {
   };
 
   const handleFileMenuOpen = (event, file) => {
+    console.log('File menu opened for file:', file);
     setFileMenuAnchor(event.currentTarget);
     setSelectedFile(file);
   };
 
   const handleFileMenuClose = () => {
+    console.log('File menu closed');
     setFileMenuAnchor(null);
     setSelectedFile(null);
   };
@@ -741,7 +758,7 @@ const AdminDashboard = () => {
     // Check for duplicates
     const isDuplicate = editingItem.type === 'file'
       ? checkDuplicateFileName(newName, currentPath)
-      : checkDuplicateFolderName(newName, currentPath);
+      : checkDuplicateFolderName(newName, currentPath, editingItem.id);
     
     if (isDuplicate) {
       setError(`${editingItem.type === 'file' ? 'File' : 'Folder'} "${newName}" already exists in this location.`);
@@ -785,30 +802,78 @@ const AdminDashboard = () => {
   };
 
   const handleDownloadFile = async () => {
-    if (!selectedFile) return;
+    console.log('=== handleDownloadFile START ===');
+    console.log('Download button clicked for file:', selectedFile);
+    
+    if (!selectedFile) {
+      console.error('No selectedFile found for download');
+      return;
+    }
+    
+    console.log('selectedFile.id:', selectedFile.id);
+    console.log('selectedFile.name:', selectedFile.name);
     
     try {
+      console.log('About to call fileApi.downloadFile...');
       const response = await fileApi.downloadFile(selectedFile.id);
+      console.log('Download response received:', response);
+      console.log('Response data type:', typeof response.data);
+      console.log('Response headers:', response.headers);
       
       // Create a blob from the response data
+      console.log('Creating blob...');
       const blob = new Blob([response.data], { 
         type: response.headers['content-type'] || 'application/octet-stream' 
       });
+      console.log('Blob created:', blob);
+      console.log('Blob size:', blob.size);
       
-      // Create a download link
-        const url = window.URL.createObjectURL(blob);
+      // Alternative download method if blob size is 0
+      if (blob.size === 0) {
+        console.log('Blob size is 0, trying alternative download method...');
+        // Try direct download using the API URL
+        const downloadUrl = `/api/files/${selectedFile.id}/download/`;
         const link = document.createElement('a');
-        link.href = url;
+        link.href = downloadUrl;
         link.download = selectedFile.name;
+        link.target = '_blank';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        console.log('Alternative download method used');
+      } else {
+        // Create a download link
+        console.log('Creating download link...');
+        const url = window.URL.createObjectURL(blob);
+        console.log('Object URL created:', url);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = selectedFile.name;
+        console.log('Download link created with filename:', selectedFile.name);
+        
+        document.body.appendChild(link);
+        console.log('Link appended to document body');
+        
+        link.click();
+        console.log('Link clicked');
+        
+        document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
+        console.log('Link removed and URL revoked');
+      }
       
-        handleFileMenuClose();
-      } catch (error) {
-        console.error('Error downloading file:', error);
-    setError('Failed to download file. Please try again.');
+      console.log('File download initiated successfully');
+      handleFileMenuClose();
+      console.log('=== handleDownloadFile END ===');
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        response: error.response
+      });
+      setError('Failed to download file. Please try again.');
     }
   };
 
@@ -856,9 +921,12 @@ const AdminDashboard = () => {
     return filesInCurrentPath.some(file => file.name.toLowerCase() === fileName.toLowerCase());
   };
 
-  const checkDuplicateFolderName = (folderName, currentPath = '/') => {
+  const checkDuplicateFolderName = (folderName, currentPath = '/', excludeId = null) => {
     const foldersInCurrentPath = folders.filter(folder => folder.path === currentPath);
-    return foldersInCurrentPath.some(folder => folder.name.toLowerCase() === folderName.toLowerCase());
+    return foldersInCurrentPath.some(folder => 
+      folder.name.toLowerCase() === folderName.toLowerCase() && 
+      (!excludeId || folder.id !== excludeId)
+    );
   };
 
   const validateFileName = (fileName) => {
@@ -901,14 +969,6 @@ const AdminDashboard = () => {
     const reservedNames = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'];
     if (reservedNames.includes(folderName.toUpperCase())) {
       return `'${folderName}' is a reserved name and cannot be used`;
-    }
-    // Check for duplicate folder names in current path
-    const duplicateFolder = folders.find(folder => 
-      folder.name.toLowerCase() === folderName.toLowerCase() && 
-      folder.id !== editingItem?.id
-    );
-    if (duplicateFolder) {
-      return 'A folder with this name already exists in this location';
     }
     return null;
   };
@@ -1456,7 +1516,6 @@ const AdminDashboard = () => {
                               value={editName}
                               onChange={(e) => setEditName(e.target.value)}
                               onKeyPress={handleEditKeyPress}
-                              onBlur={handleRename}
                               autoFocus
                                 sx={{
                                   color: 'white',
@@ -1492,7 +1551,10 @@ const AdminDashboard = () => {
                           </Box>
                         ) : (
                           <Box
-                            onClick={() => startEditing(folder, 'folder')}
+                            onClick={() => {
+                              // Navigate into the folder instead of editing
+                              setCurrentPath(folder.full_path ? '/' + folder.full_path : '/' + folder.name);
+                            }}
                               sx={{
                                 cursor: 'pointer',
                                 '&:hover': {
@@ -1563,7 +1625,10 @@ const AdminDashboard = () => {
                     secondaryAction={
                       <IconButton
                         size="small"
-                        onClick={(e) => handleFileMenuOpen(e, file)}
+                        onClick={(e) => {
+                          console.log('Three-dot icon clicked for file:', file);
+                          handleFileMenuOpen(e, file);
+                        }}
                         sx={{ color: '#a1a1aa' }}
                       >
                         <MoreVertIcon />
@@ -1581,7 +1646,6 @@ const AdminDashboard = () => {
                               value={editName}
                               onChange={(e) => setEditName(e.target.value)}
                               onKeyPress={handleEditKeyPress}
-                              onBlur={handleRename}
                               autoFocus
                               sx={{
                                 color: 'white',
@@ -1617,11 +1681,10 @@ const AdminDashboard = () => {
                           </Box>
                         ) : (
                           <Box
-                            onClick={() => startEditing(file, 'file')}
                             sx={{
-                              cursor: 'pointer',
+                              cursor: 'default',
                               '&:hover': {
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                backgroundColor: 'rgba(255, 255, 255, 0.05)',
                                 borderRadius: 1,
                                 padding: '2px 4px',
                                 margin: '-2px -4px'
@@ -1823,7 +1886,16 @@ const AdminDashboard = () => {
             </ListItemIcon>
             <ListItemText>Rename</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleDownloadFile}>
+          <MenuItem onClick={() => {
+            console.log('Download menu item clicked');
+            try {
+              console.log('About to call handleDownloadFile');
+              handleDownloadFile();
+              console.log('handleDownloadFile called successfully');
+            } catch (error) {
+              console.error('Error in download menu item onClick:', error);
+            }
+          }}>
             <ListItemIcon>
               <DownloadIcon sx={{ color: '#3b82f6' }} />
             </ListItemIcon>
