@@ -1297,3 +1297,36 @@
 .admin-custom-menu.closing {
   animation: slideOutToRight 0.2s ease-out forwards !important;
 }
+
+/* Animation keyframes for smooth easing */
+@keyframes easeInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes easeInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation classes for intersection observer fallback */
+.admin-animate-in {
+  animation: easeInFromBottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.admin-animate-in-delayed {
+  animation: easeInFromBottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+  opacity: 0;
+}

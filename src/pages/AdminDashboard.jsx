@@ -145,6 +145,9 @@ const AdminDashboard = () => {
   // File manager container ref
   const fileManagerRef = useRef(null);
   
+  // Animation state (set to true to make visible)
+  const [fileManagerVisible, setFileManagerVisible] = useState(true);
+  
   const prevPathRef = useRef('/');
 
   useEffect(() => {
