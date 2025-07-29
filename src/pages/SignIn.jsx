@@ -138,7 +138,8 @@ function SignIn() {
       // Check if this is an admin user (staff or superuser)
       if (userData.user && (userData.user.is_staff || userData.user.is_superuser)) {
         // Store admin token and redirect to admin dashboard
-        localStorage.setItem('adminToken', userData.access);
+        const token = userData.access || userData.token;
+        localStorage.setItem('adminToken', token);
         localStorage.setItem('adminEmail', email);
         navigate('/admin/dashboard');
       } else {

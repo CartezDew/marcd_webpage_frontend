@@ -41,7 +41,8 @@ export const signIn = async (credentials) => {
         try {
           resp = await api.post(endpoint, format);
           // If we get here, the request was successful
-          localStorage.setItem("token", resp.data.access);
+          const token = resp.data.access || resp.data.token;
+          localStorage.setItem("token", token);
           return resp.data;
         } catch (error) {
           lastError = error;
@@ -51,7 +52,6 @@ export const signIn = async (credentials) => {
     }
     
     // If we get here, none of the combinations worked
-    console.log('All authentication attempts failed. Last error:', lastError.response?.data);
     throw lastError;
   } catch (error) {
     throw error;

@@ -21,19 +21,23 @@ const ProtectedRoute = ({ children }) => {
       const tokenToCheck = adminToken || token;
       if (tokenToCheck) {
         try {
-          // Decode JWT token to check expiration
-          const payload = JSON.parse(atob(tokenToCheck.split('.')[1]));
-          const currentTime = Date.now() / 1000;
-          
-          if (payload.exp && payload.exp < currentTime) {
-            // Token expired, clear and redirect
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('token');
-            localStorage.removeItem('adminEmail');
-            setIsAuthenticated(false);
-            setIsChecking(false);
-            return;
+          // Check if token is JWT format (has 3 parts separated by dots)
+          if (tokenToCheck.includes('.') && tokenToCheck.split('.').length === 3) {
+            // Decode JWT token to check expiration
+            const payload = JSON.parse(atob(tokenToCheck.split('.')[1]));
+            const currentTime = Date.now() / 1000;
+            
+            if (payload.exp && payload.exp < currentTime) {
+              // Token expired, clear and redirect
+              localStorage.removeItem('adminToken');
+              localStorage.removeItem('token');
+              localStorage.removeItem('adminEmail');
+              setIsAuthenticated(false);
+              setIsChecking(false);
+              return;
+            }
           }
+          // For simple tokens (like Django's token auth), assume they're valid
           
           // Token is valid
           setIsAuthenticated(true);

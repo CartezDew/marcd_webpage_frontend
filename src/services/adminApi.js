@@ -1,4 +1,4 @@
-import { devLog, devError } from "../utils/logger";
+import { devError } from "../utils/logger";
 // Admin API service for fetching contact and waitlist data
 import api from './apiConfig';
 
@@ -8,9 +8,6 @@ import api from './apiConfig';
 export const fetchContactData = async () => {
   try {
     const response = await api.get('/contactus/');
-    devLog('Fetched contact data:', response.data);
-    devLog('is_read values in fetched data:', response.data.map(contact => ({ id: contact.id, contact_id: contact.contact_id, is_read: contact.is_read })));
-    devLog('Full fetched data:', JSON.stringify(response.data, null, 2));
     return response.data;
   } catch (error) {
     devError('Error fetching contact data:', error);
@@ -42,13 +39,7 @@ export const updateContactStatus = async (contactId, isRead, contactData = null)
     //   updateData = { ...contactData, is_read: isRead };
     // }
     
-    devLog('Sending update data:', updateData);
-    devLog('Contact ID:', contactId);
-    
     const response = await api.patch(`/contactus/${contactId}/`, updateData);
-    devLog('Response from backend:', response.data);
-    devLog('is_read value in response:', response.data.is_read);
-    devLog('Full response object:', JSON.stringify(response.data, null, 2));
     return response.data;
   } catch (error) {
     devError('Error updating contact status:', error);

@@ -633,12 +633,9 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteFile = async () => {
-    console.log('handleDeleteFile called with selectedFile:', selectedFile);
     if (selectedFile) {
       try {
-        console.log('Attempting to delete file with ID:', selectedFile.id);
         await fileApi.deleteFile(selectedFile.id);
-        console.log('File deleted successfully');
         
         // Reload file data from backend
         await loadFileData();
@@ -646,7 +643,6 @@ const AdminDashboard = () => {
         setShowMoveSuccess(true);
         setTimeout(() => setShowMoveSuccess(false), 3000);
       } catch (error) {
-        console.error('Error in handleDeleteFile:', error);
         if (error.message === 'Authentication required. Please log in again.') {
           // Clear tokens and redirect to login
           localStorage.removeItem('adminToken');
@@ -656,14 +652,11 @@ const AdminDashboard = () => {
           return;
         }
         setError('Failed to delete file. Please try again.');
-        console.error('Error deleting file:', error);
       } finally {
         setShowDeleteConfirm(false);
         setSelectedFile(null);
         setDeleteType(null);
       }
-    } else {
-      console.error('No selectedFile found');
     }
   };
 
@@ -2105,16 +2098,7 @@ const AdminDashboard = () => {
               Cancel
             </Button>
             <Button
-              onClick={() => {
-                console.log('Delete button clicked, deleteType:', deleteType);
-                console.log('selectedFile:', selectedFile);
-                console.log('folderToDelete:', folderToDelete);
-                if (deleteType === 'file') {
-                  handleDeleteFile();
-                } else {
-                  confirmDeleteFolder();
-                }
-              }}
+              onClick={deleteType === 'file' ? handleDeleteFile : confirmDeleteFolder}
               variant="contained"
               sx={{
                 background: 'linear-gradient(135deg, #0a0909, #be0303, #be0303)',
