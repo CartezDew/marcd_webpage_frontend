@@ -120,6 +120,9 @@ const AdminDashboard = () => {
   const [dragOverFolder, setDragOverFolder] = useState(null);
   const [showMoveSuccess, setShowMoveSuccess] = useState(false);
   const [moveMessage, setMoveMessage] = useState('');
+  const [feedbackPosition, setFeedbackPosition] = useState({ x: 0, y: 0 });
+  const [showLocalFeedback, setShowLocalFeedback] = useState(false);
+  const [localFeedbackMessage, setLocalFeedbackMessage] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [folderToDelete, setFolderToDelete] = useState(null);
   const [deleteType, setDeleteType] = useState(null); // 'file' or 'folder'
@@ -737,9 +740,15 @@ const AdminDashboard = () => {
     setEditName('');
   };
 
-  const handleRename = async () => {
+  const handleCancelRename = () => {
+    cancelEditing();
+    setLocalFeedbackMessage('Name change canceled');
+    setShowLocalFeedback(true);
+    setTimeout(() => setShowLocalFeedback(false), 3000);
+  };
+
+    const handleRename = async () => {
     if (!editingItem || !editName.trim()) {
-      cancelEditing();
       return;
     }
 
@@ -754,10 +763,10 @@ const AdminDashboard = () => {
       setError(validationError);
       return;
     }
-
+    
     // Check for duplicates
     const isDuplicate = editingItem.type === 'file'
-      ? checkDuplicateFileName(newName, currentPath)
+      ? checkDuplicateFileName(newName, currentPath, editingItem.id)
       : checkDuplicateFolderName(newName, currentPath, editingItem.id);
     
     if (isDuplicate) {
@@ -766,18 +775,29 @@ const AdminDashboard = () => {
     }
 
     try {
+      // Check if the name actually changed
+      const originalName = editingItem.name;
+      if (newName === originalName) {
+        const message = `${editingItem.type === 'file' ? 'File' : 'Folder'} name unchanged`;
+        setLocalFeedbackMessage(message);
+        setShowLocalFeedback(true);
+        setTimeout(() => setShowLocalFeedback(false), 3000);
+        cancelEditing();
+        return;
+      }
+
       if (editingItem.type === 'file') {
         await fileApi.renameFile(editingItem.id, newName);
-        setMoveMessage(`File renamed to "${newName}" successfully!`);
+        setLocalFeedbackMessage(`File renamed to "${newName}" successfully!`);
       } else {
         await fileApi.renameFolder(editingItem.id, newName);
-        setMoveMessage(`Folder renamed to "${newName}" successfully!`);
+        setLocalFeedbackMessage(`Folder renamed to "${newName}" successfully!`);
       }
       
       // Reload file data from backend
       await loadFileData();
-      setShowMoveSuccess(true);
-      setTimeout(() => setShowMoveSuccess(false), 3000);
+      setShowLocalFeedback(true);
+      setTimeout(() => setShowLocalFeedback(false), 3000);
       cancelEditing();
     } catch (error) {
       if (error.message === 'Authentication required. Please log in again.') {
@@ -797,7 +817,7 @@ const AdminDashboard = () => {
     if (e.key === 'Enter') {
       handleRename();
     } else if (e.key === 'Escape') {
-      cancelEditing();
+      handleCancelRename();
     }
   };
 
@@ -916,9 +936,12 @@ const AdminDashboard = () => {
   };
 
   // Validation functions
-  const checkDuplicateFileName = (fileName, currentPath = '/') => {
+  const checkDuplicateFileName = (fileName, currentPath = '/', excludeId = null) => {
     const filesInCurrentPath = files.filter(file => file.path === currentPath);
-    return filesInCurrentPath.some(file => file.name.toLowerCase() === fileName.toLowerCase());
+    return filesInCurrentPath.some(file => 
+      file.name.toLowerCase() === fileName.toLowerCase() && 
+      (!excludeId || file.id !== excludeId)
+    );
   };
 
   const checkDuplicateFolderName = (folderName, currentPath = '/', excludeId = null) => {
@@ -1186,7 +1209,8 @@ const AdminDashboard = () => {
               top: 20,
               right: 20,
               zIndex: 9999,
-              minWidth: 300
+              minWidth: 300,
+              animation: 'successMessageFloat 3s ease-in-out forwards'
             }}
             onClose={() => setShowMoveSuccess(false)}
           >
@@ -1386,7 +1410,7 @@ const AdminDashboard = () => {
           </Box>
 
           {/* File Management Panel - Now below the content area */}
-          <Box className="admin-file-manager-container">
+          <Box className="admin-file-manager-container" sx={{ position: 'relative' }}>
             <Paper className="admin-file-manager-paper">
               {/* File Panel Header */}
               <Box className="admin-file-manager-header">
@@ -1412,8 +1436,70 @@ const AdminDashboard = () => {
                       <CreateFolderIcon />
                     </IconButton>
                   </Tooltip>
+                  <Tooltip title="Test Feedback">
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        setLocalFeedbackMessage('Test message - feedback system working!');
+                        setShowLocalFeedback(true);
+                        setTimeout(() => setShowLocalFeedback(false), 3000);
+                      }}
+                      sx={{ color: '#ff6b6b' }}
+                    >
+                      <Box sx={{ fontSize: '0.75rem' }}>🧪</Box>
+                    </IconButton>
+                  </Tooltip>
                 </Box>
               </Box>
+
+              {/* Local Feedback Message */}
+              {showLocalFeedback && (
+                <Box
+                  sx={{
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 10000,
+                    background: 'rgba(34, 197, 94, 0.9)',
+                    color: 'white',
+                    padding: '12px 20px',
+                    borderRadius: '8px',
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
+                    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)',
+                    animation: 'successMessageFloat 3s ease-in-out forwards',
+                    pointerEvents: 'none',
+                    minWidth: '200px',
+                    textAlign: 'center'
+                  }}
+                >
+                  {localFeedbackMessage}
+                </Box>
+              )}
+                <Box
+                  sx={{
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 10000,
+                    background: 'rgba(34, 197, 94, 0.9)',
+                    color: 'white',
+                    padding: '12px 20px',
+                    borderRadius: '8px',
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
+                    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)',
+                    animation: 'successMessageFloat 3s ease-in-out forwards',
+                    pointerEvents: 'none',
+                    minWidth: '200px',
+                    textAlign: 'center'
+                  }}
+                >
+                  {localFeedbackMessage}
+                </Box>
+              )}
 
               {/* File Manager Content - Always visible */}
               <Box 
@@ -1536,14 +1622,17 @@ const AdminDashboard = () => {
                             />
                             <IconButton
                               size="small"
-                              onClick={handleRename}
+                              onClick={() => {
+                                console.log('Folder checkmark clicked');
+                                handleRename();
+                              }}
                                 sx={{ color: '#22c55e', p: 0.5 }}
                             >
                                 <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
                             </IconButton>
                             <IconButton
                               size="small"
-                              onClick={cancelEditing}
+                              onClick={handleCancelRename}
                                 sx={{ color: '#ef4444', p: 0.5 }}
                             >
                                 <Box sx={{ fontSize: '0.75rem' }}>✕</Box>
@@ -1666,14 +1755,17 @@ const AdminDashboard = () => {
                             />
                             <IconButton
                               size="small"
-                              onClick={handleRename}
+                              onClick={() => {
+                                console.log('File checkmark clicked');
+                                handleRename();
+                              }}
                               sx={{ color: '#22c55e', p: 0.5 }}
                             >
                               <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
                             </IconButton>
                             <IconButton
                               size="small"
-                              onClick={cancelEditing}
+                              onClick={handleCancelRename}
                               sx={{ color: '#ef4444', p: 0.5 }}
                             >
                               <Box sx={{ fontSize: '0.75rem' }}>✕</Box>

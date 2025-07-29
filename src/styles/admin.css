@@ -506,6 +506,25 @@
   }
 }
 
+@keyframes successMessageFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+}
+
 /* Override Material-UI delete button styling */
 .MuiDialogActions-root .MuiButton-contained {
   background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
