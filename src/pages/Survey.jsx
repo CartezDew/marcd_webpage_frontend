@@ -250,7 +250,21 @@ function Survey() {
         import.meta.env.VITE_SURVEY_MONKEY_WIDGET_URL;
 
       script.onload = () => {
-        setTimeout(() => setIsLoading(false), 1000);
+        // Poll for widget content instead of fixed timeout
+        const checkWidget = () => {
+          if (widgetRef.current) {
+            const hasContent = widgetRef.current.querySelector('iframe, form, .smcx-embed') || 
+                              widgetRef.current.children.length > 1;
+            if (hasContent) {
+              setTimeout(() => setIsLoading(false), 300);
+            } else {
+              setTimeout(checkWidget, 100);
+            }
+          }
+        };
+        setTimeout(checkWidget, 500);
+        // Fallback after 8 seconds
+        setTimeout(() => setIsLoading(false), 8000);
       };
 
       widgetRef.current.appendChild(script);
