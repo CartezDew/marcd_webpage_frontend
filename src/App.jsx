@@ -1,113 +1,43 @@
-import { Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Box, Typography } from '@mui/material';
-import Nav from './components/Nav';
-import Home from './pages/Home';
-import ContactUs from './pages/ContactUs';
-import Survey from './pages/Survey';
-import './styles/global.css';
-import './styles/components.css';
-import './styles/admin.css';
-import OurStory from './pages/OurStory';
-import Leadership_Cartez from './pages/Leadership_Cartez';
-import Leadership_Beth from './pages/Leadership_Beth';
-import Features from './pages/Features';
-import SignIn from './pages/SignIn';
-
-import AdminDashboard from './pages/AdminDashboard';
-import ProtectedRoute from './components/ProtectedRoute';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 import { WaitlistProvider } from './context/WaitlistContext';
+import Nav from './components/Nav';
 import Footer from './components/Footer';
-// Create a custom theme
+import AppLoading from './components/AppLoading';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotFound from './pages/NotFound';
+
+// Lazy load components for code splitting
+const Home = React.lazy(() => import('./pages/Home'));
+const Features = React.lazy(() => import('./pages/Features'));
+const OurStory = React.lazy(() => import('./pages/OurStory'));
+const ContactUs = React.lazy(() => import('./pages/ContactUs'));
+const Survey = React.lazy(() => import('./pages/Survey'));
+const Register = React.lazy(() => import('./pages/Register'));
+const SignIn = React.lazy(() => import('./pages/SignIn'));
+const SignOut = React.lazy(() => import('./pages/SignOut'));
+const LeadershipCartez = React.lazy(() => import('./pages/Leadership_Cartez'));
+const LeadershipBeth = React.lazy(() => import('./pages/Leadership_Beth'));
+const AdminLogin = React.lazy(() => import('./pages/AdminLogin'));
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+
+// Create theme with optimized settings
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#be0303', // Red color for highlights
+      main: '#be0303',
       dark: '#9a0202',
-    },
-    secondary: {
-      main: '#2c3e50',
-    },
-    background: {
-      default: '#f5f5f5',
-    },
-  },
-  typography: {
-    fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
-    h3: {
-      fontWeight: 300,
-    },
-    h4: {
-      fontWeight: 400,
-    },
-    h5: {
-      fontWeight: 500,
     },
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          borderRadius: 8,
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-          // backgroundColor: 'rgba(10, 9, 9, 0.6)',
-          backgroundImage: 'none',
-        },
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-          backgroundColor: 'none',
-          backgroundImage: 'none',
-        },
-      },
-    },
     MuiLink: {
       styleOverrides: {
         root: {
           color: '#be0303 !important',
-          textDecoration: 'none',
           '&:hover': {
             textDecoration: 'underline',
-          },
-        },
-      },
-    },
-    MuiTabs: {
-      styleOverrides: {
-        root: {
-          '& .MuiTabs-indicator': {
-            backgroundColor: '#be0303 !important',
-            height: '3px !important',
-          },
-        },
-      },
-    },
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          color: '#a1a1aa !important',
-          fontWeight: '600 !important',
-          textTransform: 'none !important',
-          minHeight: '48px !important',
-          padding: '0.75rem 1.5rem !important',
-          '&.Mui-selected': {
-            color: '#be0303 !important',
-            backgroundColor: 'transparent !important',
-          },
-          '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.05) !important',
           },
         },
       },
@@ -115,51 +45,57 @@ const theme = createTheme({
   },
 });
 
-// Simple NotFound component
-const NotFound = () => {
-  return (
-    <Box textAlign="center" mt={10}>
-      <Typography variant="h3" color="error">
-        404 - Page Not Found
-      </Typography>
-      <Typography variant="subtitle1" mt={2}>
-        The page you're looking for doesn't exist.
-      </Typography>
-    </Box>
-  );
-};
+// Loading fallback component
+const PageLoader = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '50vh' 
+  }}>
+    <AppLoading />
+  </div>
+);
 
 function App() {
-  // Remove userLocation and loading state
   return (
-    <WaitlistProvider>
-      <div className="App">
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Nav />
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/contactus" element={<ContactUs />} />
-              <Route path="/survey" element={<Survey />} />
-              <Route path="/our-story" element={<OurStory />} />
-              <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
-              <Route path="/leadership/beth" element={<Leadership_Beth />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/signin" element={<SignIn />} />
-
-              <Route path="/admin/dashboard" element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="*" element={<NotFound />} /> {/* fallback */}
-            </Routes>
-          </main>
-          <Footer />
-        </ThemeProvider>
-      </div>
-    </WaitlistProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <WaitlistProvider>
+        <Router>
+          <div className="App">
+            <Nav />
+            <main>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/features" element={<Features />} />
+                  <Route path="/our-story" element={<OurStory />} />
+                  <Route path="/contactus" element={<ContactUs />} />
+                  <Route path="/survey" element={<Survey />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/signin" element={<SignIn />} />
+                  <Route path="/signout" element={<SignOut />} />
+                  <Route path="/leadership/cartez" element={<LeadershipCartez />} />
+                  <Route path="/leadership/beth" element={<LeadershipBeth />} />
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route 
+                    path="/admin/dashboard" 
+                    element={
+                      <ProtectedRoute>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </WaitlistProvider>
+    </ThemeProvider>
   );
 }
 

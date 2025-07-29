@@ -7,6 +7,9 @@ import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
 import { validateWaitlistEmail, validateEmailRealTime } from '../utils/emailValidation';
 import { useWaitlist } from '../context/WaitlistContext';
+import LazyImage from '../components/LazyImage';
+import LazyVideo from '../components/LazyVideo';
+import BackgroundVideo from '../components/BackgroundVideo';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -880,7 +883,7 @@ function home() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.7 }}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginTop: '1rem' }}
           >
-            <img 
+            <LazyImage 
               src={socialProofImg} 
               alt="Social proof - trusted by truckers" 
               className="social-proof-image"
@@ -917,23 +920,20 @@ function home() {
             style={{ cursor: 'pointer' }}
           >
             <AnimatePresence mode="wait">
-              <motion.img
+              <motion.div
                 key={currentImageIndex}
-                src={heroImages[currentImageIndex]}
-                alt={getImageAltText(currentImageIndex)}
                 className={`home-main-image ${isAboutVisible ? 'animate' : ''} ${isCurrentImageSmall() ? 'small-image' : 'large-image'}`}
                 variants={imageVariants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                style={{
-                  width: isCurrentImageSmall() ? '100%' : '100%',
-                  height: isCurrentImageSmall() ? '600px' : '100%',
-                  maxWidth: '100%',
-                  objectFit: isCurrentImageSmall() ? 'cover' : 'contain',
-                  objectPosition: 'center'
-                }}
-              />
+              >
+                <LazyImage
+                  src={heroImages[currentImageIndex]}
+                  alt={getImageAltText(currentImageIndex)}
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              </motion.div>
             </AnimatePresence>
             {/* Image Indicators */}
             <Box className="carousel-indicators">
@@ -1053,7 +1053,7 @@ function home() {
                 Join the Waitlist
               </Typography>
               <Box className="launching-soon-container animate">
-              <img 
+              <LazyImage 
                 src={launchingSoonImg} 
                 alt="Launching Soon" 
                 className="launching-soon-image"
@@ -1137,7 +1137,7 @@ function home() {
               {scrollWords.map((word) => (
                 <li key={`image-${word.id}`} className="scroll-item image-item">
                   <div className="scroll-content">
-                    <img 
+                    <LazyImage 
                       src={word.image} 
                       alt={word.text}
                       className="scroll-image"
@@ -1153,7 +1153,7 @@ function home() {
       {/* Did You Know Section */}
       <Box className={`did-you-know-section ${isDidYouKnowVisible ? 'visible' : ''}`} ref={didYouKnowRef}>
         <div className="video-overlay"></div>
-        <video 
+        <BackgroundVideo 
           src={truckParkingVideo} 
           autoPlay 
           loop 
@@ -1161,13 +1161,10 @@ function home() {
           playsInline
           preload="auto"
           className="background-video"
-        >
-          <source src={truckParkingVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        />
         <Box className="did-you-know-content">
           <Typography variant="h3" className="did-you-know-title">
-            <img src={truckIcon} alt="Truck" className="truck-icon" />
+            <LazyImage src={truckIcon} alt="Truck" className="truck-icon" />
             Did You Know?
           </Typography>
           
@@ -1227,7 +1224,7 @@ function home() {
                     <Typography className="fact-stat">{fact.stat}</Typography>
                   )}
                   {fact.stat === "image" && fact.statImage && (
-                    <img src={fact.statImage} alt="Healthy food" className="fact-stat-image" />
+                    <LazyImage src={fact.statImage} alt="Healthy food" className="fact-stat-image" />
                   )}
                   {fact.stat === "icon" && fact.statIcon && (
                     <fact.statIcon className="fact-stat-icon" />
@@ -1284,7 +1281,7 @@ function home() {
       {/* Marc'd Solutions Section */}
       <Box className={`marcd-solutions-section ${isSolutionsVisible ? 'visible' : ''}`} ref={solutionsRef}>
         <div className="video-overlay"></div>
-        <video 
+        <BackgroundVideo 
           src={truckParkingVideo} 
           autoPlay 
           loop 
@@ -1305,7 +1302,7 @@ function home() {
                 detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally, save time, fuel, and avoid violations."
               },
               {
-                icon: <img src={healthFoodImg} alt="Healthy food" className="solution-stat-image" />,
+                icon: <LazyImage src={healthFoodImg} alt="Healthy food" className="solution-stat-image" />,
                 title: "Wellness support",
                 text: "Locates cleaner stops, healthier food, even halal options, so you can take care of yourself on the road.",
                 detail: "Find truck stops with healthy meal options, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it while on the road."

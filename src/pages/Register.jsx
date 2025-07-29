@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../services/users.js";
-import splash from "../assets/splash.svg";
 
 function Register({ setUser }) {
   const navigate = useNavigate();
