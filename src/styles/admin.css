@@ -399,6 +399,76 @@
   width: 100%;
 }
 
+/* Override Material-UI generated class for file manager ListItems */
+.admin-file-manager-container .css-1fnzh3y {
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  display: block !important;
+  align-items: unset !important;
+  gap: 0 !important;
+}
+
+/* Alert message styling with lighter red color and animation */
+.css-fw9dsa-MuiPaper-root-MuiAlert-root {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  box-shadow: var(--Paper-shadow);
+  background-image: var(--Paper-overlay);
+  border-radius: 12px;
+  background-color: none;
+  background-image: none;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  background-color: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 6px 16px;
+  color: rgb(95, 33, 32);
+  background-color: rgb(253, 237, 237);
+  animation: alertPulse 2s ease-in-out infinite;
+  border: 2px solid rgb(239, 68, 68);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Animation for alert attention */
+@keyframes alertPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+}
+
+/* Override Material-UI delete button styling */
+.MuiDialogActions-root .MuiButton-contained {
+  background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.MuiDialogActions-root .MuiButton-contained:hover {
+  background: linear-gradient(135deg, #be0303, #0a0909, #be0303) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+}
+
 .admin-file-manager-paper {
   width: 100%;
   background: rgba(15, 15, 35, 0.6);

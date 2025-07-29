@@ -633,17 +633,20 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteFile = async () => {
+    console.log('handleDeleteFile called with selectedFile:', selectedFile);
     if (selectedFile) {
       try {
+        console.log('Attempting to delete file with ID:', selectedFile.id);
         await fileApi.deleteFile(selectedFile.id);
+        console.log('File deleted successfully');
         
         // Reload file data from backend
         await loadFileData();
         setMoveMessage(`"${selectedFile.name}" deleted successfully`);
         setShowMoveSuccess(true);
         setTimeout(() => setShowMoveSuccess(false), 3000);
-        handleFileMenuClose();
       } catch (error) {
+        console.error('Error in handleDeleteFile:', error);
         if (error.message === 'Authentication required. Please log in again.') {
           // Clear tokens and redirect to login
           localStorage.removeItem('adminToken');
@@ -654,7 +657,13 @@ const AdminDashboard = () => {
         }
         setError('Failed to delete file. Please try again.');
         console.error('Error deleting file:', error);
+      } finally {
+        setShowDeleteConfirm(false);
+        setSelectedFile(null);
+        setDeleteType(null);
       }
+    } else {
+      console.error('No selectedFile found');
     }
   };
 
@@ -1834,10 +1843,10 @@ const AdminDashboard = () => {
             <ListItemText>Duplicate</ListItemText>
           </MenuItem>
           <MenuItem onClick={() => {
-            setSelectedFile(selectedFile);
             setDeleteType('file');
             setShowDeleteConfirm(true);
-            handleFileMenuClose();
+            // Don't close the menu immediately to preserve selectedFile
+            setFileMenuAnchor(null);
           }}>
             <ListItemIcon>
               <DeleteIcon sx={{ color: '#ef4444' }} />
@@ -1887,7 +1896,8 @@ const AdminDashboard = () => {
             setFolderToDelete(selectedFolder);
             setDeleteType('folder');
             setShowDeleteConfirm(true);
-            handleFolderMenuClose();
+            // Don't close the menu immediately to preserve selectedFolder
+            setFolderMenuAnchor(null);
           }}>
             <ListItemIcon>
               <DeleteIcon sx={{ color: '#ef4444' }} />
@@ -2095,13 +2105,28 @@ const AdminDashboard = () => {
               Cancel
             </Button>
             <Button
-              onClick={deleteType === 'file' ? handleDeleteFile : confirmDeleteFolder}
+              onClick={() => {
+                console.log('Delete button clicked, deleteType:', deleteType);
+                console.log('selectedFile:', selectedFile);
+                console.log('folderToDelete:', folderToDelete);
+                if (deleteType === 'file') {
+                  handleDeleteFile();
+                } else {
+                  confirmDeleteFolder();
+                }
+              }}
               variant="contained"
               sx={{
-                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                background: 'linear-gradient(135deg, #0a0909, #be0303, #be0303)',
                 color: 'white',
+                borderRadius: '12px',
+                fontWeight: 500,
+                textTransform: 'none',
+                transition: 'all 0.3s ease',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)'
+                  background: 'linear-gradient(135deg, #be0303, #0a0909, #be0303)',
+                  transform: 'translateY(-1px)',
+                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
                 }
               }}
             >
