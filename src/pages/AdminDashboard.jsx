@@ -146,8 +146,6 @@ const AdminDashboard = () => {
 
   // Debug file menu state
   useEffect(() => {
-    console.log('File menu anchor changed:', fileMenuAnchor);
-    console.log('Selected file changed:', selectedFile);
   }, [fileMenuAnchor, selectedFile]);
 
   // Clear editing state when path changes
@@ -518,6 +516,16 @@ const AdminDashboard = () => {
     
     // Validate all files before starting upload
     for (const file of uploadedFiles) {
+      // Check file type
+      if (!validateFileType(file.name)) {
+        const allowedTypes = 'PDF, Excel (.xlsx, .xls, etc.), Word (.docx, .doc), PowerPoint (.pptx, .ppt), and image files (.png, .jpg, .jpeg, .gif, .bmp, .tiff, .svg, .webp, .ico, .jfif, .pjpeg, .pjp)';
+        setLocalFeedbackMessage(`File type not allowed. Only ${allowedTypes} are supported.`);
+        setShowLocalFeedback(true);
+        setTimeout(() => setShowLocalFeedback(false), 5000);
+        event.target.value = ''; // Reset file input
+        return;
+      }
+      
       // Check for duplicate file names
       if (checkDuplicateFileName(file.name, currentPath)) {
         setError(`File "${file.name}" already exists in this location. Please rename the file or choose a different location.`);
@@ -631,13 +639,11 @@ const AdminDashboard = () => {
   };
 
   const handleFileMenuOpen = (event, file) => {
-    console.log('File menu opened for file:', file);
     setFileMenuAnchor(event.currentTarget);
     setSelectedFile(file);
   };
 
   const handleFileMenuClose = () => {
-    console.log('File menu closed');
     setFileMenuAnchor(null);
     setSelectedFile(null);
   };
@@ -732,7 +738,15 @@ const AdminDashboard = () => {
   // Inline editing functions
   const startEditing = (item, type) => {
     setEditingItem({ type, id: item.id, name: item.name });
-    setEditName(item.name);
+    
+    // For files, show name without extension in input field
+    if (type === 'file') {
+      const lastDotIndex = item.name.lastIndexOf('.');
+      const nameWithoutExtension = lastDotIndex > 0 ? item.name.substring(0, lastDotIndex) : item.name;
+      setEditName(nameWithoutExtension);
+    } else {
+      setEditName(item.name);
+    }
   };
 
   const cancelEditing = () => {
@@ -764,9 +778,18 @@ const AdminDashboard = () => {
       return;
     }
     
+    // For files, check duplicates with the final name (including extension)
+    let finalName = newName;
+    if (editingItem.type === 'file') {
+      const originalName = editingItem.name;
+      const lastDotIndex = originalName.lastIndexOf('.');
+      const originalExtension = lastDotIndex > 0 ? originalName.substring(lastDotIndex) : '';
+      finalName = newName + originalExtension;
+    }
+    
     // Check for duplicates
     const isDuplicate = editingItem.type === 'file'
-      ? checkDuplicateFileName(newName, currentPath, editingItem.id)
+      ? checkDuplicateFileName(finalName, currentPath, editingItem.id)
       : checkDuplicateFolderName(newName, currentPath, editingItem.id);
     
     if (isDuplicate) {
@@ -775,9 +798,18 @@ const AdminDashboard = () => {
     }
 
     try {
+      // For files, preserve the original extension
+      let finalName = newName;
+      if (editingItem.type === 'file') {
+        const originalName = editingItem.name;
+        const lastDotIndex = originalName.lastIndexOf('.');
+        const originalExtension = lastDotIndex > 0 ? originalName.substring(lastDotIndex) : '';
+        finalName = newName + originalExtension;
+      }
+      
       // Check if the name actually changed
       const originalName = editingItem.name;
-      if (newName === originalName) {
+      if (finalName === originalName) {
         const message = `${editingItem.type === 'file' ? 'File' : 'Folder'} name unchanged`;
         setLocalFeedbackMessage(message);
         setShowLocalFeedback(true);
@@ -787,11 +819,11 @@ const AdminDashboard = () => {
       }
 
       if (editingItem.type === 'file') {
-        await fileApi.renameFile(editingItem.id, newName);
-        setLocalFeedbackMessage(`File renamed to "${newName}" successfully!`);
+        await fileApi.renameFile(editingItem.id, finalName);
+        setLocalFeedbackMessage(`File renamed to "${finalName}" successfully!`);
       } else {
-        await fileApi.renameFolder(editingItem.id, newName);
-        setLocalFeedbackMessage(`Folder renamed to "${newName}" successfully!`);
+        await fileApi.renameFolder(editingItem.id, finalName);
+        setLocalFeedbackMessage(`Folder renamed to "${finalName}" successfully!`);
       }
       
       // Reload file data from backend
@@ -826,31 +858,21 @@ const AdminDashboard = () => {
     console.log('Download button clicked for file:', selectedFile);
     
     if (!selectedFile) {
-      console.error('No selectedFile found for download');
       return;
     }
     
-    console.log('selectedFile.id:', selectedFile.id);
-    console.log('selectedFile.name:', selectedFile.name);
+
     
     try {
-      console.log('About to call fileApi.downloadFile...');
       const response = await fileApi.downloadFile(selectedFile.id);
-      console.log('Download response received:', response);
-      console.log('Response data type:', typeof response.data);
-      console.log('Response headers:', response.headers);
       
       // Create a blob from the response data
-      console.log('Creating blob...');
       const blob = new Blob([response.data], { 
         type: response.headers['content-type'] || 'application/octet-stream' 
       });
-      console.log('Blob created:', blob);
-      console.log('Blob size:', blob.size);
       
       // Alternative download method if blob size is 0
       if (blob.size === 0) {
-        console.log('Blob size is 0, trying alternative download method...');
         // Try direct download using the API URL
         const downloadUrl = `/api/files/${selectedFile.id}/download/`;
         const link = document.createElement('a');
@@ -860,39 +882,22 @@ const AdminDashboard = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        console.log('Alternative download method used');
       } else {
         // Create a download link
-        console.log('Creating download link...');
         const url = window.URL.createObjectURL(blob);
-        console.log('Object URL created:', url);
         
         const link = document.createElement('a');
         link.href = url;
         link.download = selectedFile.name;
-        console.log('Download link created with filename:', selectedFile.name);
         
         document.body.appendChild(link);
-        console.log('Link appended to document body');
-        
         link.click();
-        console.log('Link clicked');
-        
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
-        console.log('Link removed and URL revoked');
       }
       
-      console.log('File download initiated successfully');
       handleFileMenuClose();
-      console.log('=== handleDownloadFile END ===');
     } catch (error) {
-      console.error('Error downloading file:', error);
-      console.error('Error details:', {
-        message: error.message,
-        stack: error.stack,
-        response: error.response
-      });
       setError('Failed to download file. Please try again.');
     }
   };
@@ -994,6 +999,30 @@ const AdminDashboard = () => {
       return `'${folderName}' is a reserved name and cannot be used`;
     }
     return null;
+  };
+
+  // File type validation for uploads
+  const validateFileType = (fileName) => {
+    const allowedExtensions = [
+      // PDF files
+      '.pdf',
+      // Excel files
+      '.xlsx', '.xls', '.xlsm', '.xlsb', '.xltx', '.xltm',
+      // Word files
+      '.docx', '.doc', '.docm', '.dotx', '.dotm',
+      // PowerPoint files
+      '.pptx', '.ppt', '.pptm', '.potx', '.potm',
+      // Image files
+      '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.svg', '.webp', '.ico', '.jfif', '.pjpeg', '.pjp'
+    ];
+    
+    const lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex === -1 || lastDotIndex === fileName.length - 1) {
+      return false; // No extension or file ends with dot
+    }
+    
+    const fileExtension = fileName.toLowerCase().substring(lastDotIndex);
+    return allowedExtensions.includes(fileExtension);
   };
 
   // LocalStorage functions for file persistence
@@ -1436,19 +1465,7 @@ const AdminDashboard = () => {
                       <CreateFolderIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="Test Feedback">
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        setLocalFeedbackMessage('Test message - feedback system working!');
-                        setShowLocalFeedback(true);
-                        setTimeout(() => setShowLocalFeedback(false), 3000);
-                      }}
-                      sx={{ color: '#ff6b6b' }}
-                    >
-                      <Box sx={{ fontSize: '0.75rem' }}>🧪</Box>
-                    </IconButton>
-                  </Tooltip>
+
                 </Box>
               </Box>
 
@@ -1599,10 +1616,7 @@ const AdminDashboard = () => {
                             />
                             <IconButton
                               size="small"
-                              onClick={() => {
-                                console.log('Folder checkmark clicked');
-                                handleRename();
-                              }}
+                              onClick={handleRename}
                                 sx={{ color: '#22c55e', p: 0.5 }}
                             >
                                 <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
@@ -1691,10 +1705,7 @@ const AdminDashboard = () => {
                     secondaryAction={
                       <IconButton
                         size="small"
-                        onClick={(e) => {
-                          console.log('Three-dot icon clicked for file:', file);
-                          handleFileMenuOpen(e, file);
-                        }}
+                                                    onClick={(e) => handleFileMenuOpen(e, file)}
                         sx={{ color: '#a1a1aa' }}
                       >
                         <MoreVertIcon />
@@ -1732,10 +1743,7 @@ const AdminDashboard = () => {
                             />
                             <IconButton
                               size="small"
-                              onClick={() => {
-                                console.log('File checkmark clicked');
-                                handleRename();
-                              }}
+                              onClick={handleRename}
                               sx={{ color: '#22c55e', p: 0.5 }}
                             >
                               <Box sx={{ fontSize: '0.75rem' }}>✓</Box>
@@ -1955,16 +1963,7 @@ const AdminDashboard = () => {
             </ListItemIcon>
             <ListItemText>Rename</ListItemText>
           </MenuItem>
-          <MenuItem onClick={() => {
-            console.log('Download menu item clicked');
-            try {
-              console.log('About to call handleDownloadFile');
-              handleDownloadFile();
-              console.log('handleDownloadFile called successfully');
-            } catch (error) {
-              console.error('Error in download menu item onClick:', error);
-            }
-          }}>
+          <MenuItem onClick={handleDownloadFile}>
             <ListItemIcon>
               <DownloadIcon sx={{ color: '#3b82f6' }} />
             </ListItemIcon>
