@@ -1179,5 +1179,21 @@
   line-height: 1.43 !important;
 } 
 
-
-
+/* Modern Faded Divider */
+.admin-modern-divider {
+  margin: 32px 0 !important;
+  height: 2px !important;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(190, 3, 3, 0.3) 15%,
+    #010101d1 50%,
+    rgba(190, 3, 3, 0.3) 85%,
+    transparent 100%
+  ) !important;
+  border: none !important;
+  border-radius: 1px !important;
+  box-shadow: 
+    0 0 8px rgba(190, 3, 3, 0.3),
+    inset 0 1px 2px rgba(1, 1, 1, 0.1) !important;
+}

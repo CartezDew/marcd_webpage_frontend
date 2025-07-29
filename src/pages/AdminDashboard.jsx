@@ -1580,6 +1580,9 @@ const AdminDashboard = () => {
           </Paper>
           </Box>
 
+          {/* Modern Faded Divider between Main Content and File Manager */}
+          <Divider className="admin-modern-divider" />
+
           {/* File Management Panel - Now below the content area */}
           <Box className="admin-file-manager-container" sx={{ position: 'relative' }}>
             <Paper className="admin-file-manager-paper">
@@ -1940,6 +1943,8 @@ const AdminDashboard = () => {
             </Paper>
           </Box>
         </Box>
+
+
 
         {/* File Upload Dialog */}
         <Dialog
