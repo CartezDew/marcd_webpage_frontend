@@ -404,25 +404,18 @@ function home() {
     switch (currentSection) {
       case 'hero':
         setCurrentSection('marcIt');
-        marcItRef.current?.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start',
-          inline: 'nearest'
-        });
-        // Additional scroll adjustment to ensure proper positioning
-        setTimeout(() => {
-          const element = marcItRef.current;
-          if (element) {
-            const elementTop = element.offsetTop;
-            const scrollTop = elementTop - 100; // 100px buffer above the container
-            window.scrollTo({
-              top: scrollTop,
-              behavior: 'smooth'
-            });
-            // Trigger Marc It! animations
-            triggerAnimations(marcItRef, 'marc-it-outer-container');
-          }
-        }, 100);
+        // Single smooth scroll to bottom of Marc It section
+        const element = marcItRef.current;
+        if (element) {
+          const elementBottom = element.offsetTop + element.offsetHeight;
+          const scrollTop = elementBottom - window.innerHeight + 170; // 80px buffer from bottom
+          window.scrollTo({
+            top: scrollTop,
+            behavior: 'smooth'
+          });
+          // Trigger Marc It! animations
+          triggerAnimations(marcItRef, 'marc-it-outer-container');
+        }
         // Hide tooltip after 2 seconds for forward navigation
         setTimeout(() => {
           setShowScrollTooltip(false);
@@ -450,7 +443,11 @@ function home() {
       case 'solutions':
         setCurrentSection('hero');
         setIsScrollingToTop(true);
-        aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
+        // Scroll to top of viewport to show entire Hero section
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
         // Trigger hero animations
         setTimeout(() => {
           triggerAnimations(aboutRef, 'home-hero-section');
