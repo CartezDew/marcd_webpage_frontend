@@ -72,6 +72,12 @@
       padding: 0 2rem;
     }
     
+    /* Remove left padding for social proof container to align flush left */
+    .home-hero-section .social-proof-container {
+      margin-left: -2rem;
+      padding-left: 2rem;
+    }
+    
     .home-hero-headline {
       font-size: clamp(3rem, 5vw, 5rem) !important;
     }
@@ -96,6 +102,10 @@
     .carousel-image-container {
       min-width: 400px;
       min-height: 500px;
+      border-color: #03be44d1;
+      border-width: 2px;
+      border-style: solid;
+      border-radius: 12px;
     }
     
     .home-main-image.small-image {
@@ -121,7 +131,6 @@
     
     .scroll-down-arrow {
       padding: 8px !important;
-      left: calc(70% - 8px) !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -165,10 +174,6 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding-top: 4rem;
-    /* border-color: #f5f3f2d1; */
-    /* border-width: 2px;
-    border-style: solid;
-    border-radius: 12px; */
   }
 
   
@@ -257,7 +262,13 @@
     display: flex;
     justify-content: left;
     align-items: left;
+    align-content: left;
     margin-top: 0rem !important;
+    margin-left: 0rem !important;
+    padding-left: 0rem !important;
+    position: relative !important;
+    left: 0 !important;
+    transform: none !important;
   }
 
   .social-proof-image {
@@ -279,7 +290,7 @@
     text-align: left;
     opacity: 0.8;
     line-height: 1.3;
-    padding-left: .5rem;
+    padding-left: 1rem;
   }
   
   .carousel-image-container {
@@ -414,7 +425,6 @@
   .scroll-down-arrow {
     position: fixed;
     bottom: 1rem;
-    transform: translateX(-50%);
     cursor: pointer;
     z-index: 1000;
     animation: bounce 2s infinite;
@@ -440,7 +450,7 @@
   
   .scroll-down-arrow:hover {
     background: rgba(0, 0, 0, 0.9);
-    transform: translateX(-50%) scale(1.1);
+    transform: scale(1.1);
   }
   
   .scroll-down-arrow:hover .arrow-icon {
@@ -478,18 +488,18 @@
 
   .scroll-down-arrow.back-to-top:hover {
     background: rgba(190, 3, 3, 0.9);
-    transform: translateX(-50%) scale(1.1);
+    transform: scale(1.1);
   }
   
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
     }
     40% {
-      transform: translateX(-50%) translateY(-10px);
+      transform: translateY(-10px);
     }
     60% {
-      transform: translateX(-50%) translateY(-5px);
+      transform: translateY(-5px);
     }
   }
 
@@ -500,13 +510,13 @@
 
   @keyframes bounceUp {
     0%, 20%, 50%, 80%, 100% {
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
     }
     40% {
-      transform: translateX(-50%) translateY(10px);
+      transform: translateY(10px);
     }
     60% {
-      transform: translateX(-50%) translateY(5px);
+      transform: translateY(5px);
     }
   }
   
@@ -1951,19 +1961,7 @@
     .carousel-dot {
       width: 14px;
       height: 14px;
-    }
-    
-    /* Scroll down arrow styling- centers the arrow in the middle of the screen*/
-         .scroll-down-arrow {
-       padding: 9px !important;
-       left: calc(72% - 9px) !important;
-       bottom: 3rem !important;
-       display: flex !important;
-       align-items: center !important;
-       justify-content: center !important;
-       padding-bottom: 10px !important;
-     }
-    
+    } 
     .arrow-icon {
       font-size: 1.5rem !important;
     }
@@ -2089,10 +2087,6 @@
 }
 
   @media (max-width: 1025px) {
-    .home-hero-section .scroll-down-arrow {
-      left: calc(72.5% - 20px) !important;
-    }
-    
       /* Large images (Statistics, Alerts, Parking, Places, Navigation) */
       .home-main-image.large-image {
         max-height: 500px !important;
@@ -2141,7 +2135,6 @@
 
     .scroll-down-arrow {
       padding: 9px !important;
-      left: calc(73% - 12px) !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -2323,15 +2316,6 @@
 
      .carousel-indicators {
       bottom: -50px !important;
-     }
-
-           .home-hero-section .scroll-down-arrow {
-       padding: 9px !important;
-       left: calc(67% - 9px) !important;
-       display: flex !important;
-       align-items: center !important;
-       justify-content: center !important;
-       padding-bottom: 10px !important;
      }
 
      .marc-it-title {

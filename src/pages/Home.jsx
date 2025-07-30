@@ -202,9 +202,16 @@ function home() {
     const updateArrowPosition = () => {
       if (carouselRef.current) {
         const carouselRect = carouselRef.current.getBoundingClientRect();
-        const carouselCenter = carouselRect.left + carouselRect.width / 2.1;
+        // Get the true center of the carousel container
+        const carouselCenter = carouselRect.left + carouselRect.width / 2;
         const viewportWidth = window.innerWidth;
-        const arrowLeftPercent = (carouselCenter / viewportWidth) * 100;
+        
+        // Calculate the arrow's actual width
+        const arrowElement = document.querySelector('.scroll-down-arrow');
+        const arrowWidth = arrowElement ? arrowElement.offsetWidth : 60;
+        
+        // Center the arrow on the carousel container
+        const arrowLeftPercent = ((carouselCenter - arrowWidth / 3) / viewportWidth) * 100;
         setArrowLeft(`${arrowLeftPercent}%`);
       }
     };
@@ -894,7 +901,7 @@ function home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: isAboutVisible ? 1 : 0, y: isAboutVisible ? 0 : 30 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.7 }}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'left', marginTop: '1rem' }}
+            style={{ display: 'flex', alignItems: 'left', justifyContent: 'left', marginTop: '1rem' }}
           >
             <img 
               src={socialProofImg} 
@@ -930,7 +937,7 @@ function home() {
             onClick={() => handleManualNavigation('next')}
             onMouseEnter={handleCarouselMouseEnter}
             onMouseLeave={handleCarouselMouseLeave}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', position: 'relative' }}
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -973,29 +980,30 @@ function home() {
               <ChevronRight />
             </IconButton>
           </Tooltip>
-        </Box>
+                </Box>
+      </Box>
 
-        {/* Dynamic Scroll Arrow */}
-        <Tooltip 
-          title={<span className="scroll-tooltip">{currentSection === 'solutions' ? 'Back to top' : 'Next page'}</span>} 
-          placement="top" 
-          arrow 
-          open={showScrollTooltip}
-          onClose={() => setShowScrollTooltip(false)}
-          classes={{ popper: 'scroll-tooltip-popper' }}
-        >
-          <Box 
+      {/* Dynamic Scroll Arrow */}
+      <Tooltip 
+        title={<span className="scroll-tooltip">{currentSection === 'solutions' ? 'Back to top' : 'Next page'}</span>} 
+        placement="top" 
+        arrow 
+        open={showScrollTooltip}
+        onClose={() => setShowScrollTooltip(false)}
+        classes={{ popper: 'scroll-tooltip-popper' }}
+      >
+                  <Box 
             className={`scroll-down-arrow ${currentSection === 'solutions' ? 'back-to-top' : ''}`}
             onClick={handleDynamicScroll}
             tabIndex={0}
             style={{ left: arrowLeft }}
+            title={`Arrow position: ${arrowLeft}`}
           >
-            <FaChevronDown 
-              className={`arrow-icon ${currentSection === 'solutions' ? 'rotated' : ''}`} 
-            />
-          </Box>
-        </Tooltip>
-      </Box>
+          <FaChevronDown 
+            className={`arrow-icon ${currentSection === 'solutions' ? 'rotated' : ''}`} 
+          />
+        </Box>
+      </Tooltip>
 
       {/* Join Waitlist Section - Conditionally Rendered */}
       {isWaitlistVisible && (

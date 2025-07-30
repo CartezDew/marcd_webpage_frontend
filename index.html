@@ -25,10 +25,17 @@
     <!-- Critical CSS for above-the-fold content -->
     <style>
       /* Prevent layout shift while images load */
-      .home-main-image, .social-proof-image {
+      .home-main-image {
         width: 100%;
         height: auto;
         display: block;
+      }
+      
+      /* Social proof images need different handling for flexbox layout */
+      .social-proof-image {
+        height: auto;
+        max-width: 90%;
+        object-fit: contain;
       }
       
       /* Loading skeleton for images */
