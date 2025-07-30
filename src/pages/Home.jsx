@@ -1159,7 +1159,6 @@ function home() {
       <Box className={`did-you-know-section ${isDidYouKnowVisible ? 'visible' : ''}`} ref={didYouKnowRef}>
         <div className="video-overlay"></div>
         <video 
-          src={truckParkingVideo} 
           autoPlay 
           loop 
           muted 
@@ -1290,12 +1289,11 @@ function home() {
       <Box className={`marcd-solutions-section ${isSolutionsVisible ? 'visible' : ''}`} ref={solutionsRef}>
         <div className="video-overlay"></div>
         <video 
-          src={truckParkingVideo} 
           autoPlay 
           loop 
           muted 
           playsInline
-          preload="none"
+          preload="metadata"
           className="background-video"
         >
           <source src={truckParkingVideo} type="video/mp4" />

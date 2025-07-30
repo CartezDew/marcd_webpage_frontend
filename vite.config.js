@@ -20,8 +20,9 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 1000,
-    assetsInlineLimit: 4096,
+    assetsInlineLimit: 8192,
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
+    target: 'esnext',
   },
   server: {
     hmr: {

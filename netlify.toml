@@ -103,4 +103,10 @@
   pretty_urls = true
 
 [build.processing.images]
-  compress = true 
+  compress = true
+
+# Video caching
+[[headers]]
+  for = "*.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable" 
