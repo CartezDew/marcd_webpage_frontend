@@ -10,11 +10,67 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://marc-d.com">
+    <link rel="preconnect" href="https://marc-d.com">
     
     <!-- Preload critical resources -->
     <link rel="preload" href="/src/assets/Marc-d_Logo.png" as="image" type="image/png">
+    <link rel="preload" href="/src/assets/App_Marc-d_Main_Page.png" as="image" type="image/png">
+    <link rel="preload" href="/src/assets/Social_Proof.png" as="image" type="image/png">
+    
+    <!-- Preload critical JavaScript modules -->
+    <link rel="modulepreload" href="/src/main.jsx">
+    <link rel="modulepreload" href="/src/App.jsx">
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Critical CSS for above-the-fold content -->
+    <style>
+      /* Prevent layout shift while images load */
+      .home-main-image, .social-proof-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      /* Loading skeleton for images */
+      .image-loading {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      
+      /* Critical path optimization */
+      .app-loading { display: none; }
+      .app-ready .app-loading { display: block; }
+    </style>
+    
+    <!-- Critical JavaScript for immediate image display -->
+    <script>
+      // Immediately show preloaded images
+      window.addEventListener('DOMContentLoaded', function() {
+        // Add class to enable faster rendering
+        document.documentElement.classList.add('app-ready');
+        
+        // Preload critical images immediately
+        const criticalImages = [
+          '/src/assets/Marc-d_Logo.png',
+          '/src/assets/App_Marc-d_Main_Page.png', 
+          '/src/assets/Social_Proof.png'
+        ];
+        
+        criticalImages.forEach(src => {
+          const img = new Image();
+          img.src = src;
+        });
+      });
+    </script>
+    
     <title>Marc'd</title>
   </head>
   <body>
