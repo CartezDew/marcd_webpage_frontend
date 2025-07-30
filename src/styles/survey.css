@@ -106,7 +106,7 @@
 
 /* Conditional hover message - only show when not on first viewport */
 .scroll-to-top-button.other-viewport::before {
-  content: 'Back to Top';
+  content: 'Back to top';
   position: absolute;
   bottom: 100%;
   right: 0;
@@ -175,7 +175,7 @@
 
 /* Hover message for first-viewport */
 .scroll-to-top-button.first-viewport::before {
-  content: 'See what our community is saying';
+  content: 'Back to top';
   position: absolute;
   bottom: 100%;
   right: 0;

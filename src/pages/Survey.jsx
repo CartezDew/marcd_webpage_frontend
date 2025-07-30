@@ -427,7 +427,7 @@ function Survey() {
 
           {/* Navigation Controls */}
           <Box className="response-navigation">
-            <Tooltip title="Back page" placement="left">
+            <Tooltip title="Previous section" placement="left">
               <IconButton
                 onClick={prevResponseSet}
                 className={`nav-arrow nav-arrow-left${currentResponseSet === surveyResponses.length - 1 ? ' nav-arrow-animate' : ''}`}
@@ -441,7 +441,7 @@ function Survey() {
               {currentResponseSet + 1} of {surveyResponses.length}
             </Typography>
             
-            <Tooltip title="Next page" placement="right">
+            <Tooltip title="Next section" placement="right">
               <IconButton
                 onClick={nextResponseSet}
                 className={`nav-arrow nav-arrow-right${currentResponseSet < surveyResponses.length - 1 ? ' nav-arrow-animate' : ''}`}

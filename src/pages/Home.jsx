@@ -1000,7 +1000,6 @@ function home() {
             onClick={handleDynamicScroll}
             tabIndex={0}
             style={{ left: arrowLeft }}
-            title={`Arrow position: ${arrowLeft}`}
           >
           <FaChevronDown 
             className={`arrow-icon ${currentSection === 'solutions' ? 'rotated' : ''}`} 
