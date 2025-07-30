@@ -44,7 +44,7 @@ function OurStory() {
       isExternal: true
     },
     {
-      name: 'Beth Crosby',
+      name: 'Beth Corbley',
       title: 'Co-Founder',
       image: bethImg,
       route: '/leadership/beth',

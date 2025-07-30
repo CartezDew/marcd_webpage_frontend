@@ -149,9 +149,10 @@ function Survey() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasIntroAnimated) {
+        if (entry.isIntersecting && !hasIntroAnimated && !isManualScrolling) {
           setIsIntroVisible(true);
           setHasIntroAnimated(true);
+          setIsFirstViewport(true);
         }
       },
       {
@@ -169,15 +170,16 @@ function Survey() {
         observer.unobserve(introRef.current);
       }
     };
-  }, [hasIntroAnimated]);
+  }, [hasIntroAnimated, isManualScrolling]);
 
   // Intersection Observer for responses section
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasResponsesAnimated) {
+        if (entry.isIntersecting && !hasResponsesAnimated && !isManualScrolling) {
           setIsResponsesVisible(true);
           setHasResponsesAnimated(true);
+          setIsFirstViewport(false);
         }
       },
       {
@@ -195,7 +197,7 @@ function Survey() {
         observer.unobserve(responsesRef.current);
       }
     };
-  }, [hasResponsesAnimated]);
+  }, [hasResponsesAnimated, isManualScrolling]);
 
   // Auto-show message logic for mobile
   useEffect(() => {
@@ -294,9 +296,13 @@ function Survey() {
 
   // Dynamic scroll function - scrolls to responses section or back to top
   const handleScrollAction = () => {
+    // Set manual scrolling flag to prevent interference
+    setIsManualScrolling(true);
+    
     if (isFirstViewport) {
       // If we're in the first viewport, scroll to responses section
       if (responsesRef.current) {
+        // Update state immediately for responsive UI
         setIsFirstViewport(false);
         
         // Get the target scroll position
@@ -314,25 +320,30 @@ function Survey() {
           behavior: 'smooth'
         });
         
-        // Trigger animation after scroll completes
+        // Trigger animation immediately, then again after scroll completes for safety
+        if (!hasResponsesAnimated) {
+          setIsResponsesVisible(true);
+          setHasResponsesAnimated(true);
+        }
+        
+        // Clear manual scrolling flag after scroll completes
         setTimeout(() => {
-          if (!hasResponsesAnimated) {
-            setIsResponsesVisible(true);
-            setHasResponsesAnimated(true);
-          }
-        }, 800);
+          setIsManualScrolling(false);
+        }, 1000);
       }
     } else {
       // If we're in the responses section, scroll back to top
+      setIsFirstViewport(true);
+      
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
       
-      // Update viewport state after scroll completes
+      // Clear manual scrolling flag after scroll completes
       setTimeout(() => {
-        setIsFirstViewport(true);
-      }, 800);
+        setIsManualScrolling(false);
+      }, 1000);
     }
   };
 

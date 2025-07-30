@@ -76,3 +76,106 @@ export const verifyUser = async () => {
   }
   return false;
 };
+
+// Password Reset Functions
+export const requestPasswordReset = async (data) => {
+  try {
+    // Send the exact payload format the backend expects
+    const payload = {
+      username: data.username,
+      professor_last_name: data.professor_last_name
+    };
+    
+    // Only include security_answer if it's provided (for users who have set it up)
+    if (data.security_answer) {
+      payload.security_answer = data.security_answer;
+    }
+    
+    console.log('Sending password reset request with payload:', payload);
+    const resp = await api.post("/api/password/reset/request/", payload);
+    console.log('Password reset request successful');
+    return resp.data;
+  } catch (error) {
+    console.log('Password reset request failed:', error.response?.data);
+    throw error;
+  }
+};
+
+export const confirmPasswordReset = async (data) => {
+  try {
+    // Send the exact payload format the backend expects
+    const payload = {
+      username: data.username,
+      professor_last_name: data.professor_last_name,
+      new_password: data.new_password
+    };
+    
+    // Only include security_answer if it's provided (for users who have set it up)
+    if (data.security_answer) {
+      payload.security_answer = data.security_answer;
+    }
+    
+    console.log('Sending password reset confirmation with payload:', payload);
+    const resp = await api.post("/api/password/reset/confirm/", payload);
+    console.log('Password reset confirmation successful');
+    return resp.data;
+  } catch (error) {
+    console.log('Password reset confirmation failed:', error.response?.data);
+    throw error;
+  }
+};
+
+export const changePassword = async (data) => {
+  try {
+    const resp = await api.post("/api/password/change/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const setupSecurityQuestions = async (data) => {
+  try {
+    const resp = await api.post("/api/security-questions/setup/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateSecurityQuestions = async (data) => {
+  try {
+    const resp = await api.put("/api/security-questions/update/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Email-based Password Reset Functions
+export const requestEmailPasswordReset = async (data) => {
+  try {
+    const resp = await api.post("/api/password/reset/email/request/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyEmailResetCode = async (data) => {
+  try {
+    const resp = await api.post("/api/password/reset/email/verify/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const confirmEmailPasswordReset = async (data) => {
+  try {
+    const resp = await api.post("/api/password/reset/email/confirm/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -10,11 +10,19 @@ import {
   Grid, 
   Link, 
   InputAdornment, 
-  IconButton 
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Stepper,
+  Step,
+  StepLabel,
+  Alert
 } from '@mui/material';
-import { Person, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Person, Lock, Visibility, VisibilityOff, Close } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { signIn } from '../services/users';
+import { signIn, requestPasswordReset, confirmPasswordReset } from '../services/users';
 
 import '../styles/signin.css';
 
@@ -25,6 +33,19 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Forgot Password State
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+  const [resetStep, setResetStep] = useState(0);
+  const [resetEmail, setResetEmail] = useState('');
+  const [professorLastName, setProfessorLastName] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetError, setResetError] = useState('');
+  const [resetSuccess, setResetSuccess] = useState('');
 
   const [registerMessage, setRegisterMessage] = useState('');
   const [headerVisible, setHeaderVisible] = useState(false);
@@ -158,8 +179,158 @@ function SignIn() {
 
   const handleRegisterClick = (e) => {
     e.preventDefault();
-            setRegisterMessage(`To register, please contact customer service at ${import.meta.env.VITE_CONTACT_EMAIL} for further assistance.`);
+    setRegisterMessage(`To register, please contact customer service at ${import.meta.env.VITE_CONTACT_EMAIL} for further assistance.`);
   };
+
+  // Forgot Password Functions
+  const handleForgotPassword = () => {
+    setForgotPasswordOpen(true);
+    setResetStep(0);
+    setResetError('');
+    setResetSuccess('');
+  };
+
+  const handleCloseForgotPassword = () => {
+    setForgotPasswordOpen(false);
+    setResetStep(0);
+    setResetEmail('');
+    setProfessorLastName('');
+    setNewPassword('');
+    setConfirmNewPassword('');
+    setShowNewPassword(false);
+    setShowConfirmNewPassword(false);
+    setResetError('');
+    setResetSuccess('');
+  };
+
+  const handleVerifySecurityQuestions = async () => {
+    if (!resetEmail || !professorLastName.trim()) {
+      setResetError('Please fill in all fields.');
+      return;
+    }
+
+    // Trim whitespace from professor's last name
+    const trimmedProfessorLastName = professorLastName.trim();
+
+    setResetLoading(true);
+    setResetError('');
+
+    try {
+      await requestPasswordReset({
+        username: resetEmail,
+        professor_last_name: trimmedProfessorLastName
+      });
+      
+      setResetStep(1);
+      setResetSuccess('Security questions verified successfully. Please enter your new password.');
+    } catch (err) {
+      // Check if it's a 404 or 400 error (endpoint doesn't exist)
+      if (err?.response?.status === 404) {
+        setResetError(
+          'Password reset functionality is not yet available. Please contact support for assistance.'
+        );
+      } else if (err?.response?.status === 400) {
+        // Handle specific backend validation errors
+        const errorData = err?.response?.data;
+        console.log('Backend error data:', errorData);
+        
+        if (errorData?.professor_last_name) {
+          setResetError('Professor last name is incorrect. Please check your answer.');
+        } else if (errorData?.security_answer) {
+          setResetError('Security answer is incorrect. Please check your answer.');
+        } else if (errorData?.username || errorData?.email) {
+          setResetError('Username/email not found. Please check your entry.');
+        } else if (errorData?.detail) {
+          setResetError(errorData.detail);
+        } else {
+          setResetError(
+            err?.message || 
+            'Failed to verify security questions. Please check your answers.'
+          );
+        }
+      } else {
+        setResetError(
+          err?.message || 
+          'Failed to verify security questions. Please check your answers.'
+        );
+      }
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    if (!newPassword || !confirmNewPassword) {
+      setResetError('Please fill in all fields.');
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      setResetError('Passwords do not match.');
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setResetError('Password must be at least 8 characters long.');
+      return;
+    }
+
+    // Additional frontend validation
+    if (!/[A-Za-z]/.test(newPassword)) {
+      setResetError('Password must contain at least one letter.');
+      return;
+    }
+
+    if (!/[0-9]/.test(newPassword)) {
+      setResetError('Password must contain at least one number.');
+      return;
+    }
+
+    // Check for common passwords
+    const commonPasswords = ['password', '123456', 'password123', 'admin', 'test123', 'test1234'];
+    if (commonPasswords.some(common => newPassword.toLowerCase().includes(common))) {
+      setResetError('This password is too common. Please choose a more unique password.');
+      return;
+    }
+
+    setResetLoading(true);
+    setResetError('');
+
+    try {
+      await confirmPasswordReset({
+        username: resetEmail,
+        professor_last_name: trimmedProfessorLastName,
+        new_password: newPassword
+      });
+      
+      setResetSuccess('Password reset successfully! You can now sign in with your new password.');
+      setTimeout(() => {
+        handleCloseForgotPassword();
+      }, 2000);
+    } catch (err) {
+      // Handle specific backend validation errors
+      const errorData = err?.response?.data;
+      if (errorData?.new_password) {
+        // Backend password validation errors
+        if (Array.isArray(errorData.new_password)) {
+          setResetError(errorData.new_password.join(' '));
+        } else {
+          setResetError(errorData.new_password);
+        }
+      } else if (errorData?.detail) {
+        setResetError(errorData.detail);
+      } else {
+        setResetError(
+          err?.message || 
+          'Failed to reset password. Please try again.'
+        );
+      }
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
+  const steps = ['Verify Security Questions', 'Reset Password'];
 
   return (
     <Container maxWidth="sm" className="signin-container">
@@ -218,7 +389,14 @@ function SignIn() {
                     }}
                   />
                   <div className="signin-forgot">
-                    <Link href="#" underline="hover" className="signin-link">Forgot password?</Link>
+                    <Link 
+                      href="#" 
+                      underline="hover" 
+                      className="signin-link"
+                      onClick={handleForgotPassword}
+                    >
+                      Forgot password?
+                    </Link>
                   </div>
                   {error && <div className="signin-error">{error}</div>}
                   <Button
@@ -250,6 +428,143 @@ function SignIn() {
       {registerMessage && (
         <div className="register-message">{registerMessage}</div>
       )}
+
+      {/* Forgot Password Dialog */}
+      <Dialog 
+        open={forgotPasswordOpen} 
+        onClose={handleCloseForgotPassword}
+        maxWidth="sm"
+        fullWidth
+        className="forgot-password-dialog"
+      >
+        <DialogTitle>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h6">Reset Password</Typography>
+            <IconButton onClick={handleCloseForgotPassword}>
+              <Close />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Stepper activeStep={resetStep} sx={{ mb: 3 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          {resetError && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {resetError}
+            </Alert>
+          )}
+
+          {resetSuccess && (
+            <Alert severity="success" sx={{ mb: 2 }}>
+              {resetSuccess}
+            </Alert>
+          )}
+
+          {resetStep === 0 && (
+            <Box>
+                        <Typography variant="body2" sx={{ mb: 2 }}>
+            Please verify your security questions to reset your password. 
+            You need to know Professor Rob's last name to proceed.
+          </Typography>
+              <TextField
+                fullWidth
+                label="Username or Email"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="What is Professor Rob's last name?"
+                value={professorLastName}
+                onChange={(e) => setProfessorLastName(e.target.value)}
+                placeholder="Enter Professor Rob's last name"
+                helperText="Enter Professor Rob's last name exactly (case-insensitive)"
+                sx={{ mb: 2 }}
+              />
+            </Box>
+          )}
+
+          {resetStep === 1 && (
+            <Box>
+              <Typography variant="body2" sx={{ mb: 2 }}>
+                Please enter your new password.
+              </Typography>
+              <Typography variant="caption" sx={{ mb: 2, display: 'block', color: '#666' }}>
+                Password requirements:
+                • Minimum 8 characters
+                • Must include letters and numbers
+                • Cannot be a common password
+                • Special characters recommended (!@#$%^&*)
+              </Typography>
+              <TextField
+                fullWidth
+                type={showNewPassword ? 'text' : 'password'}
+                label="New Password"
+                placeholder="e.g. MySecurePass123!"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowNewPassword(!showNewPassword)} edge="end">
+                        {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                type={showConfirmNewPassword ? 'text' : 'password'}
+                label="Confirm New Password"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)} edge="end">
+                        {showConfirmNewPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ mb: 2 }}
+              />
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseForgotPassword}>
+            Cancel
+          </Button>
+          {resetStep === 0 && (
+            <Button 
+              onClick={handleVerifySecurityQuestions}
+              disabled={resetLoading}
+              variant="contained"
+            >
+              {resetLoading ? 'Verifying...' : 'Verify'}
+            </Button>
+          )}
+          {resetStep === 1 && (
+            <Button 
+              onClick={handleResetPassword}
+              disabled={resetLoading}
+              variant="contained"
+            >
+              {resetLoading ? 'Resetting...' : 'Reset Password'}
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

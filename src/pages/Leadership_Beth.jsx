@@ -163,14 +163,14 @@ function Leadership_Beth() {
               >
                 <img 
                   src={bethImg} 
-                  alt="Beth Crosby, Co-Founder of Marc'd"
+                  alt="Beth Corbley, Co-Founder of Marc'd"
                   className="profile-image"
                 />
               </Box>
               
               <Box className="profile-card-content">
                 <Typography variant="h1" className="profile-name">
-                  Beth Crosby
+                  Beth Corbley
                 </Typography>
                 <Typography variant="h3" className="profile-title">
                   Co-Founder
@@ -182,7 +182,7 @@ function Leadership_Beth() {
                 <IconButton 
                   className="linkedin-button"
                   onClick={handleLinkedInClick}
-                  aria-label="Contact Beth Crosby"
+                  aria-label="Contact Beth Corbley"
                 >
                   <img 
                     src={linkedinIcon} 
@@ -203,7 +203,7 @@ function Leadership_Beth() {
                 {/* Mobile Profile Image */}
                 <img 
                   src={bethImg} 
-                  alt="Beth Crosby, Co-Founder of Marc'd"
+                  alt="Beth Corbley, Co-Founder of Marc'd"
                   className="mobile-profile-image"
                 />
                 {/* Mobile Profile Info */}
@@ -223,7 +223,7 @@ function Leadership_Beth() {
                 <button 
                   className="mobile-linkedin-button"
                   onClick={handleLinkedInClick}
-                  aria-label="Contact Beth Crosby"
+                  aria-label="Contact Beth Corbley"
                 >
                   <img 
                     src={linkedinIcon} 
