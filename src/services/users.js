@@ -91,12 +91,9 @@ export const requestPasswordReset = async (data) => {
       payload.security_answer = data.security_answer;
     }
     
-    console.log('Sending password reset request with payload:', payload);
     const resp = await api.post("/api/password/reset/request/", payload);
-    console.log('Password reset request successful');
     return resp.data;
   } catch (error) {
-    console.log('Password reset request failed:', error.response?.data);
     throw error;
   }
 };
@@ -115,12 +112,9 @@ export const confirmPasswordReset = async (data) => {
       payload.security_answer = data.security_answer;
     }
     
-    console.log('Sending password reset confirmation with payload:', payload);
     const resp = await api.post("/api/password/reset/confirm/", payload);
-    console.log('Password reset confirmation successful');
     return resp.data;
   } catch (error) {
-    console.log('Password reset confirmation failed:', error.response?.data);
     throw error;
   }
 };

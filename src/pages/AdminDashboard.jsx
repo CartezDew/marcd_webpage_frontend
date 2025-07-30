@@ -636,9 +636,7 @@ const AdminDashboard = () => {
         const currentFolderId = getCurrentFolderId();
         await fileApi.uploadFile(file, currentFolderId, conflictResolution);
         } catch (uploadError) {
-          console.log('Upload error response:', uploadError.response?.data);
-          console.log('Upload error status:', uploadError.response?.status);
-          console.log('Upload error options:', uploadError.response?.data?.options);
+          
           
           // Check if this is a conflict error from the backend
           if (uploadError.response?.status === 400 && uploadError.response?.data?.error?.includes('already exists')) {
@@ -990,8 +988,7 @@ const AdminDashboard = () => {
   };
 
   const handleDownloadFile = async () => {
-    console.log('=== handleDownloadFile START ===');
-    console.log('Download button clicked for file:', selectedFile);
+
     
     if (!selectedFile) {
       return;

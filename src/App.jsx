@@ -1,30 +1,28 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import { WaitlistProvider } from './context/WaitlistContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
-// Critical CSS imports
+// CSS imports
 import './styles/global.css';
 import './styles/components.css';
+import './styles/admin.css';
 
-// Lazy load non-critical pages for faster initial bundle
-const Home = lazy(() => import('./pages/Home'));
-const ContactUs = lazy(() => import('./pages/ContactUs'));
-const Survey = lazy(() => import('./pages/Survey'));
-const OurStory = lazy(() => import('./pages/OurStory'));
-const Leadership_Cartez = lazy(() => import('./pages/Leadership_Cartez'));
-const Leadership_Beth = lazy(() => import('./pages/Leadership_Beth'));
-const Features = lazy(() => import('./pages/Features'));
-const SignIn = lazy(() => import('./pages/SignIn'));
-const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
-
-// Lazy load admin CSS only when needed
-const loadAdminCSS = () => import('./styles/admin.css');
+// Page imports
+import Home from './pages/Home';
+import ContactUs from './pages/ContactUs';
+import Survey from './pages/Survey';
+import OurStory from './pages/OurStory';
+import Leadership_Cartez from './pages/Leadership_Cartez';
+import Leadership_Beth from './pages/Leadership_Beth';
+import Features from './pages/Features';
+import SignIn from './pages/SignIn';
+import AdminDashboard from './pages/AdminDashboard';
 // Create a custom theme
 const theme = createTheme({
   palette: {
@@ -134,21 +132,7 @@ const NotFound = () => {
   );
 };
 
-// Fast loading component
-const PageLoader = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" minHeight="50vh">
-    <CircularProgress size={40} />
-  </Box>
-);
-
 function App() {
-  // Load admin CSS when admin route is accessed
-  useEffect(() => {
-    if (window.location.pathname.includes('/admin')) {
-      loadAdminCSS();
-    }
-  }, []);
-
   return (
     <WaitlistProvider>
       <div className="App">
@@ -156,25 +140,23 @@ function App() {
           <CssBaseline />
           <Nav />
           <main className="main-content">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/contactus" element={<ContactUs />} />
-                <Route path="/survey" element={<Survey />} />
-                <Route path="/our-story" element={<OurStory />} />
-                <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
-                <Route path="/leadership/beth" element={<Leadership_Beth />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/signin" element={<SignIn />} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/survey" element={<Survey />} />
+              <Route path="/our-story" element={<OurStory />} />
+              <Route path="/leadership/cartez" element={<Leadership_Cartez />} />
+              <Route path="/leadership/beth" element={<Leadership_Beth />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/signin" element={<SignIn />} />
 
-                <Route path="/admin/dashboard" element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } />
-                <Route path="*" element={<NotFound />} /> {/* fallback */}
-              </Routes>
-            </Suspense>
+              <Route path="/admin/dashboard" element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="*" element={<NotFound />} /> {/* fallback */}
+            </Routes>
           </main>
           <Footer />
         </ThemeProvider>

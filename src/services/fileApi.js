@@ -58,7 +58,6 @@ export const fileApi = {
       // Backend expects folder_id, send the actual folder ID
       if (folderId !== null) {
         formData.append('folder', folderId);
-        console.log('Sending folder ID:', folderId);
       }
       
       // Add conflict resolution parameters to FormData (backend expects them in request.data)
@@ -69,18 +68,6 @@ export const fileApi = {
           formData.append('upload_as_duplicate', 'true');
         }
       }
-      
-      // Debug: Log what we're sending
-      console.log('Uploading file:', file.name);
-      console.log('Folder ID:', folderId);
-      console.log('Conflict resolution:', conflictResolution);
-      
-      // Log all form data being sent
-      console.log('=== FormData being sent ===');
-      for (let [key, value] of formData.entries()) {
-        console.log(`FormData - ${key}:`, value);
-      }
-      console.log('=== End FormData ===');
       
       const response = await api.post('/api/files/upload/', formData, {
         headers: {
@@ -207,7 +194,6 @@ export const fileApi = {
       console.log('File details response:', fileResponse.data);
       
       const fileUrl = fileResponse.data.file;
-      console.log('File URL from response:', fileUrl);
       
       if (!fileUrl) {
         throw new Error('File URL not found in response');
@@ -226,14 +212,11 @@ export const fileApi = {
       
       for (const endpoint of endpoints) {
         try {
-          console.log('Trying download endpoint:', endpoint);
           response = await api.get(endpoint, {
             responseType: 'blob'
           });
-          console.log('Download successful from endpoint:', endpoint);
           break;
         } catch (error) {
-          console.log('Failed endpoint:', endpoint, 'Error:', error.response?.status);
           lastError = error;
         }
       }
@@ -241,12 +224,6 @@ export const fileApi = {
       if (!response) {
         throw lastError || new Error('All download endpoints failed');
       }
-      
-      console.log('fileApi.downloadFile response received:', response);
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-      console.log('Response data type:', typeof response.data);
-      console.log('Response data size:', response.data ? response.data.size : 'undefined');
       
       return response;
     } catch (error) {

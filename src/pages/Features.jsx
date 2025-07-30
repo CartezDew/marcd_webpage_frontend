@@ -567,9 +567,7 @@ function Features() {
   const handleNavigationImageClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log('Navigation image clicked! Current state:', isNavigationImageEnlarged);
     const newState = !isNavigationImageEnlarged;
-    console.log('Setting new state to:', newState);
     setIsNavigationImageEnlarged(newState);
   };
 
@@ -606,10 +604,7 @@ function Features() {
     };
   }, [isVideoEnlarged, isSpotterVideoEnlarged, isStatisticsVideoEnlarged, isFeatureRequestVideoEnlarged, isNavigationImageEnlarged]);
 
-  // Debug useEffect to monitor navigation image state
-  useEffect(() => {
-    console.log('Navigation image enlarged state changed to:', isNavigationImageEnlarged);
-  }, [isNavigationImageEnlarged]);
+
 
   // Scroll function - scrolls to next section if in first viewport, otherwise scrolls to top
   const handleScrollAction = () => {

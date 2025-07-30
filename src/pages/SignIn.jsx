@@ -179,11 +179,19 @@ function SignIn() {
 
   const handleRegisterClick = (e) => {
     e.preventDefault();
+    // Remove focus from the link to avoid potential focus issues
+    if (e && e.target) {
+      e.target.blur();
+    }
     setRegisterMessage(`To register, please contact customer service at ${import.meta.env.VITE_CONTACT_EMAIL} for further assistance.`);
   };
 
   // Forgot Password Functions
-  const handleForgotPassword = () => {
+  const handleForgotPassword = (e) => {
+    // Remove focus from the link before opening dialog to avoid aria-hidden focus conflict
+    if (e && e.target) {
+      e.target.blur();
+    }
     setForgotPasswordOpen(true);
     setResetStep(0);
     setResetError('');
@@ -232,7 +240,7 @@ function SignIn() {
       } else if (err?.response?.status === 400) {
         // Handle specific backend validation errors
         const errorData = err?.response?.data;
-        console.log('Backend error data:', errorData);
+
         
         if (errorData?.professor_last_name) {
           setResetError('Professor last name is incorrect. Please check your answer.');
@@ -436,10 +444,12 @@ function SignIn() {
         maxWidth="sm"
         fullWidth
         className="forgot-password-dialog"
+        aria-labelledby="forgot-password-dialog-title"
+        disableRestoreFocus={false}
       >
         <DialogTitle>
           <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6">Reset Password</Typography>
+            <Typography variant="h6" id="forgot-password-dialog-title">Reset Password</Typography>
             <IconButton onClick={handleCloseForgotPassword}>
               <Close />
             </IconButton>
@@ -478,6 +488,7 @@ function SignIn() {
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
                 sx={{ mb: 2 }}
+                autoFocus
               />
               <TextField
                 fullWidth
