@@ -2205,6 +2205,11 @@
     }
 
    @media (max-width: 900px) {
+
+    .home-hero-headline  {
+      font-size: 3.5rem !important;
+    }
+
     .marc-it-title {
       font-size: 1.5rem !important;
     }
@@ -2277,7 +2282,7 @@
     }
 
     .home-hero-description {
-      font-size: 1.1rem !important;
+      font-size: 1.2rem !important;
       margin-right: 0rem !important;
       padding-right: 0rem !important;
     }
@@ -2314,7 +2319,7 @@
     .home-main-image.large-image {
       width: 100% !important;
       height: auto !important;
-      max-height: 500px !important;
+      max-height: 530px !important;
       object-fit: contain !important;
     }
          .social-proof-container {
@@ -2324,14 +2329,14 @@
      }
      
      .social-proof-text {
-       font-size: .9rem !important;
+       font-size: 1.2rem !important;
        margin-top: 0.5rem !important;
        padding-right: 0rem !important;
        margin-right: 0rem !important;
      }
      
      .social-proof-image {
-       max-height: 40px !important;
+       max-height: 50px !important;
      }
 
            .carousel-nav-left,
