@@ -211,7 +211,7 @@ function home() {
         const arrowWidth = arrowElement ? arrowElement.offsetWidth : 60;
         
         // Center the arrow on the carousel container
-        const arrowLeftPercent = ((carouselCenter - arrowWidth / 3) / viewportWidth) * 100;
+        const arrowLeftPercent = ((carouselCenter - arrowWidth / 4) / viewportWidth) * 100;
         setArrowLeft(`${arrowLeftPercent}%`);
       }
     };
@@ -469,6 +469,8 @@ function home() {
       case 'solutions':
         setCurrentSection('hero');
         setIsScrollingToTop(true);
+        // Hide tooltip immediately when scrolling back to top
+        setShowScrollTooltip(false);
         // Scroll to top of viewport to show entire Hero section
         window.scrollTo({
           top: 0,
@@ -478,9 +480,8 @@ function home() {
         setTimeout(() => {
           triggerAnimations(aboutRef, 'home-hero-section');
         }, 100);
-        // Keep tooltip visible during scroll and add 2-second delay after reaching top
+        // Reset scrolling state after reaching top
         setTimeout(() => {
-          setShowScrollTooltip(false);
           setIsScrollingToTop(false);
           setIsManualScrolling(false);
         }, 2000);
@@ -985,7 +986,9 @@ function home() {
 
       {/* Dynamic Scroll Arrow */}
       <Tooltip 
-        title={<span className="scroll-tooltip">{currentSection === 'solutions' ? 'Back to top' : 'Next page'}</span>} 
+        title={<span className="scroll-tooltip">{currentSection === 'solutions' ? 'Back to top' : 'Next section'}</span>}
+        onMouseEnter={() => setShowScrollTooltip(true)}
+        onMouseLeave={() => setShowScrollTooltip(false)} 
         placement="top" 
         arrow 
         open={showScrollTooltip}
