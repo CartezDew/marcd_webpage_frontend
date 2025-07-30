@@ -13,46 +13,14 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
-    // Try different possible authentication endpoints and credential formats
-    let resp;
+    // Use the correct login endpoint
+    const resp = await api.post("/api/login/", credentials);
     
-    // Try different endpoint variations
-    const endpoints = [
-      "/api/token/",
-      "/api/login/", 
-      "/api/auth/login/",
-      "/api/signin/",
-      "/auth/login/",
-      "/login/"
-    ];
+    // Store the token
+    const token = resp.data.access || resp.data.token;
+    localStorage.setItem("token", token);
     
-    // Try different credential formats
-    const credentialFormats = [
-      credentials, // { username: email, password }
-      { email: credentials.username, password: credentials.password },
-      { username: credentials.username, password: credentials.password },
-      { user: credentials.username, password: credentials.password }
-    ];
-    
-    let lastError;
-    
-    for (const endpoint of endpoints) {
-      for (const format of credentialFormats) {
-        try {
-          resp = await api.post(endpoint, format);
-          // If we get here, the request was successful
-          const token = resp.data.access || resp.data.token;
-          localStorage.setItem("token", token);
-          return resp.data;
-        } catch (error) {
-          lastError = error;
-          // Continue trying other combinations
-        }
-      }
-    }
-    
-    // If we get here, none of the combinations worked
-    throw lastError;
+    return resp.data;
   } catch (error) {
     throw error;
   }
