@@ -5,7 +5,7 @@ import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/ma
 import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
-import { validateWaitlistEmail, validateEmailRealTime } from '../utils/emailValidation';
+import { validateWaitlistEmail, validateEmailRealTime, validateEmailOnSubmit } from '../utils/emailValidation';
 import { useWaitlist } from '../context/WaitlistContext';
 import '../styles/home.css';
 
@@ -309,9 +309,10 @@ function home() {
     const value = e.target.value;
     setEmail(value);
     
-    // Use real-time validation for better UX
-    const validation = validateEmailRealTime(value, 'waitlist');
-    setEmailError(validation.error);
+    // Clear any existing error when user starts typing
+    if (emailError) {
+      setEmailError('');
+    }
   };
 
   // Handle waitlist submission
@@ -328,7 +329,10 @@ function home() {
   const handleWaitlistSubmit = (e) => {
     e.preventDefault();
     
-    if (!email || emailError) {
+    // Validate email only when submit button is clicked
+    const validation = validateEmailOnSubmit(email, 'waitlist');
+    if (!validation.isValid) {
+      setEmailError(validation.error);
       return;
     }
 
@@ -1090,7 +1094,7 @@ function home() {
                 <button
                   type="submit"
                   className="join-button"
-                  disabled={!email || !!emailError}
+                  disabled={!email}
                 >
                   Join
                 </button>

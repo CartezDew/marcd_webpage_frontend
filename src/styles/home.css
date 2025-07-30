@@ -1452,7 +1452,7 @@
   }
   
   .join-button {
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;;
     border: none;
     border-radius: 50px;
     color: white;
@@ -1484,7 +1484,7 @@
     opacity: 0.8;
     transform: scale(1.05);
     animation-play-state: paused; /* Pause the pulse animation on hover */
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 8px 25px rgba(60, 0, 3, 0.5);
   }
   
   .join-button:disabled {
@@ -1511,11 +1511,11 @@
   @keyframes subtleJoinPulse {
     0%, 100% {
       transform: scale(1);
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 4px 15px rgba(141, 0, 0, 0.4);
     }
     50% {
       transform: scale(1.08);
-      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 8px 25px rgba(148, 147, 147, 0.6);
     }
   }
   

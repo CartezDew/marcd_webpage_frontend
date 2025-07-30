@@ -117,4 +117,66 @@ export const validateEmailRealTime = (email, type = 'contact') => {
   } else {
     return validateContactEmail(email);
   }
+};
+
+/**
+ * Email validation for button click (shows errors only when submitted)
+ * @param {string} email - The email address to validate
+ * @param {string} type - 'waitlist' or 'contact'
+ * @returns {object} - { isValid: boolean, error: string }
+ */
+export const validateEmailOnSubmit = (email, type = 'contact') => {
+  // Check if email is empty
+  if (!email || email.trim() === '') {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  const emailValue = email.trim();
+
+  // Check if email contains @ symbol
+  if (!emailValue.includes('@')) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  // Check if email contains . symbol
+  if (!emailValue.includes('.')) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  // Basic email format validation using the same regex as Django
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(emailValue)) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  // Additional checks for common invalid patterns
+  if (emailValue.startsWith('@') || emailValue.endsWith('@')) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  if (emailValue.includes('..') || emailValue.includes('@@')) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  // Check for spaces in email
+  if (emailValue.includes(' ')) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  // Check for consecutive dots in domain
+  const domain = emailValue.split('@')[1];
+  if (domain && domain.includes('..')) {
+    return { isValid: false, error: 'Please enter a valid email' };
+  }
+
+  // Check if domain has at least 2 characters after the last dot
+  const domainParts = domain?.split('.');
+  if (domainParts && domainParts.length > 0) {
+    const lastPart = domainParts[domainParts.length - 1];
+    if (lastPart.length < 2) {
+      return { isValid: false, error: 'Please enter a valid email' };
+    }
+  }
+
+  return { isValid: true, error: '' };
 }; 
