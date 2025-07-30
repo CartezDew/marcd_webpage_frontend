@@ -21,6 +21,9 @@ import healthFoodImg from '../assets/Health_Food.png';
 import truckIcon from '../assets/Truck_Icon.png';
 import launchingSoonImg from '../assets/Launching_Soon.png';
 import socialProofImg from '../assets/Social_Proof.png';
+import truckerWithFamilyImg from '../assets/Trucker_with_family.jpg';
+import truckerOnPhoneImg from '../assets/Trucker_on_phone.jpg';
+import happyTrucker1Img from '../assets/Happy_Truckers_1.png';
 
 // Video imports
 const truckParkingVideo = '/videos/Truck_Parking_Home_Page.mp4';
@@ -847,6 +850,23 @@ function home() {
             </Box>
             truckers.
           </Typography>
+          <div className="trucker-images-container">
+            <img 
+              src={truckerOnPhoneImg} 
+              alt="Trucker on phone" 
+              className="trucker-image trucker-phone"
+            />
+            <img 
+              src={happyTrucker1Img} 
+              alt="Happy trucker" 
+              className="trucker-image trucker-happy"
+            />
+            <img 
+              src={truckerWithFamilyImg} 
+              alt="Trucker with family" 
+              className="trucker-image trucker-family"
+            />
+          </div>
           <Typography className={`home-hero-description ${isAboutVisible ? 'animate' : ''}`}>
             Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
           </Typography>
