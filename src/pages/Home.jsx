@@ -76,7 +76,7 @@ function home() {
   const [isManualScrolling, setIsManualScrolling] = useState(false);
   
   // Action words for cycling animation
-  const actionWords = ['Reward', 'Empower', 'Support', 'Thank', 'Value', 'Connect', 'Celebrate', 'Recognize'];
+  const actionWords = ['Reward', 'Recognize', 'Uplift', 'Unite', 'Support', 'Thank', 'Value', 'Connect', 'Celebrate', 'Empower', 'Engage', 'Respect', 'Serve'];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   // Scroll words for Marc It! section

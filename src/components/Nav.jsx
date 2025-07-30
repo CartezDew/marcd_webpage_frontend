@@ -362,7 +362,6 @@ function Nav() {
                   to="/signin"
                   startIcon={<LoginIcon />}
                   className="nav-button"
-                  sx={{ ml: 2 }}
                 >
                   Log In
                 </Button>
@@ -373,7 +372,6 @@ function Nav() {
                   to="/admin/dashboard"
                   startIcon={<DashboardIcon />}
                   className="nav-button"
-                  sx={{ ml: 2 }}
                 >
                   Admin
                 </Button>
@@ -383,7 +381,6 @@ function Nav() {
                   onClick={handleLogout}
                   startIcon={<LogoutIcon />}
                   className="nav-button"
-                  sx={{ ml: 2 }}
                 >
                   Logout
                 </Button>

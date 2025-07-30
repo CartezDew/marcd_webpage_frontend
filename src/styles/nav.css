@@ -27,7 +27,7 @@
 /* Main toolbar container with responsive padding */
 .nav-toolbar {
   padding-left: 24px !important; /* Left padding */
-  padding-right: 24px !important; /* Right padding */
+  padding-right: 48px !important; /* Right padding - increased for more space */
   padding-top: 8px !important; /* Top padding */
   padding-bottom: 8px !important; /* Bottom padding */
   min-height: 60px !important; /* Match AppBar height */
@@ -180,6 +180,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 .nav-buttons-container {
   display: flex !important;
   gap: 16px; /* Space between buttons */
+  margin-right: 24px; /* Extra space on the right */
 }
 
 /* Individual navigation button styling */
