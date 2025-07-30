@@ -473,6 +473,10 @@ const AdminDashboard = () => {
           aValue = a.email?.toLowerCase() || '';
           bValue = b.email?.toLowerCase() || '';
           break;
+        case 'entry_id':
+          aValue = a.entry_id?.toLowerCase() || '';
+          bValue = b.entry_id?.toLowerCase() || '';
+          break;
         case 'type':
           aValue = a.feedback_type?.toLowerCase() || '';
           bValue = b.feedback_type?.toLowerCase() || '';
@@ -1649,6 +1653,12 @@ const AdminDashboard = () => {
                       </>
                     ) : (
                       <>
+                        <TableCell className="admin-table-header-cell admin-column-entry-id">
+                          <Box className="admin-header-with-sort" onClick={() => handleSort('entry_id')}>
+                            <span>Entry ID</span>
+                            {getSortIcon('entry_id')}
+                          </Box>
+                        </TableCell>
                         <TableCell className="admin-table-header-cell admin-column-email">
                           <Box className="admin-header-with-sort" onClick={() => handleSort('email')}>
                             <span>Email</span>
@@ -1710,6 +1720,9 @@ const AdminDashboard = () => {
                         </>
                       ) : (
                         <>
+                          <TableCell sx={{ color: 'white', fontFamily: 'monospace', fontWeight: 'bold' }}>
+                            {entry.entry_id}
+                          </TableCell>
                           <TableCell sx={{ color: 'white' }}>{entry.email}</TableCell>
                           <TableCell sx={{ color: 'white' }}>
                             {formatDate(entry.created_at)}
@@ -2461,7 +2474,7 @@ const AdminDashboard = () => {
             <Typography variant="h6">
               {activeTab === 0 ? 'Contact Details' : 'Waitlist Entry Details'}
             </Typography>
-            <IconButton onClick={handleCloseDialog} sx={{ color: '#a1a1aa' }}>
+            <IconButton onClick={handleCloseDialog} sx={{ color: '#be0303' }}>
               <CloseIcon />
             </IconButton>
           </DialogTitle>
@@ -2533,10 +2546,10 @@ const AdminDashboard = () => {
                   <>
                     <Box sx={{ mb: 3 }}>
                       <Typography variant="subtitle2" sx={{ color: '#a1a1aa', mb: 1 }}>
-                        ID
+                        Entry ID
                       </Typography>
-                      <Typography variant="body1" sx={{ color: 'white' }}>
-                        {selectedEntry.id}
+                      <Typography variant="body1" sx={{ color: 'white', fontFamily: 'monospace', fontWeight: 'bold' }}>
+                        {selectedEntry.entry_id}
                       </Typography>
                     </Box>
                     <Box sx={{ mb: 3 }}>
@@ -2561,7 +2574,7 @@ const AdminDashboard = () => {
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDialog} sx={{ color: '#a1a1aa' }}>
+            <Button onClick={handleCloseDialog} sx={{ color: '#be0303' }}>
               Close
             </Button>
           </DialogActions>

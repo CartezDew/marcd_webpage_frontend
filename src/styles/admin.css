@@ -333,6 +333,7 @@
 /* Text truncation for responsive columns */
 .admin-column-name,
 .admin-column-email,
+.admin-column-entry-id,
 .admin-column-created {
   max-width: 150px !important;
   white-space: nowrap !important;
@@ -347,6 +348,10 @@
 
 .admin-column-email {
   max-width: 180px !important;
+}
+
+.admin-column-entry-id {
+  max-width: 100px !important;
 }
 
 .admin-column-created {
@@ -374,7 +379,11 @@
   max-width: 100px !important; /* Created column for contact submissions */
 }
 
-/* For waitlist entries (only email and created columns) */
+/* For waitlist entries (entry_id, email, and created columns) */
+.admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-child(1) {
+  max-width: 100px !important; /* Entry ID column for waitlist */
+}
+
 .admin-dashboard-main .MuiTable-root .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root:nth-child(2) {
   max-width: 200px !important; /* Email column for waitlist */
 }

@@ -7,6 +7,7 @@ import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
 import { validateWaitlistEmail, validateEmailRealTime, validateEmailOnSubmit } from '../utils/emailValidation';
 import { useWaitlist } from '../context/WaitlistContext';
+import { addToWaitlist } from '../services/users';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -326,7 +327,7 @@ function home() {
     }, 500);
   };
 
-  const handleWaitlistSubmit = (e) => {
+  const handleWaitlistSubmit = async (e) => {
     e.preventDefault();
     
     // Validate email only when submit button is clicked
@@ -336,9 +337,19 @@ function home() {
       return;
     }
 
-    setIsSubmitted(true);
-    setEmail('');
-    setEmailError('');
+    try {
+      // Submit email to waitlist API
+      await addToWaitlist({ email: email.trim() });
+      
+      // Show success message
+      setIsSubmitted(true);
+      setEmail('');
+      setEmailError('');
+    } catch (error) {
+      // Handle API errors
+      console.error('Error adding to waitlist:', error);
+      setEmailError('Failed to add to waitlist. Please try again.');
+    }
   };
 
   // Smooth scroll to waitlist section

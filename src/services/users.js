@@ -141,3 +141,13 @@ export const confirmEmailPasswordReset = async (data) => {
     throw error;
   }
 };
+
+// Waitlist Functions
+export const addToWaitlist = async (data) => {
+  try {
+    const resp = await api.post("/waitlist/", data);
+    return resp.data;
+  } catch (error) {
+    throw error;
+  }
+};
