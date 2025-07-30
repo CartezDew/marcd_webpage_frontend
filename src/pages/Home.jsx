@@ -42,6 +42,8 @@ import scrollImage14 from '../assets/Scroll Images/Image-14.png';
 import scrollImage15 from '../assets/Scroll Images/Image-15.png';
 import scrollImage16 from '../assets/Scroll Images/Image-16.png';
 
+
+
 function home() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,6 +54,8 @@ function home() {
   const solutionsRef = useRef(null);
   const marcItRef = useRef(null);
   const carouselRef = useRef(null);
+  
+
   const [isAboutVisible, setIsAboutVisible] = useState(false);
   const [isDidYouKnowVisible, setIsDidYouKnowVisible] = useState(false);
   const [isSolutionsVisible, setIsSolutionsVisible] = useState(false);
@@ -1160,7 +1164,7 @@ function home() {
           loop 
           muted 
           playsInline
-          preload="auto"
+          preload="metadata"
           className="background-video"
         >
           <source src={truckParkingVideo} type="video/mp4" />
@@ -1290,8 +1294,13 @@ function home() {
           autoPlay 
           loop 
           muted 
+          playsInline
+          preload="none"
           className="background-video"
-        />
+        >
+          <source src={truckParkingVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         <Box className="marcd-solutions-content">
           <Typography variant="h3" className="solutions-title">
             ✅ How Marc'd Solves These Problems
