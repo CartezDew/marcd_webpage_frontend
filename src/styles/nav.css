@@ -464,7 +464,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   }
 
   .nav-logo {
-    height: 80px !important; /* slightly smaller logo */
+    height: 85px !important; /* slightly smaller logo */
   }
 
   .nav-button, .nav-join-button {
@@ -472,7 +472,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
     padding-right: 12px !important;
     padding-top: 6px !important;
     padding-bottom: 6px !important;
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
   }
 }
 
@@ -485,7 +485,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   }
 
   .nav-logo {
-    height: 70px !important; /* slightly smaller logo */
+    height: 80px !important; /* slightly smaller logo */
   }
 
   .nav-button, .nav-join-button {
@@ -493,7 +493,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
     padding-right: 12px !important;
     padding-top: 6px !important;
     padding-bottom: 6px !important;
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
   }
 }
 
@@ -507,7 +507,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   }
 
   .nav-logo {
-    height: 70px !important; /* slightly smaller logo */
+    height: 80px !important; /* slightly smaller logo */
   }
 
   .nav-button, .nav-join-button {
@@ -515,6 +515,6 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
     padding-right: 6px !important;
     padding-top: 6px !important;
     padding-bottom: 6px !important;
-    font-size: 0.7rem !important;
+    font-size: 0.85rem !important;
   }
 }
