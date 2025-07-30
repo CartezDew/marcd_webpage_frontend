@@ -1522,6 +1522,17 @@
     border-radius: 8px !important;
     border: 1px solid rgba(76, 175, 80, 0.3) !important;
   }
+  
+  .privacy-message {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 0.9rem !important;
+    margin-top: 2.5rem !important;
+    font-style: italic !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+    font-weight: 400 !important;
+    opacity: 0.8 !important;
+  }
 
 /* Marc It! Infinite Scroll Section - Two Container Structure */
 .marc-it-outer-container {
@@ -2485,7 +2496,7 @@
       font-size: 0.8rem !important;
      }
 
-       .waitlist-title,
+       /* .waitlist-title,
        .MuiTypography-root.waitlist-title,
        .MuiTypography-h3.waitlist-title {
          font-size: 1.6rem !important;
@@ -2523,7 +2534,7 @@
       
       .email-input-wrapper {
        position: relative !important;
-      }  
+      }   */
 
   }
 
@@ -2620,22 +2631,28 @@
      .waitlist-title,
      .MuiTypography-root.waitlist-title,
      .MuiTypography-h3.waitlist-title {
-      font-size: 1.7rem !important;
+      font-size: 1.9rem !important;
       margin-bottom: 1rem !important;
      }
 
      .waitlist-description,
      .MuiTypography-root.waitlist-description {
-      font-size: 0.8rem !important;
+      font-size: 1.1rem !important;
+      margin-bottom: 2rem !important;
+      margin-top: 1rem !important;
      }
 
      .launching-soon-image {
-      max-width: 300px !important;
+      max-width: 400px !important;
       margin-bottom: -1rem !important;
      }
 
      .perks-title {
-      font-size: .8rem !important;
+      font-size: 1rem !important;
+     }
+
+     .privacy-message {
+      font-size: 0.82rem !important;
      }
 
      .marc-it-title {
@@ -2755,24 +2772,30 @@
    }  
 
   @media (max-width: 524px) {
-    .email-input-field {
+    /* .email-input-field {
       width: 70% !important;
       font-size: .7rem !important;
       padding-right: 80px !important;
-     }
- 
-     
+     } */
+
+    .perks-title {
+      font-size: 0.8rem !important;
+     }  
+
+     .waitlist-description.animate, .MuiTypography-root.waitlist-description.animate {
+      font-size: 0.9rem !important;
+     }  
   }
 
   @media (max-width: 520px) {
 
   
 
-     .join-button {
+     /* .join-button {
       right: 62px !important;
     
      }
-     
+      */
       
    }
 
@@ -2793,28 +2816,8 @@
      .marcd-solutions-section .background-video {
        display: none !important;
      }
-
-     
    }
 
-   @media (max-width: 510px) {
-    .join-button {
-      right: 60px !important;
-     }
-   }
-
-   @media (max-width: 498px) {
-    .join-button {
-      right: 59px !important;
-      font-size: .8rem !important;
-     }
-   }
-
-   @media (max-width: 493px) {
-    .join-button {
-      right: 57px !important;
-     }
-   }
 
   @media (max-width: 490px) {
 
@@ -2858,6 +2861,18 @@
     .fact-detail {
       font-size: 0.8rem !important;
     }
+
+    .perks-title {
+      font-size: 0.75rem !important;
+    }
+
+    .privacy-message {
+      font-size: 0.7rem !important;
+    }
+
+    .waitlist-description, .MuiTypography-root.waitlist-description {
+      font-size: 0.82rem !important;
+    }
   }
 
   @media (max-width: 475px) {
@@ -2870,27 +2885,7 @@
       font-size: 0.75rem !important;
     }
 
-    .email-input-field {
-      width: 70% !important;
-      font-size: .7rem !important;
-      padding-right: 80px !important;
-     }
-
-     .join-button {
-      font-size: .8rem !important;
-      position: absolute !important;
-      right: 55px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
-      height: calc(100% - 10px) !important;
-      width: 70px !important;
-     }
-     
-     .email-input-wrapper {
-      position: relative !important;
-     } 
-
-          .home-main-image.large-image,
+     .home-main-image.large-image,
      .carousel-image-container .home-main-image.large-image {
        max-height: 350px !important;
        height: 350px !important;
@@ -2918,27 +2913,9 @@
         font-size: 0.75rem !important;
       }
   
-      .email-input-field {
-        font-size: .7rem !important;
-       }
-
-       .join-button {
-        right: 52px !important;
-       }
-  
      }}
 
      @media (max-width: 461px) {
-
-      .email-input-field {
-        width: 90% !important;
-        font-size: .82rem !important;
-       }
-
-      .join-button {
-        right: 21px !important;
-        font-size: .9rem !important;
-       }
 
       .marc-it-title {
         font-size: .9rem !important;
@@ -2957,14 +2934,22 @@
     }
 
     .join-button {
-      right: 19px !important;
+      right: 42px !important;
+      font-size: .8rem !important;
+      width: 75px !important;
     }
 
+    .privacy-message {
+      font-size: 0.75rem !important;
+    }
+
+    .perks-title {
+      font-size: 0.7rem !important;
+    }  
+  
   }
 
-
-
-    @media (max-width: 430px) {
+  @media (max-width: 430px) {
       
        .home-hero-section .home-hero-headline {
            font-size: 2.2rem !important;
@@ -2986,14 +2971,19 @@
 
    @media (max-width: 415px) {
 
+    .email-input-field {    
+      font-size: .9rem !important;
+     }
+
     .join-button {
-      right: 17px !important;
+      right: 40px !important;
       font-size: .85rem !important;
+      width: 70px !important;
     }
 
-    .email-input-field {
-      font-size: .78rem !important;
-     }
+    .perks-title {
+      font-size: 0.65rem !important;
+    }
 
    }
 

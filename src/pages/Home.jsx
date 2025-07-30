@@ -1102,6 +1102,10 @@ function home() {
                   🎉 Thank you! You've been added to our waitlist.
                 </Typography>
               )}
+              
+              <Typography className="privacy-message">
+                We respect your privacy. Your email will only be used to notify you about Marc'd updates.
+              </Typography>
             </Box>
           </Box>
         </Box>
