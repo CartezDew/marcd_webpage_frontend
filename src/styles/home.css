@@ -855,6 +855,66 @@
     }
   }
 
+  /* Fact Navigation Controls */
+  .fact-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .fact-counter {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 1rem;
+  }
+
+  .nav-arrow {
+    background: rgba(190, 3, 3, 0.8) !important;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .nav-arrow:hover {
+    background: rgba(190, 3, 3, 1) !important;
+    transform: scale(1.1) !important;
+  }
+
+  .nav-arrow-left {
+    transform: rotate(0deg) !important;
+  }
+
+  .nav-arrow-right {
+    transform: rotate(0deg) !important;
+  }
+
+  /* Solution Navigation Controls */
+  .solution-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .solution-counter {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 1rem;
+  }
+
+  /* Hide pagination controls on larger screens */
+  @media (min-width: 801px) {
+    .fact-navigation,
+    .solution-navigation {
+      display: none !important;
+    }
+  }
+
   .expand-arrow svg {
     width: 14px;
     height: 14px;
@@ -2513,8 +2573,49 @@
       }
 
     }
-
    }
+
+
+  /* Hide pagination controls on larger screens */
+  @media (min-width: 801px) {
+    .fact-navigation,
+    .solution-navigation {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .did-you-know-title {
+      font-size: 2.2rem !important;
+    }
+
+    .fact-stat {
+      font-size: 1.4rem !important;
+    }
+
+    .fact-detail {
+      font-size: 1rem !important;
+
+    }
+
+    .marcd-solutions-content .solutions-title {
+      font-size: 2rem !important;
+    }
+
+    .marcd-solutions-content .solution-text {
+      font-size: 1rem !important;
+    }
+
+    .marcd-solutions-content .solution-detail {
+      font-size: 1rem !important;
+    }
+
+    .marcd-solutions-content .solution-item {
+      min-height: 230px !important;
+    }
+  }
+
+
   /* Responsive adjustments */
   @media (max-width: 768px) {
 
@@ -2644,10 +2745,6 @@
       font-size: 1.1rem !important;
     }
 
-    .fact-stat {
-      font-size: 0.8rem !important;
-    }
-
     .home-main-image.large-image {
       max-height: 380px !important;
       height: auto !important;
@@ -2665,9 +2762,6 @@
        grid-template-columns: repeat(2, 1fr) !important;
      }
      
-     .marcd-solutions-content .solution-item {
-       min-height: 120px !important;
-     }
 
      .marcd-solutions-content .solutions-title {
       font-size: 1.5rem !important;
@@ -2676,20 +2770,20 @@
      }
 
      .marcd-solutions-content .solution-text {
-      font-size: 0.9rem !important;
+      font-size: 1rem !important;
      }
 
      .marcd-solutions-content .solution-detail {
-      font-size: 0.9rem !important;
+      font-size: 1rem !important;
      }
 
      .did-you-know-title {
-      font-size: 1.8rem !important;
+      font-size: 1.7rem !important;
       margin-bottom: 1rem !important;
      }
 
      .fact-stat {
-      font-size: 1rem !important;
+      font-size: 1.2rem !important;
      }
      .facts-grid {
        grid-template-columns: repeat(2, 1fr) !important;
@@ -2704,12 +2798,70 @@
        min-height: 160px !important;
      }
 
-     .fact-stat {
+
+     .fact-text {
       font-size: 1rem !important;
      }
 
-     .fact-text {
-      font-size: 0.9rem !important;
+     .fact-detail {
+      font-size: 1rem !important;
+     }
+
+     /* Show pagination controls at 800px and below */
+     .fact-navigation {
+       display: flex !important;
+       justify-content: center !important;
+       align-items: center !important;
+       gap: 1rem !important;
+       margin-bottom: 2rem !important;
+     }
+
+     .fact-counter {
+       font-size: 1rem !important;
+       font-weight: 500 !important;
+       color: #ffffff !important;
+       margin: 0 1rem !important;
+     }
+
+     .nav-arrow {
+       background: rgba(190, 3, 3, 0.8) !important;
+       color: white !important;
+       border: 2px solid rgba(255, 255, 255, 0.2) !important;
+       transition: all 0.3s ease !important;
+     }
+
+     .nav-arrow:hover {
+       background: rgba(190, 3, 3, 1) !important;
+       transform: scale(1.1) !important;
+     }
+
+     .nav-arrow-left {
+       transform: rotate(0deg) !important;
+     }
+
+     .nav-arrow-right {
+       transform: rotate(0deg) !important;
+     }
+
+     /* Show solution pagination controls at 800px and below */
+     .solution-navigation {
+       display: flex !important;
+       justify-content: center !important;
+       align-items: center !important;
+       gap: 1rem !important;
+       margin-bottom: 2rem !important;
+     }
+
+     .solution-counter {
+       font-size: 1rem !important;
+       font-weight: 500 !important;
+       color: #ffffff !important;
+       margin: 0 1rem !important;
+     }
+
+     /* 3-column layout for solutions at 800px and below */
+     .solutions-grid {
+       grid-template-columns: repeat(3, 1fr) !important;
      }
 
      .waitlist-title,

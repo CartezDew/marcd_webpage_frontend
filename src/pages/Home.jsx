@@ -77,6 +77,8 @@ function home() {
   const [firstArrowClicked, setFirstArrowClicked] = useState(false);
   const [firstSolutionArrowClicked, setFirstSolutionArrowClicked] = useState(false);
   const [isManualScrolling, setIsManualScrolling] = useState(false);
+  const [currentFactPage, setCurrentFactPage] = useState(0);
+  const [currentSolutionPage, setCurrentSolutionPage] = useState(0);
   
   // Trucker images animation
   const truckerImagesRef = useRef(null);
@@ -518,6 +520,24 @@ function home() {
     if (cardIndex === 8) {
       setFirstSolutionArrowClicked(true);
     }
+  };
+
+  // Pagination functions for Did You Know section
+  const nextFactPage = () => {
+    setCurrentFactPage((prev) => (prev + 1) % 2); // 2 pages total (4 facts per page)
+  };
+
+  const prevFactPage = () => {
+    setCurrentFactPage((prev) => (prev - 1 + 2) % 2); // 2 pages total
+  };
+
+  // Pagination functions for Solutions section
+  const nextSolutionPage = () => {
+    setCurrentSolutionPage((prev) => (prev + 1) % 2); // 2 pages total (3 solutions per page)
+  };
+
+  const prevSolutionPage = () => {
+    setCurrentSolutionPage((prev) => (prev - 1 + 2) % 2); // 2 pages total
   };
 
   // Handle click outside to collapse cards
@@ -1308,8 +1328,9 @@ function home() {
             Did You Know?
           </Typography>
           
-          <Box className="facts-grid">
-            {[
+          {/* Facts data */}
+          {(() => {
+            const allFacts = [
               {
                 stat: "100%",
                 text: "truckers rely on each other.",
@@ -1352,7 +1373,51 @@ function home() {
                 text: "speeding is a top safety violation.",
                 detail: "Drivers often exceed limits without realizing, putting safety scores—and lives—at risk."
               }
-            ].map((fact, index) => (
+            ];
+
+            // Show all facts on larger screens, paginated on smaller screens
+            const isLargeScreen = window.innerWidth > 800;
+            const factsPerPage = 4;
+            const currentFacts = isLargeScreen 
+              ? allFacts 
+              : allFacts.slice(
+                  currentFactPage * factsPerPage, 
+                  (currentFactPage + 1) * factsPerPage
+                );
+
+            return (
+              <>
+                {/* Navigation Controls - Only show on smaller screens */}
+                {!isLargeScreen && (
+                  <Box className="fact-navigation">
+                  <Tooltip title="Previous facts" placement="left">
+                    <IconButton
+                      onClick={prevFactPage}
+                      className="nav-arrow nav-arrow-left"
+                      aria-label="Previous facts"
+                    >
+                      ‹
+                    </IconButton>
+                  </Tooltip>
+                  
+                  <Typography className="fact-counter">
+                    {currentFactPage + 1} of 2
+                  </Typography>
+                  
+                  <Tooltip title="Next facts" placement="right">
+                    <IconButton
+                      onClick={nextFactPage}
+                      className="nav-arrow nav-arrow-right"
+                      aria-label="Next facts"
+                    >
+                      ›
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+                )}
+
+                <Box className="facts-grid">
+                  {currentFacts.map((fact, index) => (
               <Box 
                 key={index} 
                 className={`fact-item ${expandedCard === index ? 'expanded' : ''} ${index === 0 && firstArrowClicked ? 'arrow-clicked' : ''}`}
@@ -1414,7 +1479,10 @@ function home() {
                 </AnimatePresence>
               </Box>
                           ))}
-          </Box>
+                </Box>
+              </>
+            );
+          })()}
         </Box>
       </Box>
 
@@ -1437,8 +1505,9 @@ function home() {
             ✅ How Marc'd Solves These Problems
           </Typography>
           
-          <Box className="solutions-grid">
-            {[
+          {/* Solutions data */}
+          {(() => {
+            const allSolutions = [
               {
                 icon: <ParkingIcon className="solution-stat-icon" />,
                 title: "Real-time parking",
@@ -1469,7 +1538,51 @@ function home() {
                 text: "Drivers help each other with parking, hazards, or spotting, and earn rewards for it.",
                 detail: "Join a supportive community where drivers look out for each other. Share parking updates, road conditions, and spotting assistance while earning Marc'er points that convert to real cash rewards."
               }
-            ].map((solution, index) => (
+            ];
+
+            // Show all solutions on larger screens, paginated on smaller screens
+            const isLargeScreen = window.innerWidth > 800;
+            const solutionsPerPage = 3;
+            const currentSolutions = isLargeScreen 
+              ? allSolutions 
+              : allSolutions.slice(
+                  currentSolutionPage * solutionsPerPage, 
+                  (currentSolutionPage + 1) * solutionsPerPage
+                );
+
+            return (
+              <>
+                {/* Navigation Controls - Only show on smaller screens */}
+                {!isLargeScreen && (
+                  <Box className="solution-navigation">
+                    <Tooltip title="Previous solutions" placement="left">
+                      <IconButton
+                        onClick={prevSolutionPage}
+                        className="nav-arrow nav-arrow-left"
+                        aria-label="Previous solutions"
+                      >
+                        ‹
+                      </IconButton>
+                    </Tooltip>
+                    
+                    <Typography className="solution-counter">
+                      {currentSolutionPage + 1} of 2
+                    </Typography>
+                    
+                    <Tooltip title="Next solutions" placement="right">
+                      <IconButton
+                        onClick={nextSolutionPage}
+                        className="nav-arrow nav-arrow-right"
+                        aria-label="Next solutions"
+                      >
+                        ›
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                )}
+
+                <Box className="solutions-grid">
+                  {currentSolutions.map((solution, index) => (
               <Box 
                 key={index} 
                 className={`solution-item ${expandedCard === index + 8 ? 'expanded' : ''} ${index === 0 && firstSolutionArrowClicked ? 'arrow-clicked' : ''}`}
@@ -1523,37 +1636,39 @@ function home() {
                 </AnimatePresence>
               </Box>
                           ))}
-          </Box>
+                </Box>
 
-          <Typography className="tagline">
-            Because "The journey is easier when it's Marc'd."
-          </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                mt: 2,
-                color: '#be0303',
-                borderColor: '#be0303',
-                fontWeight: 600,
-                borderRadius: '20px',
-                textTransform: 'none',
-                background: 'rgba(255, 255, 255, 0.48)',
-                '&:hover': {
-                  background: 'rgba(190,3,3,0.08)',
-                  borderColor: '#be0303',
-                  color: '#be0303',
-                },
-              }}
-              onClick={() => navigate('/features')}
-            >
-              See Features
-            </Button>
-          </Box>
+                <Typography className="tagline">
+                  Because "The journey is easier when it's Marc'd."
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      mt: 2,
+                      color: '#be0303',
+                      borderColor: '#be0303',
+                      fontWeight: 600,
+                      borderRadius: '20px',
+                      textTransform: 'none',
+                      background: 'rgba(255, 255, 255, 0.48)',
+                      '&:hover': {
+                        background: 'rgba(190,3,3,0.08)',
+                        borderColor: '#be0303',
+                        color: '#be0303',
+                      },
+                    }}
+                    onClick={() => navigate('/features')}
+                  >
+                    See Features
+                  </Button>
+                </Box>
+              </>
+            );
+          })()}
         </Box>
       </Box>
-
     </Box>
   );
 }
