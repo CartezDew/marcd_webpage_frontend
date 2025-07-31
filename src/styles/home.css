@@ -189,11 +189,6 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding-top: 4rem;
-    border-color: #03be44d1;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 12px;
-    width: 100%;
   }
 
   
@@ -287,7 +282,7 @@
     align-items: center; /* align-items doesn't accept 'left' */
     justify-content: flex-start; /* use flex-start instead of 'left' */
     padding-top: 2rem;
-    padding-bottom: 3rem;
+    padding-bottom: 1.5rem;
     padding-left: 0;  /* ensure it's not pushed in */
     margin-left: 0;   /* remove any unintended left margin */
   }
@@ -1953,8 +1948,8 @@
 
   }
 
-  @media (max-width: 1230px) {
 
+  @media (max-width: 1230px) {
     .marc-it-title {
       font-size: 1.8rem !important;
     }
@@ -2105,14 +2100,11 @@
     }
     
     /* Hero bullets responsive styling */
-    /* .home-hero-bullets {
+    .home-hero-bullets {
       gap: 1rem;
       margin: 1rem 0;
     }
-    
-    .hero-bullet {
-      padding: 0.4rem 0.8rem;
-    }
+  
     
     .hero-bullet-icon {
       font-size: 1.4rem !important;
@@ -2165,10 +2157,6 @@
     height: auto !important;
     min-height: 600px !important;
     width: 100% !important;
-    /* border-color: #03b2bed1; */
-    /* border-width: 2px;
-    border-style: solid;
-    border-radius: 12px; */
   }
 
   /* Ensure consistent image sizing */
@@ -2251,6 +2239,8 @@
   }
 
 } 
+
+
 
   @media (max-width: 1025px) {
       /* Large images (Statistics, Alerts, Parking, Places, Navigation) */
@@ -2432,24 +2422,7 @@
       overflow-x: hidden !important;
     }
     
-    /* Hero bullets responsive styling for smaller screens */
-    .home-hero-bullets {
-      gap: 0.8rem;
-      margin: 0.8rem 0;
-      flex-wrap: wrap;
-    }
-    
-    .hero-bullet {
-      padding: 0.3rem 0.6rem;
-    }
-    
-    .hero-bullet-icon {
-      font-size: 0.9rem !important;
-    }
-    
-    .hero-bullet span {
-      font-size: 0.75rem;
-    }
+   
   
     .home-hero-text {
       flex: 1 1 40% !important;
@@ -2465,6 +2438,23 @@
       font-size: 1.2rem !important;
       margin-right: 0rem !important;
       padding-right: 0rem !important;
+    }
+
+    /* Hero bullets responsive styling */
+    .home-hero-bullets {
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+  
+    
+    .hero-bullet-icon {
+      font-size: 1.4rem !important;
+    }
+    
+    .hero-bullet span {
+      font-size: 1.2rem;
+      font-family: 'poppins', sans-serif !important;
+      opacity: .9;
     }
   
     .home-hero-image-carousel {
@@ -2523,7 +2513,7 @@
       .carousel-nav-right {
        width: 30px !important;
        height: 30px !important;
-       top: 55% !important;
+       top: 40% !important;
        background-color: #8d0404 !important;
        color: white !important;
       }
