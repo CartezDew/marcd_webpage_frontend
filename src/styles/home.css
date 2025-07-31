@@ -442,7 +442,6 @@
     bottom: 1rem;
     cursor: pointer;
     z-index: 1000;
-    animation: bounce 2s infinite;
     background: rgba(0, 0, 0, 0.7);
     padding: 8px;
     border-radius: 50%;
@@ -451,6 +450,13 @@
   }
 
   /* Fine-tune positioning for different desktop widths */
+  
+  /* Main scroll arrow animation - only for larger screens */
+  @media (min-width: 601px) {
+    .scroll-down-arrow {
+      animation: bounce 2s infinite;
+    }
+  }
   
   .arrow-icon {
     font-size: 2rem;
@@ -542,6 +548,17 @@
     }
     60% {
       transform: translateY(5px);
+    }
+  }
+
+  @keyframes subtlePulse {
+    0%, 100% {
+      transform: scale(1) translateY(0);
+      box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3);
+    }
+    50% {
+      transform: scale(2.5) translateY(-25px);
+      box-shadow: 0 40px 100px rgba(190, 3, 3, 1);
     }
   }
   
@@ -2855,9 +2872,8 @@
          .scroll-down-arrow,
      .scroll-down-arrow[style] {
        padding: 12px !important;
-       left: calc(100vw - 60px) !important;
+       left: calc(100vw - 70px) !important;
        right: auto !important;
-       transform: none !important;
        display: flex !important;
        align-items: center !important;
        justify-content: center !important;
@@ -2865,6 +2881,11 @@
        height: 48px !important;
        border-radius: 50% !important;
        position: fixed !important;
+       background: linear-gradient(135deg, #d90202d1, #be0303) !important;
+       box-shadow: 0 4px 20px rgba(190, 3, 3, 0.3) !important;
+       border: 2px solid rgba(255, 255, 255, 0.1) !important;
+       animation: subtlePulse 1.5s ease-in-out infinite !important;
+       z-index: 1000 !important;
      }
 
      .scroll-image {
