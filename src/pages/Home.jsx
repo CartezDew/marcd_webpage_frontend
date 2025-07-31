@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/material';
 import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
-import { motion, AnimatePresence, useTime, useTransform, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useTime, useTransform, useSpring, useInView } from 'framer-motion';
 import { validateWaitlistEmail, validateEmailRealTime, validateEmailOnSubmit } from '../utils/emailValidation';
 import { useWaitlist } from '../context/WaitlistContext';
 import { addToWaitlist } from '../services/users';
@@ -23,7 +23,7 @@ import launchingSoonImg from '../assets/Launching_Soon.png';
 import socialProofImg from '../assets/Social_Proof.png';
 import truckerWithFamilyImg from '../assets/Trucker_with_family.jpg';
 import truckerOnPhoneImg from '../assets/Trucker_on_phone.jpg';
-import happyTrucker1Img from '../assets/Happy_Truckers_1.png';
+import happyTrucker1Img from '../assets/Happy_Truckers_1.jpg';
 
 // Video imports
 const truckParkingVideo = '/videos/Truck_Parking_Home_Page.mp4';
@@ -77,6 +77,13 @@ function home() {
   const [firstArrowClicked, setFirstArrowClicked] = useState(false);
   const [firstSolutionArrowClicked, setFirstSolutionArrowClicked] = useState(false);
   const [isManualScrolling, setIsManualScrolling] = useState(false);
+  
+  // Trucker images animation
+  const truckerImagesRef = useRef(null);
+  const isTruckerImagesInView = useInView(truckerImagesRef, { 
+    amount: 0.05, // 5% of the element must be visible
+    once: true 
+  });
   
   // Action words for cycling animation
   const actionWords = ['Reward', 'Recognize', 'Uplift', 'Unite', 'Support', 'Thank', 'Value', 'Connect', 'Celebrate', 'Empower', 'Engage', 'Respect', 'Serve'];
@@ -850,23 +857,104 @@ function home() {
             </Box>
             truckers.
           </Typography>
-          <div className="trucker-images-container">
-            <img 
+          <motion.div 
+            ref={truckerImagesRef}
+            className="trucker-images-container"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isTruckerImagesInView ? 1 : 0 }}
+            transition={{ duration: 0.5, delay: 1.2 }} // Delay after headline and social proof
+          >
+            <div className="trucker-images-overlay"></div>
+            <motion.img 
               src={truckerOnPhoneImg} 
               alt="Trucker on phone" 
               className="trucker-image trucker-phone"
+              style={{ transform: 'none' }}
+              initial={{ 
+                opacity: 0, 
+                y: -100, 
+                rotate: -180,
+                scale: 0.8 
+              }}
+              animate={{ 
+                opacity: isTruckerImagesInView ? 1 : 0, 
+                y: isTruckerImagesInView ? 0 : -100, 
+                rotate: isTruckerImagesInView ? 0 : -180,
+                scale: isTruckerImagesInView ? 1 : 0.8 
+              }}
+              transition={{ 
+                duration: 1.2, 
+                ease: "easeOut",
+                delay: 1.4 // First card
+              }}
             />
-            <img 
+            <motion.img 
               src={happyTrucker1Img} 
               alt="Happy trucker" 
               className="trucker-image trucker-happy"
+              style={{ transform: 'none' }}
+              initial={{ 
+                opacity: 0, 
+                y: -100, 
+                rotate: 180,
+                scale: 0.8 
+              }}
+              animate={{ 
+                opacity: isTruckerImagesInView ? 1 : 0, 
+                y: isTruckerImagesInView ? 0 : -100, 
+                rotate: isTruckerImagesInView ? 0 : 180,
+                scale: isTruckerImagesInView ? 1 : 0.8 
+              }}
+              transition={{ 
+                duration: 1.2, 
+                ease: "easeOut",
+                delay: 1.6 // Second card
+              }}
             />
-            <img 
-              src={truckerWithFamilyImg} 
-              alt="Trucker with family" 
-              className="trucker-image trucker-family"
-            />
-          </div>
+            <motion.div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '-20px',
+                width: '130px',
+                height: '130px',
+                zIndex: 1,
+                transform: 'translateY(-50%)'
+              }}
+              initial={{ 
+                opacity: 0, 
+                y: -100, 
+                rotate: 270,
+                scale: 0.8 
+              }}
+              animate={{ 
+                opacity: isTruckerImagesInView ? 1 : 0, 
+                y: isTruckerImagesInView ? 0 : -100, 
+                rotate: isTruckerImagesInView ? 0 : 270,
+                scale: isTruckerImagesInView ? 1 : 0.8 
+              }}
+              transition={{ 
+                duration: 2.0, 
+                ease: "easeOut",
+                delay: 1.8 // Third card
+              }}
+            >
+              <img 
+                src={truckerWithFamilyImg} 
+                alt="Trucker with family" 
+                className="trucker-image trucker-family"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                  transition: 'all 0.3s ease'
+                }}
+              />
+            </motion.div>
+          </motion.div>
           <Typography className={`home-hero-description ${isAboutVisible ? 'animate' : ''}`}>
             Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
           </Typography>
