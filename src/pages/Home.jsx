@@ -406,6 +406,28 @@ function home() {
     }
   }, []);
 
+  // Force scroll to top on page refresh/initial load
+  useEffect(() => {
+    // Only scroll to top if there's no hash in the URL
+    if (!window.location.hash) {
+      // Force immediate scroll to top to override browser scroll restoration
+      window.history.scrollRestoration = 'manual'; // Disable automatic scroll restoration
+      
+      const forceScrollToTop = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      };
+      
+      // Execute immediately
+      forceScrollToTop();
+      
+      // Execute again after DOM is ready
+      setTimeout(forceScrollToTop, 10);
+      setTimeout(forceScrollToTop, 50);
+    }
+  }, []); // Only run once on mount
+
   // Smooth scroll to top (Hero section)
   const scrollToTop = () => {
     aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
