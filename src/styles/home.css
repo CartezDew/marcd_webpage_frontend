@@ -3005,6 +3005,7 @@
 
     .home-hero-description {
       font-size: 1.4rem !important;
+      font-family: 'Poppins', sans-serif !important;
     }
 
     .social-proof-text {
@@ -3177,6 +3178,26 @@
 
 
   @media (max-width: 543px) {
+
+    .home-hero-section .home-hero-headline {
+      font-size: 2.7rem !important;
+      margin-bottom: 3rem !important;
+    }
+
+    .home-hero-section .home-hero-description {
+      font-size: 1.25rem !important;
+    }
+
+    .home-hero-section .hero-button {
+      font-size: 1rem !important;
+    }
+
+    .social-proof-text {
+      font-size: 1.1rem !important;
+      color: #cccccc !important;
+      font-family: 'Poppins', sans-serif !important;
+      opacity: .6 !important;
+    }
     
     .marc-it-inner-container {
       padding: 1px 1px 1px 1px !important;
@@ -3190,15 +3211,21 @@
       padding-top: 40px !important;
       
     }
+
+    .home-hero-section .home-main-image.small-image {
+      max-width: 370px !important;
+      height: 370px !important;
+      margin-bottom: 2rem !important;
+    }
+
+    .home-main-image.large-image {
+      max-height: 450px !important;
+      height: 450px !important;
+    }
   
   }
 
   @media (max-width: 524px) {
-    /* .email-input-field {
-      width: 70% !important;
-      font-size: .7rem !important;
-      padding-right: 80px !important;
-     } */
 
     .perks-title {
       font-size: 0.8rem !important;
@@ -3208,18 +3235,6 @@
       font-size: 0.9rem !important;
      }  
   }
-
-  @media (max-width: 520px) {
-
-  
-
-     /* .join-button {
-      right: 62px !important;
-    
-     }
-      */
-      
-   }
 
    @media (max-width: 515px) {
 
@@ -3231,21 +3246,47 @@
       font-size: 0.9rem !important;
     }
 
-     .marcd-solutions-section {
-       background: #000000 !important;
-     }
-
-     .marcd-solutions-section .background-video {
-       display: none !important;
-     }
-
      .marc-it-title {
       font-size: 1.2rem !important;
       padding-left: 10px !important;
       padding-right: 10px !important;
       
     }
+
+    .fact-counter {
+      font-size: 1rem !important;
+    }
+
+    .nav-arrow {
+      width: 35px !important;
+      height: 35px !important;
+    }
+
+    .nav-arrow {
+      font-size: 1.2rem !important;
+    }
+
+    .marcd-solutions-content .solutions-title {
+      font-size: 1.3rem !important;
+      margin-bottom: 3rem !important;
+    }
+
+    .marcd-solutions-content .solution-stat-icon {
+      font-size: 2rem !important;
+    }
+
+    .marcd-solutions-content .solution-stat-image {
+      width: 30px !important;
+      height: 30px !important;
    }
+
+   .solution-counter {
+    font-size: 1rem !important;
+   }
+   .marcd-solutions-content .tagline {
+    font-size: .9rem !important;
+   }
+  }
 
 
   @media (max-width: 490px) {
