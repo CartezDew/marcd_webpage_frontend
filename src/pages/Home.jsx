@@ -1020,7 +1020,7 @@ function home() {
                 </motion.span>
               </AnimatePresence>
             </Box>
-            truckers.
+            truckers!
           </Typography>
           <Typography className={`home-hero-description ${isAboutVisible ? 'animate' : ''}`}>
             Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
