@@ -2764,7 +2764,7 @@
      
 
      .marcd-solutions-content .solutions-title {
-      font-size: 1.5rem !important;
+      font-size: 1.6rem !important;
       padding-bottom: 0rem !important;
       margin-bottom: 2rem !important;
      }
@@ -3055,17 +3055,17 @@
      }
   
     /* Small images (Main Hero and Landing Page) */
-  .home-main-image.small-image {
-    max-width: 500px !important;
+  .home-hero-section .home-main-image.small-image {
+    max-width: 400px !important;
     margin: 0 auto !important;
-    height: 400px !important;
+    height: 410px !important;
     width: 100% !important;
     object-fit: contain !important;
     object-position: top center !important;
   }
   
   .home-main-image.large-image {
-    max-height: 460px !important;
+    max-height: 470px !important;
     height: auto !important;
     object-fit: contain !important; 
     width: 100% !important;
@@ -3092,12 +3092,36 @@
      background-color: black !important;
    }
 
+   .did-you-know-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 3rem !important;
+   }
+
    .fact-text {
     text-align: left !important;
   }
 
   .fact-detail {
     text-align: left !important;
+    font-size: .96rem !important;
+  }
+
+  .marcd-solutions-content .solutions-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+
+  .marcd-solutions-content .solution-text {
+    font-size: .9rem !important;
+    text-align: left !important;
+  }
+
+  .marcd-solutions-content .solution-item {
+    height: 170px !important;
+  }
+
+  .marcd-solutions-content .solution-detail {
+    font-size: .9rem !important;
   }
 }
 
@@ -3144,6 +3168,10 @@
 
     .trucker-phone {
       top: 80px !important;
+    }
+
+    .marcd-solutions-content .tagline {
+      font-size: 1rem !important;
     }
   } 
 

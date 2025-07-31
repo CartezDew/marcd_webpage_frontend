@@ -86,6 +86,19 @@ function home() {
     amount: 0.05, // 5% of the element must be visible
     once: true 
   });
+
+  // Title animations
+  const didYouKnowTitleRef = useRef(null);
+  const isDidYouKnowTitleInView = useInView(didYouKnowTitleRef, {
+    amount: 0.05, // 5% of the element must be visible
+    once: true
+  });
+
+  const solutionsTitleRef = useRef(null);
+  const isSolutionsTitleInView = useInView(solutionsTitleRef, {
+    amount: 0.05, // 5% of the element must be visible
+    once: true
+  });
   
   // Action words for cycling animation
   const actionWords = ['Reward', 'Recognize', 'Uplift', 'Unite', 'Support', 'Thank', 'Value', 'Connect', 'Celebrate', 'Empower', 'Engage', 'Respect', 'Serve'];
@@ -1323,10 +1336,33 @@ function home() {
           Your browser does not support the video tag.
         </video>
         <Box className="did-you-know-content">
-          <Typography variant="h3" className="did-you-know-title">
-            <img src={truckIcon} alt="Truck" className="truck-icon" />
-            Did You Know?
-          </Typography>
+          <motion.div
+            ref={didYouKnowTitleRef}
+            initial={{ 
+              opacity: 0, 
+              x: -100, 
+              scale: 0.8,
+              rotate: -15
+            }}
+            animate={{ 
+              opacity: isDidYouKnowTitleInView ? 1 : 0, 
+              x: isDidYouKnowTitleInView ? 0 : -100, 
+              scale: isDidYouKnowTitleInView ? 1 : 0.8,
+              rotate: isDidYouKnowTitleInView ? 0 : -15
+            }}
+            transition={{ 
+              duration: 1.2, 
+              ease: "easeOut",
+              type: "spring",
+              stiffness: 60,
+              damping: 15
+            }}
+          >
+            <Typography variant="h3" className="did-you-know-title">
+              <img src={truckIcon} alt="Truck" className="truck-icon" />
+              Did You Know?
+            </Typography>
+          </motion.div>
           
           {/* Facts data */}
           {(() => {
@@ -1501,9 +1537,32 @@ function home() {
           Your browser does not support the video tag.
         </video>
         <Box className="marcd-solutions-content">
-          <Typography variant="h3" className="solutions-title">
-            ✅ How Marc'd Solves These Problems
-          </Typography>
+          <motion.div
+            ref={solutionsTitleRef}
+            initial={{ 
+              opacity: 0, 
+              x: 100, 
+              scale: 0.8,
+              rotate: 15
+            }}
+            animate={{ 
+              opacity: isSolutionsTitleInView ? 1 : 0, 
+              x: isSolutionsTitleInView ? 0 : 100, 
+              scale: isSolutionsTitleInView ? 1 : 0.8,
+              rotate: isSolutionsTitleInView ? 0 : 15
+            }}
+            transition={{ 
+              duration: 1.2, 
+              ease: "easeOut",
+              type: "spring",
+              stiffness: 60,
+              damping: 15
+            }}
+          >
+            <Typography variant="h3" className="solutions-title">
+              ✅ How Marc'd Solves These Problems
+            </Typography>
+          </motion.div>
           
           {/* Solutions data */}
           {(() => {
