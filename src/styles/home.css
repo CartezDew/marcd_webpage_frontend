@@ -3093,6 +3093,11 @@
      background-color: black !important;
    }
 
+   .did-you-know-content {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+   }
+
    .did-you-know-title {
     font-size: 1.5rem !important;
     margin-bottom: 3rem !important;
@@ -3105,6 +3110,11 @@
   .fact-detail {
     text-align: left !important;
     font-size: .96rem !important;
+  }
+
+  .marcd-solutions-content {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 
   .marcd-solutions-content .solutions-title {
@@ -3141,10 +3151,6 @@
       font-size: 1.1rem !important;
     }
 
-    .trucker-phone {
-      top: 98px !important;
-    }
-
     .trucker-image {
       width: 90px !important;
       height: 90px !important;
@@ -3163,8 +3169,6 @@
       left: 25px !important;
       width: 120px !important;
       height: 120px !important;
-      transform: translateY(-50%) !important;
-      z-index: 1 !important;
     }
 
     .trucker-phone {
@@ -3238,13 +3242,20 @@
 
    @media (max-width: 515px) {
 
-    .fact-text {
-      font-size: 0.8rem !important;
+    .home-hero-section .home-hero-headline {
+      font-size: 2.5rem !important;
     }
 
-    .fact-detail {
-      font-size: 0.9rem !important;
+    .home-hero-section .home-hero-description {
+      font-size: 1.2rem !important;
     }
+
+    .social-proof-text {
+      font-size: 1rem !important;
+    }
+
+
+  
 
      .marc-it-title {
       font-size: 1.2rem !important;
@@ -3255,6 +3266,14 @@
 
     .fact-counter {
       font-size: 1rem !important;
+    }
+
+    .fact-text {
+      font-size: 0.85rem !important;
+    }
+
+    .fact-detail {
+      font-size: 0.9rem !important;
     }
 
     .nav-arrow {
@@ -3288,11 +3307,16 @@
    }
   }
 
+  @media (max-width: 500px) {
+    .home-hero-section .home-hero-headline {
+      font-size: 2.4rem !important;
+    }
+  }
 
   @media (max-width: 490px) {
 
     .marcd-solutions-content .solution-text{
-      font-size: 0.73rem !important;
+      font-size: 0.9rem !important;
       text-align: left !important;
     }
 
@@ -3300,10 +3324,7 @@
       font-size: 2rem !important;
     }
 
-    .marcd-solutions-content .solution-stat-image {
-      width: 35px !important;
-      height: 35px !important;
-    }
+  
 
     .fact-detail {
       font-size: 0.8rem !important;
@@ -3312,10 +3333,67 @@
 
     .fact-text {
       text-align: left !important;
+      font-size: 0.9rem !important;
     }
 
-    .fact-detail {
-      text-align: left !important;
+    .trucker-image {
+      width: 85px !important;
+      height: 85px !important;
+    }
+
+    /* Image 2: Happy trucker - top right, overlapping image 1 */
+    .trucker-happy {
+      top: 0 !important;
+      right: 0 !important;
+      z-index: 3 !important;
+    }
+
+    /* Image 3: Trucker with family - left side, overlapping both */
+    .trucker-family {
+      top: -17% !important;
+      left: 30px !important;
+      width: 125px !important;
+      height: 125px !important;
+    }
+
+    .trucker-phone {
+      top: 75px !important;
+    }
+
+    .home-hero-section .hero-button {
+      font-size: .9rem !important;
+    }
+
+    .home-hero-section .home-hero-headline {
+      font-size: 2.4rem !important;
+  
+    }
+  }
+
+  @media (max-width: 480px) {
+
+    .home-hero-section .home-hero-headline {
+      font-size: 2.3rem !important;
+    }
+
+    /* Image 3: Trucker with family - left side, overlapping both */
+    .trucker-family {
+      top: -17% !important;
+      left: 39px !important;
+      width: 115px !important;
+      height: 115px !important;
+    }
+
+    .trucker-phone {
+      top: 75px !important;
+    }
+
+    .trucker-image {
+      margin-right: 0px !important;
+    }
+
+    .social-proof-text {
+      font-size: 0.9rem !important;
     }
   }
 
@@ -3325,7 +3403,7 @@
   @media (max-width: 485px) {
 
     .fact-text {
-      font-size: 0.76rem !important;
+      font-size: 0.9rem !important;
     }
 
     .fact-detail {
@@ -3355,11 +3433,11 @@
   @media (max-width: 475px) {
 
     .fact-text {
-      font-size: 0.7rem !important;
+      font-size: 0.9rem !important;
     }
 
     .fact-detail {
-      font-size: 0.75rem !important;
+      font-size: 0.8rem !important;
     }
 
      .home-main-image.large-image,
@@ -3370,6 +3448,14 @@
        width: 100% !important;
        max-width: 100% !important;
        min-height: unset !important;
+     }
+
+     .home-hero-section .home-main-image.small-image {
+      max-height: 330px !important;
+      height: 330px !important;
+      object-fit: contain !important; 
+      width: 100% !important;
+      max-width: 100% !important;
      }
 
      .carousel-image-container {
@@ -3392,7 +3478,56 @@
   
      }}
 
+    @media (max-width: 465px) {
+
+      .home-hero-section .home-hero-headline {
+        font-size: 2.2rem !important;
+      }
+
+      .trucker-image {
+        width: 80px !important;
+        height: 80px !important;
+      }
+  
+      /* Image 2: Happy trucker - top right, overlapping image 1 */
+      .trucker-happy {
+        top: 0 !important;
+        right: 0 !important;
+        z-index: 3 !important;
+      }
+  
+      /* Image 3: Trucker with family - left side, overlapping both */
+      .trucker-family {
+        top: -25% !important;
+        left: 50px !important;
+        width: 105px !important;
+        height: 105px !important;
+      }
+  
+      .trucker-phone {
+        top: 70px !important;
+        right: 10px !important;
+      
+      }
+
+      .home-hero-section .home-hero-description {
+        font-size: 1rem !important;
+      }
+      .fact-text {
+        font-size: 0.7rem !important;
+      }
+  
+      .fact-detail {
+        font-size: 0.75rem !important;
+      }
+  
+     }
+
     @media (max-width: 450px) {
+
+      .home-hero-section .home-hero-headline {
+        font-size: 2.1rem !important;
+      }
 
     .marc-it-title {
       font-size: 1rem !important;

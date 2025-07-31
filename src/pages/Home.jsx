@@ -801,28 +801,25 @@ function home() {
     };
   }, [isScrollingToTop, isManualScrolling]);
 
-  // Animation variants for the action words
+  // Animation variants for the action words - no y movement to prevent layout shifts
   const wordVariants = {
     initial: { 
       opacity: 0, 
-      y: 20,
-      scale: 0.8
+      scale: 0.9
     },
     animate: { 
       opacity: 1, 
-      y: 0,
       scale: 1,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: "easeOut"
       }
     },
     exit: { 
       opacity: 0, 
-      y: -20,
-      scale: 0.8,
+      scale: 0.9,
       transition: {
-        duration: 0.4,
+        duration: 0.3,
         ease: "easeIn"
       }
     }
@@ -859,6 +856,114 @@ function home() {
     <Box className="home-page-container">
       {/* Home Hero Section - Full Viewport */}
       <Box className="home-hero-section" ref={aboutRef}>
+        
+        {/* Trucker Images - Positioned absolutely relative to hero section */}
+        <motion.div 
+          ref={truckerImagesRef}
+          className="trucker-images-container"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isTruckerImagesInView ? 1 : 0 }}
+          transition={{ duration: 0.5, delay: 1.2 }} // Delay after headline and social proof
+        >
+          <div className="trucker-images-overlay"></div>
+          <motion.img 
+            src={truckerOnPhoneImg} 
+            alt="Trucker on phone" 
+            className="trucker-image trucker-phone"
+            style={{ 
+              imageRendering: 'auto',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
+            }}
+            initial={{ 
+              opacity: 0, 
+              y: -100, 
+              rotate: -180,
+              scale: 0.8 
+            }}
+            animate={{ 
+              opacity: isTruckerImagesInView ? 1 : 0, 
+              y: isTruckerImagesInView ? 0 : -100, 
+              rotate: isTruckerImagesInView ? 0 : -180,
+              scale: isTruckerImagesInView ? 1 : 0.8 
+            }}
+            transition={{ 
+              duration: 1.2, 
+              ease: "easeOut",
+              delay: 1.4 // First card
+            }}
+          />
+          <motion.img 
+            src={happyTrucker1Img} 
+            alt="Happy trucker" 
+            className="trucker-image trucker-happy"
+            style={{ 
+              imageRendering: 'auto',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden'
+            }}
+            initial={{ 
+              opacity: 0, 
+              y: -100, 
+              rotate: 180,
+              scale: 0.8 
+            }}
+            animate={{ 
+              opacity: isTruckerImagesInView ? 1 : 0, 
+              y: isTruckerImagesInView ? 0 : -100, 
+              rotate: isTruckerImagesInView ? 0 : 180,
+              scale: isTruckerImagesInView ? 1 : 0.8 
+            }}
+            transition={{ 
+              duration: 1.2, 
+              ease: "easeOut",
+              delay: 1.6 // Second card
+            }}
+          />
+          <motion.div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '-20px',
+              width: '130px',
+              height: '130px',
+              zIndex: 1,
+              transform: 'translateY(-50%)'
+            }}
+            initial={{ 
+              opacity: 0, 
+              y: -100, 
+              rotate: 270,
+              scale: 0.8 
+            }}
+            animate={{ 
+              opacity: isTruckerImagesInView ? 1 : 0, 
+              y: isTruckerImagesInView ? 0 : -100, 
+              rotate: isTruckerImagesInView ? 0 : 270,
+              scale: isTruckerImagesInView ? 1 : 0.8 
+            }}
+            transition={{ 
+              duration: 2.0, 
+              ease: "easeOut",
+              delay: 1.8 // Third card
+            }}
+          >
+            <img 
+              src={truckerWithFamilyImg} 
+              alt="Trucker with family" 
+              className="trucker-image trucker-family"
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '2px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+                transition: 'all 0.3s ease'
+              }}
+            />
+          </motion.div>
+        </motion.div>
         {/* Left Column - Text Content */}
         <Box className="home-hero-text">
           <Typography 
@@ -867,7 +972,12 @@ function home() {
           >
             Built to
             <br />
-            <Box component="span" style={{ display: 'block', minHeight: '1.2em', position: 'relative' }}>
+            <Box component="span" style={{ 
+              display: 'block', 
+              minHeight: '1.2em', 
+              position: 'relative',
+              width: '300px' // Fixed width to prevent layout shifts
+            }}>
               <AnimatePresence mode="wait">
                 <motion.span
                   key={actionWords[currentWordIndex]}
@@ -890,104 +1000,6 @@ function home() {
             </Box>
             truckers.
           </Typography>
-          <motion.div 
-            ref={truckerImagesRef}
-            className="trucker-images-container"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isTruckerImagesInView ? 1 : 0 }}
-            transition={{ duration: 0.5, delay: 1.2 }} // Delay after headline and social proof
-          >
-            <div className="trucker-images-overlay"></div>
-            <motion.img 
-              src={truckerOnPhoneImg} 
-              alt="Trucker on phone" 
-              className="trucker-image trucker-phone"
-              style={{ transform: 'none' }}
-              initial={{ 
-                opacity: 0, 
-                y: -100, 
-                rotate: -180,
-                scale: 0.8 
-              }}
-              animate={{ 
-                opacity: isTruckerImagesInView ? 1 : 0, 
-                y: isTruckerImagesInView ? 0 : -100, 
-                rotate: isTruckerImagesInView ? 0 : -180,
-                scale: isTruckerImagesInView ? 1 : 0.8 
-              }}
-              transition={{ 
-                duration: 1.2, 
-                ease: "easeOut",
-                delay: 1.4 // First card
-              }}
-            />
-            <motion.img 
-              src={happyTrucker1Img} 
-              alt="Happy trucker" 
-              className="trucker-image trucker-happy"
-              style={{ transform: 'none' }}
-              initial={{ 
-                opacity: 0, 
-                y: -100, 
-                rotate: 180,
-                scale: 0.8 
-              }}
-              animate={{ 
-                opacity: isTruckerImagesInView ? 1 : 0, 
-                y: isTruckerImagesInView ? 0 : -100, 
-                rotate: isTruckerImagesInView ? 0 : 180,
-                scale: isTruckerImagesInView ? 1 : 0.8 
-              }}
-              transition={{ 
-                duration: 1.2, 
-                ease: "easeOut",
-                delay: 1.6 // Second card
-              }}
-            />
-            <motion.div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '-20px',
-                width: '130px',
-                height: '130px',
-                zIndex: 1,
-                transform: 'translateY(-50%)'
-              }}
-              initial={{ 
-                opacity: 0, 
-                y: -100, 
-                rotate: 270,
-                scale: 0.8 
-              }}
-              animate={{ 
-                opacity: isTruckerImagesInView ? 1 : 0, 
-                y: isTruckerImagesInView ? 0 : -100, 
-                rotate: isTruckerImagesInView ? 0 : 270,
-                scale: isTruckerImagesInView ? 1 : 0.8 
-              }}
-              transition={{ 
-                duration: 2.0, 
-                ease: "easeOut",
-                delay: 1.8 // Third card
-              }}
-            >
-              <img 
-                src={truckerWithFamilyImg} 
-                alt="Trucker with family" 
-                className="trucker-image trucker-family"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '2px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-                  transition: 'all 0.3s ease'
-                }}
-              />
-            </motion.div>
-          </motion.div>
           <Typography className={`home-hero-description ${isAboutVisible ? 'animate' : ''}`}>
             Wherever the road takes you, Marc'd is there! Trucking isn't just work; it's a way of life. It keeps America moving, and you deserve a partner that moves with you.
           </Typography>
