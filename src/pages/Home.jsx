@@ -998,7 +998,7 @@ function home() {
               display: 'block', 
               minHeight: '1.2em', 
               position: 'relative',
-              width: '300px' // Fixed width to prevent layout shifts
+              width: '100%' // Full width to match parent
             }}>
               <AnimatePresence mode="wait">
                 <motion.span
