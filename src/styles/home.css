@@ -2017,10 +2017,7 @@
       top: 5px !important;
       height: calc(100% - 10px) !important;
     }
-@media (max-width: 1050px) {
-    .home-page-container {
-      padding: 2rem 3rem !important; 
-  }}
+
     
 @media (min-width: 1155px) {
     
@@ -2037,8 +2034,8 @@
 
   .home-hero-section .home-hero-headline {
     font-size: 4rem !important;
-
-  }}
+  }
+}
 
   .home-hero-section .home-hero-description {
     font-size: 1.3rem !important;
@@ -2094,12 +2091,6 @@
   .home-hero-section .social-proof-text {
     opacity: .9 !important;
   }
-}
-
-@media (max-width: 1100px) {
-  .home-page-container {
-    padding: 3rem 4rem;
-  }
 
   /* Home Hero Section - Full Viewport */
   .home-hero-section {
@@ -2116,60 +2107,60 @@
     padding: 16px 35px !important;
   }
     
-    .social-proof-image {
-      max-height: 50px;
-    }
-    
-    .social-proof-text {
-      font-size: 1.1rem;
-    }
-    
-    .carousel-image-container {
-      min-width: 300px;
-      min-height: 300px;
-    }
-    
-    .home-main-image.small-image {
-      height: 100% !important;
-      max-width: 5500px !important;
-    }
-    
-    .home-main-image.large-image {
-      height: 100%;
-      max-height: 550px;
-    }
-    
-    .carousel-nav-left,
-    .carousel-nav-right {
-      width: 40px !important;
-      height: 40px !important;
-    }
-    
-    .carousel-dot {
-      width: 14px;
-      height: 14px;
-    } 
-    .arrow-icon {
-      font-size: 1.5rem !important;
-    }
-    
-    /* Hero bullets responsive styling */
-    .home-hero-bullets {
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-  
-    
-    .hero-bullet-icon {
-      font-size: 1.5rem !important;
-    }
-    
-    .hero-bullet span {
-      font-size: 1.4rem;
-      font-family: 'poppins', sans-serif !important;
-      opacity: .9;
-    }
+  .social-proof-image {
+    max-height: 50px;
   }
+    
+  .social-proof-text {
+    font-size: 1.1rem;
+  }
+    
+  .carousel-image-container {
+    min-width: 300px;
+    min-height: 300px;
+  }
+    
+  .home-main-image.small-image {
+    height: 100% !important;
+    max-width: 5500px !important;
+  }
+    
+  .home-main-image.large-image {
+    height: 100%;
+    max-height: 550px;
+  }
+    
+  .carousel-nav-left,
+  .carousel-nav-right {
+    width: 40px !important;
+    height: 40px !important;
+  }
+    
+  .carousel-dot {
+    width: 14px;
+    height: 14px;
+  } 
+  
+  .arrow-icon {
+    font-size: 1.5rem !important;
+  }
+    
+  /* Hero bullets responsive styling */
+  .home-hero-bullets {
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+    
+  .hero-bullet-icon {
+    font-size: 1.5rem !important;
+  }
+    
+  .hero-bullet span {
+    font-size: 1.4rem;
+    font-family: 'poppins', sans-serif !important;
+    opacity: .9;
+  }
+}
   
   .home-hero-description {
     font-size: clamp(1.2rem, 1.5vw, 1.3rem) !important;
@@ -2284,15 +2275,20 @@
     height: 10px !important;
   }
 
-@media (min-width: 1025px) {
+@media (max-width: 1025px) {
 
   .home-hero-section .home-hero-headline {
-    font-size: 3.5rem !important;
+    font-size: 3.8rem !important;
   }
-
-} 
-
-
+    
+  .hero-bullet-icon {
+    font-size: 1.8rem !important;
+  }
+    
+  .home-hero-section .hero-bullet span {
+    font-size: 1.2rem !important;
+  }
+}
 
   @media (max-width: 1025px) {
       /* Large images (Statistics, Alerts, Parking, Places, Navigation) */
@@ -2306,121 +2302,114 @@
 
     }
 
- @media (max-width: 1000px) {
-    .home-page-container {
-      padding: 1.5rem 2.2rem !important; 
-    }} 
-    
-    .home-hero-section .home-hero-description {
-      padding-right: 0rem !important;
-    } 
+@media (max-width: 1000px) {
+  .home-page-container {
+    padding: 1.5rem 2.2rem !important; 
+  }
+  
+  .home-hero-section .home-hero-description {
+    padding-right: 0rem !important;
+  } 
+}
 
-  @media (max-width: 930px) {
-
-    .home-hero-section .home-hero-headline {
-      font-size: 3.5rem !important;
-    }
+@media (max-width: 930px) {
+  .home-hero-section .home-hero-headline {
+    font-size: 3.5rem !important;
   }
 
-    .home-hero-description {
-      font-size: 1.4rem !important;
-      padding-right: .8rem !important;
-      text-align: initial;
-      text-align-last: initial;
+  .home-hero-description {
+    font-size: 1.4rem !important;
+    padding-right: .8rem !important;
+    text-align: initial;
+    text-align-last: initial;
+  }
 
-    }
+  .home-page-container {
+    padding: 4rem;
+  }
 
-    .home-page-container {
-      padding: 4rem;
-    }
+  .home-hero-section {
+    gap: 0rem !important;
+  }
 
-    .home-hero-section {
-      gap: 0rem !important;
-    }
+  .home-hero-text {
+    padding-top: 2rem !important;
+  }
 
-    .home-hero-text {
-      padding-top: 2rem !important;
-    }
+  .carousel-image-container {
+    padding-top: 2rem !important;
+  }
 
-    .carousel-image-container {
-      padding-top: 2rem !important;
-    }
+  .social-proof-image {
+    max-height: 45px !important;
+  }
 
-    .social-proof-image {
-      max-height: 45px !important;
-    }
+  .social-proof-text {
+    font-size: 1.2rem !important;
+  }
 
-    .social-proof-text {
-      font-size: 1.2rem !important;
-    }
+  .carousel-dot.active {
+    background: #be0303d1 !important;
+    width: 8px !important;
+    height: 8px !important;
+  }
 
-    .carousel-dot.active {
-      background:  #be0303d1 !important;
-      width: 8px !important;
-      height: 8px !important;
+  .carousel-dot {
+    width: 8px !important;
+    height: 8px !important;
+    opacity: .6 !important;
+  }
 
-    }
+  .home-hero-section .hero-button {
+    font-size: 1.3rem !important;
+    padding: 10px 18px !important;
+  }
 
-    .carousel-dot {
-      width: 8px !important;
-      height: 8px !important;
-      opacity: .6 !important;
-    }
+  .home-main-image.large-image {
+    max-height: 500px !important;
+    max-width: 100%;
+    height: 500px !important;
+    width: auto;
+    object-fit: contain;
+  }
 
-    .home-hero-section .hero-button {
-      font-size: 1.3rem !important;
-      padding: 10px 18px !important;
-    }
+  .scroll-down-arrow {
+    padding: 9px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-bottom: 10px !important;
+  }
 
-    .home-main-image.large-image {
-      max-height: 500px !important;
-      max-width: 100%;
-      height: 500px !important;
-      width: auto;
-      object-fit: contain;
-    }
+  .marc-it-title {
+    font-size: 1.6rem !important;
+  }
 
-    .scroll-down-arrow {
-      padding: 9px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding-bottom: 10px !important;
-    }
+  .did-you-know-title {
+    font-size: 2rem !important;
+  }
 
-    .marc-it-title {
-      font-size: 1.6rem !important;
-    }
-
-    .did-you-know-title {
-      font-size: 2rem !important;
-    }
-
+  .marc-it-outer-container {
+    margin-top: 0rem !important;
+  }
   
-     
-     .marc-it-outer-container {
-       margin-top: 0rem !important;
-     }
-     
-     .facts-grid {
-       grid-template-columns: repeat(3, 1fr) !important;
-     }
-     
-     .solutions-grid {
-       grid-template-columns: repeat(3, 1fr) !important;
-     }
-     
-     .marcd-solutions-content .solutions-grid {
-       grid-template-columns: repeat(3, 1fr) !important;
-     }
+  .facts-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .solutions-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .marcd-solutions-content .solutions-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
 
-    
-
-   @media (max-width: 900px) {
-
-    .home-hero-headline  {
-      font-size: 3.5rem !important;
-    }}
+@media (max-width: 900px) {
+  .home-hero-headline {
+    font-size: 3.5rem !important;
+  }
 
     .marc-it-title {
       font-size: 1.5rem !important;
@@ -2606,13 +2595,12 @@
       font-size: 1.1rem !important;
     }
 
-    .fact-text {
-      font-size: .9rem !important;
-    }
-  
-  
+  .fact-text {
+    font-size: .9rem !important;
+  }
+}
 
-  @media (max-width: 880px) {
+@media (max-width: 880px) {
 
 
     .carousel-nav-left,
@@ -2664,9 +2652,9 @@
     padding: 10px 18px !important;
    }
 
-  }
+}
 
-     @media (max-width: 850px) {
+@media (max-width: 850px) {
      .home-hero-headline {
       font-size: 3.6rem !important;
        margin-bottom: 2rem !important;
