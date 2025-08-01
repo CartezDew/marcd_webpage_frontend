@@ -180,7 +180,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 .nav-buttons-container {
   display: flex !important;
   gap: 16px; /* Space between buttons */
-  margin-right: 24px; /* Extra space on the right */
+  margin-right: 0; /* Remove extra margin to allow equal spacing */
 }
 
 /* Individual navigation button styling */
@@ -218,6 +218,7 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 .nav-join-button-container {
   position: relative !important;
   display: inline-block !important;
+  margin-left: 16px !important; /* Equal spacing from navigation items */
 }
 
 /* Desktop join button styling */
@@ -711,5 +712,15 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
     padding-top: 6px !important;
     padding-bottom: 6px !important;
     font-size: 0.85rem !important;
+  }
+}
+
+@media (max-width: 890px) {
+  .nav-buttons-container {
+    gap: 8px !important; /* Reduced spacing between buttons */
+  }
+
+  .nav-join-button-container {
+    margin-left: 8px !important; /* Reduced spacing from navigation items */
   }
 }

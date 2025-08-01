@@ -62,9 +62,11 @@ function ContactUs() {
 
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [error, setError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
 
   const isFormValid = useMemo(() => {
     const emailValidation = validateContactEmail(formData.email);
@@ -149,10 +151,12 @@ function ContactUs() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     
-    // Add email validation for real-time feedback
-    if (name === 'email') {
-      const validation = validateEmailRealTime(value, 'contact');
-      setEmailError(validation.error);
+    // Clear errors when user starts typing after a failed submission
+    if (hasAttemptedSubmit) {
+      if (name === 'email') {
+        setEmailError("");
+      }
+      setError("");
     }
   };
 
@@ -171,11 +175,25 @@ function ContactUs() {
     }
 
     setFormData((prev) => ({ ...prev, phone: formatted }));
-    setPhoneError("");
+    
+    // Clear phone errors when user starts typing after a failed submission
+    if (hasAttemptedSubmit) {
+      setPhoneError("");
+      setError("");
+    }
+  };
+
+  const handleCloseOverlay = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setIsClosing(false);
+    }, 500); // Match the CSS animation duration
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasAttemptedSubmit(true);
   
     const missingFields = [];
     if (!formData.first_name) missingFields.push("First Name");
@@ -227,32 +245,155 @@ function ContactUs() {
 
   if (submitted) {
     return (
-      <Container maxWidth="sm" sx={{ mt: 6, textAlign: "center", position: "relative" }}>
-        <Confetti width={width} height={height} numberOfPieces={250} recycle={false} />
-        
-        <Card className="thank-you-card">
-          <CardContent>
-            <Typography variant="h4" fontWeight="bold" gutterBottom>
-              Thank you for your feedback!
+      <>
+        {/* Continue showing the contact form in the background */}
+        <Container maxWidth="sm" className="contact-container">
+          <Box ref={headerRef} className="contact-header-section">
+            <Typography 
+              ref={headerRef} 
+              variant="h3" 
+              component="h1" 
+              className={`contact-header ${isHeaderVisible ? 'animate' : ''}`}
+            >
+              Contact Us
             </Typography>
-            <Typography variant="body1" color="textSecondary" gutterBottom>
-              We'll be in touch soon!
-            </Typography>
-  
-            <Box sx={{ mt: 4 }}>
-              <Button
-                onClick={() => setSubmitted(false)}
-                variant="contained"
-                color="primary"
-                size="large"
-                className="animated-submit"
-              >
-                Submit Another
-              </Button>
-            </Box>
-          </CardContent>
-        </Card>
-      </Container>
+          </Box>
+          
+          <Card ref={cardRef} className={`contact-card ${isCardVisible ? 'animate' : ''}`}>
+            <CardContent>
+              <Box component="form" id="contact-form" onSubmit={handleSubmit}>
+                <Stack spacing={3} alignItems="center">
+                  {/* Form content - simplified for background display */}
+                  <Typography variant="h6" color="textSecondary">
+                    Form submitted successfully!
+                  </Typography>
+                </Stack>
+              </Box>
+            </CardContent>
+          </Card>
+        </Container>
+
+        {/* Success message overlay with same animation as waitlist */}
+        <Box 
+          sx={{ 
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            animation: submitted && !isClosing ? 'slideInUp 0.6s ease-out' : isClosing ? 'slideOutDown 0.5s ease-in' : 'none'
+          }}
+        >
+          <Confetti width={width} height={height} numberOfPieces={250} recycle={false} />
+          
+          {/* Overlay background - clickable to close */}
+          <Box
+            onClick={handleCloseOverlay}
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(5px)',
+              cursor: 'pointer'
+            }}
+          />
+
+          {/* Close X button - top right of screen */}
+          <Box
+            onClick={handleCloseOverlay}
+            sx={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '2rem',
+              cursor: 'pointer',
+              zIndex: 10000,
+              padding: '10px',
+              borderRadius: '50%',
+              width: '50px',
+              height: '50px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background-color 0.3s ease',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              }
+            }}
+          >
+            ×
+          </Box>
+
+          {/* Close text button - bottom right of screen */}
+          <Box
+            onClick={handleCloseOverlay}
+            sx={{
+              position: 'absolute',
+              bottom: '20px',
+              right: '20px',
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '1.2rem',
+              cursor: 'pointer',
+              zIndex: 10000,
+              padding: '10px 15px',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background-color 0.3s ease',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              }
+            }}
+          >
+            Close
+          </Box>
+          
+          {/* Success message card */}
+          <Box 
+            onClick={(e) => e.stopPropagation()}
+            sx={{
+              position: 'relative',
+              zIndex: 10000,
+              animation: submitted && !isClosing ? 'contentSlideIn 0.7s ease-out 0.3s both' : isClosing ? 'contentSlideOut 0.5s ease-in both' : 'none'
+            }}
+          >
+            <Card className="thank-you-card">
+              <CardContent sx={{ textAlign: 'center', padding: '2rem' }}>
+                <Typography variant="h4" fontWeight="bold" gutterBottom>
+                  Thank you for your feedback!
+                </Typography>
+                <Typography variant="h6" color="textSecondary" gutterBottom sx={{ mb: 4, mt: 2 }}>
+                  We'll be in touch soon!
+                </Typography>
+      
+                <Button
+                  onClick={handleCloseOverlay}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  className="submit-button animate"
+                >
+                  Submit Another
+                </Button>
+              </CardContent>
+            </Card>
+          </Box>
+        </Box>
+      </>
     );
   }
 
@@ -314,8 +455,6 @@ function ContactUs() {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      error={Boolean(emailError)}
-                      helperText={emailError}
                     />
 
                       <FormControl sx={{ display: "flex", gap: "8px", width: "100%" }}>
@@ -376,13 +515,10 @@ function ContactUs() {
                       placeholder="000-000-0000"
                       type="tel"
                       inputProps={{
-                        inputMode: "numeric",
                         maxLength: 12,
                       }}
                       value={formData.phone}
                       onChange={handlePhoneChange}
-                      error={Boolean(phoneError)}
-                      helperText={phoneError}
                     />
                 </Box>
 
@@ -392,23 +528,53 @@ function ContactUs() {
                     fullWidth
                     required
                     multiline
-                    rows={5}
+                    rows={3}
                     label="Message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    className="message-text-field"
+                    inputProps={{
+                      maxLength: 150,
+                    }}
+                    helperText={`${formData.message.length}/150 characters`}
                   />
                 </Box>
 
-                {error && (
-                  <Box sx={{ width: "90%" }}>
-                    <Typography color="error" align="center">{error}</Typography>
-                  </Box>
-                )}
+
               </Stack>
             </Box>
           </CardContent>
         </Card>
+
+        {/* Error Messages - Only show after submission attempt */}
+        {hasAttemptedSubmit && (error || emailError || phoneError) && (
+          <Box sx={{ 
+            width: '100%', 
+            maxWidth: '600px', 
+            margin: '20px auto', 
+            padding: '16px',
+            backgroundColor: '#ffebee',
+            border: '1px solid #f44336',
+            borderRadius: '8px'
+          }}>
+            {error && (
+              <Typography color="error" align="center" sx={{ marginBottom: emailError || phoneError ? '8px' : '0' }}>
+                {error}
+              </Typography>
+            )}
+            {emailError && (
+              <Typography color="error" align="center" sx={{ marginBottom: phoneError ? '8px' : '0' }}>
+                Email Error: {emailError}
+              </Typography>
+            )}
+            {phoneError && (
+              <Typography color="error" align="center">
+                Phone Error: {phoneError}
+              </Typography>
+            )}
+          </Box>
+        )}
 
         {/* Social + Submit */}
         <Box className="bottom-controls">

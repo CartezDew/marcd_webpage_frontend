@@ -438,9 +438,9 @@
       padding: 0.75rem;
     }
     
-    /* Input field font size reduction */
+    /* Input field font size - prevent mobile zoom */
     .MuiInputBase-input {
-      font-size: 0.8rem !important;
+      font-size: 16px !important; /* Prevent mobile zoom */
     }
     
     .MuiInputLabel-root {
@@ -454,6 +454,24 @@
     /* Fix alignment between TextField and Select components */
     .MuiTextField-root {
       height: 56px !important;
+    }
+
+    /* Only allow the message text field to expand properly */
+    .message-text-field.MuiTextField-root {
+      height: auto !important;
+      min-height: 100px !important;
+    }
+
+    /* Ensure the textarea inside message field behaves properly */
+    .message-text-field .MuiInputBase-multiline {
+      height: auto !important;
+      min-height: 80px !important;
+    }
+
+    .message-text-field textarea {
+      min-height: 60px !important;
+      max-height: 120px !important;
+      resize: vertical !important;
     }
 
     .MuiFormControl-root {
@@ -626,6 +644,51 @@
   .animated-submit:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Success overlay animations - same as waitlist popup */
+  @keyframes slideInUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes contentSlideIn {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes contentSlideOut {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.95);
+    }
   }
 
   .action-section {
