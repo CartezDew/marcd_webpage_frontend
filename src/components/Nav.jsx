@@ -47,6 +47,7 @@ function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDrawerClosing, setIsDrawerClosing] = useState(false);
 
   // Framer Motion animation setup (same as Home component)
   const time = useTime();
@@ -123,7 +124,16 @@ function Nav() {
   ].filter(item => !(isHomePage && item.path === '/'));
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    if (mobileOpen) {
+      // Start closing animation
+      setIsDrawerClosing(true);
+      setTimeout(() => {
+        setMobileOpen(false);
+        setIsDrawerClosing(false);
+      }, 400); // Match the CSS transition duration
+    } else {
+      setMobileOpen(true);
+    }
   };
 
   const goToWaitlist = () => {
@@ -420,7 +430,7 @@ function Nav() {
         }}
         className="nav-drawer-mui-container"
         PaperProps={{
-          className: 'nav-drawer'
+          className: `nav-drawer ${isDrawerClosing ? 'closing' : mobileOpen ? 'opening' : ''}`
         }}
       >
         {drawer}

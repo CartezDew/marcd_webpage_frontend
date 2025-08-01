@@ -261,18 +261,135 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
 }
 
 .nav-drawer-join-button {
-  text-align: center !important; /* Center-align text */
-  background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;
-  color: white !important; /* White text */
-  margin: 5px 10px !important; /* Margin around button */
-  border-radius: 8px !important; /* Rounded corners */
-  margin-top: 10px !important;
-  animation: subtlePulse 3s ease-in-out infinite !important; /* Subtle infinite animation */
-  transition: all 0.3s ease !important; /* Smooth transitions */
+  text-align: center !important;
+  background: #be0303 !important;
+  color: white !important;
+  margin: 20px 12px 15px 12px !important;
+  border-radius: 16px !important;
+  margin-top: 25px !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  padding: 14px 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(190, 3, 3, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 
+    0 4px 12px rgba(190, 3, 3, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  animation: attentionPulse 4s ease-in-out infinite !important;
 }
 
+/* Subtle gradient overlay */
+.nav-drawer-join-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(0, 0, 0, 0.05) 100%),
+    linear-gradient(90deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
+  background-size: 100% 100%, 200% 100%;
+  border-radius: 16px;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Hover ripple effect */
+.nav-drawer-join-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+/* Hover effects */
 .nav-drawer-join-button:hover {
-  background-color: #B71C1C !important; /* Darker red on hover */
+  background: linear-gradient(135deg, #be0303 0%, #d10404 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 
+    0 8px 25px rgba(190, 3, 3, 0.25),
+    0 4px 12px rgba(190, 3, 3, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  animation: none !important;
+}
+
+.nav-drawer-join-button:hover::before {
+  opacity: 0.7;
+  animation: none !important;
+}
+
+.nav-drawer-join-button:hover::after {
+  width: 120px;
+  height: 120px;
+  opacity: 1;
+}
+
+/* Active state */
+.nav-drawer-join-button:active {
+  transform: translateY(0) scale(0.98) !important;
+  transition: all 0.1s ease !important;
+  box-shadow: 
+    0 2px 8px rgba(190, 3, 3, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Attention-grabbing pulse animation */
+@keyframes attentionPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      0 4px 12px rgba(190, 3, 3, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 0 rgba(190, 3, 3, 0);
+  }
+  15% {
+    transform: scale(1.02);
+    box-shadow: 
+      0 6px 20px rgba(190, 3, 3, 0.25),
+      0 2px 6px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 0 0 4px rgba(190, 3, 3, 0.1);
+  }
+  30% {
+    transform: scale(1);
+    box-shadow: 
+      0 4px 12px rgba(190, 3, 3, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 8px rgba(190, 3, 3, 0.05);
+  }
+  45% {
+    box-shadow: 
+      0 4px 12px rgba(190, 3, 3, 0.15),
+      0 1px 3px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 12px rgba(190, 3, 3, 0);
+  }
+}
+
+/* Shimmer effect animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 /* ===================================
@@ -323,30 +440,107 @@ div.nav-logo-tooltip-popper-mobile .MuiTooltip-tooltip {
   position: relative !important; /* Independent positioning */
 }
 
-/* Individual drawer menu item */
-.nav-drawer-item {
-  text-align: left !important; 
-  opacity: 0.9 !important;
+
+
+/* Selected drawer item styling with curved design */
+.nav-drawer-item.Mui-selected {
+  color: #be0303 !important; /* Brand red text */
+  background: linear-gradient(135deg, rgba(190, 3, 3, 0.1), rgba(190, 3, 3, 0.05)) !important;
+  border: none !important;
+  border-radius: 25px 0 25px 0 !important; /* Asymmetric curved design */
+  margin-right: 30px !important;
+  margin-left: 5px !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 12px rgba(190, 3, 3, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Selected drawer item styling */
-.nav-drawer-item.Mui-selected {
-  color: rgb(10, 9, 9) !important; /* White text for selected item */
-  border: 2px solid #be0303d1 !important;
-  border-radius: 10px !important; /* Curved oval-like corners */
-  margin-right: 40px !important;
-  margin-left: 1px !important;
-  opacity: 1 !important;
+/* Curved indicator on the left */
+.nav-drawer-item.Mui-selected::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 70%;
+  background: linear-gradient(to bottom, #be0303, #ff4444, #be0303);
+  border-radius: 0 15px 15px 0;
+  box-shadow: 2px 0 8px rgba(190, 3, 3, 0.4);
+  transition: all 0.4s ease;
+}
+
+/* Curved glow effect on the right */
+.nav-drawer-item.Mui-selected::after {
+  content: '';
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 80%;
+  background: radial-gradient(circle at left, rgba(190, 3, 3, 0.15) 0%, rgba(190, 3, 3, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  transition: all 0.4s ease;
 }
 
 /* Selected drawer item hover effect */
 .nav-drawer-item.Mui-selected:hover {
-  background-color: #B71C1C !important; /* Darker red on hover */
+  background: linear-gradient(135deg, rgba(190, 3, 3, 0.2), rgba(190, 3, 3, 0.1)) !important;
+  transform: translateX(5px) !important;
+  box-shadow: 0 6px 20px rgba(190, 3, 3, 0.25) !important;
+}
+
+/* Enhanced hover effect for the curved indicator */
+.nav-drawer-item.Mui-selected:hover::before {
+  width: 8px;
+  height: 85%;
+  box-shadow: 3px 0 12px rgba(190, 3, 3, 0.6);
+}
+
+/* Enhanced hover effect for the glow */
+.nav-drawer-item.Mui-selected:hover::after {
+  width: 35px;
+  background: radial-gradient(circle at left, rgba(190, 3, 3, 0.25) 0%, rgba(190, 3, 3, 0.1) 50%, transparent 70%);
 }
 
 /* Drawer item icon styling */
 .nav-drawer-icon {
   color: inherit !important; /* Inherit color from parent */
+  transition: all 0.3s ease !important;
+}
+
+/* Enhanced icon styling for selected items */
+.nav-drawer-item.Mui-selected .nav-drawer-icon {
+  color: #be0303 !important;
+  transform: scale(1.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Text styling for selected items */
+.nav-drawer-item.Mui-selected .MuiListItemText-primary {
+  font-weight: 600 !important;
+  color: #be0303 !important;
+  text-shadow: 0 1px 2px rgba(190, 3, 3, 0.1) !important;
+  transition: all 0.4s ease !important;
+}
+
+/* Smooth transitions for non-selected items */
+.nav-drawer-item {
+  text-align: left !important; 
+  opacity: 0.9 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  margin: 5px 10px !important;
+}
+
+/* Hover effect for non-selected items */
+.nav-drawer-item:hover:not(.Mui-selected) {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  transform: translateX(2px) !important;
 }
 
 /* Mobile drawer close button */
