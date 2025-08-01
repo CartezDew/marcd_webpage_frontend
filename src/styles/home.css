@@ -2624,7 +2624,6 @@
   .home-hero-section .home-hero-headline {
     font-size: 3.3rem !important;
     margin-bottom: 2rem !important;
-    margin-top: 1.5rem !important;  
     margin-bottom: 3.5rem !important;
   }
   
@@ -2891,10 +2890,6 @@
 
 
   @media (max-width: 700px) {
-
-    .home-page-container {
-      padding: 1rem !important;
-    }
 
     .home-hero-section .home-hero-headline {
       font-size: 2.85rem !important;
@@ -3220,7 +3215,7 @@
     .home-hero-section .home-hero-headline {
       font-size: 3.4rem !important;
       margin-bottom: 3.5rem !important;
-      margin-top: 1rem !important;
+      margin-top: .5rem !important;
     }
 
     .home-hero-section .home-hero-description {
@@ -3896,6 +3891,10 @@
       .home-page-container {
         padding: .5rem .8rem !important;
       }
+
+      .home-hero-section .social-proof-text {
+        font-size: 1rem !important;
+      }
   
      }
     @media (max-width: 450px) {
@@ -4088,6 +4087,7 @@
       height: 100px !important;
     }
 
+
    }
 
    @media (max-width: 411px) {
@@ -4182,6 +4182,7 @@
 
     .home-hero-section .home-hero-headline {
       font-size: 2.4rem !important;
+      margin-bottom: 3rem !important;
     }
 
     .email-input-field {
