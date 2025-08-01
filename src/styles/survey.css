@@ -737,7 +737,7 @@
 
 @media (max-width: 500px) {
   .survey-intro-container {
-    padding: 2rem 0.5rem 3rem;
+    padding: 1rem 0.5rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Change from 'left' to 'flex-start' */
@@ -748,13 +748,12 @@
   
   .survey-intro-heading {
     text-align: left !important; /* Align heading to left */
-    font-size: 1.8rem !important; /* Slightly smaller for mobile */
-    margin-bottom: .5rem !important;
+    font-size: 1.7rem !important; /* Slightly smaller for mobile */
   }
   
   .survey-intro-text {
     text-align: left !important; /* Align text to left */
-    font-size: 1.35rem !important; /* Smaller font for mobile */
+    font-size: 1.2rem !important; /* Smaller font for mobile */
     max-width: 100%; /* Full width on small screens */
     margin: 0; /* Remove auto margins */
   }
@@ -767,6 +766,30 @@
   .responses-subtitle {
     font-size: 1rem !important;
     text-align: left !important;
+    position: relative !important;
+    margin-bottom: 5rem !important;
+  }
+  
+  /* Divider below responses subtitle at 500px */
+  .responses-subtitle::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -35px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 95% !important;
+    height: 2px !important;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      transparent 5%,
+      #be0303 15%,
+      #151515 50%,
+      #be0303 85%,
+      transparent 95%,
+      transparent 100%
+    ) !important;
+    border-radius: 1px !important;
   }
 
   .survey-social-proof-image {
