@@ -3244,16 +3244,15 @@
 
     .home-hero-section .home-hero-headline {
       font-size: 3.4rem !important;
-      margin-bottom: 3.5rem !important;
+      margin-bottom: 3rem !important;
       margin-top: .5rem !important;
     }
 
     .home-hero-section .home-hero-description {
       font-size: 1.5rem !important;
       font-family: 'Poppins', sans-serif !important;
-      margin-bottom: 0rem !important;
-      margin-right: 0rem !important;
       line-height: 1.5 !important;
+      padding-bottom: 0rem !important;
     }
 
     .home-hero-section .hero-bullet span {
