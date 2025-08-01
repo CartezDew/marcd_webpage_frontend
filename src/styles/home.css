@@ -4041,10 +4041,6 @@
        font-size: 2rem !important;
      }
 
-     .join-button {
-       right: 18px !important;
-     }
-
      .email-input-field {
        font-size: .75rem !important;
       }
@@ -4093,9 +4089,6 @@
 
    @media (max-width: 395px) {
 
-    .join-button {
-      right: 17px !important;
-    }
 
     .email-input-field {
       font-size: .7rem !important;
