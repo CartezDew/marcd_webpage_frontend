@@ -3432,7 +3432,7 @@
     }
 
     .home-hero-section .hero-button {
-      font-size: 1.1rem !important;
+      font-size: 1.3rem !important;
     }
 
     .trucker-image {
@@ -3548,6 +3548,11 @@
 
     .social-proof-text {
       font-size: 1rem !important;
+    }
+
+    .home-hero-section .hero-button{
+      font-size: 1.2rem !important;
+      padding: 13px 17px !important;
     }
 
 
@@ -3939,9 +3944,7 @@
     }
 
     .home-hero-section .hero-button {
-      font-size: .9rem !important;
-      padding-left: 10px !important;
-      padding-right: 10px !important;
+      font-size: 1rem !important;
     }
 
   }
@@ -4118,6 +4121,10 @@
     .email-input-field {
       font-size: .7rem !important;
      }
+    .home-hero-section .hero-button{
+      font-size: 1.1rem !important;
+      padding: 10px 11px !important;
+    }
 
    }
 
@@ -4178,6 +4185,11 @@
     .home-hero-section .home-main-image.large-image {
       max-height: 280px !important;
       height: 280px !important;
+    }
+
+    .home-hero-section .hero-button{
+      font-size: 1rem !important;
+      padding: 8px 8px !important;
     }
 
   }
