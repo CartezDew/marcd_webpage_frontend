@@ -20,21 +20,6 @@
   position: relative !important;
 }
 
-/* Trucker Images Overlay - Light black overlay */
-.trucker-images-overlay {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  z-index: 5 !important;
-  pointer-events: none !important;
-  border-radius: 50% !important;
-}
-
-
-
 /* Override main-content styling for home page */
 
   
@@ -2290,6 +2275,12 @@
   }
 }
 
+@media (max-width: 1040px) {
+  .home-page-container {
+    padding: 1.5rem 3.5rem !important; 
+  }
+}
+
   @media (max-width: 1025px) {
       /* Large images (Statistics, Alerts, Parking, Places, Navigation) */
       .home-main-image.large-image {
@@ -2303,9 +2294,6 @@
     }
 
 @media (max-width: 1000px) {
-  .home-page-container {
-    padding: 1.5rem 2.2rem !important; 
-  }
   
   .home-hero-section .home-hero-description {
     padding-right: 0rem !important;
@@ -2407,8 +2395,14 @@
 }
 
 @media (max-width: 900px) {
-  .home-hero-headline {
-    font-size: 3.5rem !important;
+
+  .home-hero-section .home-hero-description {
+    margin-right: 0.1rem !important;
+    text-align: left !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
   }
 
     .marc-it-title {
@@ -2469,7 +2463,7 @@
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
-      padding: 0 1rem !important;
+      
       overflow-x: hidden !important;
     }
     
@@ -2485,11 +2479,7 @@
       padding-top: 3rem !important;
     }
 
-    .home-hero-description {
-      font-size: 1.2rem !important;
-      margin-right: 0rem !important;
-      padding-right: 0rem !important;
-    }
+   
   
     .home-hero-section .hero-bullet-icon {
       font-size: 1.5rem !important;
@@ -2607,7 +2597,7 @@
     .carousel-nav-right {
      width: 30px !important;
      height: 30px !important;
-     top: 50% !important;
+     top: 45% !important;
      transform: translateY(-50%) !important;
      background-color: #8d0404 !important;
      color: white !important;
@@ -2652,13 +2642,13 @@
     padding: 10px 18px !important;
    }
 
-}
+
 
 @media (max-width: 850px) {
-     .home-hero-headline {
-      font-size: 3.6rem !important;
+     .home-hero-section .home-hero-headline {
+      font-size: 3.3rem !important;
        margin-bottom: 2rem !important;
-     }
+     }}
      
      .home-hero-description {
        margin-bottom: 0rem !important;
@@ -2668,7 +2658,7 @@
     margin-top: -2rem !important;
        }
     .home-main-image.large-image {
-      max-height: 420px !important;
+      max-height: 430px !important;
       height: auto !important;
       object-fit: contain !important; 
       width: 100% !important;
@@ -2679,31 +2669,49 @@
       width: 40px !important;
       height: 35px !important;
     }
+
+    .home-hero-section .carousel-image-container {
+      padding-top: 0rem !important;
+    }
+
+    .home-hero-section .hero-bullet span {
+      font-size: 1rem !important;
+    }
+
+    .home-hero-section .hero-bullet-icon {
+      font-size: 1.7rem !important;
+    }
+
+    .home-hero-section .home-hero-description {
+      font-size: 1.2rem !important;
+    }
+
+    .home-page-container {
+      padding: 1.2rem 2rem !important;
+    }
   
-   }
 
   @media (max-width: 830px) {
 
     .home-hero-headline {
       font-size: 3.4rem !important;
     }
-  
-    @media (max-width: 795px) {
-
-      .home-hero-headline {
-        font-size: 3.2rem !important;
-      }
-
+    .home-hero-section .home-hero-description {
+      font-size: 1.2rem !important;
     }
-   }
 
-   @media (max-width: 820px) {
-    .home-hero-section .home-hero-headline {
+    .home-page-container {
+      padding: 2rem 2rem !important;
+    }
+
+  }
+  
+  @media (max-width: 795px) {
+
+    .home-hero-headline {
       font-size: 3.2rem !important;
     }
-   }
-
-
+  }
   /* Hide pagination controls on larger screens */
   @media (min-width: 801px) {
     .fact-navigation,
@@ -2741,13 +2749,48 @@
     .marcd-solutions-content .solution-item {
       min-height: 230px !important;
     }
+
+    .home-hero-section .home-hero-headline {
+      font-size: 3.1rem !important;
+    }
+
+    .home-hero-section .home-hero-description {
+      font-size: 1.1rem !important;
+    }
   }
 
 
   /* Center on smaller screens */
   @media (max-width: 768px) {
     .home-hero-bullets {
-      justify-content: center;
+      gap: 0.6rem !important;
+    }
+
+    .home-hero-section .hero-bullet-icon {
+      font-size: 1.2rem !important;
+    }
+
+    .home-hero-section .hero-bullet span {
+      font-size: 1.2rem !important;
+    }
+    
+    .home-hero-section .hero-bullet {
+      gap: 0.2rem !important;
+    }
+  }
+  
+  /* Override the 768px rule for 750px and below */
+  @media (max-width: 750px) {
+    .home-hero-section .hero-bullet-icon {
+      font-size: 1.5rem !important;
+    }
+    
+    .home-hero-section .hero-bullet span {
+      font-size: 1.05rem !important;
+    }
+
+    .home-hero-bullets {
+      gap: 0.4rem !important;
     }
   }
 
@@ -2864,11 +2907,25 @@
     }
   }
 
-  @media (max-width: 670px) {
+  @media (max-width: 675px) {
     .home-hero-section .home-hero-headline {
-      font-size: 2.5rem !important;
+      font-size: 2.7rem !important;
+    }
+    
+    .home-hero-section .hero-bullet-icon {
+        font-size: 1.3rem !important;
+    }
+      
+    .home-hero-section .hero-bullet span {
+      font-size: 1rem !important;
+    }
+  
+    .home-hero-bullets {
+      gap: 0.5rem !important;
+      padding-bottom: 2.5rem !important;
     }
   }
+  
 
   @media (max-width: 650px) {
 
@@ -3061,7 +3118,7 @@
 
     .home-page-container {
       background: linear-gradient(135deg,  #000000  10%, #be0303d1 30%,  #be0303d1 70%, #0f1419 100%) !important;
-      padding: .3rem !important;
+      padding: .5rem 1.2rem !important;
     }
     /* Trucker Images Container - Overlapping circles in top right corner */
     .trucker-images-container {
@@ -3085,25 +3142,50 @@
       border: 2px solid rgba(255, 255, 255, 0.1) !important;
       transition: all 0.3s ease !important;
     }
+    /* Dark overlay circles in front of each trucker image */
+    .trucker-phone-overlay {
+      position: absolute !important;
+      top: 98px !important;
+      right: 10px !important;
+      width: 110px !important;
+      height: 110px !important;
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 50% !important;
+      z-index: 4 !important;
+      pointer-events: none !important;
+      border: 2px solid rgba(15, 14, 14, 0.6) !important;
+    }
 
-    /* Trucker Images Overlay - Light black overlay */
-    .trucker-images-overlay {
+    .trucker-happy-overlay {
       position: absolute !important;
       top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
+      right: 0 !important;
+      width: 110px !important;
+      height: 110px !important;
       background-color: rgba(0, 0, 0, 0.2) !important;
-      z-index: 5 !important;
-      pointer-events: none !important;
       border-radius: 50% !important;
+      z-index: 6 !important;
+      pointer-events: none !important;
+      border: 2px solid rgba(196, 195, 195, 0.6) !important;
+    }
+
+    .trucker-family-overlay {
+      position: absolute !important;
+      top: -60% !important; 
+      width: 130px !important;
+      height: 130px !important;
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 50% !important;
+      z-index: 2 !important;
+      pointer-events: none !important;
+      border: 2px solid rgba(126, 0, 23, 0.863) !important;
     }
 
     /* Image 1: Trucker on phone - bottom right */
     .trucker-phone {
       top: 98px !important;
-      right: 0 !important;
-      z-index: 2 !important;
+      right: 10px !important;
+      z-index: 3 !important;
       border-color: rgba(15, 14, 14, 0.6) !important;
     }
 
@@ -3111,7 +3193,7 @@
     .trucker-happy {
       top: 0 !important;
       right: 0 !important;
-      z-index: 3 !important;
+      z-index: 5 !important;
       border-color: rgba(196, 195, 195, 0.6) !important;
     }
 
@@ -3122,6 +3204,7 @@
       transform: translateY(-50%) !important;
       z-index: 1 !important;
       border-color: rgba(190, 3, 3, 0.6) !important;
+      top: -10% 
     }
 
     /* Hover effects for all images */
