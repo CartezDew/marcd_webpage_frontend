@@ -748,12 +748,13 @@
   
   .survey-intro-heading {
     text-align: left !important; /* Align heading to left */
-    font-size: 1.7rem !important; /* Slightly smaller for mobile */
+    font-size: 1.8rem !important; /* Slightly smaller for mobile */
+    margin-bottom: .5rem !important;
   }
   
   .survey-intro-text {
     text-align: left !important; /* Align text to left */
-    font-size: 1rem !important; /* Smaller font for mobile */
+    font-size: 1.35rem !important; /* Smaller font for mobile */
     max-width: 100%; /* Full width on small screens */
     margin: 0; /* Remove auto margins */
   }
@@ -764,12 +765,12 @@
   }
   
   .responses-subtitle {
-    font-size: 0.9rem !important;
+    font-size: 1rem !important;
     text-align: left !important;
   }
 
   .survey-social-proof-image {
-    max-width: 50% !important;
+    max-width: 60% !important;
     height: 90% !important;
   }
 }
