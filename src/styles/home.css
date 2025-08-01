@@ -1735,6 +1735,20 @@
   transform: translateY(50px);
   transition: all 0.6s ease-out;
   transition-delay: 0.2s;
+  padding-bottom: 1.5rem !important;
+}
+
+.marc-it-title::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -30px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 80% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #be0303 0%, #151515 50%, #be0303 100%) !important;
+  border-radius: 1px !important;
+
 }
 
 .marc-it-title.animate {
@@ -3652,8 +3666,37 @@
   @media (max-width: 500px) {
     .home-hero-section .home-hero-headline {
       font-size: 2.4rem !important;
+
+    }}  
+
+  @media (max-width: 500px) {
+      .marc-it-title {
+        font-size: 1.6rem !important;
+        text-align: left !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        line-height: 1.5 !important;
+        position: relative !important;
+        margin-bottom: 6rem !important;
+        margin-top: -1rem !important;
+      }
+      
+            /* Divider below Marc'd It title at 500px */
+      .marc-it-title::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -50px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 80% !important;
+        height: 2px !important;
+        background: linear-gradient(90deg, #be0303 0%, #151515 50%, #be0303 100%) !important;
+        border-radius: 1px !important;
+     
+      }
     }
-  }
+   
+
 
   @media (max-width: 490px) {
 
@@ -3762,9 +3805,8 @@
     }
 
     .marc-it-title {
-      font-size: 1.25rem !important;
-      margin-left: -28px !important;
-      margin-right: -28px !important;
+      font-size: 1.4rem !important;
+    
       
     }
   }
@@ -3911,7 +3953,8 @@
       }
 
     .marc-it-title {
-      font-size: 1.2rem !important;
+      margin-left: -5px !important;
+      margin-right: -5px !important;
     }
 
     .scroll-text {
@@ -3944,17 +3987,16 @@
   @media (max-width: 430px) {
     .home-hero-section .home-hero-headline {
       font-size: 2rem !important;
-    }
+    }}
 
+    @media (max-width: 430px) {
     .home-hero-description,
     .home-hero-section .home-hero-description {
       font-size: 1.2rem !important;
     }
          
     .marc-it-title {
-      font-size: 1.17rem !important;
-      margin-left: -25px !important;
-      margin-right: -25px !important;
+      font-size: 1.2rem !important;
     }
 
     .did-you-know-title {
@@ -3992,9 +4034,9 @@
 
     .home-hero-section .hero-button {
       font-size: 1rem !important;
-    }
+    }}
 
-  }
+  
 
 
   @media (max-width: 420px) {
@@ -4043,7 +4085,7 @@
     
       @media (max-width: 420px) {
         .marc-it-title {
-          font-size: 1.1rem !important;
+          font-size: 1.3rem !important;
         }
       }
 
@@ -4135,7 +4177,7 @@
       }
 
      .marc-it-title {
-       font-size:1rem !important;
+       font-size:1.25rem !important;
      }
 
      .marcd-solutions-content .solutions-text {
