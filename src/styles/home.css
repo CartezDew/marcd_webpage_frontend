@@ -1641,13 +1641,13 @@
   }
   
   .success-message {
-    color: #4caf50 !important;
+    color: #ff6b6b !important; /* Light red text */
     font-weight: bold !important;
     margin-top: 1rem !important;
     padding: 1rem !important;
-    background: rgba(76, 175, 80, 0.1) !important;
+    background: rgba(255, 107, 107, 0.1) !important; /* Light red background */
     border-radius: 8px !important;
-    border: 1px solid rgba(76, 175, 80, 0.3) !important;
+    border: 1px solid rgba(255, 107, 107, 0.3) !important; /* Red border */
   }
   
   .privacy-message {

@@ -377,6 +377,11 @@ function home() {
       setIsSubmitted(true);
       setEmail('');
       setEmailError('');
+      
+      // Auto-close waitlist screen after 5 seconds
+      setTimeout(() => {
+        handleCloseWaitlist();
+      }, 5000);
     } catch (error) {
       // Handle API errors
       console.error('Error adding to waitlist:', error);
@@ -1304,7 +1309,7 @@ function home() {
               
               {isSubmitted && (
                 <Typography className="success-message">
-                  🎉 Thank you! You've been added to our waitlist.
+                  Thank you! You've been added to our waitlist.
                 </Typography>
               )}
               
