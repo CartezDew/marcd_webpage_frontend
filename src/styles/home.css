@@ -3318,21 +3318,21 @@
      }
 
      .home-hero-section {
-      padding-bottom: 4rem !important;
+      padding-bottom: 5rem !important;
      }
   
     /* Small images (Main Hero and Landing Page) */
   .home-hero-section .home-main-image.small-image {
-    max-width: 450px !important;
+    max-width: 480px !important;
     margin: 0 auto !important;
-    height: 450px !important;
+    height: 480px !important;
     width: 100% !important;
     object-fit: contain !important;
     object-position: top center !important;
   }
   
   .home-main-image.large-image {
-    max-height: 510px !important;
+    max-height: 550px !important;
     height: auto !important;
     object-fit: contain !important; 
     width: 100% !important;
@@ -3556,14 +3556,14 @@
     }
 
     .home-hero-section .home-main-image.small-image {
-      max-width: 370px !important;
-      height: 370px !important;
+      max-width: 410px !important;
+      height: 410px !important;
       margin-bottom: 2rem !important;
     }
 
     .home-main-image.large-image {
-      max-height: 450px !important;
-      height: 450px !important;
+      max-height: 500px !important;
+      height: 500px !important;
     }
   
   }
@@ -3781,29 +3781,25 @@
 
      .home-main-image.large-image,
      .carousel-image-container .home-main-image.large-image {
-       max-height: 350px !important;
-       height: 350px !important;
+       max-height: 430px !important;
+       height: 430px !important;
      }
 
+
      .home-hero-section .home-main-image.small-image {
-      max-height: 330px !important;
-      height: 330px !important;
+      max-height: 390px !important;
+      height: 390px !important;
       object-fit: contain !important; 
       width: 100% !important;
       max-width: 100% !important;
      }
 
-     .home-hero-section .home-hero-image-carousel {
-      min-height: 450px !important;
-      overflow-x: hidden !important;
-      overflow-y: hidden !important;
-      padding-bottom: 10px !important;
-      margin-bottom: 50px !important;
-      }
-
-     .home-hero-image-carousel {
-       max-height: 300px !important;
+     .home-hero-section {
+      padding-bottom: 1rem !important;
      }
+
+     
+
 
      .social-proof-image {
       width: 38% !important;
@@ -4029,17 +4025,17 @@
     }
 
     .home-hero-section .home-main-image.small-image {
-      max-height: 290px !important;
-      height: 290px !important;
-    }
-
-    .home-hero-section .home-main-image.large-image {
       max-height: 320px !important;
       height: 320px !important;
     }
+
+    .home-hero-section .home-main-image.large-image {
+      max-height: 390px !important;
+      height: 390px !important;
+    }
            /* Target the carousel container more aggressively */
     .home-hero-section .home-hero-image-carousel {
-      min-height: 390px !important;
+      min-height: 500px !important;
       overflow-x: hidden !important;
       overflow-y: hidden !important;
   
@@ -4050,6 +4046,10 @@
           font-size: 1.1rem !important;
         }
       }
+
+      .home-hero-section {
+        padding-bottom: 3rem !important;
+       }
     }
 
       @media (max-width: 415px) {
@@ -4240,19 +4240,23 @@
 
   @media (max-width: 365px) {
     .home-hero-section .home-main-image.small-image {
-      max-height: 250px !important;
-      height: 250px !important;
+      max-height: 290px !important;
+      height: 290px !important;
     }
 
     .home-hero-section .home-main-image.large-image {
-      max-height: 280px !important;
-      height: 280px !important;
+      max-height: 320px !important;
+      height: 320px !important;
     }
 
     .home-hero-section .hero-button{
       font-size: 1rem !important;
       padding: 8px 8px !important;
     }
+
+    .home-hero-section {
+      padding-bottom: 0rem !important;
+     }
 
   }
 
