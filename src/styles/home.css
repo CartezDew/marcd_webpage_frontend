@@ -3312,15 +3312,40 @@
     max-width: 100% !important;
   }
   
-  .carousel-nav-left,
+  .carousel-nav-left {
+    background-color: #212121 !important;
+    color: white !important;
+    left: 35px !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
   .carousel-nav-right {
     background-color: #212121 !important;
     color: white !important;
+    right: 35px !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* Improve touch experience for carousel */
+  .carousel-image-container {
+    touch-action: pan-y pinch-zoom !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
   }
   
+  .carousel-nav-left:hover,
+  .carousel-nav-right:hover {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    color: white !important;
+  }
+
   .carousel-nav-left:active,
   .carousel-nav-right:active {
-    background-color: #be0303 !important;
+    background-color: rgba(0, 0, 0, 0.9) !important;
     color: white !important;
   }
   
