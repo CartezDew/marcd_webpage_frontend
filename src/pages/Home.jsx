@@ -24,6 +24,7 @@ import socialProofImg from '../assets/Social_Proof.png';
 import truckerWithFamilyImg from '../assets/Trucker_with_family.jpg';
 import truckerOnPhoneImg from '../assets/Trucker_on_phone.jpg';
 import happyTrucker1Img from '../assets/Happy_Truckers_1.jpg';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
 // Video imports
 const truckParkingVideo = '/videos/Truck_Parking_Home_Page.mp4';
@@ -1329,6 +1330,7 @@ function home() {
             <br />
             <br />
             We have a place to Marc It!
+            <GpsFixedIcon style={{ color: '#2E0000', marginLeft: '0.8rem' }} />
           </Typography>
           
           {/* Words scrolling to the right */}
