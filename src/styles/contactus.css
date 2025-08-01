@@ -301,6 +301,15 @@
       padding: 8px 16px !important;
       font-size: 0.85rem !important;
     }
+    
+    /* Prevent mobile zoom on all input fields */
+    .MuiInputBase-input,
+    .MuiTextField-root input,
+    .MuiTextField-root textarea,
+    .MuiFormControl-root input,
+    .MuiFormControl-root textarea {
+      font-size: 16px !important;
+    }
   }
 
 
@@ -440,6 +449,14 @@
     
     /* Input field font size - prevent mobile zoom */
     .MuiInputBase-input {
+      font-size: 16px !important; /* Prevent mobile zoom */
+    }
+    
+    /* Additional mobile zoom prevention for all input types */
+    .MuiTextField-root input,
+    .MuiTextField-root textarea,
+    .MuiFormControl-root input,
+    .MuiFormControl-root textarea {
       font-size: 16px !important; /* Prevent mobile zoom */
     }
     

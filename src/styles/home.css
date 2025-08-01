@@ -1563,6 +1563,13 @@
     box-sizing: border-box;
   }
   
+  /* Prevent mobile zoom on email input */
+  @media (max-width: 768px) {
+    .email-input-field {
+      font-size: 16px !important;
+    }
+  }
+  
   .email-input-field:focus {
     outline: 2px solid rgba(255, 255, 255, 0.8);
     background: rgba(255, 255, 255, 0.15);
@@ -3796,6 +3803,10 @@
 
      .home-hero-image-carousel {
        max-height: 300px !important;
+     }
+
+     .social-proof-image {
+      width: 38% !important;
      }
     }
 
