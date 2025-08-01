@@ -217,9 +217,9 @@
     display: inline-block;
     margin-top: -1rem !important;
     margin-bottom: 3rem !important;
-    padding: 3px;
+    padding: 1px;
     border-radius: 12px;
-    background: linear-gradient(45deg, #959494, #710101, #be0303, #101010);
+    /* background: linear-gradient(45deg, #959494, #710101, #be0303, #101010); */
     background-size: 200% 200%;
     animation: gradientShift 9s ease infinite;
     opacity: 0;
@@ -3401,7 +3401,6 @@
   }
 
   .home-hero-section .hero-button {
-    border: 1px solid #858181 !important;
     font-size: 1.3rem !important;
     padding: 10px 20px !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
