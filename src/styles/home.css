@@ -3142,43 +3142,17 @@
       border: 2px solid rgba(255, 255, 255, 0.1) !important;
       transition: all 0.3s ease !important;
     }
-    /* Dark overlay circles in front of each trucker image */
-    .trucker-phone-overlay {
-      position: absolute !important;
-      top: 98px !important;
-      right: 10px !important;
-      width: 110px !important;
-      height: 110px !important;
-      background-color: rgba(0, 0, 0, 0.2) !important;
-      border-radius: 50% !important;
-      z-index: 4 !important;
-      pointer-events: none !important;
-      border: 2px solid rgba(15, 14, 14, 0.6) !important;
+    /* Trucker images with darkening filter */
+    .trucker-phone {
+      filter: brightness(0.8) contrast(1.1) !important;
     }
 
-    .trucker-happy-overlay {
-      position: absolute !important;
-      top: 0 !important;
-      right: 0 !important;
-      width: 110px !important;
-      height: 110px !important;
-      background-color: rgba(0, 0, 0, 0.2) !important;
-      border-radius: 50% !important;
-      z-index: 6 !important;
-      pointer-events: none !important;
-      border: 2px solid rgba(196, 195, 195, 0.6) !important;
+    .trucker-happy {
+      filter: brightness(0.8) contrast(1.1) !important;
     }
 
-    .trucker-family-overlay {
-      position: absolute !important;
-      top: -60% !important; 
-      width: 130px !important;
-      height: 130px !important;
-      background-color: rgba(0, 0, 0, 0.2) !important;
-      border-radius: 50% !important;
-      z-index: 2 !important;
-      pointer-events: none !important;
-      border: 2px solid rgba(126, 0, 23, 0.863) !important;
+    .trucker-family {
+      filter: brightness(0.8) contrast(1.1) !important;
     }
 
     /* Image 1: Trucker on phone - bottom right */
@@ -3250,17 +3224,24 @@
       font-size: 0.7rem;
     }
 
-    .home-hero-text {
-      padding-top: 1rem !important;
-    }
     .home-hero-section .home-hero-headline {
-      font-size: 3.2rem !important;
+      font-size: 3.25rem !important;
       margin-bottom: 4rem !important;
+      margin-top: 1rem !important;
     }
 
-    .home-hero-description {
-      font-size: 1.4rem !important;
+    .home-hero-section .home-hero-description {
+      font-size: 1.5rem !important;
       font-family: 'Poppins', sans-serif !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .home-hero-section .hero-bullet span {
+      font-size: 1.4rem !important;
+    }
+
+    .home-hero-section .hero-bullet-icon {
+      font-size: 2rem !important;
     }
 
     .social-proof-text {

@@ -915,7 +915,6 @@ function home() {
               delay: 1.4 // First card
             }}
           />
-          <div className="trucker-phone-overlay"></div>
           <motion.img 
             src={happyTrucker1Img} 
             alt="Happy trucker" 
@@ -943,7 +942,6 @@ function home() {
               delay: 1.6 // Second card
             }}
           />
-          <div className="trucker-happy-overlay"></div>
           <motion.div
             style={{
               position: 'absolute',
@@ -986,7 +984,7 @@ function home() {
                 transition: 'all 0.3s ease'
               }}
             />
-            <div className="trucker-family-overlay"></div>
+
           </motion.div>
         </motion.div>
         {/* Left Column - Text Content */}
