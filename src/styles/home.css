@@ -334,21 +334,16 @@
   }
   
   .carousel-image-container {
-    position: relative;
-    min-width:300px;
-    max-width: 100%;
     border-radius: 12px;
     overflow: visible;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Ensure consistent image sizing */
+    align-items: flex-start;
+    justify-content: flex-start;
     width: 100%;
-    height: 100%;
-    /* Adjust container for different image sizes */
-    min-height: 400px;
+    height: auto;
     padding-top: 4rem;
   }
+  
   .home-hero-image-carousel {
     flex: 1 1 50%;
     min-width: 500px;
@@ -378,10 +373,9 @@
 
   /* Small images (Main Hero and Landing Page) */
 .home-main-image.small-image {
-  max-width: 800px !important;
   margin: 0 auto !important;
-  height: 700px !important;
-  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
   object-fit: contain !important;
   object-position: top center !important;
 }
@@ -2004,6 +1998,18 @@
       height: calc(100% - 10px) !important;
     }
 
+    .home-hero-section .hero-bullet-icon {
+      font-size: 1.8rem !important;
+    }
+    .home-hero-section .hero-bullet span {
+      font-size: 1.4rem !important;
+
+    }
+
+    .home-hero-section .hero-bullet {
+      margin-bottom: 1rem !important;
+    }
+
     
 @media (min-width: 1155px) {
     
@@ -2096,10 +2102,6 @@
     max-height: 50px;
   }
     
-  .social-proof-text {
-    font-size: 1.1rem;
-  }
-    
   .carousel-image-container {
     min-width: 300px;
     min-height: 300px;
@@ -2167,7 +2169,7 @@
   }
 
   .social-proof-text {
-    font-size: 1rem !important;
+    font-size: 1.1rem !important;
     color: #666;
     text-align: left;
     opacity: 0.8;
