@@ -90,6 +90,10 @@ function home() {
   const [totalImages, setTotalImages] = useState(0);
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
   const [contentReady, setContentReady] = useState(false);
+  const [videosLoaded, setVideosLoaded] = useState({
+    didYouKnow: false,
+    solutions: false
+  });
   
   // Trucker images animation
   const truckerImagesRef = useRef(null);
@@ -341,10 +345,10 @@ function home() {
       };
     }
 
-    // Load videos after images are done
+    // Start loading videos independently after content is ready (don't wait for them)
     const videoTimer = setTimeout(() => {
       setShouldLoadVideos(true);
-    }, 500);
+    }, 2000); // Start videos later, after main content loads
 
     return () => {
       clearTimeout(videoTimer);
@@ -1534,6 +1538,21 @@ function home() {
       {/* Did You Know Section */}
       <Box className={`did-you-know-section ${isDidYouKnowVisible ? 'visible' : ''}`} ref={didYouKnowRef}>
         <div className="video-overlay"></div>
+        
+        {/* Video background placeholder */}
+        {!videosLoaded.didYouKnow && (
+          <div className="video-placeholder-background" style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+            zIndex: 0,
+            borderRadius: '12px'
+          }}></div>
+        )}
+        
         {shouldLoadVideos && (
           <video 
             autoPlay 
@@ -1543,6 +1562,12 @@ function home() {
             preload="none"
             className="background-video"
             loading="lazy"
+            onLoadedData={() => setVideosLoaded(prev => ({ ...prev, didYouKnow: true }))}
+            onError={() => console.log('Did You Know video failed to load')}
+            style={{
+              opacity: videosLoaded.didYouKnow ? 1 : 0,
+              transition: 'opacity 1s ease-in-out'
+            }}
           >
             <source src={truckParkingVideo} type="video/mp4" />
             Your browser does not support the video tag.
@@ -1738,6 +1763,21 @@ function home() {
       {/* Marc'd Solutions Section */}
       <Box className={`marcd-solutions-section ${isSolutionsVisible ? 'visible' : ''}`} ref={solutionsRef}>
         <div className="video-overlay"></div>
+        
+        {/* Video background placeholder */}
+        {!videosLoaded.solutions && (
+          <div className="video-placeholder-background" style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+            zIndex: 0,
+            borderRadius: '12px'
+          }}></div>
+        )}
+        
         {shouldLoadVideos && (
           <video 
             autoPlay 
@@ -1747,6 +1787,12 @@ function home() {
             preload="none"
             className="background-video"
             loading="lazy"
+            onLoadedData={() => setVideosLoaded(prev => ({ ...prev, solutions: true }))}
+            onError={() => console.log('Solutions video failed to load')}
+            style={{
+              opacity: videosLoaded.solutions ? 1 : 0,
+              transition: 'opacity 1s ease-in-out'
+            }}
           >
             <source src={truckParkingVideo} type="video/mp4" />
             Your browser does not support the video tag.
