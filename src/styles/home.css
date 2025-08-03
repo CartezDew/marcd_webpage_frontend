@@ -576,7 +576,8 @@
   /* Did You Know Section */
   .did-you-know-section {
     width: 100%;
-    min-height: 100vh;
+    min-height: auto;
+    height: auto;
     position: relative;
     overflow: visible;
     margin-bottom: 6rem;
@@ -1031,7 +1032,8 @@
   /* Marc'd Solutions Section */
   .marcd-solutions-section {
     width: 100%;
-    min-height: 100vh;
+    min-height: auto;
+    height: auto;
     position: relative;
     overflow: visible;
     border-radius: 12px;
