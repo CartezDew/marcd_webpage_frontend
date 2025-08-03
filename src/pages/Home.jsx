@@ -8,6 +8,7 @@ import { motion, AnimatePresence, useTime, useTransform, useSpring, useInView } 
 import { validateWaitlistEmail, validateEmailRealTime, validateEmailOnSubmit } from '../utils/emailValidation';
 import { useWaitlist } from '../context/WaitlistContext';
 import { addToWaitlist } from '../services/users';
+import AppLoading from '../components/AppLoading';
 import '../styles/home.css';
 
 import Main_Hero_Img from '../assets/App_Marc-d_Main_Page.png';
@@ -26,7 +27,7 @@ import truckerOnPhoneImg from '../assets/Trucker_on_phone.jpg';
 import happyTrucker1Img from '../assets/Happy_Truckers_1.jpg';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
-// Video imports
+// Video imports - will be loaded lazily
 const truckParkingVideo = '/videos/Truck_Parking_Home_Page.mp4';
 
 // Import scroll images
@@ -80,6 +81,15 @@ function home() {
   const [isManualScrolling, setIsManualScrolling] = useState(false);
   const [currentFactPage, setCurrentFactPage] = useState(0);
   const [currentSolutionPage, setCurrentSolutionPage] = useState(0);
+  
+  // Progressive loading states
+  const [shouldLoadVideos, setShouldLoadVideos] = useState(false);
+  const [shouldLoadImages, setShouldLoadImages] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Show loading screen initially
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [totalImages, setTotalImages] = useState(0);
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
   
   // Trucker images animation
   const truckerImagesRef = useRef(null);
@@ -222,6 +232,131 @@ function home() {
       });
     }
   }, []);
+
+  // Progressive loading effect
+  useEffect(() => {
+    // Count critical images (carousel images and main hero images)
+    const criticalImages = [
+      Main_Hero_Img,
+      Landing_Page_Img,
+      Statistics_Img,
+      Parking_Img,
+      Places_Img,
+      Navigation_Img,
+      Alerts_Img,
+      socialProofImg,
+      launchingSoonImg
+    ];
+
+    setTotalImages(criticalImages.length);
+
+    // Check if content is already cached/ready
+    const checkIfImagesAreCached = () => {
+      let cachedCount = 0;
+      
+      criticalImages.forEach((imageSrc) => {
+        const img = new Image();
+        img.onload = () => {
+          cachedCount++;
+          if (cachedCount === criticalImages.length) {
+            // All images are cached, content is ready
+            setContentReady(true);
+            setImagesLoaded(criticalImages.length);
+            setIsLoading(false);
+          }
+        };
+        img.onerror = () => {
+          cachedCount++;
+          if (cachedCount === criticalImages.length) {
+            setContentReady(true);
+            setImagesLoaded(criticalImages.length);
+            setIsLoading(false);
+          }
+        };
+        img.src = imageSrc;
+      });
+    };
+
+    // Start loading images immediately
+    setShouldLoadImages(true);
+
+    // Check if images are already cached
+    checkIfImagesAreCached();
+
+    // If not cached, show loading with minimum time
+    if (!contentReady) {
+      // Minimum 1-second timer (reduced since we're being smarter)
+      const minTimeTimer = setTimeout(() => {
+        setMinTimeElapsed(true);
+      }, 1000);
+
+      // Preload critical images if not cached
+      let loadedCount = 0;
+      let allImagesLoaded = false;
+      
+      const checkIfCanHideLoading = () => {
+        // Only hide loading if all conditions are met and content isn't already ready
+        if (allImagesLoaded && minTimeElapsed && !isWaitlistVisible && !contentReady) {
+          setTimeout(() => {
+            setIsLoading(false);
+            setContentReady(true);
+          }, 200);
+        }
+      };
+      
+      criticalImages.forEach((imageSrc) => {
+        const img = new Image();
+        img.onload = () => {
+          loadedCount++;
+          setImagesLoaded(loadedCount);
+          
+          if (loadedCount >= criticalImages.length) {
+            allImagesLoaded = true;
+            checkIfCanHideLoading();
+          }
+        };
+        img.onerror = () => {
+          loadedCount++;
+          setImagesLoaded(loadedCount);
+          
+          if (loadedCount >= criticalImages.length) {
+            allImagesLoaded = true;
+            checkIfCanHideLoading();
+          }
+        };
+        img.src = imageSrc;
+      });
+
+      // Fallback: hide loading after maximum 3 seconds (unless waitlist is visible)
+      const fallbackTimer = setTimeout(() => {
+        if (!isWaitlistVisible) {
+          setIsLoading(false);
+          setContentReady(true);
+        }
+      }, 3000);
+
+      return () => {
+        clearTimeout(minTimeTimer);
+        clearTimeout(fallbackTimer);
+      };
+    }
+
+    // Load videos after images are done
+    const videoTimer = setTimeout(() => {
+      setShouldLoadVideos(true);
+    }, 500);
+
+    return () => {
+      clearTimeout(videoTimer);
+    };
+  }, [minTimeElapsed, isWaitlistVisible, contentReady]);
+
+  // Hide loading overlay immediately when waitlist becomes visible
+  useEffect(() => {
+    if (isWaitlistVisible) {
+      setIsLoading(false);
+    }
+  }, [isWaitlistVisible]);
 
   // Calculate arrow position based on carousel container center
   useEffect(() => {
@@ -880,8 +1015,41 @@ function home() {
     }
   };
 
+
   return (
     <Box className="home-page-container">
+      {/* Loading Overlay - Only show if waitlist is not visible */}
+      {isLoading && !isWaitlistVisible && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+          }}
+        >
+          <AppLoading />
+          {totalImages > 0 && (
+            <Typography
+              variant="body2"
+              sx={{
+                mt: 2,
+                color: 'text.secondary',
+                textAlign: 'center'
+              }}
+            >
+              Loading images... {imagesLoaded}/{totalImages}
+            </Typography>
+          )}
+        </Box>
+      )}
       {/* Home Hero Section - Full Viewport */}
       <Box className="home-hero-section" ref={aboutRef}>
         
@@ -1366,17 +1534,20 @@ function home() {
       {/* Did You Know Section */}
       <Box className={`did-you-know-section ${isDidYouKnowVisible ? 'visible' : ''}`} ref={didYouKnowRef}>
         <div className="video-overlay"></div>
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          preload="metadata"
-          className="background-video"
-        >
-          <source src={truckParkingVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {shouldLoadVideos && (
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            preload="none"
+            className="background-video"
+            loading="lazy"
+          >
+            <source src={truckParkingVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
         <Box className="did-you-know-content">
           <motion.div
             ref={didYouKnowTitleRef}
@@ -1401,7 +1572,7 @@ function home() {
             }}
           >
             <Typography variant="h3" className="did-you-know-title">
-              <img src={truckIcon} alt="Truck" className="truck-icon" />
+              {shouldLoadImages && <img src={truckIcon} alt="Truck" className="truck-icon" loading="lazy" />}
               Did You Know?
             </Typography>
           </motion.div>
@@ -1506,8 +1677,8 @@ function home() {
                   {fact.stat && fact.stat !== "image" && fact.stat !== "icon" && (
                     <Typography className="fact-stat">{fact.stat}</Typography>
                   )}
-                  {fact.stat === "image" && fact.statImage && (
-                    <img src={fact.statImage} alt="Healthy food" className="fact-stat-image" />
+                  {fact.stat === "image" && fact.statImage && shouldLoadImages && (
+                    <img src={fact.statImage} alt="Healthy food" className="fact-stat-image" loading="lazy" />
                   )}
                   {fact.stat === "icon" && fact.statIcon && (
                     <fact.statIcon className="fact-stat-icon" />
@@ -1567,17 +1738,20 @@ function home() {
       {/* Marc'd Solutions Section */}
       <Box className={`marcd-solutions-section ${isSolutionsVisible ? 'visible' : ''}`} ref={solutionsRef}>
         <div className="video-overlay"></div>
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          preload="metadata"
-          className="background-video"
-        >
-          <source src={truckParkingVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {shouldLoadVideos && (
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            preload="none"
+            className="background-video"
+            loading="lazy"
+          >
+            <source src={truckParkingVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
         <Box className="marcd-solutions-content">
           <motion.div
             ref={solutionsTitleRef}
@@ -1616,7 +1790,7 @@ function home() {
                 detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally, save time, fuel, and avoid violations."
               },
               {
-                icon: <img src={healthFoodImg} alt="Healthy food" className="solution-stat-image" />,
+                icon: shouldLoadImages ? <img src={healthFoodImg} alt="Healthy food" className="solution-stat-image" loading="lazy" /> : <div className="solution-stat-image-placeholder" />,
                 title: "Wellness support",
                 text: "Locates cleaner stops, healthier food, even halal options, so you can take care of yourself on the road.",
                 detail: "Find truck stops with healthy meal options, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it while on the road."

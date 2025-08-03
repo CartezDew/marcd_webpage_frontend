@@ -25,7 +25,7 @@ const AppLoading = () => {
           component="img"
           src={logo}
           alt="Marc'd Logo"
-          sx={{ width: 140, height: "auto", mb: 1 }}
+          sx={{ width: 200, height: "auto", mb: 1 }}
         />
 
         {/* Spinner */}
