@@ -3720,13 +3720,13 @@
   
 
     .fact-detail {
-      font-size: 0.8rem !important;
+      font-size: 0.9rem !important;
       text-align: left !important;
     }
 
     .fact-text {
       text-align: left !important;
-      font-size: 0.9rem !important;
+      font-size: .95rem !important;
     }
 
     .trucker-image {
@@ -3938,11 +3938,11 @@
      @media (max-width: 455px) {
 
       .fact-text {
-        font-size: 0.7rem !important;
+        font-size: 0.9rem !important;
       }
   
       .fact-detail {
-        font-size: 0.75rem !important;
+        font-size: 0.9rem !important;
       }
 
       .home-page-container {
