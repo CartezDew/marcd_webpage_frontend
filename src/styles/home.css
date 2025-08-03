@@ -3177,7 +3177,7 @@
 
     .home-page-container {
       background: linear-gradient(135deg,  #000000  10%, #be0303d1 30%,  #be0303d1 70%, #0f1419 100%) !important;
-      padding: 0rem 1rem !important;
+      padding: 0rem .5rem !important;
     }
     /* Trucker Images Container - Overlapping circles in top right corner */
     .trucker-images-container {
