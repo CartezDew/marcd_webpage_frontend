@@ -2733,6 +2733,19 @@
     }
   }
 
+  @media (max-width: 770px) {
+    /* Move expand buttons to top right corner for "How Marc'd Solves These Problems" cards */
+    .marcd-solutions-content .solution-item .expand-arrow {
+      position: absolute !important;
+      top: 10px !important;
+      right: 10px !important;
+      bottom: auto !important;
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 0.8rem !important;
+    }
+  }
+
 
   /* Center on smaller screens */
   @media (max-width: 768px) {
@@ -2844,11 +2857,11 @@
      }
 
      .marcd-solutions-content .solutions-title {
-       font-size: 2rem !important;
+       font-size: 1.9rem !important;
      }
 
      .marcd-solutions-content .solution-text {
-       font-size: 0.87rem !important;
+       font-size: .92rem !important;
        font-weight: 400 !important;
      }
 
@@ -3414,7 +3427,7 @@
   }
 
   .marcd-solutions-content .solution-text {
-    font-size: .9rem !important;
+    font-size: 1rem !important;
     text-align: left !important;
   }
 
@@ -3696,7 +3709,7 @@
   @media (max-width: 490px) {
 
     .marcd-solutions-content .solution-text{
-      font-size: 0.9rem !important;
+      font-size: 0.95rem !important;
       text-align: left !important;
     }
 
@@ -4175,16 +4188,12 @@
        font-size:1.25rem !important;
      }
 
-     .marcd-solutions-content .solutions-text {
-       font-size: 0.8rem !important;
-     }
-
     .marcd-solutions-content .solution-text {
-      font-size: 0.75rem !important;
+      font-size: 0.85rem !important;
     }
 
          .marcd-solutions-content .solution-detail {
-       font-size: 0.8rem !important;
+       font-size: 0.85rem !important;
      }
 
      /* Move expand buttons to top right corner for "Did You Know" cards */
