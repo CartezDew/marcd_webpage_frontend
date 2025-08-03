@@ -1522,65 +1522,6 @@
     box-sizing: border-box;
   }
   
-  /* Prevent mobile zoom on email input */
-  @media (max-width: 768px) {
-    .email-input-field {
-      font-size: 16px !important;
-    }
-  }
-  
-  .email-input-field:focus {
-    outline: 2px solid rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.15);
-  }
-  
-  .email-input-field::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-  }
-  
-  .join-button {
-    background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;;
-    border: none;
-    border-radius: 50px;
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    animation: subtleJoinPulse 2s ease-in-out infinite;
-    
-    position: absolute;
-    top: 10%;
-    right: 5px;
-    height: 80%;
-    aspect-ratio: 2.5;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .error-message {
-    color: #ff6b6b !important;
-    font-size: 0.9rem !important;
-    margin-top: 0.5rem !important;
-    text-align: center !important;
-  }
-  
-  .join-button:hover {
-    opacity: 0.8;
-    transform: scale(1.05);
-    animation-play-state: paused; /* Pause the pulse animation on hover */
-    box-shadow: 0 8px 25px rgba(60, 0, 3, 0.5);
-  }
-  
-  .join-button:disabled {
-    background: rgba(255, 255, 255, 0.3) !important;
-    color: rgba(255, 255, 255, 0.5) !important;
-    cursor: not-allowed !important;
-    /* Keep the animation even when disabled but with reduced intensity */
-    animation: subtleJoinPulseDisabled 2.5s ease-in-out infinite !important;
-  }
 
   /* Reduced animation for disabled state */
   @keyframes subtleJoinPulseDisabled {
@@ -2393,6 +2334,64 @@
   }
 }
 
+/* Joinwaitlist styles for screens below 900px */
+@media (max-width: 899px) {
+  .waitlist-title {
+    font-size: 2rem !important;
+  }
+
+  .waitlist-description,
+  .MuiTypography-root.waitlist-description {
+    font-size: 1rem !important;
+  }
+
+  .launching-soon-image {
+    max-width: 300px !important;
+  }
+
+  .perks-title {
+    font-size: 1rem !important;
+  }
+
+  .waitlist-content {
+    max-width: 95vw !important;
+    padding: 1rem !important;
+  }
+}
+
+/* Joinwaitlist styles for screens 900px and above */
+@media (min-width: 900px) {
+  .home-page-container .waitlist-content {
+    padding: 2rem 0rem 0rem 0rem !important;
+  }
+
+
+  .waitlist-title {
+    font-size: 2.5rem !important;
+  }
+
+  .waitlist-description,
+  .MuiTypography-root.waitlist-description {
+    font-size: 1.2rem !important;
+  }
+
+  .launching-soon-image {
+    max-width: 400px !important;
+  }
+
+  .perks-title {
+    font-size: 1.4rem !important;
+  }
+
+  .waitlist-content {
+    max-width: 600px !important;
+    padding: 2rem !important;
+  }
+  .privacy-message {
+    padding-bottom: 1.5rem !important;
+  }
+}
+
 @media (max-width: 900px) {
 
   .home-hero-section .home-hero-description {
@@ -2432,22 +2431,6 @@
       padding-top: 2rem !important;
     }
   
-    .waitlist-title {
-      font-size: 1.2rem !important;
-    }
-  
-    .waitlist-description,
-    .MuiTypography-root.waitlist-description {
-      font-size: 1.2rem !important;
-    }
-  
-    .launching-soon-image {
-      max-width: 400px !important;
-    }
-  
-    .perks-title {
-      font-size: 1.2rem !important;
-    }
   
     .home-hero-section {
       min-height: auto !important;
@@ -2591,9 +2574,6 @@
     overflow: visible !important;
   }
 
-  .perks-title {
-   font-size: 1.1rem !important;
-  }
 
   .home-hero-section .hero-button {
    font-size: 1.2rem !important;
@@ -2753,6 +2733,66 @@
       font-size: 0.8rem !important;
     }
   }
+
+    /* Prevent mobile zoom on email input */
+    @media (max-width: 768px) {
+      .email-input-field {
+        font-size: 16px !important;
+      }
+    }
+    
+    .email-input-field:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .email-input-field::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .join-button {
+      background: linear-gradient(135deg, #0a0909, #be0303, #be0303) !important;;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: subtleJoinPulse 2s ease-in-out infinite;
+      
+      position: absolute;
+      top: 10%;
+      right: 5px;
+      height: 80%;
+      aspect-ratio: 2.5;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .error-message {
+      color: #ff6b6b !important;
+      font-size: 0.9rem !important;
+      margin-top: 0.5rem !important;
+      text-align: center !important;
+    }
+    
+    .join-button:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+      animation-play-state: paused; /* Pause the pulse animation on hover */
+      box-shadow: 0 8px 25px rgba(60, 0, 3, 0.5);
+    }
+    
+    .join-button:disabled {
+      background: rgba(255, 255, 255, 0.3) !important;
+      color: rgba(255, 255, 255, 0.5) !important;
+      cursor: not-allowed !important;
+      /* Keep the animation even when disabled but with reduced intensity */
+      animation: subtleJoinPulseDisabled 2.5s ease-in-out infinite !important;
+    }
 
 
   /* Center on smaller screens */

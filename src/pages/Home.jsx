@@ -622,7 +622,7 @@ function home() {
         const element = marcItRef.current;
         if (element) {
           const elementBottom = element.offsetTop + element.offsetHeight;
-          const scrollTop = elementBottom - window.innerHeight + 170; // 170px buffer from bottom
+          const scrollTop = elementBottom - window.innerHeight + 50; // 170px buffer from bottom
           window.scrollTo({
             top: scrollTop,
             behavior: 'smooth'
