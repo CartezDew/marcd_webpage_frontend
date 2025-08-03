@@ -59,14 +59,12 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0rem 0rem;
-    padding-bottom: 8rem;
+    padding: 2rem 0rem;
     gap: clamp(1rem, 2vw + 1rem, 1rem);
-    /* border-color: #03be44d1;
     border-width: 2px;
-    border-style: solid;
-    border-radius: 12px;
-    width: 100%; */
+    margin-bottom: 4rem;
+  
+    width: 100%;
   }
 
   @media (min-width: 1200px) {
@@ -74,9 +72,13 @@
       max-width: 100%;
       width: 100%;
       padding: 0 2rem;
+      min-height: 100vh;
     }
     
     /* Remove left padding for social proof container to align flush left */
+
+
+
     .home-hero-section .social-proof-container {
       margin-left: -2rem;
       padding-left: 2rem;
@@ -1924,6 +1926,10 @@
 
   @media (max-width: 1230px) {
 
+    .home-hero-section {
+      margin-bottom: 3rem;
+    }
+
     .home-hero-section .home-hero-text {
       padding-top: 1rem !important;
     }}
@@ -2075,7 +2081,8 @@
 
   /* Home Hero Section - Full Viewport */
   .home-hero-section {
-    min-height: 100vh !important;
+    min-height: auto !important;
+    height: auto !important;
     display: flex !important;
     flex-direction: row !important;
     justify-content: space-between !important;
@@ -2443,7 +2450,8 @@
     }
   
     .home-hero-section {
-      min-height: 100vh !important;
+      min-height: auto !important;
+      height: auto !important;
       display: flex !important;
       flex-direction: row !important;
       justify-content: space-between !important;
@@ -3199,13 +3207,16 @@
 
     /* Ensure the hero section has relative positioning for absolute positioning of image */
     .home-hero-section {
-      min-height: 100vh !important;
+      min-height: auto !important;
+      height: auto !important;
       position: relative !important;
     }
 
     .home-hero-section {
-      min-height: 100vh !important;
+      min-height: auto !important;
+      height: auto !important;
       flex-direction: column !important;
+      margin-bottom: 0rem !important;
     }
     
     /* Hero bullets mobile styling */
