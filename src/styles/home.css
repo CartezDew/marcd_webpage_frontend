@@ -574,9 +574,9 @@
   /* Did You Know Section */
   .did-you-know-section {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     margin-bottom: 6rem;
     border-radius: 12px;
     box-shadow: 
@@ -584,6 +584,9 @@
     0 8px 16px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(8, 7, 7, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: auto;
 }
 
 
@@ -609,21 +612,20 @@
   }
 
   .did-you-know-content {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 100%;
-    top: 0;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     color: white;
-    padding: 0rem 2rem 3rem 2rem;
+    padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%);
     box-sizing: border-box;
+    flex: 1;
+    overflow: visible;
   }
 
   .did-you-know-title {
@@ -654,6 +656,8 @@
     width: 100%;
     max-width: 1200px;
     align-items: start;
+    height: auto;
+    min-height: fit-content;
   }
 
   .fact-item {
@@ -674,6 +678,8 @@
   .fact-item.expanded {
     height: auto;
     min-height: 200px;
+    max-height: none;
+    overflow: visible;
   }
 
   .did-you-know-section.visible .fact-item {
@@ -700,38 +706,7 @@
     }
   }
 
-  .fact-item[title] {
-    position: relative;
-  }
 
-  .fact-item[title]:hover::after {
-    content: attr(title);
-    position: absolute;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
-    z-index: 1000;
-    pointer-events: none;
-    opacity: 0;
-    animation: tooltipFadeIn 0.1s ease-out forwards;
-  }
-
-  @keyframes tooltipFadeIn {
-    from {
-      opacity: 0;
-      transform: translateX(-50%) translateY(-5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  }
 
   .fact-item:hover {
     transform: translateY(-3px);
@@ -1148,31 +1123,7 @@
   .marcd-solutions-section.visible .solution-item:nth-child(4) { animation-delay: 0.4s; }
   .marcd-solutions-section.visible .solution-item:nth-child(5) { animation-delay: 0.5s; }
 
-  .marcd-solutions-content .solution-item[title] {
-    position: relative;
-  }
 
-  .marcd-solutions-content .solution-item[title]:hover::after {
-    content: attr(title);
-    position: absolute;
-    top: -45px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
-    z-index: 1000;
-    pointer-events: none;
-    opacity: 0;
-    animation: tooltipFadeIn 0.1s ease-out forwards;
-  }
-
-  .marcd-solutions-content .solution-item.expanded[title]:hover::after {
-    display: none;
-  }
 
   .marcd-solutions-content .solution-item:hover {
     transform: translateY(-3px);
@@ -2622,6 +2573,8 @@
   .fact-item.expanded {
     height: auto !important;
     min-height: 180px !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   .perks-title {
@@ -3016,6 +2969,8 @@
      .fact-item.expanded {
        height: auto !important;
        min-height: 160px !important;
+       max-height: none !important;
+       overflow: visible !important;
      }
 
 
@@ -3409,6 +3364,11 @@
    .did-you-know-content {
     padding-left: 10px !important;
     padding-right: 10px !important;
+    min-height: 100% !important;
+    justify-content: flex-start !important;
+    flex: 1 !important;
+    overflow: visible !important;
+    position: relative !important;
    }
 
    .did-you-know-title {
