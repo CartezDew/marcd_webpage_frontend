@@ -43,7 +43,7 @@
   .home-page-container {
     min-height: 100vh;
     width: 100vw;
-    padding: 2rem 6.5rem;
+    padding: .5rem 4rem;
     background: linear-gradient(135deg, #040505 20%, #be0303d1 30%,  #be0303d1 60%, #0f1419 100%) !important;
     position: relative;
     overflow-x: hidden;
@@ -59,10 +59,10 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 0rem;
+    padding: 2rem 1rem;
     gap: clamp(1rem, 2vw + 1rem, 1rem);
     border-width: 2px;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   
     width: 100%;
   }
@@ -71,7 +71,7 @@
     .home-hero-section {
       max-width: 100%;
       width: 100%;
-      padding: 0 2rem;
+      padding: 1rem 2rem;
       min-height: 100vh;
     }
     
@@ -1872,7 +1872,7 @@
     }
 
     .home-hero-section .home-hero-text {
-      padding-top: 1rem !important;
+      padding-top: 0rem !important;
     }}
 
     .home-hero-section .home-hero-description {
@@ -1880,7 +1880,7 @@
     }
 
     .home-hero-section .carousel-image-container {
-      padding-top: 2rem !important;
+      padding-top: 0rem !important;
     }
 
     .marc-it-title {
@@ -2201,7 +2201,7 @@
 
 @media (max-width: 1040px) {
   .home-page-container {
-    padding: 1.5rem 4rem !important; 
+    padding: .5rem 3rem !important; 
   }
 
   .home-hero-section .home-hero-description {
@@ -2581,7 +2581,7 @@
   }
 
   .home-hero-section .home-hero-bullets {
-    margin-top: 3rem !important;
+    margin-top: 1rem !important;
   }
 
   .home-hero-section .hero-bullet span {
@@ -2626,9 +2626,6 @@
     height: 35px !important;
   }
 
-  .home-hero-section .carousel-image-container {
-    padding-top: 1rem !important;
-  }
 
   .home-hero-section .hero-bullet span {
     font-size: 1.2rem !important;
@@ -2643,7 +2640,7 @@
   }
 
   .home-page-container {
-    padding: 1.2rem 2rem !important;
+    padding: .2rem 2rem !important;
   }
 }
   
