@@ -977,7 +977,7 @@ function Features() {
                   </ul>
                 </Typography>
                 <Typography className="navigation-description">
-                  <p className="rewards-note voice-commands-note">
+                  <div className="rewards-note voice-commands-note">
                     <span className="just-say-text">Just say:</span>
                     <div className="command-examples">
                       <strong>"Hey Marc'd, find parking near me"</strong>
@@ -985,7 +985,7 @@ function Features() {
                       <div className="command-or">or</div>
                       <strong>"Report DOT activity ahead"</strong>
                     </div>
-                  </p>
+                  </div>
                 </Typography>
                 <Typography className="navigation-description">
                   Marc'd understands trucking lingo and works with your truck's audio system—even in noisy cabs—so you can stay connected without touching your phone.
@@ -1193,16 +1193,23 @@ function Features() {
                   Favorite Places
                 </Typography>
                 <Typography className="navigation-description">
-                  Save time and streamline your routes with Marc'd's Favorite Places feature. Mark your most 
-                  frequently visited locations — from regular pickup and delivery points to preferred truck stops, 
-                  fuel stations, and rest areas. With one tap, you can navigate to any saved location without 
-                  having to search or remember addresses every time.
+                  Save time by keeping your go-to spots just a tap away.
+                </Typography>
+                <Box sx={{ height: '1rem' }} />
+                <Typography className="navigation-description">
+                  With Marc'd, you can bookmark your most-used locations:
+                  <ul className="rewards-list spotter-bullets">
+                    <li><strong>Pickup & delivery sites</strong></li>
+                    <li><strong>Fuel stations & truck stops</strong></li>
+                    <li><strong>Rest areas & repair shops</strong></li>
+                  </ul>
                 </Typography>
                 <Typography className="navigation-description">
-                  Organize your favorites by categories like "Fuel Stops," "Customers," "Rest Areas," and "Repair 
-                  Shops" for quick access. Share your favorite spots with other drivers in the Marc'd community 
-                  and discover new highly-rated locations along your routes. Your favorite places sync across all 
-                  your devices, ensuring your essential locations are always at your fingertips.
+                  No more searching or retyping addresses—just tap and go.
+                </Typography>
+                <Box sx={{ height: '1rem' }} />
+                <Typography className="navigation-description">
+                  Share your favorite spots with other drivers in the Marc'd community and discover new highly-rated locations along your routes.
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
@@ -1232,15 +1239,23 @@ function Features() {
                   Feature Request
                 </Typography>
                 <Typography className="navigation-description">
-                  Your voice matters! At Marc'd, we believe the best ideas come from the drivers who live on the road every day. 
-                  You're empowered to make suggestions and recommendations for features that would make your trucking experience 
-                  safer, more efficient, and more rewarding. Whether it's a new alert system, improved navigation features, or 
-                  innovative ways to connect with fellow drivers, we want to hear from you.
+                  <strong>Your voice matters!</strong>
                 </Typography>
                 <Typography className="navigation-description">
-                  Marc'd is built by truckers, for truckers. Every feature request is carefully reviewed by our development team, 
-                  and the most impactful suggestions become part of our roadmap. Your real-world experience and insights help us 
-                  create solutions that truly matter. Together, we're building the ultimate trucking companion app.
+                  At Marc'd, we know the best ideas come from drivers like you—out on the road every day.
+                  <br />
+                  <br />
+                </Typography>
+                <Typography className="navigation-description">
+                  Have an idea that could make trucking:
+                  <ul className="rewards-list spotter-bullets">
+                    <li><strong>Safer?</strong></li>
+                    <li><strong>More efficient?</strong></li>
+                    <li><strong>More rewarding?</strong></li>
+                  </ul>
+                </Typography>
+                <Typography className="navigation-description">
+                  Whether it's a new alert, a better navigation tool, or a way to connect with other drivers—we want to hear it.
                 </Typography>
                 <Box sx={{ mt: 3 }}>
                   <Button

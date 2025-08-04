@@ -1211,6 +1211,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  padding-bottom: 1rem;
+  padding-top: 2rem;
 }
 
 .feature-request-video {
@@ -2421,7 +2423,7 @@
   
   .feature-request-video.enlarged {
     border-radius: 1rem;
-    transform: scale(1.25);
+    transform: scale(1.35);
     margin-bottom: 2rem;
     margin-top: 2rem;
   }
