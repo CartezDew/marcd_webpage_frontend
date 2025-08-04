@@ -897,12 +897,12 @@
   }
 
   /* Hide pagination controls on larger screens */
-  @media (min-width: 801px) {
+  /* @media (min-width: 801px) {
     .fact-navigation,
     .solution-navigation {
       display: none !important;
     }
-  }
+  } */
 
   .expand-arrow svg {
     width: 14px;
@@ -2685,12 +2685,12 @@
     }
   }
   /* Hide pagination controls on larger screens */
-  @media (min-width: 801px) {
+  @media (min-width: 1200px) {
     .fact-navigation,
     .solution-navigation {
       display: none !important;
     }
-  }
+  } 
 
   @media (max-width: 800px) {
     .did-you-know-title {

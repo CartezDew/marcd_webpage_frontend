@@ -1674,7 +1674,7 @@ function home() {
             ];
 
             // Show all facts on larger screens, paginated on smaller screens
-            const isLargeScreen = window.innerWidth > 800;
+            const isLargeScreen = window.innerWidth > 1200;
             const factsPerPage = window.innerWidth >= 650 ? 6 : 4; // 6 facts per page above 650px, 4 per page below
             const currentFacts = isLargeScreen 
               ? allFacts 
@@ -1878,12 +1878,6 @@ function home() {
                 detail: "Find truck stops with healthy meals, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it on the road."
               },
               {
-                icon: <DevicesIcon className="solution-stat-icon" />,
-                title: "Affordable Tech",
-                text: "Solutions that level the playing field.",
-                detail: "We empower independent drivers with big-fleet technology—without the high cost."
-              },
-              {
                 icon: <TrendingUpIcon className="solution-stat-icon" />,
                 title: "Maximize Your Miles",
                 text: "Keeping freight moving efficiently.",
@@ -1891,9 +1885,9 @@ function home() {
               },
               {
                 icon: <FitnessCenterIcon className="solution-stat-icon" />,
-                title: "Community Updates",
-                text: "Truckers share stops and tips for healthier living.",
-                detail: "Truckers share healthy meal stops, safe rest areas, and fitness-friendly locations through community updates."
+                title: "Park & Pump",
+                text: "Find gyms with truck parking and showers.",
+                detail: "Locate gyms with truck parking, clean showers, and day-pass access so you can stay fit on the road."
               },
               {
                 icon: <GavelIcon className="solution-stat-icon" />,
@@ -1902,22 +1896,28 @@ function home() {
                 detail: "Marc'd offers speed zone alerts, weigh station updates, and inspection reminders to help avoid costly violations."
               },
               {
-                icon: <PeopleIcon className="solution-stat-icon" />,
-                title: "Partnering with USDOT",
-                text: "Helping drivers benefit from new infrastructure.",
-                detail: "Marc'd is designed to complement infrastructure growth by helping drivers locate new USDOT-funded parking zones."
-              },
-              {
                 icon: <KeyboardVoiceIcon className="solution-stat-icon" />,
                 title: "Voice Parking Search",
                 text: "Find and update parking hands-free.",
                 detail: "Find and update parking availability without taking your hands off the wheel—saving time and improving safety."
               },
               {
+                icon: <PeopleIcon className="solution-stat-icon" />,
+                title: "Partnering with USDOT",
+                text: "Helping drivers benefit from new infrastructure.",
+                detail: "Marc'd is designed to complement infrastructure growth by helping drivers locate new USDOT-funded parking zones."
+              },
+              {
                 icon: <RestaurantIcon className="solution-stat-icon" />,
-                title: "Healthier Choices",
-                text: "Eat better on the road.",
-                detail: "Marc'd helps drivers find healthy and halal-friendly meals—so you don't have to sacrifice your health or your values."
+                title: "Community Updates",
+                text: "Truckers share stops and tips for healthier living.",
+                detail: "Truckers share healthy meal stops, safe rest areas, and fitness-friendly locations through community updates."
+              },
+              {
+                icon: <DevicesIcon className="solution-stat-icon" />,
+                title: "Affordable Tech",
+                text: "Solutions that level the playing field.",
+                detail: "We empower independent drivers with big-fleet technology—without the high cost."
               },
               {
                 icon: <SpeedIcon className="solution-stat-icon" />,
@@ -1928,7 +1928,7 @@ function home() {
             ];
 
             // Show all solutions on larger screens, paginated on smaller screens
-            const isLargeScreen = window.innerWidth > 800;
+            const isLargeScreen = window.innerWidth > 1200;
             const solutionsPerPage = window.innerWidth >= 650 ? 6 : 4; // 6 solutions per page above 650px, 4 per page below
             const currentSolutions = isLargeScreen 
               ? allSolutions 
