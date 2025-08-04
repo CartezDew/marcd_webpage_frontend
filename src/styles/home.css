@@ -3749,7 +3749,7 @@
 
   @media (max-width: 500px) {
       .marc-it-title {
-        font-size: 1.6rem !important;
+        font-size: 1.4rem !important;
         text-align: left !important;
         margin-left: -12px !important;
         margin-right: -12px !important;
@@ -3894,7 +3894,7 @@
     }
 
     .marc-it-title {
-      font-size: 1.4rem !important;
+      font-size: 1.35rem !important;
     
       
     }
@@ -4170,7 +4170,7 @@
     
       @media (max-width: 420px) {
         .marc-it-title {
-          font-size: 1.3rem !important;
+          font-size: 1.25rem !important;
         }
       }
 
@@ -4400,7 +4400,7 @@
      }
 
      .marc-it-title {
-      font-size: 1rem !important;
+      font-size: .91rem !important;
      }
 
   }

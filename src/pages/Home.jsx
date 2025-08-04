@@ -46,7 +46,7 @@ import scrollImage12 from '../assets/Scroll Images/Image-12.png';
 import scrollImage13 from '../assets/Scroll Images/Image-13.png';
 import scrollImage14 from '../assets/Scroll Images/Image-14.png';
 import scrollImage15 from '../assets/Scroll Images/Image-15.png';
-import scrollImage16 from '../assets/Scroll Images/Image-16.png';
+import scrollImage16 from '../assets/Scroll Images/Image-16.jpg';
 
 
 
@@ -702,27 +702,26 @@ function home() {
     }
   };
 
-  // Pagination functions for Did You Know section
-  const nextFactPage = () => {
-    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 facts per page above 650px, 4 per page below
-    setCurrentFactPage((prev) => (prev + 1) % totalPages);
+  // Synchronized pagination functions for both sections
+  const nextPage = () => {
+    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 items per page above 650px, 4 per page below
+    const nextPageIndex = (currentFactPage + 1) % totalPages;
+    setCurrentFactPage(nextPageIndex);
+    setCurrentSolutionPage(nextPageIndex);
   };
 
-  const prevFactPage = () => {
-    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 facts per page above 650px, 4 per page below
-    setCurrentFactPage((prev) => (prev - 1 + totalPages) % totalPages);
+  const prevPage = () => {
+    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 items per page above 650px, 4 per page below
+    const prevPageIndex = (currentFactPage - 1 + totalPages) % totalPages;
+    setCurrentFactPage(prevPageIndex);
+    setCurrentSolutionPage(prevPageIndex);
   };
 
-  // Pagination functions for Solutions section
-  const nextSolutionPage = () => {
-    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 solutions per page above 650px, 4 per page below
-    setCurrentSolutionPage((prev) => (prev + 1) % totalPages);
-  };
-
-  const prevSolutionPage = () => {
-    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 solutions per page above 650px, 4 per page below
-    setCurrentSolutionPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
+  // Keep individual functions for backwards compatibility (but they now sync both sections)
+  const nextFactPage = nextPage;
+  const prevFactPage = prevPage;
+  const nextSolutionPage = nextPage;
+  const prevSolutionPage = prevPage;
 
   // Handle click outside to collapse cards
   useEffect(() => {
@@ -1505,7 +1504,7 @@ function home() {
             You have helpful information to share.
             <br />
             <br />
-            We have a place to Marc It!
+            We have a place to Marc' It!
             <GpsFixedIcon style={{ color: '#2E0000', marginLeft: '0.8rem' }} />
           </Typography>
           
