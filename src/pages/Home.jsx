@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/material';
 import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon, LocalShipping as LocalShippingIcon, Devices as DevicesIcon, TrendingUp as TrendingUpIcon, FitnessCenter as FitnessCenterIcon, Gavel as GavelIcon, Restaurant as RestaurantIcon, AttachMoney as CashIcon } from '@mui/icons-material';
-import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown, FaInstagram, FaFacebook } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring, useInView } from 'framer-motion';
 import { validateWaitlistEmail, validateEmailRealTime, validateEmailOnSubmit } from '../utils/emailValidation';
 import { useWaitlist } from '../context/WaitlistContext';
@@ -100,6 +100,13 @@ function home() {
   const isTruckerImagesInView = useInView(truckerImagesRef, { 
     amount: 0.05, // 5% of the element must be visible
     once: true 
+  });
+  
+  // Footer social media icons animation
+  const footerSocialRef = useRef(null);
+  const isFooterSocialInView = useInView(footerSocialRef, { 
+    threshold: 0.05, // Trigger when 5% visible
+    rootMargin: '0px 0px -50px 0px'
   });
 
   // Title animations
@@ -1270,6 +1277,91 @@ function home() {
               Stephen L. and 200+ others have already joined.
             </Box>
           </motion.div>
+          
+          {/* Social Media Icons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isAboutVisible ? 1 : 0, y: isAboutVisible ? 0 : 20 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.9 }}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'left', 
+              marginTop: '1.5rem',
+              gap: '1rem'
+            }}
+          >
+            <motion.a 
+              href="https://www.instagram.com/marcdtheapp/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                color: '#be0303',
+                fontSize: '1.5rem',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+              animate={{
+                y: [0, -8, 0],
+                transition: {
+                  y: {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5
+                  }
+                }
+              }}
+              whileHover={{ 
+                scale: 1.1,
+                transition: { duration: 0.2 }
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = '#8b0000';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = '#be0303';
+              }}
+            >
+              <FaInstagram />
+            </motion.a>
+            <motion.a 
+              href="https://www.facebook.com/profile.php?id=61579151007527" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                color: '#be0303',
+                fontSize: '1.5rem',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+              animate={{
+                y: [0, -8, 0],
+                transition: {
+                  y: {
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.7
+                  }
+                }
+              }}
+              whileHover={{ 
+                scale: 1.1,
+                transition: { duration: 0.2 }
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = '#8b0000';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = '#be0303';
+              }}
+            >
+              <FaFacebook />
+            </motion.a>
+          </motion.div>
         </Box>
 
         {/* Right Column - Image Carousel */}
@@ -2068,6 +2160,139 @@ function home() {
               </>
             );
           })()}
+        </Box>
+      </Box>
+
+      {/* Footer Social Media Icons */}
+      <Box 
+        ref={footerSocialRef}
+        sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          padding: '3rem 0 2rem 0',
+          backgroundColor: 'rgba(0, 0, 0, 0.02)',
+          borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+          marginTop: '2rem'
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ 
+              opacity: isFooterSocialInView && shouldLoadImages ? 1 : 0, 
+              y: isFooterSocialInView && shouldLoadImages ? 0 : 50,
+              scale: isFooterSocialInView && shouldLoadImages ? 1 : 0.8
+            }}
+            transition={{ 
+              duration: 0.6, 
+              ease: "easeOut",
+              type: "spring",
+              stiffness: 100,
+              damping: 15
+            }}
+          >
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                color: '#cccccc',
+                marginRight: '1rem',
+                fontWeight: 500
+              }}
+            >
+              Follow us:
+            </Typography>
+          </motion.div>
+          
+          <motion.a 
+            href="https://www.instagram.com/marcdtheapp/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#be0303',
+              fontSize: '1.8rem',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={isFooterSocialInView ? {
+              opacity: 1,
+              y: [0, -10, 0],
+              scale: 1,
+              transition: {
+                opacity: { duration: 0.6, ease: "easeOut", type: "spring", stiffness: 100, damping: 15, delay: 0.1 },
+                scale: { duration: 0.6, ease: "easeOut", type: "spring", stiffness: 100, damping: 15, delay: 0.1 },
+                y: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.6
+                }
+              }
+            } : {
+              opacity: 0,
+              y: 50,
+              scale: 0.8
+            }}
+            whileHover={{ 
+              scale: 1.15,
+              transition: { duration: 0.2 }
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = '#8b0000';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = '#be0303';
+            }}
+          >
+            <FaInstagram />
+          </motion.a>
+          
+          <motion.a 
+            href="https://www.facebook.com/profile.php?id=61579151007527" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#be0303',
+              fontSize: '1.8rem',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={isFooterSocialInView ? {
+              opacity: 1,
+              y: [0, -10, 0],
+              scale: 1,
+              transition: {
+                opacity: { duration: 0.6, ease: "easeOut", type: "spring", stiffness: 100, damping: 15, delay: 0.2 },
+                scale: { duration: 0.6, ease: "easeOut", type: "spring", stiffness: 100, damping: 15, delay: 0.2 },
+                y: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.7
+                }
+              }
+            } : {
+              opacity: 0,
+              y: 50,
+              scale: 0.8
+            }}
+            whileHover={{ 
+              scale: 1.15,
+              transition: { duration: 0.2 }
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = '#8b0000';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = '#be0303';
+            }}
+          >
+            <FaFacebook />
+          </motion.a>
         </Box>
       </Box>
 

@@ -579,10 +579,10 @@ function ContactUs() {
         {/* Social + Submit */}
         <Box className="bottom-controls">
           <Box ref={iconsRef} className={`social-icons ${isIconsVisible ? 'animate' : ''}`}>
-                          <a href={import.meta.env.VITE_INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="social-icon-link">
+            <a href="https://www.instagram.com/marcdtheapp/" target="_blank" rel="noopener noreferrer" className="social-icon-link">
               <FaInstagram className="social-icon instagram" />
             </a>
-                          <a href={import.meta.env.VITE_FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="social-icon-link">
+            <a href="https://www.facebook.com/profile.php?id=61579151007527" target="_blank" rel="noopener noreferrer" className="social-icon-link">
               <FaFacebook className="social-icon facebook" />
             </a>
           </Box>

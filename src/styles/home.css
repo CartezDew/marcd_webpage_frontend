@@ -4439,13 +4439,13 @@
 
   @media (max-width: 365px) {
     .home-hero-section .home-main-image.small-image {
-      max-height: 290px !important;
-      height: 290px !important;
+      max-height: 250px !important;
+      height: 250px !important;
     }
 
     .home-hero-section .home-main-image.large-image {
-      max-height: 320px !important;
-      height: 320px !important;
+      max-height: 300px !important;
+      height: 300px !important;
     }
 
     .home-hero-section .hero-button{
