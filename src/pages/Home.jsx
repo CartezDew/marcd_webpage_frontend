@@ -1535,6 +1535,21 @@ function home() {
               ))}
             </ul>
           </div>
+          
+          {/* Button Divider */}
+          <div className="marc-it-button-divider"></div>
+          
+          {/* See Features Button */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: 3 }}>
+            <Button
+              variant="outlined"
+              size="small"
+              className="marc-it-features-button"
+              onClick={() => navigate('/features')}
+            >
+              See Features
+            </Button>
+          </Box>
         </Box>
       </Box>
 
