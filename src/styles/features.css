@@ -606,6 +606,7 @@
   .voice-commands-note {
     text-align: left !important;
     background: rgba(0, 0, 0, 0.7) !important;
+    margin-left: .5rem !important;
   }
 
   .voice-commands-note .just-say-text {
@@ -621,6 +622,17 @@
 
   .voice-commands-note .command-or {
     padding-left: 0.8rem !important;
+  }
+
+  /* Spotter section bullets with black background */
+  .spotter-bullets {
+    background: rgba(0, 0, 0, 0.7) !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    border-left: 4px solid #be0303 !important;
+    width: fit-content !important;
+    margin: 0.5rem 0 !important;
+    margin-left: .5rem !important;
   }
 
 
@@ -660,6 +672,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  padding-bottom: 1rem;
+  padding-top: 2rem;
 }
 
 .alerts-video {
@@ -739,6 +753,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  padding-bottom: 1rem;
+  padding-top: 2rem;
 }
 
 .spotter-video {
@@ -2364,16 +2380,16 @@
   }
 
   .spotter-video {
-    max-width: 55%;
-    max-height: 55%;
-    border-radius: 2.1rem;
+    max-width: 60%;
+    max-height: 60%;
+    border-radius: 2.2rem;
   }
   
   .spotter-video.enlarged {
     border-radius: 2.1rem;
     margin-bottom: 2rem;
     margin-top: 1rem;
-    transform: scale(1.25);
+    transform: scale(1.35);
   }
 
   .speed-alerts-icon-container {
@@ -2382,14 +2398,14 @@
   }
 
   .alerts-video {
-    max-width: 45%;
-    max-height: 45%;
-    border-radius: 2.1rem;
+    max-width: 50%;
+    max-height: 50%;
+    border-radius: 2.2rem;
   }
   
   .alerts-video.enlarged {
     border-radius: 2.1rem;
-    transform: scale(1.25);
+    transform: scale(1.35);
   }
 
   .favorite-places-icon-container {

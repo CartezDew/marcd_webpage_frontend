@@ -1022,16 +1022,28 @@ function Features() {
                   Spotter Request Assistance
                 </Typography>
                 <Typography className="navigation-description">
-                  Even the best drivers sometimes need an extra set of eyes. With Marc'd, you can request spotter 
-                  assistance directly through the app when facing tight docks, blindside backing, or challenging 
-                  parking situations. Nearby drivers and location staff are notified in real time and can step in 
-                  to guide you safely, reducing stress and preventing costly mistakes.
+                  Even the best drivers need a second set of eyes!
+                  <br />
+                  <br />
                 </Typography>
                 <Typography className="navigation-description">
-                  Every time you help guide another driver, you earn Marc'er points, with additional bonus points 
-                  awarded specifically for spotting and backing assistance. It's Marc'd's way of recognizing your 
-                  contribution to a safer, more supportive trucking community — where drivers look out for each 
-                  other and get rewarded for it.
+                  With Marc'd, you can request spotter help directly in the app when:
+                  <ul className="rewards-list spotter-bullets">
+                    <li><strong>Backing into tight docks</strong></li>
+                    <li><strong>Navigating blindside angles</strong></li>
+                    <li><strong>Parking in tough spots</strong></li>
+                  </ul>
+                </Typography>
+                <Typography className="navigation-description">
+                  Nearby drivers or location staff are alerted in real time and can step in to guide you—<strong>reducing stress and preventing costly mistakes.</strong>
+                </Typography>
+                <Box sx={{ height: '1rem' }} />
+                <Typography className="navigation-description">
+                  <strong>Help Others, Earn Rewards</strong>
+                  <br />
+                  Guide another driver and earn Marc'er points.
+                  <br />
+                  Get bonus points for spotting and backing assistance—it's our way of recognizing drivers who keep the road safer for everyone.
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
@@ -1071,19 +1083,33 @@ function Features() {
             <Box className="navigation-grid">
               <Box className="navigation-text-content">
                 <Typography variant="h2" className="navigation-title">
-                  Speed Monitoring Alerts
+                  Smart Speed Monitoring
                 </Typography>
                 <Typography className="navigation-description">
-                  Stay compliant and safe with Marc'd's intelligent speed monitoring system. Our app continuously 
-                  tracks speed limits along your route and provides real-time alerts when you're approaching or 
-                  exceeding posted limits. With construction zones, school zones, and varying speed limits across 
-                  different states, Marc'd ensures you're always informed of the current speed requirements.
+                  Stay compliant and safe with Marc'd's intelligent speed alerts.
                 </Typography>
                 <Typography className="navigation-description">
-                  The system integrates with your truck's GPS to provide customized alerts based on your vehicle's 
-                  specifications and load requirements. Get advance warnings for upcoming speed limit changes, 
-                  steep grade restrictions, and special zone requirements. Drive with confidence knowing Marc'd 
-                  is helping you maintain compliance while keeping you and other drivers safe on the road.
+                  Our system tracks speed limits in real time and alerts you when you're:
+                  <ul className="rewards-list spotter-bullets">
+                    <li><strong>Approaching a speed zone</strong></li>
+                    <li><strong>Entering a construction or school zone</strong></li>
+                    <li><strong>Exceeding posted limits</strong></li>
+                  </ul>
+                </Typography>
+                <Box sx={{ height: '1rem' }} />
+                <Typography className="navigation-description">
+                  <strong>Smarter Alerts, Safer Driving</strong>
+                  <br />
+                  Marc'd syncs with your GPS and factors in:
+                  <ul className="rewards-list spotter-bullets">
+                    <li><strong>Your truck's specs</strong></li>
+                    <li><strong>Your load type</strong></li>
+                    <li><strong>Upcoming speed changes</strong></li>
+                    <li><strong>Grade restrictions and special zones</strong></li>
+                  </ul>
+                </Typography>
+                <Typography className="navigation-description">
+                  Drive confidently, knowing Marc'd is helping you stay compliant—and keeping everyone on the road safer.
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
@@ -1110,18 +1136,21 @@ function Features() {
             <Box className="navigation-grid">
               <Box className="navigation-text-content">
                 <Typography variant="h2" className="navigation-title">
-                  DOT/Police Alerts
+                  DOT & Police Alerts
                 </Typography>
                 <Typography className="navigation-description">
-                  Stay ahead of the game with real-time DOT and police activity alerts from fellow drivers. Marc'd keeps 
-                  you informed about inspection stations, weigh station activity, and police presence along your route. 
-                  Our community-driven alert system helps you prepare for what's ahead, giving you time to ensure your 
-                  logs are current and your rig is inspection-ready.
+                  Stay ahead with real-time updates from fellow drivers.
                 </Typography>
                 <Typography className="navigation-description">
-                  When you spot DOT officers or police activity, share it with the community and earn Marc'er points. 
-                  Every alert you share helps fellow drivers stay prepared and avoid unexpected delays. Together, we're 
-                  building a network of drivers who look out for each other on the road.
+                  Marc'd alerts you to:
+                  <ul className="rewards-list spotter-bullets">
+                    <li><strong>DOT inspection stations</strong></li>
+                    <li><strong>Weigh station activity</strong></li>
+                    <li><strong>Police presence along your route</strong></li>
+                  </ul>
+                </Typography>
+                <Typography className="navigation-description">
+                  Be ready for what's ahead—check your logs, secure your load, and avoid surprise delays.
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
