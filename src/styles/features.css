@@ -591,7 +591,37 @@
 }
 
 
+  /* Section content indentation */
+  .navigation-description .section-content-indent {
+    padding-left: .5rem !important;
+  }
 
+  /* Highlighted text color to match bullet points */
+  .highlighted-text {
+    color: #be0303 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Voice commands section styling */
+  .voice-commands-note {
+    text-align: left !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .voice-commands-note .just-say-text {
+    opacity: 0.8 !important;
+    display: block !important;
+    padding-bottom: 0.3rem !important;
+    font-weight: bold !important;
+  }
+
+  .voice-commands-note .command-examples {
+    padding-left: 0.5rem !important;
+  }
+
+  .voice-commands-note .command-or {
+    padding-left: 0.8rem !important;
+  }
 
 
 /* Cash Reward Animation */

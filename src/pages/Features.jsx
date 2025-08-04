@@ -780,7 +780,9 @@ function Features() {
                 <Typography className="navigation-description">
                   <strong>What It Is</strong>
                   <br />
-                  Top Marc'er Rewards celebrates drivers who go the extra mile — sharing updates that protect fellow truckers and keep roads safer.
+                  <Box className="section-content-indent">
+                    Top Marc'er Rewards celebrates drivers who go the extra mile, sharing updates that protect fellow truckers and keep roads safer.
+                  </Box>
                   <br />
                   <br />
                 </Typography>
@@ -801,11 +803,13 @@ function Features() {
                 <Typography className="navigation-description">
                   <strong>Monthly Regional Winners</strong>
                   <br />
-                  Each month, the top Marc'er in every U.S. region — NW, West, SW, SE, Mid-Atlantic, and NE — wins
-                  <Box component="span" className="cash-reward-container">
-                    <CashIcon className="floating-cash-icon" />
-                    <strong className="floating-cash-amount">$200</strong>
-                  </Box> in cash rewards.
+                  <Box className="section-content-indent">
+                    Each month, the top Marc'er in every U.S. region — NW, West, SW, SE, Mid-Atlantic, and NE — wins
+                    <Box component="span" className="cash-reward-container">
+                      <CashIcon className="floating-cash-icon" />
+                      <strong className="floating-cash-amount">$200</strong>
+                    </Box> in cash rewards.
+                  </Box>
                 </Typography>
 
                 <Box sx={{ height: '2rem' }} />
@@ -813,9 +817,11 @@ function Features() {
                 <Typography className="navigation-description">
                   <strong>Why It Matters</strong>
                   <br />
-                  Every update helps another driver travel with more confidence.
-                  <br />
-                  Together, we're building a community where truckers look out for one another — and get rewarded for it.
+                  <Box className="section-content-indent">
+                    Every update helps another driver travel with more confidence.
+                    <br />
+                    Together, we're building a community where truckers look out for one another, and get rewarded for it.
+                  </Box>
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
@@ -908,15 +914,29 @@ function Features() {
                   Real-time Parking Solutions
                 </Typography>
                 <Typography className="navigation-description">
-                  Never waste time searching for parking again. Marc'd provides real-time parking availability updates 
-                  from fellow drivers, helping you find open spots before you even arrive. Our community-driven approach 
-                  means you get the most current information about truck parking at rest stops, truck stops, and designated 
-                  parking areas across the country.
+                  Never waste time searching for parking again.
                 </Typography>
+
                 <Typography className="navigation-description">
-                  Share your own parking updates and help other drivers while earning rewards. When you report available 
-                  or full parking spots, you're not just helping the community—you're building up your Marc'er points. 
-                  Together, we're solving one of trucking's biggest challenges, one parking spot at a time.
+                  Marc'd delivers <strong className="highlighted-text">live parking updates</strong> from fellow drivers, so you can find open spots <strong className="highlighted-text">before you arrive</strong>. Get the most current information on truck parking at:
+                  <ul className="rewards-list">
+                    <li><strong>Rest stops</strong></li>
+                    <li><strong>Truck stops</strong></li>
+                    <li><strong>Designated parking areas nationwide</strong></li>
+                  </ul>
+                </Typography>
+
+                <Box sx={{ height: '1rem' }} />
+
+                <Typography className="navigation-description">
+                  <strong>Share & Earn</strong>
+                  <br />
+                  <Box className="section-content-indent">
+                    Post your own parking updates to help other drivers—and earn Marc'er points along the way.
+                    <br />
+                    <br />
+                    Every spot you report, whether open or full, makes the road better for all of us. Together, we're solving one of trucking's biggest challenges, <strong>one parking space at a time.</strong>
+                  </Box>
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
@@ -945,17 +965,34 @@ function Features() {
                   Voice-Activated Controls
                 </Typography>
                 <Typography className="navigation-description">
-                  Keep your hands on the wheel and your eyes on the road with Marc'd's advanced voice-activated controls. 
-                  Simply speak your commands to navigate the app, report road conditions, request spotter assistance, or 
-                  check parking availability. Our intelligent voice recognition system understands natural speech patterns 
-                  and trucking terminology, making it easy to stay connected with the Marc'd community without ever 
-                  touching your phone.
+                  Stay focused on the road—Marc'd lets you control the app with just your voice.
                 </Typography>
                 <Typography className="navigation-description">
-                  From "Hey Marc'd, find parking near me" to "Report DOT activity ahead," voice controls make every 
-                  interaction safer and more convenient. The system works seamlessly with your truck's audio setup, 
-                  ensuring clear communication even in noisy cab environments. Drive smarter, not harder, with hands-free 
-                  technology designed specifically for professional drivers.
+                  Use natural commands to:
+                  <ul className="rewards-list">
+                    <li><strong>Check parking availability</strong></li>
+                    <li><strong>Report road or DOT activity</strong></li>
+                    <li><strong>Request spotter assistance</strong></li>
+                    <li><strong>Navigate safely, hands-free</strong></li>
+                  </ul>
+                </Typography>
+                <Typography className="navigation-description">
+                  <p className="rewards-note voice-commands-note">
+                    <span className="just-say-text">Just say:</span>
+                    <div className="command-examples">
+                      <strong>"Hey Marc'd, find parking near me"</strong>
+                      <br />
+                      <div className="command-or">or</div>
+                      <strong>"Report DOT activity ahead"</strong>
+                    </div>
+                  </p>
+                </Typography>
+                <Typography className="navigation-description">
+                  Marc'd understands trucking lingo and works with your truck's audio system—even in noisy cabs—so you can stay connected without touching your phone.
+                </Typography>
+                <Box sx={{ height: '1rem' }} />
+                <Typography className="navigation-description">
+                  <strong>Drive smarter with voice controls made for life on the road.</strong>
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
