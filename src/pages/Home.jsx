@@ -2,7 +2,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Box, Typography, TextField, Button, IconButton, Tooltip } from '@mui/material';
-import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon } from '@mui/icons-material';
+import { KeyboardVoice as KeyboardVoiceIcon, Speed as SpeedIcon, LocalParking as ParkingIcon, ExpandMore as ExpandMoreIcon, ChevronLeft, ChevronRight, Update as UpdateIcon, People as PeopleIcon, LocalShipping as LocalShippingIcon, Devices as DevicesIcon, TrendingUp as TrendingUpIcon, FitnessCenter as FitnessCenterIcon, Gavel as GavelIcon, Restaurant as RestaurantIcon } from '@mui/icons-material';
 import { FaChevronDown } from 'react-icons/fa';
 import { motion, AnimatePresence, useTime, useTransform, useSpring, useInView } from 'framer-motion';
 import { validateWaitlistEmail, validateEmailRealTime, validateEmailOnSubmit } from '../utils/emailValidation';
@@ -704,20 +704,24 @@ function home() {
 
   // Pagination functions for Did You Know section
   const nextFactPage = () => {
-    setCurrentFactPage((prev) => (prev + 1) % 2); // 2 pages total (4 facts per page)
+    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 facts per page above 650px, 4 per page below
+    setCurrentFactPage((prev) => (prev + 1) % totalPages);
   };
 
   const prevFactPage = () => {
-    setCurrentFactPage((prev) => (prev - 1 + 2) % 2); // 2 pages total
+    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 facts per page above 650px, 4 per page below
+    setCurrentFactPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
   // Pagination functions for Solutions section
   const nextSolutionPage = () => {
-    setCurrentSolutionPage((prev) => (prev + 1) % 2); // 2 pages total (3 solutions per page)
+    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 solutions per page above 650px, 4 per page below
+    setCurrentSolutionPage((prev) => (prev + 1) % totalPages);
   };
 
   const prevSolutionPage = () => {
-    setCurrentSolutionPage((prev) => (prev - 1 + 2) % 2); // 2 pages total
+    const totalPages = window.innerWidth >= 650 ? 2 : 3; // 6 solutions per page above 650px, 4 per page below
+    setCurrentSolutionPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
   // Handle click outside to collapse cards
@@ -1612,8 +1616,13 @@ function home() {
               },
               {
                 stat: "98%",
-                text: "struggle to find safe parking.",
+                text: "truckers struggle to find safe parking.",
                 detail: "Only 1 authorized spot exists for every 11 trucks, costing drivers up to $5,500 a year in wasted time and fuel."
+              },
+              {
+                stat: "96%",
+                text: "of fleets operate 10 or fewer trucks.",
+                detail: "Small fleets dominate the industry."
               },
               {
                 stat: "88%",
@@ -1621,19 +1630,34 @@ function home() {
                 detail: "Hypertension, smoking, and obesity are common—jeopardizing health and careers."
               },
               {
+                stat: "70%",
+                text: "of all freight in the U.S. is moved by truck.",
+                detail: ""
+              },
+              {
                 stat: "69%",
                 text: "are obese—twice the U.S. average.",
                 detail: "Long hours, little exercise, and unhealthy food access drive this crisis."
               },
               {
-                stat: "1.7×",
-                text: "higher risk of heart disease.",
-                detail: "Nearly 50% have cardiovascular conditions, compared to just 30% of the general population."
-              },
-              {
                 stat: "53%",
                 text: "of DOT violations are preventable.",
                 detail: "Parking illegally or rushing to meet deadlines leads to costly CSA points, insurance hikes, and job risks."
+              },
+              {
+                stat: "40%",
+                text: "of truckers spend over an hour a day searching for parking.",
+                detail: "According to the USDOT, 40% of truckers spend over an hour a day searching for parking – costing our national economy billions in wasted time. It's also a safety issue – forcing truckers to park in harm's way."
+              },
+              {
+                stat: "$275M+",
+                text: "USDOT is investing to expand truck parking access nationwide.",
+                detail: ""
+              },
+              {
+                stat: "1.7×",
+                text: "higher risk of heart disease.",
+                detail: "Nearly 50% have cardiovascular conditions, compared to just 30% of the general population."
               },
               {
                 stat: "image",
@@ -1651,7 +1675,7 @@ function home() {
 
             // Show all facts on larger screens, paginated on smaller screens
             const isLargeScreen = window.innerWidth > 800;
-            const factsPerPage = 4;
+            const factsPerPage = window.innerWidth >= 650 ? 6 : 4; // 6 facts per page above 650px, 4 per page below
             const currentFacts = isLargeScreen 
               ? allFacts 
               : allFacts.slice(
@@ -1675,7 +1699,7 @@ function home() {
                   </Tooltip>
                   
                   <Typography className="fact-counter">
-                    {currentFactPage + 1} of 2
+                    {currentFactPage + 1} of {window.innerWidth >= 650 ? 2 : 3}
                   </Typography>
                   
                   <Tooltip title="Next facts" placement="right">
@@ -1830,40 +1854,82 @@ function home() {
           {(() => {
             const allSolutions = [
               {
+                icon: <PeopleIcon className="solution-stat-icon" />,
+                title: "Stronger Together",
+                text: "Driver support when and where it counts.",
+                detail: "Marc'd fosters a peer-to-peer support network where truckers share tips, updates, and alerts in real time."
+              },
+              {
                 icon: <ParkingIcon className="solution-stat-icon" />,
-                title: "Real-time parking",
+                title: "Real-time Parking",
                 text: "Shows available safe spots right now, so you stop wasting hours hunting.",
-                detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally, save time, fuel, and avoid violations."
+                detail: "Our community-driven parking system provides live updates from fellow drivers, helping you find open spots before you even arrive. No more circling truck stops or parking illegally—save time, fuel, and avoid violations."
+              },
+              {
+                icon: <LocalShippingIcon className="solution-stat-icon" />,
+                title: "Tech for 95%",
+                text: "Built for small fleets and owner-operators.",
+                detail: "Marc'd is tailored for small fleets and owner-operators who need low-cost, high-impact tools to stay competitive."
               },
               {
                 icon: shouldLoadImages ? <img src={healthFoodImg} alt="Healthy food" className="solution-stat-image" loading="lazy" /> : <div className="solution-stat-image-placeholder" />,
-                title: "Wellness support",
-                text: "Locates cleaner stops, healthier food, even halal options, so you can take care of yourself on the road.",
-                detail: "Find truck stops with healthy meal options, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it while on the road."
+                title: "Wellness Support",
+                text: "Locates cleaner stops, healthier food, even halal options.",
+                detail: "Find truck stops with healthy meals, clean facilities, and dietary-specific choices including halal and vegetarian options. Your health matters, and we help you maintain it on the road."
               },
               {
-                icon: <SpeedIcon className="solution-stat-icon" />,
-                title: "Speed alerts & compliance tools",
-                text: "Helps you avoid CSA violations and protect your safety record.",
-                detail: "Real-time speed monitoring and DOT compliance alerts help you maintain a clean driving record. Avoid costly violations, insurance hikes, and protect your livelihood with proactive safety tools."
+                icon: <DevicesIcon className="solution-stat-icon" />,
+                title: "Affordable Tech",
+                text: "Solutions that level the playing field.",
+                detail: "We empower independent drivers with big-fleet technology—without the high cost."
+              },
+              {
+                icon: <TrendingUpIcon className="solution-stat-icon" />,
+                title: "Maximize Your Miles",
+                text: "Keeping freight moving efficiently.",
+                detail: "By reducing downtime and boosting driver efficiency, Marc'd supports the backbone of the economy."
+              },
+              {
+                icon: <FitnessCenterIcon className="solution-stat-icon" />,
+                title: "Community Updates",
+                text: "Truckers share stops and tips for healthier living.",
+                detail: "Truckers share healthy meal stops, safe rest areas, and fitness-friendly locations through community updates."
+              },
+              {
+                icon: <GavelIcon className="solution-stat-icon" />,
+                title: "Compliance Alerts",
+                text: "Avoid costly violations.",
+                detail: "Marc'd offers speed zone alerts, weigh station updates, and inspection reminders to help avoid costly violations."
+              },
+              {
+                icon: <PeopleIcon className="solution-stat-icon" />,
+                title: "Partnering with USDOT",
+                text: "Helping drivers benefit from new infrastructure.",
+                detail: "Marc'd is designed to complement infrastructure growth by helping drivers locate new USDOT-funded parking zones."
               },
               {
                 icon: <KeyboardVoiceIcon className="solution-stat-icon" />,
-                title: "Voice-activated & hands-free",
-                text: "Keep eyes on the road while updating parking or checking conditions.",
-                detail: "Complete hands-free operation means you can report conditions, check parking, and get navigation updates without ever taking your hands off the wheel or eyes off the road."
+                title: "Voice Parking Search",
+                text: "Find and update parking hands-free.",
+                detail: "Find and update parking availability without taking your hands off the wheel—saving time and improving safety."
               },
               {
-                icon: <Typography className="solution-stat-emoji">🤝</Typography>,
-                title: "Community updates",
-                text: "Drivers help each other with parking, hazards, or spotting, and earn rewards for it.",
-                detail: "Join a supportive community where drivers look out for each other. Share parking updates, road conditions, and spotting assistance while earning Marc'er points that convert to real cash rewards."
+                icon: <RestaurantIcon className="solution-stat-icon" />,
+                title: "Healthier Choices",
+                text: "Eat better on the road.",
+                detail: "Marc'd helps drivers find healthy and halal-friendly meals—so you don't have to sacrifice your health or your values."
+              },
+              {
+                icon: <SpeedIcon className="solution-stat-icon" />,
+                title: "Speed Alerts & Compliance Tools",
+                text: "Helps you avoid CSA violations and protect your safety record.",
+                detail: "Real-time speed monitoring and DOT compliance alerts help you maintain a clean driving record. Avoid costly violations, insurance hikes, and protect your livelihood with proactive safety tools."
               }
             ];
 
             // Show all solutions on larger screens, paginated on smaller screens
             const isLargeScreen = window.innerWidth > 800;
-            const solutionsPerPage = 3;
+            const solutionsPerPage = window.innerWidth >= 650 ? 6 : 4; // 6 solutions per page above 650px, 4 per page below
             const currentSolutions = isLargeScreen 
               ? allSolutions 
               : allSolutions.slice(
@@ -1887,7 +1953,7 @@ function home() {
                     </Tooltip>
                     
                     <Typography className="solution-counter">
-                      {currentSolutionPage + 1} of 2
+                      {currentSolutionPage + 1} of {window.innerWidth >= 650 ? 2 : 3}
                     </Typography>
                     
                     <Tooltip title="Next solutions" placement="right">

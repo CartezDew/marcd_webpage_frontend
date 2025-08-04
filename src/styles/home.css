@@ -2719,7 +2719,7 @@
     }
 
     .marcd-solutions-content .solution-item {
-      min-height: 230px !important;
+      min-height: 180px !important;
     }
 
     .home-hero-section .home-hero-headline {
@@ -2729,11 +2729,25 @@
     .home-hero-section .home-hero-description {
       font-size: 1.1rem !important;
     }
-  }
+
+
+    }
+
 
   @media (max-width: 770px) {
     /* Move expand buttons to top right corner for "How Marc'd Solves These Problems" cards */
     .marcd-solutions-content .solution-item .expand-arrow {
+      position: absolute !important;
+      top: 10px !important;
+      right: 10px !important;
+      bottom: auto !important;
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 0.8rem !important;
+    }
+
+    /* Move expand buttons to top right corner for "Did You Know" fact cards */
+    .fact-item .expand-arrow {
       position: absolute !important;
       top: 10px !important;
       right: 10px !important;
@@ -3047,7 +3061,7 @@
      }
      
      .fact-item {
-       height: 160px !important;
+       height: 140px !important;
      }
      
      .fact-item.expanded {
@@ -3767,6 +3781,7 @@
         border-radius: 1px !important;
      
       }
+
     }
    
 
