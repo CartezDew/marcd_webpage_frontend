@@ -760,7 +760,7 @@ function Features() {
         <Box 
           id="rewards"
           ref={rewardsSectionRef}
-          className={`navigation-feature-section ${isRewardsSectionVisible ? 'animate' : ''} ${isStatisticsVideoEnlarged ? 'video-enlarged' : ''}`}
+          className={`navigation-feature-section animate ${isStatisticsVideoEnlarged ? 'video-enlarged' : ''}`}
         >
           <Container maxWidth="lg" className="navigation-content">
             <Box className="navigation-grid">
@@ -770,23 +770,52 @@ function Features() {
                 </Typography>
                 
                 <Typography className="navigation-description">
-                  Truckers are the quiet heroes of our daily lives. At Marc'd, we believe it's time their contributions are truly recognized. That's why we created Top Marc'er Rewards — a program designed to celebrate drivers who go the extra mile, sharing updates that protect fellow truckers and drivers, and keeping roads safer for everyone.
+                  Truckers are the quiet heroes of our daily lives.
+                  <br />
+                  At Marc'd, we believe it's time their contributions are truly recognized.
+                  <br />
+                  <br />
                 </Typography>
 
                 <Typography className="navigation-description">
-                  Rack up points and get the recognition you deserve for making the road better for all. From posting real-time parking updates to reporting road conditions, every helpful action earns you points that convert directly into money in your pocket. The more you contribute, the more you can potentially earn — it's our way of saying thank you for your many sacrifices and contributions to our nation's economy.
+                  <strong>What It Is</strong>
+                  <br />
+                  Top Marc'er Rewards celebrates drivers who go the extra mile — sharing updates that protect fellow truckers and keep roads safer.
+                  <br />
+                  <br />
                 </Typography>
 
                 <Typography className="navigation-description">
-                  Each marc you make helps ensure the next driver travels with greater confidence. And each month, the top Marc'er in every U.S. region — the Northwest, West, Southwest, Southeast, Mid-Atlantic, and Northeast — is rewarded with  
+                  <strong>How It Works</strong>
+                  <ul className="rewards-list">
+                    <li><strong>Posting real-time parking updates</strong> helps others find safe spots faster.</li>
+                    <li><strong>Reporting road hazards and closures</strong> keeps the community safe and informed.</li>
+                    <li><strong>Sharing helpful tips</strong> improves life on the road for everyone.</li>
+                  </ul>
+                  <p className="rewards-note">
+                    Points = cash in your pocket. <br />
+                    The more you contribute, the more you earn.
+                  </p>
+                </Typography>
+
+                <Typography className="navigation-description">
+                  <strong>Monthly Regional Winners</strong>
+                  <br />
+                  Each month, the top Marc'er in every U.S. region — NW, West, SW, SE, Mid-Atlantic, and NE — wins
                   <Box component="span" className="cash-reward-container">
                     <CashIcon className="floating-cash-icon" />
-                    <strong className="floating-cash-amount">200</strong>
-                  </Box>. 
+                    <strong className="floating-cash-amount">$200</strong>
+                  </Box> in cash rewards.
                 </Typography>
 
+                <Box sx={{ height: '2rem' }} />
+
                 <Typography className="navigation-description">
-                  Together, we're building a community where truckers look out for one another, and where gratitude travels far.
+                  <strong>Why It Matters</strong>
+                  <br />
+                  Every update helps another driver travel with more confidence.
+                  <br />
+                  Together, we're building a community where truckers look out for one another — and get rewarded for it.
                 </Typography>
               </Box>
               <Box className="navigation-image-content">
@@ -829,10 +858,28 @@ function Features() {
                   Navigate with Confidence
                 </Typography>
                 <Typography className="navigation-description">
-                  Marc'd gives truckers powerful, truck-optimized GPS and trip planning at their fingertips. 
-                  From weigh stations and truck stops to fuel and repair shops, easily find exactly what you need, 
-                  when you need it. Our trusted navigation ensures you stay on the safest, most efficient routes—saving 
-                  you time, money, and stress on the road.
+                  Marc'd puts powerful, truck-optimized GPS and trip planning right at your fingertips.
+                  <br />
+                  <br />
+                </Typography>
+
+                                  <Typography className="navigation-description">
+                    <strong>Easily find:</strong>
+                    <ul className="rewards-list">
+                      <li><strong>Parking</strong></li>
+                      <li><strong>Hazards</strong></li>
+                      <li><strong>Weigh stations</strong></li>
+                      <li><strong>Truck stops</strong></li>
+                      <li><strong>Fuel stations</strong></li>
+                      <li><strong>Repair shops</strong></li>
+                    </ul>
+                    <p className="rewards-note">
+                      Wherever you are, whenever you need them.
+                    </p>
+                  </Typography>
+
+                <Typography className="navigation-description">
+                  Our smart navigation keeps you on safe, efficient routes—saving time, money, and stress on every trip.
                 </Typography>
               </Box>
               <Box className="navigation-image-content">

@@ -4480,3 +4480,161 @@
     color: #999;
     font-size: 12px;
   }
+
+  /* Top Marc'er Rewards Section */
+  .rewards-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    border-radius: 12px;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rewards-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .rewards-title {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .rewards-section .navigation-description {
+    color: #ffffff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .rewards-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+
+  .rewards-list li {
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .rewards-list li::before {
+    content: "•";
+    color: #be0303;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .rewards-note {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1.5rem 0;
+    text-align: center;
+    background: rgba(190, 3, 3, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #be0303;
+  }
+
+  .cash-reward-container {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #be0303 0%, #8b0000 100%);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin: 0 0.5rem;
+    box-shadow: 0 4px 8px rgba(190, 3, 3, 0.3);
+    animation: pulse 2s infinite;
+  }
+
+  .floating-cash-icon {
+    color: #ffffff;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .floating-cash-amount {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Responsive styles for rewards section */
+  @media (max-width: 768px) {
+    .rewards-section {
+      padding: 2rem 1rem;
+      margin: 1rem 0;
+    }
+
+    .rewards-title {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .rewards-section .navigation-description {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .rewards-list li {
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .rewards-note {
+      font-size: 1rem;
+      padding: 0.8rem;
+    }
+
+    .cash-reward-container {
+      padding: 0.4rem 0.8rem;
+    }
+
+    .floating-cash-amount {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .rewards-title {
+      font-size: 1.8rem;
+    }
+
+    .rewards-section .navigation-description {
+      font-size: 0.9rem;
+    }
+
+    .rewards-list li {
+      font-size: 0.85rem;
+      padding-left: 1.2rem;
+    }
+
+    .rewards-note {
+      font-size: 0.9rem;
+      padding: 0.6rem;
+    }
+  }
