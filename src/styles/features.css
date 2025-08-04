@@ -2536,18 +2536,20 @@
   }
 
   .navigation-image {
-    max-width: 40%;
+    max-width: 55%;
     height: auto;
     border-radius: 0rem !important;
   }
   
   .navigation-image.enlarged {
-    transform: scale(1.35);
+    transform: scale(1.45);
   }
   
 
   .statistics-video {
     border-radius: 1.8rem;
+    max-width: 55%;
+    max-height: 55%;
   }
   
   .statistics-video.enlarged {
@@ -2557,17 +2559,19 @@
 
   .alerts-video {
     border-radius: 2.6rem;
+    max-width: 55%;
+    max-height: 55%;
   }
 
   .spotter-video {
-    max-width: 45%;
-    max-height: 45%;
+    max-width: 55%;
+    max-height: 55%;
     border-radius: 1.8rem;
   }
   
   .spotter-video.enlarged {
     border-radius: 1.8rem;
-    transform: scale(1.3);
+    transform: scale(1.45);
   }
 
   .alerts-video {
@@ -2576,7 +2580,7 @@
 
   .alerts-video.enlarged {
     border-radius: 2rem;
-    transform: scale(1.35);
+    transform: scale(1.45);
   }
 
   .favorite-places-icon-container {
