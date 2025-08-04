@@ -778,17 +778,16 @@ function Features() {
                 </Typography>
 
                 <Typography className="navigation-description">
-                  <strong>What It Is</strong>
+                  <strong>What It Is?</strong>
                   <br />
                   <Box className="section-content-indent">
                     Top Marc'er Rewards celebrates drivers who go the extra mile, sharing updates that protect fellow truckers and keep roads safer.
                   </Box>
                   <br />
-                  <br />
                 </Typography>
 
                 <Typography className="navigation-description">
-                  <strong>How It Works</strong>
+                  <strong>How It Works?</strong>
                   <ul className="rewards-list">
                     <li><strong>Posting real-time parking updates</strong> helps others find safe spots faster.</li>
                     <li><strong>Reporting road hazards and closures</strong> keeps the community safe and informed.</li>
@@ -815,7 +814,7 @@ function Features() {
                 <Box sx={{ height: '2rem' }} />
 
                 <Typography className="navigation-description">
-                  <strong>Why It Matters</strong>
+                  <strong>Why It Matters?</strong>
                   <br />
                   <Box className="section-content-indent">
                     Every update helps another driver travel with more confidence.
