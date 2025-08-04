@@ -2056,57 +2056,6 @@ function home() {
         </Box>
       </Box>
 
-      {/* Top Marc'er Rewards Section */}
-      <Box className="rewards-section">
-        <Box className="rewards-content">
-          <Typography variant="h3" className="rewards-title">
-            Top Marc'er Rewards
-          </Typography>
-          
-          <Typography className="navigation-description">
-            Truckers are the quiet heroes of our daily lives.
-            <br />
-            At Marc'd, we believe it's time their contributions are truly recognized.
-          </Typography>
-
-          <Typography className="navigation-description">
-            <strong>What It Is</strong>
-            <br />
-            Top Marc'er Rewards celebrates drivers who go the extra mile — sharing updates that protect fellow truckers and keep roads safer.
-          </Typography>
-
-          <Typography className="navigation-description">
-            <strong>How It Works</strong>
-            <ul className="rewards-list">
-              <li><strong>Posting real-time parking updates</strong> helps others find safe spots faster.</li>
-              <li><strong>Reporting road hazards and closures</strong> keeps the community safe and informed.</li>
-              <li><strong>Sharing helpful tips</strong> improves life on the road for everyone.</li>
-            </ul>
-            <p className="rewards-note">
-              Points = cash in your pocket. <br />
-              The more you contribute, the more you earn.
-            </p>
-          </Typography>
-
-          <Typography className="navigation-description">
-            <strong>Monthly Regional Winners</strong>
-            <br />
-            Each month, the top Marc'er in every U.S. region — NW, West, SW, SE, Mid-Atlantic, and NE — wins
-            <Box component="span" className="cash-reward-container">
-              <CashIcon className="floating-cash-icon" />
-              <strong className="floating-cash-amount">$200</strong>
-            </Box> in cash rewards.
-          </Typography>
-
-          <Typography className="navigation-description">
-            <strong>Why It Matters</strong>
-            <br />
-            Every update helps another driver travel with more confidence.
-            <br />
-            Together, we're building a community where truckers look out for one another — and get rewarded for it.
-          </Typography>
-        </Box>
-      </Box>
     </Box>
   );
 }

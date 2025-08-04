@@ -2570,6 +2570,7 @@
 
   .fact-text {
     font-size: .9rem !important;
+    font-weight: 600 !important;
   }
 
   .fact-item {
@@ -3074,6 +3075,7 @@
 
      .fact-text {
       font-size: 1rem !important;
+      font-weight: 500 !important;
      }
 
      .fact-detail {
@@ -4020,6 +4022,7 @@
 
       .fact-text {
         font-size: 0.9rem !important;
+        font-weight: 400 !important;
       }
   
       .fact-detail {
