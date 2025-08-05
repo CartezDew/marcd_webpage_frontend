@@ -2326,6 +2326,20 @@
   } 
 }
 
+@media (min-width: 931px) {
+  .facts-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .solutions-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .marcd-solutions-content .solutions-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
 @media (max-width: 930px) {
   .home-hero-section .home-hero-headline {
     font-size: 3.5rem !important;
