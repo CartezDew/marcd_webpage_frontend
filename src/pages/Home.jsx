@@ -95,6 +95,10 @@ function home() {
     solutions: false
   });
   
+  // Video auto-play refs
+  const didYouKnowVideoRef = useRef(null);
+  const solutionsVideoRef = useRef(null);
+  
   // Trucker images animation
   const truckerImagesRef = useRef(null);
   const isTruckerImagesInView = useInView(truckerImagesRef, { 
@@ -978,6 +982,41 @@ function home() {
     };
   }, [isScrollingToTop, isManualScrolling]);
 
+  // Video auto-play intersection observer
+  useEffect(() => {
+    const videoObserverOptions = {
+      threshold: 0.01 // Trigger when 1% visible
+    };
+
+    const didYouKnowVideoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && didYouKnowVideoRef.current) {
+            // Auto-play first video when 1% visible
+            didYouKnowVideoRef.current.play().catch(e => console.log('Did You Know video autoplay failed:', e));
+            
+            // Simultaneously start the second video
+            if (solutionsVideoRef.current) {
+              solutionsVideoRef.current.play().catch(e => console.log('Solutions video autoplay failed:', e));
+            }
+          }
+        });
+      },
+      videoObserverOptions
+    );
+
+    // Only observe the first video (Did You Know section)
+    if (didYouKnowVideoRef.current) {
+      didYouKnowVideoObserver.observe(didYouKnowVideoRef.current);
+    }
+
+    return () => {
+      if (didYouKnowVideoRef.current) {
+        didYouKnowVideoObserver.unobserve(didYouKnowVideoRef.current);
+      }
+    };
+  }, [shouldLoadVideos]);
+
   // Animation variants for the action words - no y movement to prevent layout shifts
   const wordVariants = {
     initial: { 
@@ -1665,15 +1704,25 @@ function home() {
         
         {shouldLoadVideos && (
           <video 
+            ref={didYouKnowVideoRef}
             autoPlay 
             loop 
             muted 
             playsInline
-            preload="none"
+            controls={false}
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+            preload="metadata"
             className="background-video"
             loading="lazy"
             onLoadedData={() => setVideosLoaded(prev => ({ ...prev, didYouKnow: true }))}
             onError={() => console.log('Did You Know video failed to load')}
+            onCanPlay={() => {
+              // Force play when video can play
+              if (didYouKnowVideoRef.current) {
+                didYouKnowVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
             style={{
               opacity: videosLoaded.didYouKnow ? 1 : 0,
               transition: 'opacity 1s ease-in-out'
@@ -1910,15 +1959,25 @@ function home() {
         
         {shouldLoadVideos && (
           <video 
+            ref={solutionsVideoRef}
             autoPlay 
             loop 
             muted 
             playsInline
-            preload="none"
+            controls={false}
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+            preload="metadata"
             className="background-video"
             loading="lazy"
             onLoadedData={() => setVideosLoaded(prev => ({ ...prev, solutions: true }))}
             onError={() => console.log('Solutions video failed to load')}
+            onCanPlay={() => {
+              // Force play when video can play
+              if (solutionsVideoRef.current) {
+                solutionsVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
             style={{
               opacity: videosLoaded.solutions ? 1 : 0,
               transition: 'opacity 1s ease-in-out'

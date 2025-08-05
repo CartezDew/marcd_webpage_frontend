@@ -602,6 +602,24 @@
     left: 0;
     z-index: 0;
     border-radius: 12px;
+    pointer-events: none; /* Prevent user interaction */
+  }
+
+  /* Ensure no video controls are visible */
+  .background-video::-webkit-media-controls {
+    display: none !important;
+  }
+  
+  .background-video::-webkit-media-controls-panel {
+    display: none !important;
+  }
+  
+  .background-video::-webkit-media-controls-play-button {
+    display: none !important;
+  }
+  
+  .background-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
   }
 
   .video-overlay {
@@ -3238,6 +3256,7 @@
     .home-hero-headline {
       font-size: 2.6rem !important;
     }
+    
   }
 
    /* Main scroll arrow animation - only for larger screens */
