@@ -3281,6 +3281,21 @@
   }
 
   @media (max-width: 600px) {
+    /* Ensure smooth scrolling on mobile */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    body {
+      -webkit-overflow-scrolling: touch;
+      overflow-x: hidden;
+    }
+    
+    .home-page-container {
+      -webkit-overflow-scrolling: touch;
+      overflow-x: hidden;
+    }
 
     .home-hero-section .home-page-container {
       background: linear-gradient(135deg,  #000000  10%, #be0303d1 30%,  #be0303d1 70%, #0f1419 100%) !important;
@@ -3635,7 +3650,7 @@
   }
 
   .scroll-text {
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
   }
 
   .scroll-image {
@@ -4134,7 +4149,7 @@
 
 
     .scroll-text {
-      font-size: 1.15rem !important;
+      font-size: 1rem !important;
     }
 
     .join-button {
