@@ -603,6 +603,9 @@
     z-index: 0;
     border-radius: 12px;
     pointer-events: none; /* Prevent user interaction */
+    /* Force autoplay on mobile */
+    -webkit-playsinline: true;
+    -webkit-presentation-mode: inline;
   }
 
   /* Ensure no video controls are visible */
@@ -619,6 +622,15 @@
   }
   
   .background-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+  }
+  
+  /* Additional mobile autoplay support */
+  .background-video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+  }
+  
+  .background-video::-webkit-media-controls-enclosure {
     display: none !important;
   }
 

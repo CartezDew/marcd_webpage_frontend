@@ -985,14 +985,15 @@ function home() {
   // Video auto-play intersection observer
   useEffect(() => {
     const videoObserverOptions = {
-      threshold: 0.01 // Trigger when 1% visible
+      threshold: 0.01, // Trigger immediately when visible for mobile autoplay
+      rootMargin: '0px 0px 0px 0px' // No margin for immediate trigger
     };
 
     const didYouKnowVideoObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && didYouKnowVideoRef.current) {
-            // Auto-play first video when 1% visible
+            // Auto-play first video immediately when visible
             didYouKnowVideoRef.current.play().catch(e => console.log('Did You Know video autoplay failed:', e));
             
             // Simultaneously start the second video
@@ -1712,9 +1713,8 @@ function home() {
             controls={false}
             disablePictureInPicture
             controlsList="nodownload nofullscreen noremoteplayback"
-            preload="metadata"
+            preload="auto"
             className="background-video"
-            loading="lazy"
             onLoadedData={() => setVideosLoaded(prev => ({ ...prev, didYouKnow: true }))}
             onError={() => console.log('Did You Know video failed to load')}
             onCanPlay={() => {
@@ -1967,9 +1967,8 @@ function home() {
             controls={false}
             disablePictureInPicture
             controlsList="nodownload nofullscreen noremoteplayback"
-            preload="metadata"
+            preload="auto"
             className="background-video"
-            loading="lazy"
             onLoadedData={() => setVideosLoaded(prev => ({ ...prev, solutions: true }))}
             onError={() => console.log('Solutions video failed to load')}
             onCanPlay={() => {
