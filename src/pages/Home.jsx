@@ -1011,11 +1011,54 @@ function home() {
       didYouKnowVideoObserver.observe(didYouKnowVideoRef.current);
     }
 
+    // Force autoplay on any user interaction (mobile workaround)
+    const forceAutoplay = () => {
+      if (didYouKnowVideoRef.current && didYouKnowVideoRef.current.paused) {
+        didYouKnowVideoRef.current.play().catch(e => console.log('Force autoplay failed:', e));
+      }
+      if (solutionsVideoRef.current && solutionsVideoRef.current.paused) {
+        solutionsVideoRef.current.play().catch(e => console.log('Force autoplay failed:', e));
+      }
+    };
+
+    // Listen for any user interaction to trigger autoplay
+    document.addEventListener('touchstart', forceAutoplay, { once: true });
+    document.addEventListener('click', forceAutoplay, { once: true });
+    document.addEventListener('scroll', forceAutoplay, { once: true });
+
     return () => {
       if (didYouKnowVideoRef.current) {
         didYouKnowVideoObserver.unobserve(didYouKnowVideoRef.current);
       }
+      document.removeEventListener('touchstart', forceAutoplay);
+      document.removeEventListener('click', forceAutoplay);
+      document.removeEventListener('scroll', forceAutoplay);
     };
+  }, [shouldLoadVideos]);
+
+  // Force videos to start playing when they're loaded and visible
+  useEffect(() => {
+    if (shouldLoadVideos) {
+      const startVideos = () => {
+        if (didYouKnowVideoRef.current) {
+          didYouKnowVideoRef.current.play().catch(e => console.log('Did You Know video start failed:', e));
+        }
+        if (solutionsVideoRef.current) {
+          solutionsVideoRef.current.play().catch(e => console.log('Solutions video start failed:', e));
+        }
+      };
+
+      // Try to start videos after they're loaded
+      const videoStartTimer = setTimeout(startVideos, 100);
+      const videoStartTimer2 = setTimeout(startVideos, 500);
+      const videoStartTimer3 = setTimeout(startVideos, 1000);
+
+      return () => {
+        clearTimeout(videoStartTimer);
+        clearTimeout(videoStartTimer2);
+        clearTimeout(videoStartTimer3);
+      };
+    }
   }, [shouldLoadVideos]);
 
   // Animation variants for the action words - no y movement to prevent layout shifts
@@ -1715,12 +1758,36 @@ function home() {
             controlsList="nodownload nofullscreen noremoteplayback"
             preload="auto"
             className="background-video"
-            onLoadedData={() => setVideosLoaded(prev => ({ ...prev, didYouKnow: true }))}
+            onLoadStart={() => {
+              // Start playing as soon as video starts loading
+              if (didYouKnowVideoRef.current) {
+                didYouKnowVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
+            onLoadedData={() => {
+              setVideosLoaded(prev => ({ ...prev, didYouKnow: true }));
+              // Force play immediately when data is loaded
+              if (didYouKnowVideoRef.current) {
+                didYouKnowVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
             onError={() => console.log('Did You Know video failed to load')}
             onCanPlay={() => {
               // Force play when video can play
               if (didYouKnowVideoRef.current) {
                 didYouKnowVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
+            onPlay={() => {
+              // Ensure video stays playing
+              if (didYouKnowVideoRef.current && didYouKnowVideoRef.current.paused) {
+                didYouKnowVideoRef.current.play().catch(e => console.log('Video play failed:', e));
+              }
+            }}
+            onPause={() => {
+              // Restart if paused
+              if (didYouKnowVideoRef.current) {
+                didYouKnowVideoRef.current.play().catch(e => console.log('Video restart failed:', e));
               }
             }}
             style={{
@@ -1969,12 +2036,36 @@ function home() {
             controlsList="nodownload nofullscreen noremoteplayback"
             preload="auto"
             className="background-video"
-            onLoadedData={() => setVideosLoaded(prev => ({ ...prev, solutions: true }))}
+            onLoadStart={() => {
+              // Start playing as soon as video starts loading
+              if (solutionsVideoRef.current) {
+                solutionsVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
+            onLoadedData={() => {
+              setVideosLoaded(prev => ({ ...prev, solutions: true }));
+              // Force play immediately when data is loaded
+              if (solutionsVideoRef.current) {
+                solutionsVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
             onError={() => console.log('Solutions video failed to load')}
             onCanPlay={() => {
               // Force play when video can play
               if (solutionsVideoRef.current) {
                 solutionsVideoRef.current.play().catch(e => console.log('Video autoplay failed:', e));
+              }
+            }}
+            onPlay={() => {
+              // Ensure video stays playing
+              if (solutionsVideoRef.current && solutionsVideoRef.current.paused) {
+                solutionsVideoRef.current.play().catch(e => console.log('Video play failed:', e));
+              }
+            }}
+            onPause={() => {
+              // Restart if paused
+              if (solutionsVideoRef.current) {
+                solutionsVideoRef.current.play().catch(e => console.log('Video restart failed:', e));
               }
             }}
             style={{
