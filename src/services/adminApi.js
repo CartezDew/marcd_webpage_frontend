@@ -97,7 +97,8 @@ export const exportWaitlistData = async (format = 'csv') => {
 // Authentication functions
 export const adminLogin = async (email, password) => {
   try {
-    const response = await api.post('/admin/login/', { email, password });
+    // Use backend's admin login endpoint under /api
+    const response = await api.post('/api/admin/login/', { email, password });
     const data = response.data;
     
     // Store token if login successful
@@ -115,7 +116,8 @@ export const adminLogin = async (email, password) => {
 
 export const adminLogout = async () => {
   try {
-    const response = await api.post('/admin/logout/');
+    // Use backend's admin logout endpoint under /api
+    const response = await api.post('/api/admin/logout/');
     
     // Clear local storage regardless of response
     localStorage.removeItem('adminToken');
