@@ -13,8 +13,8 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
-    // Use the correct login endpoint
-    const resp = await api.post("/api/login/", credentials);
+    // Use the correct JWT token endpoint
+    const resp = await api.post("/api/token/", credentials);
     
     // Store the token
     const token = resp.data.access || resp.data.token;
