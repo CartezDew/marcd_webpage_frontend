@@ -15,6 +15,10 @@ export const signIn = async (credentials) => {
   try {
     // Debug: Log the credentials being sent
     console.log('Sending login request with credentials:', credentials);
+    console.log('Credentials type:', typeof credentials);
+    console.log('Credentials keys:', Object.keys(credentials));
+    console.log('Username value:', credentials.username);
+    console.log('Password value:', credentials.password ? '[REDACTED]' : 'undefined');
     
     // Use the correct JWT token endpoint
     const resp = await api.post("/api/token/", credentials);
@@ -25,6 +29,8 @@ export const signIn = async (credentials) => {
     
     return resp.data;
   } catch (error) {
+    console.error('SignIn error:', error);
+    console.error('Error response:', error.response);
     throw error;
   }
 };
@@ -154,3 +160,21 @@ export const addToWaitlist = async (data) => {
     throw error;
   }
 };
+
+// Test function for debugging - call this from browser console
+export const testLogin = async (username, password) => {
+  console.log('Testing login with:', { username, password });
+  try {
+    const result = await signIn({ username, password });
+    console.log('Login successful:', result);
+    return result;
+  } catch (error) {
+    console.error('Login failed:', error);
+    return error;
+  }
+};
+
+// Make testLogin available globally for console testing
+if (typeof window !== 'undefined') {
+  window.testLogin = testLogin;
+}

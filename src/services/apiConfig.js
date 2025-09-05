@@ -11,6 +11,12 @@ const api = axios.create({
 // ✅ Add request interceptor (e.g., for auth token)
 api.interceptors.request.use(
   function (config) {
+    // Debug: Log request details
+    console.log('Axios request interceptor - URL:', config.url);
+    console.log('Axios request interceptor - Method:', config.method);
+    console.log('Axios request interceptor - Data:', config.data);
+    console.log('Axios request interceptor - Headers:', config.headers);
+    
     const token = localStorage.getItem("token");
     const adminToken = localStorage.getItem("adminToken");
     
