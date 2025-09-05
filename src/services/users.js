@@ -174,7 +174,47 @@ export const testLogin = async (username, password) => {
   }
 };
 
-// Make testLogin available globally for console testing
+// Test different authentication endpoints
+export const testAuthEndpoints = async (username, password) => {
+  const endpoints = [
+    '/api/token/',
+    '/api/auth/login/',
+    '/api/login/',
+    '/auth/login/',
+    '/users/login/',
+    '/api/users/login/',
+    '/api/token/login/',
+    '/api/authentication/login/'
+  ];
+  
+  const credentialFormats = [
+    { username, password },
+    { email: username, password },
+    { user: username, password },
+    { login: username, password }
+  ];
+  
+  console.log('Testing different authentication endpoints and data formats...');
+  
+  for (const endpoint of endpoints) {
+    for (const credentials of credentialFormats) {
+      try {
+        console.log(`\n--- Testing ${endpoint} with ${JSON.stringify(credentials)} ---`);
+        const resp = await api.post(endpoint, credentials);
+        console.log(`✅ SUCCESS with ${endpoint}:`, resp.data);
+        return { endpoint, credentials, data: resp.data };
+      } catch (error) {
+        console.log(`❌ FAILED with ${endpoint}:`, error.response?.status, error.response?.data);
+      }
+    }
+  }
+  
+  console.log('\n❌ All endpoints and formats failed');
+  return null;
+};
+
+// Make functions available globally for console testing
 if (typeof window !== 'undefined') {
   window.testLogin = testLogin;
+  window.testAuthEndpoints = testAuthEndpoints;
 }
