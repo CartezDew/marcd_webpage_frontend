@@ -3,6 +3,9 @@ import axios from "axios";
 // Create the axios instance
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000", // Use environment variable or fallback to localhost
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // ✅ Add request interceptor (e.g., for auth token)

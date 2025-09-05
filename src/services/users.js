@@ -13,6 +13,9 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
+    // Debug: Log the credentials being sent
+    console.log('Sending login request with credentials:', credentials);
+    
     // Use the correct JWT token endpoint
     const resp = await api.post("/api/token/", credentials);
     
