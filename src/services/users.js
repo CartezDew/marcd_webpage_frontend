@@ -20,7 +20,17 @@ export const signIn = async (credentials) => {
     console.log('Username value:', credentials.username);
     console.log('Password value:', credentials.password ? '[REDACTED]' : 'undefined');
     
-    // Use the correct JWT token endpoint
+    // First, let's test if the backend is reachable
+    console.log('Testing backend connectivity...');
+    try {
+      const healthCheck = await api.get('/');
+      console.log('Backend health check response:', healthCheck.status);
+    } catch (healthError) {
+      console.error('Backend health check failed:', healthError.response?.status);
+    }
+    
+    // Try the original working endpoint
+    console.log('Attempting login with /api/token/');
     const resp = await api.post("/api/token/", credentials);
     
     // Store the token
@@ -31,6 +41,15 @@ export const signIn = async (credentials) => {
   } catch (error) {
     console.error('SignIn error:', error);
     console.error('Error response:', error.response);
+    console.error('Error response data:', error.response?.data);
+    console.error('Error response status:', error.response?.status);
+    console.error('Error response headers:', error.response?.headers);
+    
+    // Try to extract more details from the HTML error response
+    if (error.response?.data && typeof error.response.data === 'string') {
+      console.error('HTML Error Response:', error.response.data);
+    }
+    
     throw error;
   }
 };

@@ -23,7 +23,6 @@ import {
 import { Person, Lock, Visibility, VisibilityOff, Close } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { signIn, requestPasswordReset, confirmPasswordReset } from '../services/users';
-import { adminLogin } from '../services/adminApi';
 
 import '../styles/signin.css';
 
@@ -153,25 +152,21 @@ function SignIn() {
         return;
       }
 
-      // Try admin login first
-      try {
-        const adminResp = await adminLogin(email, password);
-        if (adminResp && (adminResp.is_staff || adminResp.is_superuser || adminResp.token)) {
-          // Admin login successful
-          setLoading(false);
-          navigate('/admin/dashboard');
-          return;
-        }
-      } catch (adminErr) {
-        // Admin login failed; proceed to regular user login
-      }
-
-      // Regular user signin (JWT)
+      // Regular user signin
       const userData = await signIn({ username: email, password });
       setLoading(false);
-
-      // Regular user - redirect to home
-      navigate('/');
+      
+      // Check if this is an admin user (staff or superuser)
+      if (userData.user && (userData.user.is_staff || userData.user.is_superuser)) {
+        // Store admin token and redirect to admin dashboard
+        const token = userData.access || userData.token;
+        localStorage.setItem('adminToken', token);
+        localStorage.setItem('adminEmail', email);
+        navigate('/admin/dashboard');
+      } else {
+        // Regular user - redirect to home
+        navigate('/');
+      }
     } catch (err) {
       setLoading(false);
       setError(
