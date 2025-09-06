@@ -13,24 +13,6 @@ export const signUp = async (credentials) => {
 
 export const signIn = async (credentials) => {
   try {
-    // Debug: Log the credentials being sent
-    console.log('Sending login request with credentials:', credentials);
-    console.log('Credentials type:', typeof credentials);
-    console.log('Credentials keys:', Object.keys(credentials));
-    console.log('Username value:', credentials.username);
-    console.log('Password value:', credentials.password ? '[REDACTED]' : 'undefined');
-    
-    // First, let's test if the backend is reachable
-    console.log('Testing backend connectivity...');
-    try {
-      const healthCheck = await api.get('/');
-      console.log('Backend health check response:', healthCheck.status);
-    } catch (healthError) {
-      console.error('Backend health check failed:', healthError.response?.status);
-    }
-    
-    // Try the original working endpoint
-    console.log('Attempting login with /api/token/');
     const resp = await api.post("/api/token/", credentials);
     
     // Store the token
@@ -39,17 +21,6 @@ export const signIn = async (credentials) => {
     
     return resp.data;
   } catch (error) {
-    console.error('SignIn error:', error);
-    console.error('Error response:', error.response);
-    console.error('Error response data:', error.response?.data);
-    console.error('Error response status:', error.response?.status);
-    console.error('Error response headers:', error.response?.headers);
-    
-    // Try to extract more details from the HTML error response
-    if (error.response?.data && typeof error.response.data === 'string') {
-      console.error('HTML Error Response:', error.response.data);
-    }
-    
     throw error;
   }
 };
@@ -180,60 +151,3 @@ export const addToWaitlist = async (data) => {
   }
 };
 
-// Test function for debugging - call this from browser console
-export const testLogin = async (username, password) => {
-  console.log('Testing login with:', { username, password });
-  try {
-    const result = await signIn({ username, password });
-    console.log('Login successful:', result);
-    return result;
-  } catch (error) {
-    console.error('Login failed:', error);
-    return error;
-  }
-};
-
-// Test different authentication endpoints
-export const testAuthEndpoints = async (username, password) => {
-  const endpoints = [
-    '/api/token/',
-    '/api/auth/login/',
-    '/api/login/',
-    '/auth/login/',
-    '/users/login/',
-    '/api/users/login/',
-    '/api/token/login/',
-    '/api/authentication/login/'
-  ];
-  
-  const credentialFormats = [
-    { username, password },
-    { email: username, password },
-    { user: username, password },
-    { login: username, password }
-  ];
-  
-  console.log('Testing different authentication endpoints and data formats...');
-  
-  for (const endpoint of endpoints) {
-    for (const credentials of credentialFormats) {
-      try {
-        console.log(`\n--- Testing ${endpoint} with ${JSON.stringify(credentials)} ---`);
-        const resp = await api.post(endpoint, credentials);
-        console.log(`✅ SUCCESS with ${endpoint}:`, resp.data);
-        return { endpoint, credentials, data: resp.data };
-      } catch (error) {
-        console.log(`❌ FAILED with ${endpoint}:`, error.response?.status, error.response?.data);
-      }
-    }
-  }
-  
-  console.log('\n❌ All endpoints and formats failed');
-  return null;
-};
-
-// Make functions available globally for console testing
-if (typeof window !== 'undefined') {
-  window.testLogin = testLogin;
-  window.testAuthEndpoints = testAuthEndpoints;
-}

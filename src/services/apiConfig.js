@@ -11,12 +11,6 @@ const api = axios.create({
 // ✅ Add request interceptor (e.g., for auth token)
 api.interceptors.request.use(
   function (config) {
-    // Debug: Log request details
-    console.log('Axios request interceptor - URL:', config.url);
-    console.log('Axios request interceptor - Method:', config.method);
-    console.log('Axios request interceptor - Data:', config.data);
-    console.log('Axios request interceptor - Headers:', config.headers);
-    
     const token = localStorage.getItem("token");
     const adminToken = localStorage.getItem("adminToken");
     
@@ -29,7 +23,6 @@ api.interceptors.request.use(
     return config;
   },
   function (error) {
-    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -40,15 +33,6 @@ api.interceptors.response.use(
     return response;
   },
   function (error) {
-    // You can inspect error.response.status here
-    if (error.response) {
-      console.error("API Response Error:", error.response);
-    } else if (error.request) {
-      console.error("API No Response Error:", error.request);
-    } else {
-      console.error("Unexpected Error:", error.message);
-    }
-
     return Promise.reject(error);
   }
 );
