@@ -23,6 +23,7 @@ import Leadership_Beth from './pages/Leadership_Beth';
 import Features from './pages/Features';
 import SignIn from './pages/SignIn';
 import AdminDashboard from './pages/AdminDashboard';
+import TestPage from './pages/TestPage';
 // Create a custom theme
 const theme = createTheme({
   palette: {
@@ -149,6 +150,7 @@ function App() {
               <Route path="/leadership/beth" element={<Leadership_Beth />} />
               <Route path="/features" element={<Features />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/test" element={<TestPage />} />
 
               <Route path="/admin/dashboard" element={
                 <ProtectedRoute>
