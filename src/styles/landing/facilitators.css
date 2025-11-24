@@ -1,0 +1,60 @@
+/* src/styles/landing/facilitators.css */
+
+.facilitators-section {
+    background-color: var(--color-black);
+    padding: var(--section-padding);
+    position: relative;
+    overflow: hidden;
+}
+
+.facilitators-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.facilitators-text h2 {
+    margin-bottom: 1.5rem;
+}
+
+.facilitators-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.facilitators-list li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-light-gray);
+}
+
+.facilitators-list li::before {
+    content: '•';
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -5px;
+}
+
+.facilitators-image-container {
+    position: relative;
+}
+
+.facilitators-image {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 968px) {
+    .facilitators-content {
+        grid-template-columns: 1fr;
+    }
+}

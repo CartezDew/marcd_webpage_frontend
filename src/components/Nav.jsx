@@ -1,11 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
-  Box, 
-  useTheme, 
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  useTheme,
   useMediaQuery,
   IconButton,
   Drawer,
@@ -16,10 +16,10 @@ import {
   ListItemText,
   Tooltip
 } from '@mui/material';
-import { 
-  LocalShipping, 
-  Map, 
-  Chat, 
+import {
+  LocalShipping,
+  Map,
+  Chat,
   Assessment,
   Menu,
   People,
@@ -77,7 +77,7 @@ function Nav() {
 
   useEffect(() => {
     let ticking = false;
-    
+
     const throttledScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
@@ -96,7 +96,7 @@ function Nav() {
   useEffect(() => {
     const adminToken = localStorage.getItem('adminToken');
     const userToken = localStorage.getItem('token');
-    
+
     if (adminToken || userToken) {
       setIsLoggedIn(true);
       // Check if it's an admin user (adminToken indicates admin login)
@@ -114,7 +114,7 @@ function Nav() {
   };
 
   const isHomePage = location.pathname === '/';
-  
+
   const navItems = [
     { path: '/', label: 'Home', icon: <Map /> },
     { path: '/features', label: 'Features', icon: <Apps /> },
@@ -139,7 +139,7 @@ function Nav() {
   const goToWaitlist = () => {
     // Close mobile drawer if open
     setMobileOpen(false);
-    
+
     if (location.pathname !== '/') {
       // If not on home page, navigate to home with waitlist parameter
       navigate('/?waitlist=true');
@@ -154,11 +154,11 @@ function Nav() {
       e.preventDefault();
       return;
     }
-    
+
     // Add click animation
     setLogoClicked(true);
     setTimeout(() => setLogoClicked(false), 200);
-    
+
     // Navigate to home page
     navigate('/');
   };
@@ -181,10 +181,10 @@ function Nav() {
       >
         <CloseIcon />
       </IconButton>
-      
+
       {/* Logo container - separate from close button */}
-      <Tooltip 
-        title={isHomePage ? "" : "Back to home page"} 
+      <Tooltip
+        title={isHomePage ? "" : "Back to home page"}
         placement="right"
         arrow
         slotProps={{
@@ -206,107 +206,107 @@ function Nav() {
           }
         }}
       >
-        <Box 
+        <Box
           className={`nav-drawer-logo-container ${isHomePage ? 'disabled' : ''}`}
           onClick={isHomePage ? undefined : handleLogoClick}
-          sx={{ 
+          sx={{
             cursor: isHomePage ? 'default' : 'pointer',
             opacity: isHomePage ? 0.6 : 1,
             transition: 'all 0.2s ease'
           }}
         >
-          <img 
-            src={marcDLogo} 
-            alt="Marc'd Logo" 
-            className={`nav-drawer-logo ${isHomePage ? 'disabled' : ''}`} 
+          <img
+            src={marcDLogo}
+            alt="Marc'd Logo"
+            className={`nav-drawer-logo ${isHomePage ? 'disabled' : ''}`}
           />
         </Box>
       </Tooltip>
-      
+
       {/* Navigation content */}
-    <Box onClick={handleDrawerToggle} className="nav-drawer-content">
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.path} disablePadding>
-            <ListItemButton 
-              component={Link} 
-              to={item.path}
-              selected={isActive(item.path)}
-              className="nav-drawer-item"
-            >
-              <ListItemIcon className="nav-drawer-icon">
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        {isHomePage && !isLoggedIn && (
-          <ListItem disablePadding>
-            <ListItemButton 
-              component={Link}
-              to="/signin"
-              className="nav-drawer-item"
-            >
-              <ListItemIcon className="nav-drawer-icon">
-                <LoginIcon />
-              </ListItemIcon>
-              <ListItemText primary="Log In" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {isLoggedIn && isAdmin && location.pathname !== '/admin/dashboard' && (
-          <ListItem disablePadding>
-            <ListItemButton 
-              component={Link}
-              to="/admin/dashboard"
-              className="nav-drawer-item"
-            >
-              <ListItemIcon className="nav-drawer-icon">
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Admin Dashboard" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {isLoggedIn && (
-          <ListItem disablePadding>
-            <ListItemButton 
-              onClick={handleLogout}
-              className="nav-drawer-item"
-            >
-              <ListItemIcon className="nav-drawer-icon">
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-        )}
-        {!isHomePage && !isAdmin && (
-          <ListItem disablePadding>
-            <ListItemButton 
-              onClick={goToWaitlist}
-              className="nav-drawer-join-button"
-            >
-              <ListItemText primary="Join Waitlist" />
-            </ListItemButton>
-          </ListItem>
-        )}
-      </List>
-    </Box>
+      <Box onClick={handleDrawerToggle} className="nav-drawer-content">
+        <List>
+          {navItems.map((item) => (
+            <ListItem key={item.path} disablePadding>
+              <ListItemButton
+                component={Link}
+                to={item.path}
+                selected={isActive(item.path)}
+                className="nav-drawer-item"
+              >
+                <ListItemIcon className="nav-drawer-icon">
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+          {isHomePage && !isLoggedIn && (
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to="/signin"
+                className="nav-drawer-item"
+              >
+                <ListItemIcon className="nav-drawer-icon">
+                  <LoginIcon />
+                </ListItemIcon>
+                <ListItemText primary="Log In" />
+              </ListItemButton>
+            </ListItem>
+          )}
+          {isLoggedIn && isAdmin && location.pathname !== '/admin/dashboard' && (
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to="/admin/dashboard"
+                className="nav-drawer-item"
+              >
+                <ListItemIcon className="nav-drawer-icon">
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admin Dashboard" />
+              </ListItemButton>
+            </ListItem>
+          )}
+          {isLoggedIn && (
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={handleLogout}
+                className="nav-drawer-item"
+              >
+                <ListItemIcon className="nav-drawer-icon">
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
+          )}
+          {!isHomePage && !isAdmin && (
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={goToWaitlist}
+                className="nav-drawer-join-button"
+              >
+                <ListItemText primary="Join Waitlist" />
+              </ListItemButton>
+            </ListItem>
+          )}
+        </List>
+      </Box>
     </>
   );
 
   return (
     <>
-      <AppBar 
+      <AppBar
         position="sticky"
         elevation={0}
         className={`nav-appbar ${scrolled ? 'nav-shrink' : ''}`}
       >
         <Toolbar className="nav-toolbar">
-          <Tooltip 
-            title={isHomePage ? "" : "Back to home page"} 
+          <Tooltip
+            title={isHomePage ? "" : "Back to home page"}
             placement="bottom"
             arrow
             slotProps={{
@@ -331,17 +331,17 @@ function Nav() {
             <Box
               onClick={handleLogoClick}
               className={`nav-logo-container ${isHomePage ? 'disabled' : ''} ${logoClicked ? 'clicked' : ''}`}
-              sx={{ 
+              sx={{
                 cursor: isHomePage ? 'default' : 'pointer',
                 transition: 'all 0.2s ease'
               }}
-          >
-            <img 
-              src="https://i.postimg.cc/rshTR7Qf/Marc-d-Logo.png" 
-              alt="Marc'd Logo" 
+            >
+              <img
+                src={marcDLogo}
+                alt="Marc'd Logo"
                 className={`nav-logo ${isHomePage ? 'disabled' : ''}`}
-            />
-          </Box>
+              />
+            </Box>
           </Tooltip>
 
           {isMobile ? (

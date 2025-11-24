@@ -1,0 +1,78 @@
+/* src/styles/landing/nearby.css */
+
+.nearby-section {
+    background-color: var(--color-dark-gray);
+    padding: var(--section-padding);
+}
+
+.nearby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.facility-card {
+    background: var(--color-black);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition-normal);
+    cursor: pointer;
+}
+
+.facility-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.facility-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.facility-info {
+    padding: 1rem;
+}
+
+.facility-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.facility-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-white);
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 0.9rem;
+    color: var(--color-white);
+}
+
+.star-icon {
+    color: var(--color-white);
+}
+
+.facility-details {
+    color: var(--color-light-gray);
+    font-size: 0.9rem;
+}
+
+.facility-price {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: var(--color-white);
+}
+
+.facility-price span {
+    font-weight: 400;
+    color: var(--color-light-gray);
+}

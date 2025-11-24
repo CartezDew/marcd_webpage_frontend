@@ -1,0 +1,53 @@
+/* src/styles/landing/features.css */
+
+.features-section {
+    background-color: var(--color-dark-gray);
+    padding: var(--section-padding);
+    position: relative;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: var(--color-black);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition-normal);
+}
+
+.feature-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-5px);
+}
+
+.feature-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    background: rgba(190, 3, 3, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+}
+
+.feature-card h3 {
+    color: var(--color-white);
+    font-size: 1.25rem;
+    margin-bottom: 0.8rem;
+}
+
+.feature-card p {
+    color: var(--color-light-gray);
+    font-size: 0.95rem;
+    margin: 0;
+}

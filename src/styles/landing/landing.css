@@ -1,0 +1,151 @@
+/* src/styles/landing/landing.css */
+
+:root {
+  /* Brand Colors */
+  --color-primary: #be0303; /* Marc'd Red */
+  --color-primary-dark: #8a0202;
+  --color-primary-light: #e60404;
+  --color-black: #040505;
+  --color-dark-gray: #0f1419;
+  --color-gray: #333333;
+  --color-light-gray: #cccccc;
+  --color-white: #ffffff;
+  
+  /* Gradients */
+  --gradient-dark: linear-gradient(135deg, #040505 0%, #0f1419 100%);
+  --gradient-red-black: linear-gradient(135deg, #040505 20%, #be0303d1 30%, #be0303d1 60%, #0f1419 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  
+  /* Typography */
+  --font-heading: 'Outfit', 'Poppins', sans-serif; /* Modern, bold */
+  --font-body: 'Inter', 'Roboto', sans-serif; /* Clean, readable */
+  
+  /* Spacing */
+  --section-padding: 4rem 2rem;
+  --container-width: 1200px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Global Reset & Base Styles for Landing Page */
+.landing-page-wrapper {
+  font-family: var(--font-body);
+  color: var(--color-white);
+  background-color: var(--color-black);
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.landing-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+
+p {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: var(--color-light-gray);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-normal);
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(190, 3, 3, 0.4);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-white);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-normal);
+  border: 2px solid var(--color-white);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--color-light-gray);
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  transition: var(--transition-normal);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-primary { color: var(--color-primary); }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+
+/* Section Specifics */
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-subtitle {
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}

@@ -1,0 +1,52 @@
+/* src/styles/landing/founder.css */
+
+.founder-section {
+    background-color: var(--color-black);
+    padding: var(--section-padding);
+    position: relative;
+}
+
+.founder-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.founder-text h2 {
+    margin-bottom: 2rem;
+}
+
+.mission-statement {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--color-white);
+    border-left: 4px solid var(--color-primary);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    line-height: 1.6;
+}
+
+.founder-image-wrapper {
+    position: relative;
+}
+
+.founder-image {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    filter: grayscale(20%);
+    transition: var(--transition-normal);
+}
+
+.founder-image:hover {
+    filter: grayscale(0%);
+}
+
+@media (max-width: 968px) {
+    .founder-content {
+        grid-template-columns: 1fr;
+    }
+}
